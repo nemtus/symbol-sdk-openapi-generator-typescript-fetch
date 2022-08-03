@@ -1,0 +1,34 @@
+// Todo: when using symbol-sdk, this will be necessary.
+// const webpack = require('webpack');
+
+module.exports = {
+  mode: 'production',
+  entry: './src/cdn.ts',
+  output: {
+    filename: '../cdn/main.js',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        use: 'ts-loader',
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['.ts', '.js'],
+    // Todo: when using symbol-sdk, this will be necessary.
+    // fallback: {
+    //   buffer: require.resolve('buffer/'),
+    //   crypto: require.resolve('crypto-browserify'),
+    //   stream: require.resolve('stream-browserify'),
+    // },
+  },
+  // Todo: when using symbol-sdk, this will be necessary.
+  // plugins: [
+  //   new webpack.ProvidePlugin({
+  //     process: 'process/browser',
+  //     Buffer: ['buffer', 'Buffer'],
+  //   }),
+  // ],
+};
