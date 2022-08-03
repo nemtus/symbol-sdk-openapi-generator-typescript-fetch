@@ -21,8 +21,7 @@
     "blockchain",
     "symbol",
     "sdk",
-    "typescript",
-    "axios"
+    "typescript"
   ],
   "author": "nemtus",
   "license": "MIT",
