@@ -1,4 +1,3 @@
-.openapi-generator-ignore
 apis/AccountRoutesApi.ts
 apis/BlockRoutesApi.ts
 apis/ChainRoutesApi.ts
