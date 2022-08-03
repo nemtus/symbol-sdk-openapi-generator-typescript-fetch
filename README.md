@@ -29,11 +29,8 @@ const configurationParameters: ConfigurationParameters = {
 };
 const configuration: Configuration = new Configuration(configurationParameters);
 const nodeRoutesApi: NodeRoutesApi = new NodeRoutesApi(configuration);
-const response = await nodeRoutesApi.getNodeInfo();
-const nodeInfoDTO: NodeInfoDTO = response.data;
-console.log(response.status); // Example: 200
-console.log(response.statusText); // Example: 'OK'
-console.dir(nodeInfoDTO, { depth: null });
+const response: NodeInfoDTO = await nodeRoutesApi.getNodeInfo();
+console.dir(response, { depth: null });
 /* Example: 
 {
   version: 16777987,
@@ -68,11 +65,8 @@ const accountRoutesApi: AccountRoutesApi = new AccountRoutesApi(configuration);
 const requestParameters: AccountRoutesApiGetAccountInfoRequest = {
   accountId: 'NCSIOEWE2364XXP65426W3RUGBRYOAGR3KMMCIA',
 };
-const response = await accountRoutesApi.getAccountInfo(requestParameters);
-const accountInfoDTO: AccountInfoDTO = response.data;
-console.log(response.status); // Example: 200
-console.log(response.statusText); // Example: "OK"
-console.dir(accountInfoDTO, { depth: null });
+const response: AccountInfoDTO = await accountRoutesApi.getAccountInfo(requestParameters);
+console.dir(response, { depth: null });
 // Example: 
 /*
 {
@@ -147,13 +141,12 @@ Example with CDN
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <!-- Load from CDN or a single file bundled with webpack -->
-    <script src="https://cdn.jsdelivr.net/npm/@nemtus/symbol-sdk-openapi-generator-typescript-fetch@0.1.0/index.min.js"></script>
+    <script src="../../dist/index.min.js"></script>
   </head>
   <body>
     <script>
       (async () => {
-        const symbolSdk = window.symbolSdkOpenAPIGeneratorTypeScriptAxios;
+        const symbolSdk = window.symbolSdkOpenAPIGeneratorTypeScriptFetch;
         const configurationParameters = {
           basePath: 'http://symbol-sakura-16.next-web-technology.com:3000',
         };
@@ -161,18 +154,14 @@ Example with CDN
 
         const nodeRoutesApi = new symbolSdk.NodeRoutesApi(configuration);
         const responseNodeInfo = await nodeRoutesApi.getNodeInfo();
-        console.log(responseNodeInfo.status);
-        console.log(responseNodeInfo.statusText);
-        console.log(responseNodeInfo.data);
+        console.log(responseNodeInfo);
 
         const accountRoutesApi = new symbolSdk.AccountRoutesApi(configuration);
         const requestParameters = {
           accountId: 'NCSIOEWE2364XXP65426W3RUGBRYOAGR3KMMCIA',
         };
         const responseAccountInfo = await accountRoutesApi.getAccountInfo(requestParameters);
-        console.log(responseAccountInfo.status);
-        console.log(responseAccountInfo.statusText);
-        console.log(responseAccountInfo.data);
+        console.log(responseAccountInfo);
       })();
     </script>
   </body>
