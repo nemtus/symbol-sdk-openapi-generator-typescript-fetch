@@ -1,6 +1,6 @@
-# symbol-sdk-openapi-generator-typescript-axios
+# symbol-sdk-openapi-generator-typescript-fetch
 
-Symbol SDK for TypeScript with OpenAPI Generator typescript-axios
+Symbol SDK for TypeScript with OpenAPI Generator typescript-fetch
 
 Note: Currently, This is a very experimental level.
 
@@ -9,7 +9,7 @@ Note: Currently, This is a very experimental level.
 ### Install
 
 ```bash
-npm install @nemtus/symbol-sdk-openapi-generator-typescript-axios
+npm install @nemtus/symbol-sdk-openapi-generator-typescript-fetch
 ```
 
 ### Usage
@@ -22,7 +22,7 @@ import {
   ConfigurationParameters,
   NodeInfoDTO,
   NodeRoutesApi,
-} from '@nemtus/symbol-sdk-openapi-generator-typescript-axios';
+} from '@nemtus/symbol-sdk-openapi-generator-typescript-fetch';
 
 const configurationParameters: ConfigurationParameters = {
   basePath: 'https://symbol-sakura-16.next-web-technology.com:3001',
@@ -58,7 +58,7 @@ import {
   AccountRoutesApiGetAccountInfoRequest,
   Configuration,
   ConfigurationParameters,
-} from '@nemtus/symbol-sdk-openapi-generator-typescript-axios';
+} from '@nemtus/symbol-sdk-openapi-generator-typescript-fetch';
 
 const configurationParameters: ConfigurationParameters = {
   basePath: 'https://symbol-sakura-16.next-web-technology.com:3001',
@@ -148,7 +148,7 @@ Example with CDN
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <!-- Load from CDN or a single file bundled with webpack -->
-    <script src="https://cdn.jsdelivr.net/npm/@nemtus/symbol-sdk-openapi-generator-typescript-axios@0.1.0/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@nemtus/symbol-sdk-openapi-generator-typescript-fetch@0.1.0/index.min.js"></script>
   </head>
   <body>
     <script>
@@ -212,7 +212,7 @@ Do not edit `src/api` manually.
 
 - [symbol/symbol-openapi](https://github.com/symbol/symbol-openapi) to generate openapi3.yml
 - [OpenAPI Generator](https://openapi-generator.tech/) to generate REST API client codes
-  - Especially [typescript-axios Generator](https://openapi-generator.tech/docs/generators/typescript-axios)
+  - Especially [typescript-fetch Generator](https://openapi-generator.tech/docs/generators/typescript-fetch)
 - [cosmos-client/cosmos-client-ts](https://github.com/cosmos-client/cosmos-client-ts) as a reference of package structure
 
 We would like to thank all the contributors to the above tools.

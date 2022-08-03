@@ -1,9 +1,9 @@
 ---
 title: Contribution Guide
-description: Any contribution to symbol-sdk-openapi-generator-typescript-axios is more than welcome!
+description: Any contribution to symbol-sdk-openapi-generator-typescript-fetch is more than welcome!
 ---
 
-> Any contribution to symbol-sdk-openapi-generator-typescript-axios is more than welcome!
+> Any contribution to symbol-sdk-openapi-generator-typescript-fetch is more than welcome!
 
 ## Reporting Issues
 
@@ -17,20 +17,20 @@ We'd love to see your pull requests, even if it's just to fix a typo!
 
 However, any significant improvement should be associated to existing the followings.
 
-- [feature request](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-axios/labels/enhancement)
-- [bug report](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-axios/labels/bug)
-- [test request](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-axios/labels/test)
-- [refactor request](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-axios/labels/refactor)
-- [docs request](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-axios/labels/documentation)
+- [feature request](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch/labels/enhancement)
+- [bug report](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch/labels/bug)
+- [test request](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch/labels/test)
+- [refactor request](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch/labels/refactor)
+- [docs request](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch/labels/documentation)
 
 ### Getting started
 
-1. [Fork](https://help.github.com/articles/fork-a-repo/) [this repository](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-axios) to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device.
+1. [Fork](https://help.github.com/articles/fork-a-repo/) [this repository](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch) to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device.
 2. Run `npm install` to install the dependencies.
 
 ### Setup
 
-Refer [For developers section in README.md](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-axios#for-developers).
+Refer [For developers section in README.md](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch#for-developers).
 
 ### Test structure
 
