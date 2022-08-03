@@ -1,3 +1,3 @@
-import * as symbolSdkOpenAPIGeneratorTypeScriptAxios from '.';
+import * as symbolSdkOpenAPIGeneratorTypeScriptFetch from '.';
 
-(window as any).symbolSdkOpenAPIGeneratorTypeScriptAxios = symbolSdkOpenAPIGeneratorTypeScriptAxios;
+(window as any).symbolSdkOpenAPIGeneratorTypeScriptFetch = symbolSdkOpenAPIGeneratorTypeScriptFetch;
