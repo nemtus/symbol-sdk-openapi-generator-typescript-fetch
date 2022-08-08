@@ -1,0 +1,16 @@
+{
+  "name": "nodejs-javascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "yasunori-matsuoka <yasunori.matsuoka@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@nemtus/symbol-sdk-openapi-generator-typescript-fetch": "^0.1.0",
+    "node-fetch": "^2.6.7"
+  }
+}
