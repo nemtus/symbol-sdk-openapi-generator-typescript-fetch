@@ -25,3 +25,9 @@
 ## Others
 
 * Reference information for reviewers (describe any implementation concerns or cautions)
+
+## Your Symbol address
+
+* Input your address to get reward.
+
+N00000000000000000000000000000000000000
