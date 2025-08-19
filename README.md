@@ -175,7 +175,7 @@ Example with CDN
 
 - Clone with submodules
 
-This project uses [https://github.com/symbol/symbol-openapi](https://github.com/symbol/symbol-openapi) OpenAPI Implementation as git submodules. You need to clone this repository with submodules to develop this package as follows.
+This project uses [https://github.com/symbol/symbol-openapi](https://github.com/symbol/symbol-openapi) OpenAPI Implementation as a git submodule. You need to clone this repository with submodules to develop this package as follows.
 
 ```bash
 git clone --recurse-submodules git@github.com:nemtus/symbol-sdk-openapi-generator-typescript-fetch.git
