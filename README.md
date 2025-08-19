@@ -169,7 +169,54 @@ Example with CDN
 </html>
 ```
 
-## For Developers
+## For Package Developers
+
+### 0. Prerequisite
+
+- Clone with submodules
+
+This project uses [https://github.com/symbol/symbol-openapi](https://github.com/symbol/symbol-openapi) OpenAPI Implementation as git submodules. You need to clone this repository with submodules to develop this package as follows.
+
+```bash
+git clone --recurse-submodules git@github.com:nemtus/symbol-sdk-openapi-generator-typescript-fetch.git
+```
+
+or
+
+```bash
+git clone --recurse-submodules https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch.git
+```
+
+If you have already cloned this repository without submodules, you can get submodules as follows.
+
+```bash
+git submodule init
+git submodule update
+```
+
+or same effect with only one command as follows.
+
+```bash
+git submodule update --init
+```
+
+- Update submodule status to latest
+
+When you want to update a specific branch's submodule, you can execute following commands.
+
+```bash
+cd symbol-openapi/
+git fetch
+git merge origin/main
+```
+
+When you check the submodule status, you can execute following commands.
+
+```bash
+git submodule status
+```
+
+- Install Java
 
 If you don't have java installed, you need to install it.
 
