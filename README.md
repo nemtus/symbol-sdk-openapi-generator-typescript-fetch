@@ -194,7 +194,7 @@ git submodule init
 git submodule update
 ```
 
-or same effect with only one command as follows.
+or achieve the same effect with only one command as follows.
 
 ```bash
 git submodule update --init
