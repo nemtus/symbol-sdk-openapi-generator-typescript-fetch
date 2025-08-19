@@ -202,12 +202,17 @@ git submodule update --init
 
 - Update submodule status to latest
 
-When you want to update a specific branch's submodule, you can execute following commands.
+To update the submodule to the latest on a specific branch (e.g., main), run the following and record the new pointer in the superproject:
 
 ```bash
-cd symbol-openapi/
-git fetch
-git merge origin/main
+cd symbol-openapi
+git fetch origin
+git switch main
+git pull --ff-only
+cd ..
+# record the updated submodule pointer in the superproject
+git add symbol-openapi
+git commit -m "chore(submodule): bump symbol-openapi to latest main"
 ```
 
 When you check the submodule status, you can execute following commands.
