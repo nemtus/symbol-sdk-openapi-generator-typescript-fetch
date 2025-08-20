@@ -1,1 +1,2 @@
 useSingleRequestParameter: true
+templateDir: ./custom-templates
