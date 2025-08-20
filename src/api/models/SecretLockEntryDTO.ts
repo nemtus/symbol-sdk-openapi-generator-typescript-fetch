@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { LockStatus } from './LockStatus';
 import {
-    LockHashAlgorithmEnum,
-    LockHashAlgorithmEnumFromJSON,
-    LockHashAlgorithmEnumFromJSONTyped,
-    LockHashAlgorithmEnumToJSON,
-} from './LockHashAlgorithmEnum';
-import {
-    LockStatus,
     LockStatusFromJSON,
     LockStatusFromJSONTyped,
     LockStatusToJSON,
+    LockStatusToJSONTyped,
 } from './LockStatus';
+import type { LockHashAlgorithmEnum } from './LockHashAlgorithmEnum';
+import {
+    LockHashAlgorithmEnumFromJSON,
+    LockHashAlgorithmEnumFromJSONTyped,
+    LockHashAlgorithmEnumToJSON,
+    LockHashAlgorithmEnumToJSONTyped,
+} from './LockHashAlgorithmEnum';
 
 /**
  * 
@@ -94,12 +96,31 @@ export interface SecretLockEntryDTO {
     compositeHash: string;
 }
 
+
+
+/**
+ * Check if a given object implements the SecretLockEntryDTO interface.
+ */
+export function instanceOfSecretLockEntryDTO(value: Record<string, any>): value is SecretLockEntryDTO {
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('ownerAddress' in value) || value['ownerAddress'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('endHeight' in value) || value['endHeight'] === undefined) return false;
+    if (!('status' in value) || value['status'] === undefined) return false;
+    if (!('hashAlgorithm' in value) || value['hashAlgorithm'] === undefined) return false;
+    if (!('secret' in value) || value['secret'] === undefined) return false;
+    if (!('recipientAddress' in value) || value['recipientAddress'] === undefined) return false;
+    if (!('compositeHash' in value) || value['compositeHash'] === undefined) return false;
+    return true;
+}
+
 export function SecretLockEntryDTOFromJSON(json: any): SecretLockEntryDTO {
     return SecretLockEntryDTOFromJSONTyped(json, false);
 }
 
 export function SecretLockEntryDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): SecretLockEntryDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -117,25 +138,27 @@ export function SecretLockEntryDTOFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function SecretLockEntryDTOToJSON(value?: SecretLockEntryDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SecretLockEntryDTOToJSON(json: any): SecretLockEntryDTO {
+    return SecretLockEntryDTOToJSONTyped(json, false);
+}
+
+export function SecretLockEntryDTOToJSONTyped(value?: SecretLockEntryDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'version': value.version,
-        'ownerAddress': value.ownerAddress,
-        'mosaicId': value.mosaicId,
-        'amount': value.amount,
-        'endHeight': value.endHeight,
-        'status': LockStatusToJSON(value.status),
-        'hashAlgorithm': LockHashAlgorithmEnumToJSON(value.hashAlgorithm),
-        'secret': value.secret,
-        'recipientAddress': value.recipientAddress,
-        'compositeHash': value.compositeHash,
+        'version': value['version'],
+        'ownerAddress': value['ownerAddress'],
+        'mosaicId': value['mosaicId'],
+        'amount': value['amount'],
+        'endHeight': value['endHeight'],
+        'status': LockStatusToJSON(value['status']),
+        'hashAlgorithm': LockHashAlgorithmEnumToJSON(value['hashAlgorithm']),
+        'secret': value['secret'],
+        'recipientAddress': value['recipientAddress'],
+        'compositeHash': value['compositeHash'],
     };
 }
 

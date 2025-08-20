@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MosaicAddressRestrictionEntryWrapperDTO } from './MosaicAddressRestrictionEntryWrapperDTO';
 import {
-    MosaicAddressRestrictionEntryWrapperDTO,
     MosaicAddressRestrictionEntryWrapperDTOFromJSON,
     MosaicAddressRestrictionEntryWrapperDTOFromJSONTyped,
     MosaicAddressRestrictionEntryWrapperDTOToJSON,
+    MosaicAddressRestrictionEntryWrapperDTOToJSONTyped,
 } from './MosaicAddressRestrictionEntryWrapperDTO';
 
 /**
@@ -40,12 +41,21 @@ export interface MosaicAddressRestrictionDTO {
     mosaicRestrictionEntry: MosaicAddressRestrictionEntryWrapperDTO;
 }
 
+/**
+ * Check if a given object implements the MosaicAddressRestrictionDTO interface.
+ */
+export function instanceOfMosaicAddressRestrictionDTO(value: Record<string, any>): value is MosaicAddressRestrictionDTO {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('mosaicRestrictionEntry' in value) || value['mosaicRestrictionEntry'] === undefined) return false;
+    return true;
+}
+
 export function MosaicAddressRestrictionDTOFromJSON(json: any): MosaicAddressRestrictionDTO {
     return MosaicAddressRestrictionDTOFromJSONTyped(json, false);
 }
 
 export function MosaicAddressRestrictionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicAddressRestrictionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,17 +65,19 @@ export function MosaicAddressRestrictionDTOFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function MosaicAddressRestrictionDTOToJSON(value?: MosaicAddressRestrictionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicAddressRestrictionDTOToJSON(json: any): MosaicAddressRestrictionDTO {
+    return MosaicAddressRestrictionDTOToJSONTyped(json, false);
+}
+
+export function MosaicAddressRestrictionDTOToJSONTyped(value?: MosaicAddressRestrictionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'mosaicRestrictionEntry': MosaicAddressRestrictionEntryWrapperDTOToJSON(value.mosaicRestrictionEntry),
+        'id': value['id'],
+        'mosaicRestrictionEntry': MosaicAddressRestrictionEntryWrapperDTOToJSON(value['mosaicRestrictionEntry']),
     };
 }
 

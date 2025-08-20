@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -27,30 +27,39 @@ export interface TransactionHashes {
     hashes?: Array<string>;
 }
 
+/**
+ * Check if a given object implements the TransactionHashes interface.
+ */
+export function instanceOfTransactionHashes(value: Record<string, any>): value is TransactionHashes {
+    return true;
+}
+
 export function TransactionHashesFromJSON(json: any): TransactionHashes {
     return TransactionHashesFromJSONTyped(json, false);
 }
 
 export function TransactionHashesFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionHashes {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'hashes': !exists(json, 'hashes') ? undefined : json['hashes'],
+        'hashes': json['hashes'] == null ? undefined : json['hashes'],
     };
 }
 
-export function TransactionHashesToJSON(value?: TransactionHashes | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionHashesToJSON(json: any): TransactionHashes {
+    return TransactionHashesToJSONTyped(json, false);
+}
+
+export function TransactionHashesToJSONTyped(value?: TransactionHashes | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'hashes': value.hashes,
+        'hashes': value['hashes'],
     };
 }
 

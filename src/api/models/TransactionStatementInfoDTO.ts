@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { StatementMetaDTO } from './StatementMetaDTO';
 import {
-    StatementMetaDTO,
     StatementMetaDTOFromJSON,
     StatementMetaDTOFromJSONTyped,
     StatementMetaDTOToJSON,
+    StatementMetaDTOToJSONTyped,
 } from './StatementMetaDTO';
+import type { TransactionStatementDTO } from './TransactionStatementDTO';
 import {
-    TransactionStatementDTO,
     TransactionStatementDTOFromJSON,
     TransactionStatementDTOFromJSONTyped,
     TransactionStatementDTOToJSON,
+    TransactionStatementDTOToJSONTyped,
 } from './TransactionStatementDTO';
 
 /**
@@ -52,12 +54,22 @@ export interface TransactionStatementInfoDTO {
     statement: TransactionStatementDTO;
 }
 
+/**
+ * Check if a given object implements the TransactionStatementInfoDTO interface.
+ */
+export function instanceOfTransactionStatementInfoDTO(value: Record<string, any>): value is TransactionStatementInfoDTO {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('meta' in value) || value['meta'] === undefined) return false;
+    if (!('statement' in value) || value['statement'] === undefined) return false;
+    return true;
+}
+
 export function TransactionStatementInfoDTOFromJSON(json: any): TransactionStatementInfoDTO {
     return TransactionStatementInfoDTOFromJSONTyped(json, false);
 }
 
 export function TransactionStatementInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionStatementInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -68,18 +80,20 @@ export function TransactionStatementInfoDTOFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function TransactionStatementInfoDTOToJSON(value?: TransactionStatementInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionStatementInfoDTOToJSON(json: any): TransactionStatementInfoDTO {
+    return TransactionStatementInfoDTOToJSONTyped(json, false);
+}
+
+export function TransactionStatementInfoDTOToJSONTyped(value?: TransactionStatementInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'meta': StatementMetaDTOToJSON(value.meta),
-        'statement': TransactionStatementDTOToJSON(value.statement),
+        'id': value['id'],
+        'meta': StatementMetaDTOToJSON(value['meta']),
+        'statement': TransactionStatementDTOToJSON(value['statement']),
     };
 }
 

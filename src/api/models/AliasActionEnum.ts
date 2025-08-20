@@ -17,6 +17,7 @@
  * Alias action:
  * * 0 - Unlink alias.
  * * 1 - Link alias.
+ * 
  * @export
  */
 export const AliasActionEnum = {
@@ -25,6 +26,17 @@ export const AliasActionEnum = {
 } as const;
 export type AliasActionEnum = typeof AliasActionEnum[keyof typeof AliasActionEnum];
 
+
+export function instanceOfAliasActionEnum(value: any): boolean {
+    for (const key in AliasActionEnum) {
+        if (Object.prototype.hasOwnProperty.call(AliasActionEnum, key)) {
+            if (AliasActionEnum[key as keyof typeof AliasActionEnum] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function AliasActionEnumFromJSON(json: any): AliasActionEnum {
     return AliasActionEnumFromJSONTyped(json, false);
@@ -36,5 +48,9 @@ export function AliasActionEnumFromJSONTyped(json: any, ignoreDiscriminator: boo
 
 export function AliasActionEnumToJSON(value?: AliasActionEnum | null): any {
     return value as any;
+}
+
+export function AliasActionEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): AliasActionEnum {
+    return value as AliasActionEnum;
 }
 

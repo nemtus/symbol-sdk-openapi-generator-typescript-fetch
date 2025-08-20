@@ -12,31 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    EmbeddedTransactionDTO,
-    EmbeddedTransactionDTOFromJSON,
-    EmbeddedTransactionDTOFromJSONTyped,
-    EmbeddedTransactionDTOToJSON,
-} from './EmbeddedTransactionDTO';
-import {
-    LinkActionEnum,
-    LinkActionEnumFromJSON,
-    LinkActionEnumFromJSONTyped,
-    LinkActionEnumToJSON,
-} from './LinkActionEnum';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { LinkActionEnum } from './LinkActionEnum';
 import {
-    VotingKeyLinkTransactionBodyDTO,
-    VotingKeyLinkTransactionBodyDTOFromJSON,
-    VotingKeyLinkTransactionBodyDTOFromJSONTyped,
-    VotingKeyLinkTransactionBodyDTOToJSON,
-} from './VotingKeyLinkTransactionBodyDTO';
+    LinkActionEnumFromJSON,
+    LinkActionEnumFromJSONTyped,
+    LinkActionEnumToJSON,
+    LinkActionEnumToJSONTyped,
+} from './LinkActionEnum';
 
 /**
  * 
@@ -94,12 +84,29 @@ export interface EmbeddedVotingKeyLinkTransactionDTO {
     linkAction: LinkActionEnum;
 }
 
+
+
+/**
+ * Check if a given object implements the EmbeddedVotingKeyLinkTransactionDTO interface.
+ */
+export function instanceOfEmbeddedVotingKeyLinkTransactionDTO(value: Record<string, any>): value is EmbeddedVotingKeyLinkTransactionDTO {
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('linkedPublicKey' in value) || value['linkedPublicKey'] === undefined) return false;
+    if (!('startEpoch' in value) || value['startEpoch'] === undefined) return false;
+    if (!('endEpoch' in value) || value['endEpoch'] === undefined) return false;
+    if (!('linkAction' in value) || value['linkAction'] === undefined) return false;
+    return true;
+}
+
 export function EmbeddedVotingKeyLinkTransactionDTOFromJSON(json: any): EmbeddedVotingKeyLinkTransactionDTO {
     return EmbeddedVotingKeyLinkTransactionDTOFromJSONTyped(json, false);
 }
 
 export function EmbeddedVotingKeyLinkTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmbeddedVotingKeyLinkTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -115,23 +122,25 @@ export function EmbeddedVotingKeyLinkTransactionDTOFromJSONTyped(json: any, igno
     };
 }
 
-export function EmbeddedVotingKeyLinkTransactionDTOToJSON(value?: EmbeddedVotingKeyLinkTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EmbeddedVotingKeyLinkTransactionDTOToJSON(json: any): EmbeddedVotingKeyLinkTransactionDTO {
+    return EmbeddedVotingKeyLinkTransactionDTOToJSONTyped(json, false);
+}
+
+export function EmbeddedVotingKeyLinkTransactionDTOToJSONTyped(value?: EmbeddedVotingKeyLinkTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'linkedPublicKey': value.linkedPublicKey,
-        'startEpoch': value.startEpoch,
-        'endEpoch': value.endEpoch,
-        'linkAction': LinkActionEnumToJSON(value.linkAction),
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'linkedPublicKey': value['linkedPublicKey'],
+        'startEpoch': value['startEpoch'],
+        'endEpoch': value['endEpoch'],
+        'linkAction': LinkActionEnumToJSON(value['linkAction']),
     };
 }
 

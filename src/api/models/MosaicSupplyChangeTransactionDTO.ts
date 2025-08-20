@@ -12,31 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    MosaicSupplyChangeActionEnum,
-    MosaicSupplyChangeActionEnumFromJSON,
-    MosaicSupplyChangeActionEnumFromJSONTyped,
-    MosaicSupplyChangeActionEnumToJSON,
-} from './MosaicSupplyChangeActionEnum';
-import {
-    MosaicSupplyChangeTransactionBodyDTO,
-    MosaicSupplyChangeTransactionBodyDTOFromJSON,
-    MosaicSupplyChangeTransactionBodyDTOFromJSONTyped,
-    MosaicSupplyChangeTransactionBodyDTOToJSON,
-} from './MosaicSupplyChangeTransactionBodyDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { MosaicSupplyChangeActionEnum } from './MosaicSupplyChangeActionEnum';
 import {
-    TransactionDTO,
-    TransactionDTOFromJSON,
-    TransactionDTOFromJSONTyped,
-    TransactionDTOToJSON,
-} from './TransactionDTO';
+    MosaicSupplyChangeActionEnumFromJSON,
+    MosaicSupplyChangeActionEnumFromJSONTyped,
+    MosaicSupplyChangeActionEnumToJSON,
+    MosaicSupplyChangeActionEnumToJSONTyped,
+} from './MosaicSupplyChangeActionEnum';
 
 /**
  * Transaction to increase or decrease the supply of a mosaic.
@@ -95,6 +85,7 @@ export interface MosaicSupplyChangeTransactionDTO {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof MosaicSupplyChangeTransactionDTO
      */
@@ -113,12 +104,32 @@ export interface MosaicSupplyChangeTransactionDTO {
     action: MosaicSupplyChangeActionEnum;
 }
 
+
+
+/**
+ * Check if a given object implements the MosaicSupplyChangeTransactionDTO interface.
+ */
+export function instanceOfMosaicSupplyChangeTransactionDTO(value: Record<string, any>): value is MosaicSupplyChangeTransactionDTO {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('maxFee' in value) || value['maxFee'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('delta' in value) || value['delta'] === undefined) return false;
+    if (!('action' in value) || value['action'] === undefined) return false;
+    return true;
+}
+
 export function MosaicSupplyChangeTransactionDTOFromJSON(json: any): MosaicSupplyChangeTransactionDTO {
     return MosaicSupplyChangeTransactionDTOFromJSONTyped(json, false);
 }
 
 export function MosaicSupplyChangeTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicSupplyChangeTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -137,26 +148,28 @@ export function MosaicSupplyChangeTransactionDTOFromJSONTyped(json: any, ignoreD
     };
 }
 
-export function MosaicSupplyChangeTransactionDTOToJSON(value?: MosaicSupplyChangeTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicSupplyChangeTransactionDTOToJSON(json: any): MosaicSupplyChangeTransactionDTO {
+    return MosaicSupplyChangeTransactionDTOToJSONTyped(json, false);
+}
+
+export function MosaicSupplyChangeTransactionDTOToJSONTyped(value?: MosaicSupplyChangeTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'maxFee': value.maxFee,
-        'deadline': value.deadline,
-        'mosaicId': value.mosaicId,
-        'delta': value.delta,
-        'action': MosaicSupplyChangeActionEnumToJSON(value.action),
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'maxFee': value['maxFee'],
+        'deadline': value['deadline'],
+        'mosaicId': value['mosaicId'],
+        'delta': value['delta'],
+        'action': MosaicSupplyChangeActionEnumToJSON(value['action']),
     };
 }
 

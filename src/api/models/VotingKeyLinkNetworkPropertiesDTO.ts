@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -27,30 +27,39 @@ export interface VotingKeyLinkNetworkPropertiesDTO {
     dummy?: string;
 }
 
+/**
+ * Check if a given object implements the VotingKeyLinkNetworkPropertiesDTO interface.
+ */
+export function instanceOfVotingKeyLinkNetworkPropertiesDTO(value: Record<string, any>): value is VotingKeyLinkNetworkPropertiesDTO {
+    return true;
+}
+
 export function VotingKeyLinkNetworkPropertiesDTOFromJSON(json: any): VotingKeyLinkNetworkPropertiesDTO {
     return VotingKeyLinkNetworkPropertiesDTOFromJSONTyped(json, false);
 }
 
 export function VotingKeyLinkNetworkPropertiesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): VotingKeyLinkNetworkPropertiesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'dummy': !exists(json, 'dummy') ? undefined : json['dummy'],
+        'dummy': json['dummy'] == null ? undefined : json['dummy'],
     };
 }
 
-export function VotingKeyLinkNetworkPropertiesDTOToJSON(value?: VotingKeyLinkNetworkPropertiesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function VotingKeyLinkNetworkPropertiesDTOToJSON(json: any): VotingKeyLinkNetworkPropertiesDTO {
+    return VotingKeyLinkNetworkPropertiesDTOToJSONTyped(json, false);
+}
+
+export function VotingKeyLinkNetworkPropertiesDTOToJSONTyped(value?: VotingKeyLinkNetworkPropertiesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'dummy': value.dummy,
+        'dummy': value['dummy'],
     };
 }
 

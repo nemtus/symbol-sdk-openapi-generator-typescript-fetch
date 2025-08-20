@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { EmbeddedTransactionMetaDTO } from './EmbeddedTransactionMetaDTO';
 import {
-    EmbeddedTransactionMetaDTO,
     EmbeddedTransactionMetaDTOFromJSON,
     EmbeddedTransactionMetaDTOFromJSONTyped,
     EmbeddedTransactionMetaDTOToJSON,
+    EmbeddedTransactionMetaDTOToJSONTyped,
 } from './EmbeddedTransactionMetaDTO';
+import type { TransactionMetaDTO } from './TransactionMetaDTO';
 import {
-    TransactionMetaDTO,
     TransactionMetaDTOFromJSON,
     TransactionMetaDTOFromJSONTyped,
     TransactionMetaDTOToJSON,
+    TransactionMetaDTOToJSONTyped,
 } from './TransactionMetaDTO';
 
 /**
@@ -82,12 +84,25 @@ export interface TransactionInfoDTOMeta {
     aggregateId: string;
 }
 
+/**
+ * Check if a given object implements the TransactionInfoDTOMeta interface.
+ */
+export function instanceOfTransactionInfoDTOMeta(value: Record<string, any>): value is TransactionInfoDTOMeta {
+    if (!('height' in value) || value['height'] === undefined) return false;
+    if (!('hash' in value) || value['hash'] === undefined) return false;
+    if (!('merkleComponentHash' in value) || value['merkleComponentHash'] === undefined) return false;
+    if (!('index' in value) || value['index'] === undefined) return false;
+    if (!('aggregateHash' in value) || value['aggregateHash'] === undefined) return false;
+    if (!('aggregateId' in value) || value['aggregateId'] === undefined) return false;
+    return true;
+}
+
 export function TransactionInfoDTOMetaFromJSON(json: any): TransactionInfoDTOMeta {
     return TransactionInfoDTOMetaFromJSONTyped(json, false);
 }
 
 export function TransactionInfoDTOMetaFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionInfoDTOMeta {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -96,30 +111,32 @@ export function TransactionInfoDTOMetaFromJSONTyped(json: any, ignoreDiscriminat
         'hash': json['hash'],
         'merkleComponentHash': json['merkleComponentHash'],
         'index': json['index'],
-        'timestamp': !exists(json, 'timestamp') ? undefined : json['timestamp'],
-        'feeMultiplier': !exists(json, 'feeMultiplier') ? undefined : json['feeMultiplier'],
+        'timestamp': json['timestamp'] == null ? undefined : json['timestamp'],
+        'feeMultiplier': json['feeMultiplier'] == null ? undefined : json['feeMultiplier'],
         'aggregateHash': json['aggregateHash'],
         'aggregateId': json['aggregateId'],
     };
 }
 
-export function TransactionInfoDTOMetaToJSON(value?: TransactionInfoDTOMeta | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionInfoDTOMetaToJSON(json: any): TransactionInfoDTOMeta {
+    return TransactionInfoDTOMetaToJSONTyped(json, false);
+}
+
+export function TransactionInfoDTOMetaToJSONTyped(value?: TransactionInfoDTOMeta | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'height': value.height,
-        'hash': value.hash,
-        'merkleComponentHash': value.merkleComponentHash,
-        'index': value.index,
-        'timestamp': value.timestamp,
-        'feeMultiplier': value.feeMultiplier,
-        'aggregateHash': value.aggregateHash,
-        'aggregateId': value.aggregateId,
+        'height': value['height'],
+        'hash': value['hash'],
+        'merkleComponentHash': value['merkleComponentHash'],
+        'index': value['index'],
+        'timestamp': value['timestamp'],
+        'feeMultiplier': value['feeMultiplier'],
+        'aggregateHash': value['aggregateHash'],
+        'aggregateId': value['aggregateId'],
     };
 }
 

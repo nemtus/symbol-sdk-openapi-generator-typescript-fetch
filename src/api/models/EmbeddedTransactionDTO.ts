@@ -12,18 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    EntityDTO,
-    EntityDTOFromJSON,
-    EntityDTOFromJSONTyped,
-    EntityDTOToJSON,
-} from './EntityDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
 
 /**
@@ -58,12 +53,25 @@ export interface EmbeddedTransactionDTO {
     type: number;
 }
 
+
+
+/**
+ * Check if a given object implements the EmbeddedTransactionDTO interface.
+ */
+export function instanceOfEmbeddedTransactionDTO(value: Record<string, any>): value is EmbeddedTransactionDTO {
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
+}
+
 export function EmbeddedTransactionDTOFromJSON(json: any): EmbeddedTransactionDTO {
     return EmbeddedTransactionDTOFromJSONTyped(json, false);
 }
 
 export function EmbeddedTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmbeddedTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -75,19 +83,21 @@ export function EmbeddedTransactionDTOFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function EmbeddedTransactionDTOToJSON(value?: EmbeddedTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EmbeddedTransactionDTOToJSON(json: any): EmbeddedTransactionDTO {
+    return EmbeddedTransactionDTOToJSONTyped(json, false);
+}
+
+export function EmbeddedTransactionDTOToJSONTyped(value?: EmbeddedTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -27,30 +27,39 @@ export interface AccountRestrictionNetworkPropertiesDTO {
     maxAccountRestrictionValues?: string;
 }
 
+/**
+ * Check if a given object implements the AccountRestrictionNetworkPropertiesDTO interface.
+ */
+export function instanceOfAccountRestrictionNetworkPropertiesDTO(value: Record<string, any>): value is AccountRestrictionNetworkPropertiesDTO {
+    return true;
+}
+
 export function AccountRestrictionNetworkPropertiesDTOFromJSON(json: any): AccountRestrictionNetworkPropertiesDTO {
     return AccountRestrictionNetworkPropertiesDTOFromJSONTyped(json, false);
 }
 
 export function AccountRestrictionNetworkPropertiesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountRestrictionNetworkPropertiesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'maxAccountRestrictionValues': !exists(json, 'maxAccountRestrictionValues') ? undefined : json['maxAccountRestrictionValues'],
+        'maxAccountRestrictionValues': json['maxAccountRestrictionValues'] == null ? undefined : json['maxAccountRestrictionValues'],
     };
 }
 
-export function AccountRestrictionNetworkPropertiesDTOToJSON(value?: AccountRestrictionNetworkPropertiesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountRestrictionNetworkPropertiesDTOToJSON(json: any): AccountRestrictionNetworkPropertiesDTO {
+    return AccountRestrictionNetworkPropertiesDTOToJSONTyped(json, false);
+}
+
+export function AccountRestrictionNetworkPropertiesDTOToJSONTyped(value?: AccountRestrictionNetworkPropertiesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'maxAccountRestrictionValues': value.maxAccountRestrictionValues,
+        'maxAccountRestrictionValues': value['maxAccountRestrictionValues'],
     };
 }
 

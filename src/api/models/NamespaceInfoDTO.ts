@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NamespaceDTO } from './NamespaceDTO';
 import {
-    NamespaceDTO,
     NamespaceDTOFromJSON,
     NamespaceDTOFromJSONTyped,
     NamespaceDTOToJSON,
+    NamespaceDTOToJSONTyped,
 } from './NamespaceDTO';
+import type { NamespaceMetaDTO } from './NamespaceMetaDTO';
 import {
-    NamespaceMetaDTO,
     NamespaceMetaDTOFromJSON,
     NamespaceMetaDTOFromJSONTyped,
     NamespaceMetaDTOToJSON,
+    NamespaceMetaDTOToJSONTyped,
 } from './NamespaceMetaDTO';
 
 /**
@@ -52,12 +54,22 @@ export interface NamespaceInfoDTO {
     namespace: NamespaceDTO;
 }
 
+/**
+ * Check if a given object implements the NamespaceInfoDTO interface.
+ */
+export function instanceOfNamespaceInfoDTO(value: Record<string, any>): value is NamespaceInfoDTO {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('meta' in value) || value['meta'] === undefined) return false;
+    if (!('namespace' in value) || value['namespace'] === undefined) return false;
+    return true;
+}
+
 export function NamespaceInfoDTOFromJSON(json: any): NamespaceInfoDTO {
     return NamespaceInfoDTOFromJSONTyped(json, false);
 }
 
 export function NamespaceInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): NamespaceInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -68,18 +80,20 @@ export function NamespaceInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function NamespaceInfoDTOToJSON(value?: NamespaceInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NamespaceInfoDTOToJSON(json: any): NamespaceInfoDTO {
+    return NamespaceInfoDTOToJSONTyped(json, false);
+}
+
+export function NamespaceInfoDTOToJSONTyped(value?: NamespaceInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'meta': NamespaceMetaDTOToJSON(value.meta),
-        'namespace': NamespaceDTOToJSON(value.namespace),
+        'id': value['id'],
+        'meta': NamespaceMetaDTOToJSON(value['meta']),
+        'namespace': NamespaceDTOToJSON(value['namespace']),
     };
 }
 

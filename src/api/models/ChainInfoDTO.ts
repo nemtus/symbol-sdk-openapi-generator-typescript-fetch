@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { FinalizedBlockDTO } from './FinalizedBlockDTO';
 import {
-    FinalizedBlockDTO,
     FinalizedBlockDTOFromJSON,
     FinalizedBlockDTOFromJSONTyped,
     FinalizedBlockDTOToJSON,
+    FinalizedBlockDTOToJSONTyped,
 } from './FinalizedBlockDTO';
 
 /**
@@ -35,6 +36,7 @@ export interface ChainInfoDTO {
     /**
      * Score of the blockchain. During synchronization, nodes try to get the
      * blockchain with highest score in the network.
+     * 
      * @type {string}
      * @memberof ChainInfoDTO
      */
@@ -42,6 +44,7 @@ export interface ChainInfoDTO {
     /**
      * Score of the blockchain. During synchronization, nodes try to get the
      * blockchain with highest score in the network.
+     * 
      * @type {string}
      * @memberof ChainInfoDTO
      */
@@ -54,12 +57,23 @@ export interface ChainInfoDTO {
     latestFinalizedBlock: FinalizedBlockDTO;
 }
 
+/**
+ * Check if a given object implements the ChainInfoDTO interface.
+ */
+export function instanceOfChainInfoDTO(value: Record<string, any>): value is ChainInfoDTO {
+    if (!('height' in value) || value['height'] === undefined) return false;
+    if (!('scoreHigh' in value) || value['scoreHigh'] === undefined) return false;
+    if (!('scoreLow' in value) || value['scoreLow'] === undefined) return false;
+    if (!('latestFinalizedBlock' in value) || value['latestFinalizedBlock'] === undefined) return false;
+    return true;
+}
+
 export function ChainInfoDTOFromJSON(json: any): ChainInfoDTO {
     return ChainInfoDTOFromJSONTyped(json, false);
 }
 
 export function ChainInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): ChainInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -71,19 +85,21 @@ export function ChainInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function ChainInfoDTOToJSON(value?: ChainInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ChainInfoDTOToJSON(json: any): ChainInfoDTO {
+    return ChainInfoDTOToJSONTyped(json, false);
+}
+
+export function ChainInfoDTOToJSONTyped(value?: ChainInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'height': value.height,
-        'scoreHigh': value.scoreHigh,
-        'scoreLow': value.scoreLow,
-        'latestFinalizedBlock': FinalizedBlockDTOToJSON(value.latestFinalizedBlock),
+        'height': value['height'],
+        'scoreHigh': value['scoreHigh'],
+        'scoreLow': value['scoreLow'],
+        'latestFinalizedBlock': FinalizedBlockDTOToJSON(value['latestFinalizedBlock']),
     };
 }
 

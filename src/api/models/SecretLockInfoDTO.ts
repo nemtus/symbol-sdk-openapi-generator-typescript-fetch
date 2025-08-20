@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { SecretLockEntryDTO } from './SecretLockEntryDTO';
 import {
-    SecretLockEntryDTO,
     SecretLockEntryDTOFromJSON,
     SecretLockEntryDTOFromJSONTyped,
     SecretLockEntryDTOToJSON,
+    SecretLockEntryDTOToJSONTyped,
 } from './SecretLockEntryDTO';
 
 /**
@@ -40,12 +41,21 @@ export interface SecretLockInfoDTO {
     lock: SecretLockEntryDTO;
 }
 
+/**
+ * Check if a given object implements the SecretLockInfoDTO interface.
+ */
+export function instanceOfSecretLockInfoDTO(value: Record<string, any>): value is SecretLockInfoDTO {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('lock' in value) || value['lock'] === undefined) return false;
+    return true;
+}
+
 export function SecretLockInfoDTOFromJSON(json: any): SecretLockInfoDTO {
     return SecretLockInfoDTOFromJSONTyped(json, false);
 }
 
 export function SecretLockInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): SecretLockInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,17 +65,19 @@ export function SecretLockInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function SecretLockInfoDTOToJSON(value?: SecretLockInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SecretLockInfoDTOToJSON(json: any): SecretLockInfoDTO {
+    return SecretLockInfoDTOToJSONTyped(json, false);
+}
+
+export function SecretLockInfoDTOToJSONTyped(value?: SecretLockInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'lock': SecretLockEntryDTOToJSON(value.lock),
+        'id': value['id'],
+        'lock': SecretLockEntryDTOToJSON(value['lock']),
     };
 }
 

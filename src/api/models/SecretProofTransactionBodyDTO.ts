@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { LockHashAlgorithmEnum } from './LockHashAlgorithmEnum';
 import {
-    LockHashAlgorithmEnum,
     LockHashAlgorithmEnumFromJSON,
     LockHashAlgorithmEnumFromJSONTyped,
     LockHashAlgorithmEnumToJSON,
+    LockHashAlgorithmEnumToJSONTyped,
 } from './LockHashAlgorithmEnum';
 
 /**
@@ -30,6 +31,7 @@ export interface SecretProofTransactionBodyDTO {
      * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
      * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
      * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * 
      * @type {string}
      * @memberof SecretProofTransactionBodyDTO
      */
@@ -54,12 +56,25 @@ export interface SecretProofTransactionBodyDTO {
     proof: string;
 }
 
+
+
+/**
+ * Check if a given object implements the SecretProofTransactionBodyDTO interface.
+ */
+export function instanceOfSecretProofTransactionBodyDTO(value: Record<string, any>): value is SecretProofTransactionBodyDTO {
+    if (!('recipientAddress' in value) || value['recipientAddress'] === undefined) return false;
+    if (!('secret' in value) || value['secret'] === undefined) return false;
+    if (!('hashAlgorithm' in value) || value['hashAlgorithm'] === undefined) return false;
+    if (!('proof' in value) || value['proof'] === undefined) return false;
+    return true;
+}
+
 export function SecretProofTransactionBodyDTOFromJSON(json: any): SecretProofTransactionBodyDTO {
     return SecretProofTransactionBodyDTOFromJSONTyped(json, false);
 }
 
 export function SecretProofTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): SecretProofTransactionBodyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -71,19 +86,21 @@ export function SecretProofTransactionBodyDTOFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function SecretProofTransactionBodyDTOToJSON(value?: SecretProofTransactionBodyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SecretProofTransactionBodyDTOToJSON(json: any): SecretProofTransactionBodyDTO {
+    return SecretProofTransactionBodyDTOToJSONTyped(json, false);
+}
+
+export function SecretProofTransactionBodyDTOToJSONTyped(value?: SecretProofTransactionBodyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'recipientAddress': value.recipientAddress,
-        'secret': value.secret,
-        'hashAlgorithm': LockHashAlgorithmEnumToJSON(value.hashAlgorithm),
-        'proof': value.proof,
+        'recipientAddress': value['recipientAddress'],
+        'secret': value['secret'],
+        'hashAlgorithm': LockHashAlgorithmEnumToJSON(value['hashAlgorithm']),
+        'proof': value['proof'],
     };
 }
 

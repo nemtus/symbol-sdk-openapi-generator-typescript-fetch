@@ -12,31 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { SupplementalPublicKeysDTO } from './SupplementalPublicKeysDTO';
 import {
-    AccountTypeEnum,
-    AccountTypeEnumFromJSON,
-    AccountTypeEnumFromJSONTyped,
-    AccountTypeEnumToJSON,
-} from './AccountTypeEnum';
-import {
-    ActivityBucketDTO,
-    ActivityBucketDTOFromJSON,
-    ActivityBucketDTOFromJSONTyped,
-    ActivityBucketDTOToJSON,
-} from './ActivityBucketDTO';
-import {
-    Mosaic,
-    MosaicFromJSON,
-    MosaicFromJSONTyped,
-    MosaicToJSON,
-} from './Mosaic';
-import {
-    SupplementalPublicKeysDTO,
     SupplementalPublicKeysDTOFromJSON,
     SupplementalPublicKeysDTOFromJSONTyped,
     SupplementalPublicKeysDTOToJSON,
+    SupplementalPublicKeysDTOToJSONTyped,
 } from './SupplementalPublicKeysDTO';
+import type { Mosaic } from './Mosaic';
+import {
+    MosaicFromJSON,
+    MosaicFromJSONTyped,
+    MosaicToJSON,
+    MosaicToJSONTyped,
+} from './Mosaic';
+import type { AccountTypeEnum } from './AccountTypeEnum';
+import {
+    AccountTypeEnumFromJSON,
+    AccountTypeEnumFromJSONTyped,
+    AccountTypeEnumToJSON,
+    AccountTypeEnumToJSONTyped,
+} from './AccountTypeEnum';
+import type { ActivityBucketDTO } from './ActivityBucketDTO';
+import {
+    ActivityBucketDTOFromJSON,
+    ActivityBucketDTOFromJSONTyped,
+    ActivityBucketDTOToJSON,
+    ActivityBucketDTOToJSONTyped,
+} from './ActivityBucketDTO';
 
 /**
  * 
@@ -112,12 +116,32 @@ export interface AccountDTO {
     importanceHeight: string;
 }
 
+
+
+/**
+ * Check if a given object implements the AccountDTO interface.
+ */
+export function instanceOfAccountDTO(value: Record<string, any>): value is AccountDTO {
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('addressHeight' in value) || value['addressHeight'] === undefined) return false;
+    if (!('publicKey' in value) || value['publicKey'] === undefined) return false;
+    if (!('publicKeyHeight' in value) || value['publicKeyHeight'] === undefined) return false;
+    if (!('accountType' in value) || value['accountType'] === undefined) return false;
+    if (!('supplementalPublicKeys' in value) || value['supplementalPublicKeys'] === undefined) return false;
+    if (!('activityBuckets' in value) || value['activityBuckets'] === undefined) return false;
+    if (!('mosaics' in value) || value['mosaics'] === undefined) return false;
+    if (!('importance' in value) || value['importance'] === undefined) return false;
+    if (!('importanceHeight' in value) || value['importanceHeight'] === undefined) return false;
+    return true;
+}
+
 export function AccountDTOFromJSON(json: any): AccountDTO {
     return AccountDTOFromJSONTyped(json, false);
 }
 
 export function AccountDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -136,26 +160,28 @@ export function AccountDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function AccountDTOToJSON(value?: AccountDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountDTOToJSON(json: any): AccountDTO {
+    return AccountDTOToJSONTyped(json, false);
+}
+
+export function AccountDTOToJSONTyped(value?: AccountDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'version': value.version,
-        'address': value.address,
-        'addressHeight': value.addressHeight,
-        'publicKey': value.publicKey,
-        'publicKeyHeight': value.publicKeyHeight,
-        'accountType': AccountTypeEnumToJSON(value.accountType),
-        'supplementalPublicKeys': SupplementalPublicKeysDTOToJSON(value.supplementalPublicKeys),
-        'activityBuckets': ((value.activityBuckets as Array<any>).map(ActivityBucketDTOToJSON)),
-        'mosaics': ((value.mosaics as Array<any>).map(MosaicToJSON)),
-        'importance': value.importance,
-        'importanceHeight': value.importanceHeight,
+        'version': value['version'],
+        'address': value['address'],
+        'addressHeight': value['addressHeight'],
+        'publicKey': value['publicKey'],
+        'publicKeyHeight': value['publicKeyHeight'],
+        'accountType': AccountTypeEnumToJSON(value['accountType']),
+        'supplementalPublicKeys': SupplementalPublicKeysDTOToJSON(value['supplementalPublicKeys']),
+        'activityBuckets': ((value['activityBuckets'] as Array<any>).map(ActivityBucketDTOToJSON)),
+        'mosaics': ((value['mosaics'] as Array<any>).map(MosaicToJSON)),
+        'importance': value['importance'],
+        'importanceHeight': value['importanceHeight'],
     };
 }
 

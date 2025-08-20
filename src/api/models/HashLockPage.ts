@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { Pagination } from './Pagination';
 import {
-    HashLockInfoDTO,
-    HashLockInfoDTOFromJSON,
-    HashLockInfoDTOFromJSONTyped,
-    HashLockInfoDTOToJSON,
-} from './HashLockInfoDTO';
-import {
-    Pagination,
     PaginationFromJSON,
     PaginationFromJSONTyped,
     PaginationToJSON,
+    PaginationToJSONTyped,
 } from './Pagination';
+import type { HashLockInfoDTO } from './HashLockInfoDTO';
+import {
+    HashLockInfoDTOFromJSON,
+    HashLockInfoDTOFromJSONTyped,
+    HashLockInfoDTOToJSON,
+    HashLockInfoDTOToJSONTyped,
+} from './HashLockInfoDTO';
 
 /**
  * 
@@ -46,12 +48,21 @@ export interface HashLockPage {
     pagination: Pagination;
 }
 
+/**
+ * Check if a given object implements the HashLockPage interface.
+ */
+export function instanceOfHashLockPage(value: Record<string, any>): value is HashLockPage {
+    if (!('data' in value) || value['data'] === undefined) return false;
+    if (!('pagination' in value) || value['pagination'] === undefined) return false;
+    return true;
+}
+
 export function HashLockPageFromJSON(json: any): HashLockPage {
     return HashLockPageFromJSONTyped(json, false);
 }
 
 export function HashLockPageFromJSONTyped(json: any, ignoreDiscriminator: boolean): HashLockPage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,17 +72,19 @@ export function HashLockPageFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function HashLockPageToJSON(value?: HashLockPage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function HashLockPageToJSON(json: any): HashLockPage {
+    return HashLockPageToJSONTyped(json, false);
+}
+
+export function HashLockPageToJSONTyped(value?: HashLockPage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'data': ((value.data as Array<any>).map(HashLockInfoDTOToJSON)),
-        'pagination': PaginationToJSON(value.pagination),
+        'data': ((value['data'] as Array<any>).map(HashLockInfoDTOToJSON)),
+        'pagination': PaginationToJSON(value['pagination']),
     };
 }
 

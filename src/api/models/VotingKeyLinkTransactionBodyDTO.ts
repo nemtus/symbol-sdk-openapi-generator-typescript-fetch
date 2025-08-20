@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { LinkActionEnum } from './LinkActionEnum';
 import {
-    LinkActionEnum,
     LinkActionEnumFromJSON,
     LinkActionEnumFromJSONTyped,
     LinkActionEnumToJSON,
+    LinkActionEnumToJSONTyped,
 } from './LinkActionEnum';
 
 /**
@@ -52,12 +53,25 @@ export interface VotingKeyLinkTransactionBodyDTO {
     linkAction: LinkActionEnum;
 }
 
+
+
+/**
+ * Check if a given object implements the VotingKeyLinkTransactionBodyDTO interface.
+ */
+export function instanceOfVotingKeyLinkTransactionBodyDTO(value: Record<string, any>): value is VotingKeyLinkTransactionBodyDTO {
+    if (!('linkedPublicKey' in value) || value['linkedPublicKey'] === undefined) return false;
+    if (!('startEpoch' in value) || value['startEpoch'] === undefined) return false;
+    if (!('endEpoch' in value) || value['endEpoch'] === undefined) return false;
+    if (!('linkAction' in value) || value['linkAction'] === undefined) return false;
+    return true;
+}
+
 export function VotingKeyLinkTransactionBodyDTOFromJSON(json: any): VotingKeyLinkTransactionBodyDTO {
     return VotingKeyLinkTransactionBodyDTOFromJSONTyped(json, false);
 }
 
 export function VotingKeyLinkTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): VotingKeyLinkTransactionBodyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,19 +83,21 @@ export function VotingKeyLinkTransactionBodyDTOFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function VotingKeyLinkTransactionBodyDTOToJSON(value?: VotingKeyLinkTransactionBodyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function VotingKeyLinkTransactionBodyDTOToJSON(json: any): VotingKeyLinkTransactionBodyDTO {
+    return VotingKeyLinkTransactionBodyDTOToJSONTyped(json, false);
+}
+
+export function VotingKeyLinkTransactionBodyDTOToJSONTyped(value?: VotingKeyLinkTransactionBodyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'linkedPublicKey': value.linkedPublicKey,
-        'startEpoch': value.startEpoch,
-        'endEpoch': value.endEpoch,
-        'linkAction': LinkActionEnumToJSON(value.linkAction),
+        'linkedPublicKey': value['linkedPublicKey'],
+        'startEpoch': value['startEpoch'],
+        'endEpoch': value['endEpoch'],
+        'linkAction': LinkActionEnumToJSON(value['linkAction']),
     };
 }
 

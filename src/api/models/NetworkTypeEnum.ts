@@ -17,6 +17,7 @@
  * Network type:
  * * 0x68 (104 decimal) - Main network.
  * * 0x98 (152 decimal) - Test network.
+ * 
  * @export
  */
 export const NetworkTypeEnum = {
@@ -25,6 +26,17 @@ export const NetworkTypeEnum = {
 } as const;
 export type NetworkTypeEnum = typeof NetworkTypeEnum[keyof typeof NetworkTypeEnum];
 
+
+export function instanceOfNetworkTypeEnum(value: any): boolean {
+    for (const key in NetworkTypeEnum) {
+        if (Object.prototype.hasOwnProperty.call(NetworkTypeEnum, key)) {
+            if (NetworkTypeEnum[key as keyof typeof NetworkTypeEnum] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function NetworkTypeEnumFromJSON(json: any): NetworkTypeEnum {
     return NetworkTypeEnumFromJSONTyped(json, false);
@@ -36,5 +48,9 @@ export function NetworkTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boo
 
 export function NetworkTypeEnumToJSON(value?: NetworkTypeEnum | null): any {
     return value as any;
+}
+
+export function NetworkTypeEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): NetworkTypeEnum {
+    return value as NetworkTypeEnum;
 }
 

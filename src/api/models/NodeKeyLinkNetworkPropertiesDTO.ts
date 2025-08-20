@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -27,30 +27,39 @@ export interface NodeKeyLinkNetworkPropertiesDTO {
     dummy?: string;
 }
 
+/**
+ * Check if a given object implements the NodeKeyLinkNetworkPropertiesDTO interface.
+ */
+export function instanceOfNodeKeyLinkNetworkPropertiesDTO(value: Record<string, any>): value is NodeKeyLinkNetworkPropertiesDTO {
+    return true;
+}
+
 export function NodeKeyLinkNetworkPropertiesDTOFromJSON(json: any): NodeKeyLinkNetworkPropertiesDTO {
     return NodeKeyLinkNetworkPropertiesDTOFromJSONTyped(json, false);
 }
 
 export function NodeKeyLinkNetworkPropertiesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): NodeKeyLinkNetworkPropertiesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'dummy': !exists(json, 'dummy') ? undefined : json['dummy'],
+        'dummy': json['dummy'] == null ? undefined : json['dummy'],
     };
 }
 
-export function NodeKeyLinkNetworkPropertiesDTOToJSON(value?: NodeKeyLinkNetworkPropertiesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NodeKeyLinkNetworkPropertiesDTOToJSON(json: any): NodeKeyLinkNetworkPropertiesDTO {
+    return NodeKeyLinkNetworkPropertiesDTOToJSONTyped(json, false);
+}
+
+export function NodeKeyLinkNetworkPropertiesDTOToJSONTyped(value?: NodeKeyLinkNetworkPropertiesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'dummy': value.dummy,
+        'dummy': value['dummy'],
     };
 }
 

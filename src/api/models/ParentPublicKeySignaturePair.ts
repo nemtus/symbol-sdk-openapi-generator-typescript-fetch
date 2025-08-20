@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -33,12 +33,21 @@ export interface ParentPublicKeySignaturePair {
     signature: string;
 }
 
+/**
+ * Check if a given object implements the ParentPublicKeySignaturePair interface.
+ */
+export function instanceOfParentPublicKeySignaturePair(value: Record<string, any>): value is ParentPublicKeySignaturePair {
+    if (!('parentPublicKey' in value) || value['parentPublicKey'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    return true;
+}
+
 export function ParentPublicKeySignaturePairFromJSON(json: any): ParentPublicKeySignaturePair {
     return ParentPublicKeySignaturePairFromJSONTyped(json, false);
 }
 
 export function ParentPublicKeySignaturePairFromJSONTyped(json: any, ignoreDiscriminator: boolean): ParentPublicKeySignaturePair {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,17 +57,19 @@ export function ParentPublicKeySignaturePairFromJSONTyped(json: any, ignoreDiscr
     };
 }
 
-export function ParentPublicKeySignaturePairToJSON(value?: ParentPublicKeySignaturePair | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ParentPublicKeySignaturePairToJSON(json: any): ParentPublicKeySignaturePair {
+    return ParentPublicKeySignaturePairToJSONTyped(json, false);
+}
+
+export function ParentPublicKeySignaturePairToJSONTyped(value?: ParentPublicKeySignaturePair | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'parentPublicKey': value.parentPublicKey,
-        'signature': value.signature,
+        'parentPublicKey': value['parentPublicKey'],
+        'signature': value['signature'],
     };
 }
 

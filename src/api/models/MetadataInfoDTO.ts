@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MetadataEntryDTO } from './MetadataEntryDTO';
 import {
-    MetadataEntryDTO,
     MetadataEntryDTOFromJSON,
     MetadataEntryDTOFromJSONTyped,
     MetadataEntryDTOToJSON,
+    MetadataEntryDTOToJSONTyped,
 } from './MetadataEntryDTO';
 
 /**
@@ -40,12 +41,21 @@ export interface MetadataInfoDTO {
     metadataEntry: MetadataEntryDTO;
 }
 
+/**
+ * Check if a given object implements the MetadataInfoDTO interface.
+ */
+export function instanceOfMetadataInfoDTO(value: Record<string, any>): value is MetadataInfoDTO {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('metadataEntry' in value) || value['metadataEntry'] === undefined) return false;
+    return true;
+}
+
 export function MetadataInfoDTOFromJSON(json: any): MetadataInfoDTO {
     return MetadataInfoDTOFromJSONTyped(json, false);
 }
 
 export function MetadataInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MetadataInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,17 +65,19 @@ export function MetadataInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function MetadataInfoDTOToJSON(value?: MetadataInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MetadataInfoDTOToJSON(json: any): MetadataInfoDTO {
+    return MetadataInfoDTOToJSONTyped(json, false);
+}
+
+export function MetadataInfoDTOToJSONTyped(value?: MetadataInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'metadataEntry': MetadataEntryDTOToJSON(value.metadataEntry),
+        'id': value['id'],
+        'metadataEntry': MetadataEntryDTOToJSON(value['metadataEntry']),
     };
 }
 

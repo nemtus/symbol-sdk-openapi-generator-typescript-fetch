@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NodeHealthDTO } from './NodeHealthDTO';
 import {
-    NodeHealthDTO,
     NodeHealthDTOFromJSON,
     NodeHealthDTOFromJSONTyped,
     NodeHealthDTOToJSON,
+    NodeHealthDTOToJSONTyped,
 } from './NodeHealthDTO';
 
 /**
@@ -34,12 +35,20 @@ export interface NodeHealthInfoDTO {
     status: NodeHealthDTO;
 }
 
+/**
+ * Check if a given object implements the NodeHealthInfoDTO interface.
+ */
+export function instanceOfNodeHealthInfoDTO(value: Record<string, any>): value is NodeHealthInfoDTO {
+    if (!('status' in value) || value['status'] === undefined) return false;
+    return true;
+}
+
 export function NodeHealthInfoDTOFromJSON(json: any): NodeHealthInfoDTO {
     return NodeHealthInfoDTOFromJSONTyped(json, false);
 }
 
 export function NodeHealthInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): NodeHealthInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,16 +57,18 @@ export function NodeHealthInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function NodeHealthInfoDTOToJSON(value?: NodeHealthInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NodeHealthInfoDTOToJSON(json: any): NodeHealthInfoDTO {
+    return NodeHealthInfoDTOToJSONTyped(json, false);
+}
+
+export function NodeHealthInfoDTOToJSONTyped(value?: NodeHealthInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'status': NodeHealthDTOToJSON(value.status),
+        'status': NodeHealthDTOToJSON(value['status']),
     };
 }
 

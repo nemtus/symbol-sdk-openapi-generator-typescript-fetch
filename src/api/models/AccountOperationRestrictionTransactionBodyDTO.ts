@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { TransactionTypeEnum } from './TransactionTypeEnum';
 import {
-    AccountRestrictionFlagsEnum,
-    AccountRestrictionFlagsEnumFromJSON,
-    AccountRestrictionFlagsEnumFromJSONTyped,
-    AccountRestrictionFlagsEnumToJSON,
-} from './AccountRestrictionFlagsEnum';
-import {
-    TransactionTypeEnum,
     TransactionTypeEnumFromJSON,
     TransactionTypeEnumFromJSONTyped,
     TransactionTypeEnumToJSON,
+    TransactionTypeEnumToJSONTyped,
 } from './TransactionTypeEnum';
+import type { AccountRestrictionFlagsEnum } from './AccountRestrictionFlagsEnum';
+import {
+    AccountRestrictionFlagsEnumFromJSON,
+    AccountRestrictionFlagsEnumFromJSONTyped,
+    AccountRestrictionFlagsEnumToJSON,
+    AccountRestrictionFlagsEnumToJSONTyped,
+} from './AccountRestrictionFlagsEnum';
 
 /**
  * 
@@ -52,12 +54,24 @@ export interface AccountOperationRestrictionTransactionBodyDTO {
     restrictionDeletions: Array<TransactionTypeEnum>;
 }
 
+
+
+/**
+ * Check if a given object implements the AccountOperationRestrictionTransactionBodyDTO interface.
+ */
+export function instanceOfAccountOperationRestrictionTransactionBodyDTO(value: Record<string, any>): value is AccountOperationRestrictionTransactionBodyDTO {
+    if (!('restrictionFlags' in value) || value['restrictionFlags'] === undefined) return false;
+    if (!('restrictionAdditions' in value) || value['restrictionAdditions'] === undefined) return false;
+    if (!('restrictionDeletions' in value) || value['restrictionDeletions'] === undefined) return false;
+    return true;
+}
+
 export function AccountOperationRestrictionTransactionBodyDTOFromJSON(json: any): AccountOperationRestrictionTransactionBodyDTO {
     return AccountOperationRestrictionTransactionBodyDTOFromJSONTyped(json, false);
 }
 
 export function AccountOperationRestrictionTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountOperationRestrictionTransactionBodyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -68,18 +82,20 @@ export function AccountOperationRestrictionTransactionBodyDTOFromJSONTyped(json:
     };
 }
 
-export function AccountOperationRestrictionTransactionBodyDTOToJSON(value?: AccountOperationRestrictionTransactionBodyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountOperationRestrictionTransactionBodyDTOToJSON(json: any): AccountOperationRestrictionTransactionBodyDTO {
+    return AccountOperationRestrictionTransactionBodyDTOToJSONTyped(json, false);
+}
+
+export function AccountOperationRestrictionTransactionBodyDTOToJSONTyped(value?: AccountOperationRestrictionTransactionBodyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'restrictionFlags': AccountRestrictionFlagsEnumToJSON(value.restrictionFlags),
-        'restrictionAdditions': ((value.restrictionAdditions as Array<any>).map(TransactionTypeEnumToJSON)),
-        'restrictionDeletions': ((value.restrictionDeletions as Array<any>).map(TransactionTypeEnumToJSON)),
+        'restrictionFlags': AccountRestrictionFlagsEnumToJSON(value['restrictionFlags']),
+        'restrictionAdditions': ((value['restrictionAdditions'] as Array<any>).map(TransactionTypeEnumToJSON)),
+        'restrictionDeletions': ((value['restrictionDeletions'] as Array<any>).map(TransactionTypeEnumToJSON)),
     };
 }
 

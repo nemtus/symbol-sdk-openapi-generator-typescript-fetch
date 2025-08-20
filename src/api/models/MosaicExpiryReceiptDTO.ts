@@ -12,24 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { ReceiptTypeEnum } from './ReceiptTypeEnum';
 import {
-    MosaicExpiryReceiptDTOAllOf,
-    MosaicExpiryReceiptDTOAllOfFromJSON,
-    MosaicExpiryReceiptDTOAllOfFromJSONTyped,
-    MosaicExpiryReceiptDTOAllOfToJSON,
-} from './MosaicExpiryReceiptDTOAllOf';
-import {
-    ReceiptDTO,
-    ReceiptDTOFromJSON,
-    ReceiptDTOFromJSONTyped,
-    ReceiptDTOToJSON,
-} from './ReceiptDTO';
-import {
-    ReceiptTypeEnum,
     ReceiptTypeEnumFromJSON,
     ReceiptTypeEnumFromJSONTyped,
     ReceiptTypeEnumToJSON,
+    ReceiptTypeEnumToJSONTyped,
 } from './ReceiptTypeEnum';
 
 /**
@@ -58,12 +47,24 @@ export interface MosaicExpiryReceiptDTO {
     artifactId: string;
 }
 
+
+
+/**
+ * Check if a given object implements the MosaicExpiryReceiptDTO interface.
+ */
+export function instanceOfMosaicExpiryReceiptDTO(value: Record<string, any>): value is MosaicExpiryReceiptDTO {
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('artifactId' in value) || value['artifactId'] === undefined) return false;
+    return true;
+}
+
 export function MosaicExpiryReceiptDTOFromJSON(json: any): MosaicExpiryReceiptDTO {
     return MosaicExpiryReceiptDTOFromJSONTyped(json, false);
 }
 
 export function MosaicExpiryReceiptDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicExpiryReceiptDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -74,18 +75,20 @@ export function MosaicExpiryReceiptDTOFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function MosaicExpiryReceiptDTOToJSON(value?: MosaicExpiryReceiptDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicExpiryReceiptDTOToJSON(json: any): MosaicExpiryReceiptDTO {
+    return MosaicExpiryReceiptDTOToJSONTyped(json, false);
+}
+
+export function MosaicExpiryReceiptDTOToJSONTyped(value?: MosaicExpiryReceiptDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'version': value.version,
-        'type': ReceiptTypeEnumToJSON(value.type),
-        'artifactId': value.artifactId,
+        'version': value['version'],
+        'type': ReceiptTypeEnumToJSON(value['type']),
+        'artifactId': value['artifactId'],
     };
 }
 

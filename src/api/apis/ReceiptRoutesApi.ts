@@ -14,23 +14,25 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  ModelError,
+  Order,
+  ReceiptTypeEnum,
+  ResolutionStatementPage,
+  TransactionStatementPage,
+} from '../models/index';
 import {
-    ModelError,
     ModelErrorFromJSON,
     ModelErrorToJSON,
-    Order,
     OrderFromJSON,
     OrderToJSON,
-    ReceiptTypeEnum,
     ReceiptTypeEnumFromJSON,
     ReceiptTypeEnumToJSON,
-    ResolutionStatementPage,
     ResolutionStatementPageFromJSON,
     ResolutionStatementPageToJSON,
-    TransactionStatementPage,
     TransactionStatementPageFromJSON,
     TransactionStatementPageToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface SearchAddressResolutionStatementsRequest {
     height?: string;
@@ -72,33 +74,36 @@ export class ReceiptRoutesApi extends runtime.BaseAPI {
      * Gets an array of address resolution statements.
      * Get receipts address resolution statements
      */
-    async searchAddressResolutionStatementsRaw(requestParameters: SearchAddressResolutionStatementsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<ResolutionStatementPage>> {
+    async searchAddressResolutionStatementsRaw(requestParameters: SearchAddressResolutionStatementsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResolutionStatementPage>> {
         const queryParameters: any = {};
 
-        if (requestParameters.height !== undefined) {
-            queryParameters['height'] = requestParameters.height;
+        if (requestParameters['height'] != null) {
+            queryParameters['height'] = requestParameters['height'];
         }
 
-        if (requestParameters.pageSize !== undefined) {
-            queryParameters['pageSize'] = requestParameters.pageSize;
+        if (requestParameters['pageSize'] != null) {
+            queryParameters['pageSize'] = requestParameters['pageSize'];
         }
 
-        if (requestParameters.pageNumber !== undefined) {
-            queryParameters['pageNumber'] = requestParameters.pageNumber;
+        if (requestParameters['pageNumber'] != null) {
+            queryParameters['pageNumber'] = requestParameters['pageNumber'];
         }
 
-        if (requestParameters.offset !== undefined) {
-            queryParameters['offset'] = requestParameters.offset;
+        if (requestParameters['offset'] != null) {
+            queryParameters['offset'] = requestParameters['offset'];
         }
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/statements/resolutions/address`;
+
         const response = await this.request({
-            path: `/statements/resolutions/address`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -111,7 +116,7 @@ export class ReceiptRoutesApi extends runtime.BaseAPI {
      * Gets an array of address resolution statements.
      * Get receipts address resolution statements
      */
-    async searchAddressResolutionStatements(requestParameters: SearchAddressResolutionStatementsRequest = {}, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<ResolutionStatementPage> {
+    async searchAddressResolutionStatements(requestParameters: SearchAddressResolutionStatementsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResolutionStatementPage> {
         const response = await this.searchAddressResolutionStatementsRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -120,33 +125,36 @@ export class ReceiptRoutesApi extends runtime.BaseAPI {
      * Gets an array of mosaic resolution statements.
      * Get receipts mosaic resolution statements
      */
-    async searchMosaicResolutionStatementsRaw(requestParameters: SearchMosaicResolutionStatementsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<ResolutionStatementPage>> {
+    async searchMosaicResolutionStatementsRaw(requestParameters: SearchMosaicResolutionStatementsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResolutionStatementPage>> {
         const queryParameters: any = {};
 
-        if (requestParameters.height !== undefined) {
-            queryParameters['height'] = requestParameters.height;
+        if (requestParameters['height'] != null) {
+            queryParameters['height'] = requestParameters['height'];
         }
 
-        if (requestParameters.pageSize !== undefined) {
-            queryParameters['pageSize'] = requestParameters.pageSize;
+        if (requestParameters['pageSize'] != null) {
+            queryParameters['pageSize'] = requestParameters['pageSize'];
         }
 
-        if (requestParameters.pageNumber !== undefined) {
-            queryParameters['pageNumber'] = requestParameters.pageNumber;
+        if (requestParameters['pageNumber'] != null) {
+            queryParameters['pageNumber'] = requestParameters['pageNumber'];
         }
 
-        if (requestParameters.offset !== undefined) {
-            queryParameters['offset'] = requestParameters.offset;
+        if (requestParameters['offset'] != null) {
+            queryParameters['offset'] = requestParameters['offset'];
         }
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/statements/resolutions/mosaic`;
+
         const response = await this.request({
-            path: `/statements/resolutions/mosaic`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -159,7 +167,7 @@ export class ReceiptRoutesApi extends runtime.BaseAPI {
      * Gets an array of mosaic resolution statements.
      * Get receipts mosaic resolution statements
      */
-    async searchMosaicResolutionStatements(requestParameters: SearchMosaicResolutionStatementsRequest = {}, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<ResolutionStatementPage> {
+    async searchMosaicResolutionStatements(requestParameters: SearchMosaicResolutionStatementsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResolutionStatementPage> {
         const response = await this.searchMosaicResolutionStatementsRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -168,61 +176,64 @@ export class ReceiptRoutesApi extends runtime.BaseAPI {
      * Gets an array of transaction statements.
      * Search transaction statements
      */
-    async searchReceiptsRaw(requestParameters: SearchReceiptsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<TransactionStatementPage>> {
+    async searchReceiptsRaw(requestParameters: SearchReceiptsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionStatementPage>> {
         const queryParameters: any = {};
 
-        if (requestParameters.height !== undefined) {
-            queryParameters['height'] = requestParameters.height;
+        if (requestParameters['height'] != null) {
+            queryParameters['height'] = requestParameters['height'];
         }
 
-        if (requestParameters.fromHeight !== undefined) {
-            queryParameters['fromHeight'] = requestParameters.fromHeight;
+        if (requestParameters['fromHeight'] != null) {
+            queryParameters['fromHeight'] = requestParameters['fromHeight'];
         }
 
-        if (requestParameters.toHeight !== undefined) {
-            queryParameters['toHeight'] = requestParameters.toHeight;
+        if (requestParameters['toHeight'] != null) {
+            queryParameters['toHeight'] = requestParameters['toHeight'];
         }
 
-        if (requestParameters.receiptType) {
-            queryParameters['receiptType'] = requestParameters.receiptType;
+        if (requestParameters['receiptType'] != null) {
+            queryParameters['receiptType'] = requestParameters['receiptType'];
         }
 
-        if (requestParameters.recipientAddress !== undefined) {
-            queryParameters['recipientAddress'] = requestParameters.recipientAddress;
+        if (requestParameters['recipientAddress'] != null) {
+            queryParameters['recipientAddress'] = requestParameters['recipientAddress'];
         }
 
-        if (requestParameters.senderAddress !== undefined) {
-            queryParameters['senderAddress'] = requestParameters.senderAddress;
+        if (requestParameters['senderAddress'] != null) {
+            queryParameters['senderAddress'] = requestParameters['senderAddress'];
         }
 
-        if (requestParameters.targetAddress !== undefined) {
-            queryParameters['targetAddress'] = requestParameters.targetAddress;
+        if (requestParameters['targetAddress'] != null) {
+            queryParameters['targetAddress'] = requestParameters['targetAddress'];
         }
 
-        if (requestParameters.artifactId !== undefined) {
-            queryParameters['artifactId'] = requestParameters.artifactId;
+        if (requestParameters['artifactId'] != null) {
+            queryParameters['artifactId'] = requestParameters['artifactId'];
         }
 
-        if (requestParameters.pageSize !== undefined) {
-            queryParameters['pageSize'] = requestParameters.pageSize;
+        if (requestParameters['pageSize'] != null) {
+            queryParameters['pageSize'] = requestParameters['pageSize'];
         }
 
-        if (requestParameters.pageNumber !== undefined) {
-            queryParameters['pageNumber'] = requestParameters.pageNumber;
+        if (requestParameters['pageNumber'] != null) {
+            queryParameters['pageNumber'] = requestParameters['pageNumber'];
         }
 
-        if (requestParameters.offset !== undefined) {
-            queryParameters['offset'] = requestParameters.offset;
+        if (requestParameters['offset'] != null) {
+            queryParameters['offset'] = requestParameters['offset'];
         }
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/statements/transaction`;
+
         const response = await this.request({
-            path: `/statements/transaction`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -235,7 +246,7 @@ export class ReceiptRoutesApi extends runtime.BaseAPI {
      * Gets an array of transaction statements.
      * Search transaction statements
      */
-    async searchReceipts(requestParameters: SearchReceiptsRequest = {}, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<TransactionStatementPage> {
+    async searchReceipts(requestParameters: SearchReceiptsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionStatementPage> {
         const response = await this.searchReceiptsRaw(requestParameters, initOverrides);
         return await response.value();
     }

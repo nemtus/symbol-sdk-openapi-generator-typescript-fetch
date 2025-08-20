@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MosaicAddressRestrictionEntryDTO } from './MosaicAddressRestrictionEntryDTO';
 import {
-    MosaicAddressRestrictionEntryDTO,
     MosaicAddressRestrictionEntryDTOFromJSON,
     MosaicAddressRestrictionEntryDTOFromJSONTyped,
     MosaicAddressRestrictionEntryDTOToJSON,
+    MosaicAddressRestrictionEntryDTOToJSONTyped,
 } from './MosaicAddressRestrictionEntryDTO';
+import type { MosaicRestrictionEntryTypeEnum } from './MosaicRestrictionEntryTypeEnum';
 import {
-    MosaicRestrictionEntryTypeEnum,
     MosaicRestrictionEntryTypeEnumFromJSON,
     MosaicRestrictionEntryTypeEnumFromJSONTyped,
     MosaicRestrictionEntryTypeEnumToJSON,
+    MosaicRestrictionEntryTypeEnumToJSONTyped,
 } from './MosaicRestrictionEntryTypeEnum';
 
 /**
@@ -70,12 +72,27 @@ export interface MosaicAddressRestrictionEntryWrapperDTO {
     restrictions: Array<MosaicAddressRestrictionEntryDTO>;
 }
 
+
+
+/**
+ * Check if a given object implements the MosaicAddressRestrictionEntryWrapperDTO interface.
+ */
+export function instanceOfMosaicAddressRestrictionEntryWrapperDTO(value: Record<string, any>): value is MosaicAddressRestrictionEntryWrapperDTO {
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('compositeHash' in value) || value['compositeHash'] === undefined) return false;
+    if (!('entryType' in value) || value['entryType'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('targetAddress' in value) || value['targetAddress'] === undefined) return false;
+    if (!('restrictions' in value) || value['restrictions'] === undefined) return false;
+    return true;
+}
+
 export function MosaicAddressRestrictionEntryWrapperDTOFromJSON(json: any): MosaicAddressRestrictionEntryWrapperDTO {
     return MosaicAddressRestrictionEntryWrapperDTOFromJSONTyped(json, false);
 }
 
 export function MosaicAddressRestrictionEntryWrapperDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicAddressRestrictionEntryWrapperDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -89,21 +106,23 @@ export function MosaicAddressRestrictionEntryWrapperDTOFromJSONTyped(json: any, 
     };
 }
 
-export function MosaicAddressRestrictionEntryWrapperDTOToJSON(value?: MosaicAddressRestrictionEntryWrapperDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicAddressRestrictionEntryWrapperDTOToJSON(json: any): MosaicAddressRestrictionEntryWrapperDTO {
+    return MosaicAddressRestrictionEntryWrapperDTOToJSONTyped(json, false);
+}
+
+export function MosaicAddressRestrictionEntryWrapperDTOToJSONTyped(value?: MosaicAddressRestrictionEntryWrapperDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'version': value.version,
-        'compositeHash': value.compositeHash,
-        'entryType': MosaicRestrictionEntryTypeEnumToJSON(value.entryType),
-        'mosaicId': value.mosaicId,
-        'targetAddress': value.targetAddress,
-        'restrictions': ((value.restrictions as Array<any>).map(MosaicAddressRestrictionEntryDTOToJSON)),
+        'version': value['version'],
+        'compositeHash': value['compositeHash'],
+        'entryType': MosaicRestrictionEntryTypeEnumToJSON(value['entryType']),
+        'mosaicId': value['mosaicId'],
+        'targetAddress': value['targetAddress'],
+        'restrictions': ((value['restrictions'] as Array<any>).map(MosaicAddressRestrictionEntryDTOToJSON)),
     };
 }
 

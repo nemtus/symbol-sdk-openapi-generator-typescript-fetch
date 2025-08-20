@@ -12,42 +12,48 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MosaicExpiryReceiptDTO } from './MosaicExpiryReceiptDTO';
 import {
-    BalanceChangeReceiptDTO,
-    BalanceChangeReceiptDTOFromJSON,
-    BalanceChangeReceiptDTOFromJSONTyped,
-    BalanceChangeReceiptDTOToJSON,
-} from './BalanceChangeReceiptDTO';
-import {
-    BalanceTransferReceiptDTO,
-    BalanceTransferReceiptDTOFromJSON,
-    BalanceTransferReceiptDTOFromJSONTyped,
-    BalanceTransferReceiptDTOToJSON,
-} from './BalanceTransferReceiptDTO';
-import {
-    InflationReceiptDTO,
-    InflationReceiptDTOFromJSON,
-    InflationReceiptDTOFromJSONTyped,
-    InflationReceiptDTOToJSON,
-} from './InflationReceiptDTO';
-import {
-    MosaicExpiryReceiptDTO,
     MosaicExpiryReceiptDTOFromJSON,
     MosaicExpiryReceiptDTOFromJSONTyped,
     MosaicExpiryReceiptDTOToJSON,
+    MosaicExpiryReceiptDTOToJSONTyped,
 } from './MosaicExpiryReceiptDTO';
+import type { InflationReceiptDTO } from './InflationReceiptDTO';
 import {
-    NamespaceExpiryReceiptDTO,
+    InflationReceiptDTOFromJSON,
+    InflationReceiptDTOFromJSONTyped,
+    InflationReceiptDTOToJSON,
+    InflationReceiptDTOToJSONTyped,
+} from './InflationReceiptDTO';
+import type { BalanceTransferReceiptDTO } from './BalanceTransferReceiptDTO';
+import {
+    BalanceTransferReceiptDTOFromJSON,
+    BalanceTransferReceiptDTOFromJSONTyped,
+    BalanceTransferReceiptDTOToJSON,
+    BalanceTransferReceiptDTOToJSONTyped,
+} from './BalanceTransferReceiptDTO';
+import type { NamespaceExpiryReceiptDTO } from './NamespaceExpiryReceiptDTO';
+import {
     NamespaceExpiryReceiptDTOFromJSON,
     NamespaceExpiryReceiptDTOFromJSONTyped,
     NamespaceExpiryReceiptDTOToJSON,
+    NamespaceExpiryReceiptDTOToJSONTyped,
 } from './NamespaceExpiryReceiptDTO';
+import type { BalanceChangeReceiptDTO } from './BalanceChangeReceiptDTO';
 import {
-    ReceiptTypeEnum,
+    BalanceChangeReceiptDTOFromJSON,
+    BalanceChangeReceiptDTOFromJSONTyped,
+    BalanceChangeReceiptDTOToJSON,
+    BalanceChangeReceiptDTOToJSONTyped,
+} from './BalanceChangeReceiptDTO';
+import type { ReceiptTypeEnum } from './ReceiptTypeEnum';
+import {
     ReceiptTypeEnumFromJSON,
     ReceiptTypeEnumFromJSONTyped,
     ReceiptTypeEnumToJSON,
+    ReceiptTypeEnumToJSONTyped,
 } from './ReceiptTypeEnum';
 
 /**
@@ -106,12 +112,29 @@ export interface TransactionStatementDTOReceiptsInner {
     artifactId: string;
 }
 
+
+
+/**
+ * Check if a given object implements the TransactionStatementDTOReceiptsInner interface.
+ */
+export function instanceOfTransactionStatementDTOReceiptsInner(value: Record<string, any>): value is TransactionStatementDTOReceiptsInner {
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('senderAddress' in value) || value['senderAddress'] === undefined) return false;
+    if (!('recipientAddress' in value) || value['recipientAddress'] === undefined) return false;
+    if (!('targetAddress' in value) || value['targetAddress'] === undefined) return false;
+    if (!('artifactId' in value) || value['artifactId'] === undefined) return false;
+    return true;
+}
+
 export function TransactionStatementDTOReceiptsInnerFromJSON(json: any): TransactionStatementDTOReceiptsInner {
     return TransactionStatementDTOReceiptsInnerFromJSONTyped(json, false);
 }
 
 export function TransactionStatementDTOReceiptsInnerFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionStatementDTOReceiptsInner {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -127,23 +150,25 @@ export function TransactionStatementDTOReceiptsInnerFromJSONTyped(json: any, ign
     };
 }
 
-export function TransactionStatementDTOReceiptsInnerToJSON(value?: TransactionStatementDTOReceiptsInner | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionStatementDTOReceiptsInnerToJSON(json: any): TransactionStatementDTOReceiptsInner {
+    return TransactionStatementDTOReceiptsInnerToJSONTyped(json, false);
+}
+
+export function TransactionStatementDTOReceiptsInnerToJSONTyped(value?: TransactionStatementDTOReceiptsInner | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'version': value.version,
-        'type': ReceiptTypeEnumToJSON(value.type),
-        'mosaicId': value.mosaicId,
-        'amount': value.amount,
-        'senderAddress': value.senderAddress,
-        'recipientAddress': value.recipientAddress,
-        'targetAddress': value.targetAddress,
-        'artifactId': value.artifactId,
+        'version': value['version'],
+        'type': ReceiptTypeEnumToJSON(value['type']),
+        'mosaicId': value['mosaicId'],
+        'amount': value['amount'],
+        'senderAddress': value['senderAddress'],
+        'recipientAddress': value['recipientAddress'],
+        'targetAddress': value['targetAddress'],
+        'artifactId': value['artifactId'],
     };
 }
 

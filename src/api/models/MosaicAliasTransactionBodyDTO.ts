@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { AliasActionEnum } from './AliasActionEnum';
 import {
-    AliasActionEnum,
     AliasActionEnumFromJSON,
     AliasActionEnumFromJSONTyped,
     AliasActionEnumToJSON,
+    AliasActionEnumToJSONTyped,
 } from './AliasActionEnum';
 
 /**
@@ -46,12 +47,24 @@ export interface MosaicAliasTransactionBodyDTO {
     aliasAction: AliasActionEnum;
 }
 
+
+
+/**
+ * Check if a given object implements the MosaicAliasTransactionBodyDTO interface.
+ */
+export function instanceOfMosaicAliasTransactionBodyDTO(value: Record<string, any>): value is MosaicAliasTransactionBodyDTO {
+    if (!('namespaceId' in value) || value['namespaceId'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('aliasAction' in value) || value['aliasAction'] === undefined) return false;
+    return true;
+}
+
 export function MosaicAliasTransactionBodyDTOFromJSON(json: any): MosaicAliasTransactionBodyDTO {
     return MosaicAliasTransactionBodyDTOFromJSONTyped(json, false);
 }
 
 export function MosaicAliasTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicAliasTransactionBodyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -62,18 +75,20 @@ export function MosaicAliasTransactionBodyDTOFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function MosaicAliasTransactionBodyDTOToJSON(value?: MosaicAliasTransactionBodyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicAliasTransactionBodyDTOToJSON(json: any): MosaicAliasTransactionBodyDTO {
+    return MosaicAliasTransactionBodyDTOToJSONTyped(json, false);
+}
+
+export function MosaicAliasTransactionBodyDTOToJSONTyped(value?: MosaicAliasTransactionBodyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'namespaceId': value.namespaceId,
-        'mosaicId': value.mosaicId,
-        'aliasAction': AliasActionEnumToJSON(value.aliasAction),
+        'namespaceId': value['namespaceId'],
+        'mosaicId': value['mosaicId'],
+        'aliasAction': AliasActionEnumToJSON(value['aliasAction']),
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { AccountRestrictionFlagsEnum } from './AccountRestrictionFlagsEnum';
 import {
-    AccountRestrictionFlagsEnum,
     AccountRestrictionFlagsEnumFromJSON,
     AccountRestrictionFlagsEnumFromJSONTyped,
     AccountRestrictionFlagsEnumToJSON,
+    AccountRestrictionFlagsEnumToJSONTyped,
 } from './AccountRestrictionFlagsEnum';
 
 /**
@@ -46,12 +47,24 @@ export interface AccountMosaicRestrictionTransactionBodyDTO {
     restrictionDeletions: Array<string>;
 }
 
+
+
+/**
+ * Check if a given object implements the AccountMosaicRestrictionTransactionBodyDTO interface.
+ */
+export function instanceOfAccountMosaicRestrictionTransactionBodyDTO(value: Record<string, any>): value is AccountMosaicRestrictionTransactionBodyDTO {
+    if (!('restrictionFlags' in value) || value['restrictionFlags'] === undefined) return false;
+    if (!('restrictionAdditions' in value) || value['restrictionAdditions'] === undefined) return false;
+    if (!('restrictionDeletions' in value) || value['restrictionDeletions'] === undefined) return false;
+    return true;
+}
+
 export function AccountMosaicRestrictionTransactionBodyDTOFromJSON(json: any): AccountMosaicRestrictionTransactionBodyDTO {
     return AccountMosaicRestrictionTransactionBodyDTOFromJSONTyped(json, false);
 }
 
 export function AccountMosaicRestrictionTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountMosaicRestrictionTransactionBodyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -62,18 +75,20 @@ export function AccountMosaicRestrictionTransactionBodyDTOFromJSONTyped(json: an
     };
 }
 
-export function AccountMosaicRestrictionTransactionBodyDTOToJSON(value?: AccountMosaicRestrictionTransactionBodyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountMosaicRestrictionTransactionBodyDTOToJSON(json: any): AccountMosaicRestrictionTransactionBodyDTO {
+    return AccountMosaicRestrictionTransactionBodyDTOToJSONTyped(json, false);
+}
+
+export function AccountMosaicRestrictionTransactionBodyDTOToJSONTyped(value?: AccountMosaicRestrictionTransactionBodyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'restrictionFlags': AccountRestrictionFlagsEnumToJSON(value.restrictionFlags),
-        'restrictionAdditions': value.restrictionAdditions,
-        'restrictionDeletions': value.restrictionDeletions,
+        'restrictionFlags': AccountRestrictionFlagsEnumToJSON(value['restrictionFlags']),
+        'restrictionAdditions': value['restrictionAdditions'],
+        'restrictionDeletions': value['restrictionDeletions'],
     };
 }
 

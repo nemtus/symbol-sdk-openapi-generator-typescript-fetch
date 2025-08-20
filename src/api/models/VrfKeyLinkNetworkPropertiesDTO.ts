@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -27,30 +27,39 @@ export interface VrfKeyLinkNetworkPropertiesDTO {
     dummy?: string;
 }
 
+/**
+ * Check if a given object implements the VrfKeyLinkNetworkPropertiesDTO interface.
+ */
+export function instanceOfVrfKeyLinkNetworkPropertiesDTO(value: Record<string, any>): value is VrfKeyLinkNetworkPropertiesDTO {
+    return true;
+}
+
 export function VrfKeyLinkNetworkPropertiesDTOFromJSON(json: any): VrfKeyLinkNetworkPropertiesDTO {
     return VrfKeyLinkNetworkPropertiesDTOFromJSONTyped(json, false);
 }
 
 export function VrfKeyLinkNetworkPropertiesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): VrfKeyLinkNetworkPropertiesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'dummy': !exists(json, 'dummy') ? undefined : json['dummy'],
+        'dummy': json['dummy'] == null ? undefined : json['dummy'],
     };
 }
 
-export function VrfKeyLinkNetworkPropertiesDTOToJSON(value?: VrfKeyLinkNetworkPropertiesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function VrfKeyLinkNetworkPropertiesDTOToJSON(json: any): VrfKeyLinkNetworkPropertiesDTO {
+    return VrfKeyLinkNetworkPropertiesDTOToJSONTyped(json, false);
+}
+
+export function VrfKeyLinkNetworkPropertiesDTOToJSONTyped(value?: VrfKeyLinkNetworkPropertiesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'dummy': value.dummy,
+        'dummy': value['dummy'],
     };
 }
 

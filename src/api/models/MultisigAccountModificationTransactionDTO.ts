@@ -12,25 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    MultisigAccountModificationTransactionBodyDTO,
-    MultisigAccountModificationTransactionBodyDTOFromJSON,
-    MultisigAccountModificationTransactionBodyDTOFromJSONTyped,
-    MultisigAccountModificationTransactionBodyDTOToJSON,
-} from './MultisigAccountModificationTransactionBodyDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
-import {
-    TransactionDTO,
-    TransactionDTOFromJSON,
-    TransactionDTOFromJSONTyped,
-    TransactionDTOToJSON,
-} from './TransactionDTO';
 
 /**
  * Transaction to create or modify a multisig account.
@@ -89,6 +78,7 @@ export interface MultisigAccountModificationTransactionDTO {
     /**
      * Number of signatures needed to remove a cosignatory.
      * If we are modifying an existing multisig account, this indicates the relative change of the minimum cosignatories.
+     * 
      * @type {number}
      * @memberof MultisigAccountModificationTransactionDTO
      */
@@ -96,6 +86,7 @@ export interface MultisigAccountModificationTransactionDTO {
     /**
      * Number of signatures needed to approve a transaction.
      * If we are modifying an existing multisig account, this indicates the relative change of the minimum cosignatories.
+     * 
      * @type {number}
      * @memberof MultisigAccountModificationTransactionDTO
      */
@@ -114,12 +105,33 @@ export interface MultisigAccountModificationTransactionDTO {
     addressDeletions: Array<string>;
 }
 
+
+
+/**
+ * Check if a given object implements the MultisigAccountModificationTransactionDTO interface.
+ */
+export function instanceOfMultisigAccountModificationTransactionDTO(value: Record<string, any>): value is MultisigAccountModificationTransactionDTO {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('maxFee' in value) || value['maxFee'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    if (!('minRemovalDelta' in value) || value['minRemovalDelta'] === undefined) return false;
+    if (!('minApprovalDelta' in value) || value['minApprovalDelta'] === undefined) return false;
+    if (!('addressAdditions' in value) || value['addressAdditions'] === undefined) return false;
+    if (!('addressDeletions' in value) || value['addressDeletions'] === undefined) return false;
+    return true;
+}
+
 export function MultisigAccountModificationTransactionDTOFromJSON(json: any): MultisigAccountModificationTransactionDTO {
     return MultisigAccountModificationTransactionDTOFromJSONTyped(json, false);
 }
 
 export function MultisigAccountModificationTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MultisigAccountModificationTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -139,27 +151,29 @@ export function MultisigAccountModificationTransactionDTOFromJSONTyped(json: any
     };
 }
 
-export function MultisigAccountModificationTransactionDTOToJSON(value?: MultisigAccountModificationTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MultisigAccountModificationTransactionDTOToJSON(json: any): MultisigAccountModificationTransactionDTO {
+    return MultisigAccountModificationTransactionDTOToJSONTyped(json, false);
+}
+
+export function MultisigAccountModificationTransactionDTOToJSONTyped(value?: MultisigAccountModificationTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'maxFee': value.maxFee,
-        'deadline': value.deadline,
-        'minRemovalDelta': value.minRemovalDelta,
-        'minApprovalDelta': value.minApprovalDelta,
-        'addressAdditions': value.addressAdditions,
-        'addressDeletions': value.addressDeletions,
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'maxFee': value['maxFee'],
+        'deadline': value['deadline'],
+        'minRemovalDelta': value['minRemovalDelta'],
+        'minApprovalDelta': value['minApprovalDelta'],
+        'addressAdditions': value['addressAdditions'],
+        'addressDeletions': value['addressDeletions'],
     };
 }
 

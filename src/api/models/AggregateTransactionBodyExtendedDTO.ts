@@ -12,30 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { CosignatureDTO } from './CosignatureDTO';
 import {
-    AggregateTransactionBodyDTO,
-    AggregateTransactionBodyDTOFromJSON,
-    AggregateTransactionBodyDTOFromJSONTyped,
-    AggregateTransactionBodyDTOToJSON,
-} from './AggregateTransactionBodyDTO';
-import {
-    CosignatureDTO,
     CosignatureDTOFromJSON,
     CosignatureDTOFromJSONTyped,
     CosignatureDTOToJSON,
+    CosignatureDTOToJSONTyped,
 } from './CosignatureDTO';
+import type { EmbeddedTransactionInfoDTO } from './EmbeddedTransactionInfoDTO';
 import {
-    EmbeddedTransactionBodyDTO,
-    EmbeddedTransactionBodyDTOFromJSON,
-    EmbeddedTransactionBodyDTOFromJSONTyped,
-    EmbeddedTransactionBodyDTOToJSON,
-} from './EmbeddedTransactionBodyDTO';
-import {
-    EmbeddedTransactionInfoDTO,
     EmbeddedTransactionInfoDTOFromJSON,
     EmbeddedTransactionInfoDTOFromJSONTyped,
     EmbeddedTransactionInfoDTOToJSON,
+    EmbeddedTransactionInfoDTOToJSONTyped,
 } from './EmbeddedTransactionInfoDTO';
 
 /**
@@ -64,12 +54,22 @@ export interface AggregateTransactionBodyExtendedDTO {
     transactions: Array<EmbeddedTransactionInfoDTO>;
 }
 
+/**
+ * Check if a given object implements the AggregateTransactionBodyExtendedDTO interface.
+ */
+export function instanceOfAggregateTransactionBodyExtendedDTO(value: Record<string, any>): value is AggregateTransactionBodyExtendedDTO {
+    if (!('transactionsHash' in value) || value['transactionsHash'] === undefined) return false;
+    if (!('cosignatures' in value) || value['cosignatures'] === undefined) return false;
+    if (!('transactions' in value) || value['transactions'] === undefined) return false;
+    return true;
+}
+
 export function AggregateTransactionBodyExtendedDTOFromJSON(json: any): AggregateTransactionBodyExtendedDTO {
     return AggregateTransactionBodyExtendedDTOFromJSONTyped(json, false);
 }
 
 export function AggregateTransactionBodyExtendedDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AggregateTransactionBodyExtendedDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -80,18 +80,20 @@ export function AggregateTransactionBodyExtendedDTOFromJSONTyped(json: any, igno
     };
 }
 
-export function AggregateTransactionBodyExtendedDTOToJSON(value?: AggregateTransactionBodyExtendedDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AggregateTransactionBodyExtendedDTOToJSON(json: any): AggregateTransactionBodyExtendedDTO {
+    return AggregateTransactionBodyExtendedDTOToJSONTyped(json, false);
+}
+
+export function AggregateTransactionBodyExtendedDTOToJSONTyped(value?: AggregateTransactionBodyExtendedDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transactionsHash': value.transactionsHash,
-        'cosignatures': ((value.cosignatures as Array<any>).map(CosignatureDTOToJSON)),
-        'transactions': ((value.transactions as Array<any>).map(EmbeddedTransactionInfoDTOToJSON)),
+        'transactionsHash': value['transactionsHash'],
+        'cosignatures': ((value['cosignatures'] as Array<any>).map(CosignatureDTOToJSON)),
+        'transactions': ((value['transactions'] as Array<any>).map(EmbeddedTransactionInfoDTOToJSON)),
     };
 }
 

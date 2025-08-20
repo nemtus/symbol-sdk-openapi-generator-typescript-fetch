@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { AliasTypeEnum } from './AliasTypeEnum';
 import {
-    AliasTypeEnum,
     AliasTypeEnumFromJSON,
     AliasTypeEnumFromJSONTyped,
     AliasTypeEnumToJSON,
+    AliasTypeEnumToJSONTyped,
 } from './AliasTypeEnum';
 
 /**
@@ -46,34 +47,46 @@ export interface AliasDTO {
     address?: string;
 }
 
+
+
+/**
+ * Check if a given object implements the AliasDTO interface.
+ */
+export function instanceOfAliasDTO(value: Record<string, any>): value is AliasDTO {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
+}
+
 export function AliasDTOFromJSON(json: any): AliasDTO {
     return AliasDTOFromJSONTyped(json, false);
 }
 
 export function AliasDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AliasDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': AliasTypeEnumFromJSON(json['type']),
-        'mosaicId': !exists(json, 'mosaicId') ? undefined : json['mosaicId'],
-        'address': !exists(json, 'address') ? undefined : json['address'],
+        'mosaicId': json['mosaicId'] == null ? undefined : json['mosaicId'],
+        'address': json['address'] == null ? undefined : json['address'],
     };
 }
 
-export function AliasDTOToJSON(value?: AliasDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AliasDTOToJSON(json: any): AliasDTO {
+    return AliasDTOToJSONTyped(json, false);
+}
+
+export function AliasDTOToJSONTyped(value?: AliasDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': AliasTypeEnumToJSON(value.type),
-        'mosaicId': value.mosaicId,
-        'address': value.address,
+        'type': AliasTypeEnumToJSON(value['type']),
+        'mosaicId': value['mosaicId'],
+        'address': value['address'],
     };
 }
 

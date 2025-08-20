@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { AccountDTO } from './AccountDTO';
 import {
-    AccountDTO,
     AccountDTOFromJSON,
     AccountDTOFromJSONTyped,
     AccountDTOToJSON,
+    AccountDTOToJSONTyped,
 } from './AccountDTO';
 
 /**
@@ -40,12 +41,21 @@ export interface AccountInfoDTO {
     account: AccountDTO;
 }
 
+/**
+ * Check if a given object implements the AccountInfoDTO interface.
+ */
+export function instanceOfAccountInfoDTO(value: Record<string, any>): value is AccountInfoDTO {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('account' in value) || value['account'] === undefined) return false;
+    return true;
+}
+
 export function AccountInfoDTOFromJSON(json: any): AccountInfoDTO {
     return AccountInfoDTOFromJSONTyped(json, false);
 }
 
 export function AccountInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,17 +65,19 @@ export function AccountInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function AccountInfoDTOToJSON(value?: AccountInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountInfoDTOToJSON(json: any): AccountInfoDTO {
+    return AccountInfoDTOToJSONTyped(json, false);
+}
+
+export function AccountInfoDTOToJSONTyped(value?: AccountInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'account': AccountDTOToJSON(value.account),
+        'id': value['id'],
+        'account': AccountDTOToJSON(value['account']),
     };
 }
 

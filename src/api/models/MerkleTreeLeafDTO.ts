@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MerkleTreeNodeTypeEnum } from './MerkleTreeNodeTypeEnum';
 import {
-    MerkleTreeNodeTypeEnum,
     MerkleTreeNodeTypeEnumFromJSON,
     MerkleTreeNodeTypeEnumFromJSONTyped,
     MerkleTreeNodeTypeEnumToJSON,
+    MerkleTreeNodeTypeEnumToJSONTyped,
 } from './MerkleTreeNodeTypeEnum';
 
 /**
@@ -64,12 +65,27 @@ export interface MerkleTreeLeafDTO {
     leafHash: string;
 }
 
+
+
+/**
+ * Check if a given object implements the MerkleTreeLeafDTO interface.
+ */
+export function instanceOfMerkleTreeLeafDTO(value: Record<string, any>): value is MerkleTreeLeafDTO {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('path' in value) || value['path'] === undefined) return false;
+    if (!('encodedPath' in value) || value['encodedPath'] === undefined) return false;
+    if (!('nibbleCount' in value) || value['nibbleCount'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    if (!('leafHash' in value) || value['leafHash'] === undefined) return false;
+    return true;
+}
+
 export function MerkleTreeLeafDTOFromJSON(json: any): MerkleTreeLeafDTO {
     return MerkleTreeLeafDTOFromJSONTyped(json, false);
 }
 
 export function MerkleTreeLeafDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MerkleTreeLeafDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -83,21 +99,23 @@ export function MerkleTreeLeafDTOFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function MerkleTreeLeafDTOToJSON(value?: MerkleTreeLeafDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MerkleTreeLeafDTOToJSON(json: any): MerkleTreeLeafDTO {
+    return MerkleTreeLeafDTOToJSONTyped(json, false);
+}
+
+export function MerkleTreeLeafDTOToJSONTyped(value?: MerkleTreeLeafDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': MerkleTreeNodeTypeEnumToJSON(value.type),
-        'path': value.path,
-        'encodedPath': value.encodedPath,
-        'nibbleCount': value.nibbleCount,
-        'value': value.value,
-        'leafHash': value.leafHash,
+        'type': MerkleTreeNodeTypeEnumToJSON(value['type']),
+        'path': value['path'],
+        'encodedPath': value['encodedPath'],
+        'nibbleCount': value['nibbleCount'],
+        'value': value['value'],
+        'leafHash': value['leafHash'],
     };
 }
 

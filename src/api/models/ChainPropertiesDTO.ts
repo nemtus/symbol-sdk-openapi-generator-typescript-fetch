@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * Chain related configuration properties.
  * @export
@@ -189,84 +189,93 @@ export interface ChainPropertiesDTO {
     maxTransactionsPerBlock?: string;
 }
 
+/**
+ * Check if a given object implements the ChainPropertiesDTO interface.
+ */
+export function instanceOfChainPropertiesDTO(value: Record<string, any>): value is ChainPropertiesDTO {
+    return true;
+}
+
 export function ChainPropertiesDTOFromJSON(json: any): ChainPropertiesDTO {
     return ChainPropertiesDTOFromJSONTyped(json, false);
 }
 
 export function ChainPropertiesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): ChainPropertiesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'enableVerifiableState': !exists(json, 'enableVerifiableState') ? undefined : json['enableVerifiableState'],
-        'enableVerifiableReceipts': !exists(json, 'enableVerifiableReceipts') ? undefined : json['enableVerifiableReceipts'],
-        'currencyMosaicId': !exists(json, 'currencyMosaicId') ? undefined : json['currencyMosaicId'],
-        'harvestingMosaicId': !exists(json, 'harvestingMosaicId') ? undefined : json['harvestingMosaicId'],
-        'blockGenerationTargetTime': !exists(json, 'blockGenerationTargetTime') ? undefined : json['blockGenerationTargetTime'],
-        'blockTimeSmoothingFactor': !exists(json, 'blockTimeSmoothingFactor') ? undefined : json['blockTimeSmoothingFactor'],
-        'blockFinalizationInterval': !exists(json, 'blockFinalizationInterval') ? undefined : json['blockFinalizationInterval'],
-        'importanceGrouping': !exists(json, 'importanceGrouping') ? undefined : json['importanceGrouping'],
-        'importanceActivityPercentage': !exists(json, 'importanceActivityPercentage') ? undefined : json['importanceActivityPercentage'],
-        'maxRollbackBlocks': !exists(json, 'maxRollbackBlocks') ? undefined : json['maxRollbackBlocks'],
-        'maxDifficultyBlocks': !exists(json, 'maxDifficultyBlocks') ? undefined : json['maxDifficultyBlocks'],
-        'defaultDynamicFeeMultiplier': !exists(json, 'defaultDynamicFeeMultiplier') ? undefined : json['defaultDynamicFeeMultiplier'],
-        'maxTransactionLifetime': !exists(json, 'maxTransactionLifetime') ? undefined : json['maxTransactionLifetime'],
-        'maxBlockFutureTime': !exists(json, 'maxBlockFutureTime') ? undefined : json['maxBlockFutureTime'],
-        'initialCurrencyAtomicUnits': !exists(json, 'initialCurrencyAtomicUnits') ? undefined : json['initialCurrencyAtomicUnits'],
-        'maxMosaicAtomicUnits': !exists(json, 'maxMosaicAtomicUnits') ? undefined : json['maxMosaicAtomicUnits'],
-        'totalChainImportance': !exists(json, 'totalChainImportance') ? undefined : json['totalChainImportance'],
-        'minHarvesterBalance': !exists(json, 'minHarvesterBalance') ? undefined : json['minHarvesterBalance'],
-        'maxHarvesterBalance': !exists(json, 'maxHarvesterBalance') ? undefined : json['maxHarvesterBalance'],
-        'minVoterBalance': !exists(json, 'minVoterBalance') ? undefined : json['minVoterBalance'],
-        'maxVotingKeysPerAccount': !exists(json, 'maxVotingKeysPerAccount') ? undefined : json['maxVotingKeysPerAccount'],
-        'minVotingKeyLifetime': !exists(json, 'minVotingKeyLifetime') ? undefined : json['minVotingKeyLifetime'],
-        'maxVotingKeyLifetime': !exists(json, 'maxVotingKeyLifetime') ? undefined : json['maxVotingKeyLifetime'],
-        'harvestBeneficiaryPercentage': !exists(json, 'harvestBeneficiaryPercentage') ? undefined : json['harvestBeneficiaryPercentage'],
-        'harvestNetworkPercentage': !exists(json, 'harvestNetworkPercentage') ? undefined : json['harvestNetworkPercentage'],
-        'harvestNetworkFeeSinkAddress': !exists(json, 'harvestNetworkFeeSinkAddress') ? undefined : json['harvestNetworkFeeSinkAddress'],
-        'blockPruneInterval': !exists(json, 'blockPruneInterval') ? undefined : json['blockPruneInterval'],
-        'maxTransactionsPerBlock': !exists(json, 'maxTransactionsPerBlock') ? undefined : json['maxTransactionsPerBlock'],
+        'enableVerifiableState': json['enableVerifiableState'] == null ? undefined : json['enableVerifiableState'],
+        'enableVerifiableReceipts': json['enableVerifiableReceipts'] == null ? undefined : json['enableVerifiableReceipts'],
+        'currencyMosaicId': json['currencyMosaicId'] == null ? undefined : json['currencyMosaicId'],
+        'harvestingMosaicId': json['harvestingMosaicId'] == null ? undefined : json['harvestingMosaicId'],
+        'blockGenerationTargetTime': json['blockGenerationTargetTime'] == null ? undefined : json['blockGenerationTargetTime'],
+        'blockTimeSmoothingFactor': json['blockTimeSmoothingFactor'] == null ? undefined : json['blockTimeSmoothingFactor'],
+        'blockFinalizationInterval': json['blockFinalizationInterval'] == null ? undefined : json['blockFinalizationInterval'],
+        'importanceGrouping': json['importanceGrouping'] == null ? undefined : json['importanceGrouping'],
+        'importanceActivityPercentage': json['importanceActivityPercentage'] == null ? undefined : json['importanceActivityPercentage'],
+        'maxRollbackBlocks': json['maxRollbackBlocks'] == null ? undefined : json['maxRollbackBlocks'],
+        'maxDifficultyBlocks': json['maxDifficultyBlocks'] == null ? undefined : json['maxDifficultyBlocks'],
+        'defaultDynamicFeeMultiplier': json['defaultDynamicFeeMultiplier'] == null ? undefined : json['defaultDynamicFeeMultiplier'],
+        'maxTransactionLifetime': json['maxTransactionLifetime'] == null ? undefined : json['maxTransactionLifetime'],
+        'maxBlockFutureTime': json['maxBlockFutureTime'] == null ? undefined : json['maxBlockFutureTime'],
+        'initialCurrencyAtomicUnits': json['initialCurrencyAtomicUnits'] == null ? undefined : json['initialCurrencyAtomicUnits'],
+        'maxMosaicAtomicUnits': json['maxMosaicAtomicUnits'] == null ? undefined : json['maxMosaicAtomicUnits'],
+        'totalChainImportance': json['totalChainImportance'] == null ? undefined : json['totalChainImportance'],
+        'minHarvesterBalance': json['minHarvesterBalance'] == null ? undefined : json['minHarvesterBalance'],
+        'maxHarvesterBalance': json['maxHarvesterBalance'] == null ? undefined : json['maxHarvesterBalance'],
+        'minVoterBalance': json['minVoterBalance'] == null ? undefined : json['minVoterBalance'],
+        'maxVotingKeysPerAccount': json['maxVotingKeysPerAccount'] == null ? undefined : json['maxVotingKeysPerAccount'],
+        'minVotingKeyLifetime': json['minVotingKeyLifetime'] == null ? undefined : json['minVotingKeyLifetime'],
+        'maxVotingKeyLifetime': json['maxVotingKeyLifetime'] == null ? undefined : json['maxVotingKeyLifetime'],
+        'harvestBeneficiaryPercentage': json['harvestBeneficiaryPercentage'] == null ? undefined : json['harvestBeneficiaryPercentage'],
+        'harvestNetworkPercentage': json['harvestNetworkPercentage'] == null ? undefined : json['harvestNetworkPercentage'],
+        'harvestNetworkFeeSinkAddress': json['harvestNetworkFeeSinkAddress'] == null ? undefined : json['harvestNetworkFeeSinkAddress'],
+        'blockPruneInterval': json['blockPruneInterval'] == null ? undefined : json['blockPruneInterval'],
+        'maxTransactionsPerBlock': json['maxTransactionsPerBlock'] == null ? undefined : json['maxTransactionsPerBlock'],
     };
 }
 
-export function ChainPropertiesDTOToJSON(value?: ChainPropertiesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ChainPropertiesDTOToJSON(json: any): ChainPropertiesDTO {
+    return ChainPropertiesDTOToJSONTyped(json, false);
+}
+
+export function ChainPropertiesDTOToJSONTyped(value?: ChainPropertiesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'enableVerifiableState': value.enableVerifiableState,
-        'enableVerifiableReceipts': value.enableVerifiableReceipts,
-        'currencyMosaicId': value.currencyMosaicId,
-        'harvestingMosaicId': value.harvestingMosaicId,
-        'blockGenerationTargetTime': value.blockGenerationTargetTime,
-        'blockTimeSmoothingFactor': value.blockTimeSmoothingFactor,
-        'blockFinalizationInterval': value.blockFinalizationInterval,
-        'importanceGrouping': value.importanceGrouping,
-        'importanceActivityPercentage': value.importanceActivityPercentage,
-        'maxRollbackBlocks': value.maxRollbackBlocks,
-        'maxDifficultyBlocks': value.maxDifficultyBlocks,
-        'defaultDynamicFeeMultiplier': value.defaultDynamicFeeMultiplier,
-        'maxTransactionLifetime': value.maxTransactionLifetime,
-        'maxBlockFutureTime': value.maxBlockFutureTime,
-        'initialCurrencyAtomicUnits': value.initialCurrencyAtomicUnits,
-        'maxMosaicAtomicUnits': value.maxMosaicAtomicUnits,
-        'totalChainImportance': value.totalChainImportance,
-        'minHarvesterBalance': value.minHarvesterBalance,
-        'maxHarvesterBalance': value.maxHarvesterBalance,
-        'minVoterBalance': value.minVoterBalance,
-        'maxVotingKeysPerAccount': value.maxVotingKeysPerAccount,
-        'minVotingKeyLifetime': value.minVotingKeyLifetime,
-        'maxVotingKeyLifetime': value.maxVotingKeyLifetime,
-        'harvestBeneficiaryPercentage': value.harvestBeneficiaryPercentage,
-        'harvestNetworkPercentage': value.harvestNetworkPercentage,
-        'harvestNetworkFeeSinkAddress': value.harvestNetworkFeeSinkAddress,
-        'blockPruneInterval': value.blockPruneInterval,
-        'maxTransactionsPerBlock': value.maxTransactionsPerBlock,
+        'enableVerifiableState': value['enableVerifiableState'],
+        'enableVerifiableReceipts': value['enableVerifiableReceipts'],
+        'currencyMosaicId': value['currencyMosaicId'],
+        'harvestingMosaicId': value['harvestingMosaicId'],
+        'blockGenerationTargetTime': value['blockGenerationTargetTime'],
+        'blockTimeSmoothingFactor': value['blockTimeSmoothingFactor'],
+        'blockFinalizationInterval': value['blockFinalizationInterval'],
+        'importanceGrouping': value['importanceGrouping'],
+        'importanceActivityPercentage': value['importanceActivityPercentage'],
+        'maxRollbackBlocks': value['maxRollbackBlocks'],
+        'maxDifficultyBlocks': value['maxDifficultyBlocks'],
+        'defaultDynamicFeeMultiplier': value['defaultDynamicFeeMultiplier'],
+        'maxTransactionLifetime': value['maxTransactionLifetime'],
+        'maxBlockFutureTime': value['maxBlockFutureTime'],
+        'initialCurrencyAtomicUnits': value['initialCurrencyAtomicUnits'],
+        'maxMosaicAtomicUnits': value['maxMosaicAtomicUnits'],
+        'totalChainImportance': value['totalChainImportance'],
+        'minHarvesterBalance': value['minHarvesterBalance'],
+        'maxHarvesterBalance': value['maxHarvesterBalance'],
+        'minVoterBalance': value['minVoterBalance'],
+        'maxVotingKeysPerAccount': value['maxVotingKeysPerAccount'],
+        'minVotingKeyLifetime': value['minVotingKeyLifetime'],
+        'maxVotingKeyLifetime': value['maxVotingKeyLifetime'],
+        'harvestBeneficiaryPercentage': value['harvestBeneficiaryPercentage'],
+        'harvestNetworkPercentage': value['harvestNetworkPercentage'],
+        'harvestNetworkFeeSinkAddress': value['harvestNetworkFeeSinkAddress'],
+        'blockPruneInterval': value['blockPruneInterval'],
+        'maxTransactionsPerBlock': value['maxTransactionsPerBlock'],
     };
 }
 

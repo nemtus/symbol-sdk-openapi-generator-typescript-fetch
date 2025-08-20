@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { SourceDTO } from './SourceDTO';
 import {
-    ResolutionEntryDTOResolved,
-    ResolutionEntryDTOResolvedFromJSON,
-    ResolutionEntryDTOResolvedFromJSONTyped,
-    ResolutionEntryDTOResolvedToJSON,
-} from './ResolutionEntryDTOResolved';
-import {
-    SourceDTO,
     SourceDTOFromJSON,
     SourceDTOFromJSONTyped,
     SourceDTOToJSON,
+    SourceDTOToJSONTyped,
 } from './SourceDTO';
+import type { ResolutionEntryDTOResolved } from './ResolutionEntryDTOResolved';
+import {
+    ResolutionEntryDTOResolvedFromJSON,
+    ResolutionEntryDTOResolvedFromJSONTyped,
+    ResolutionEntryDTOResolvedToJSON,
+    ResolutionEntryDTOResolvedToJSONTyped,
+} from './ResolutionEntryDTOResolved';
 
 /**
  * 
@@ -46,12 +48,21 @@ export interface ResolutionEntryDTO {
     resolved: ResolutionEntryDTOResolved;
 }
 
+/**
+ * Check if a given object implements the ResolutionEntryDTO interface.
+ */
+export function instanceOfResolutionEntryDTO(value: Record<string, any>): value is ResolutionEntryDTO {
+    if (!('source' in value) || value['source'] === undefined) return false;
+    if (!('resolved' in value) || value['resolved'] === undefined) return false;
+    return true;
+}
+
 export function ResolutionEntryDTOFromJSON(json: any): ResolutionEntryDTO {
     return ResolutionEntryDTOFromJSONTyped(json, false);
 }
 
 export function ResolutionEntryDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResolutionEntryDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,17 +72,19 @@ export function ResolutionEntryDTOFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function ResolutionEntryDTOToJSON(value?: ResolutionEntryDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ResolutionEntryDTOToJSON(json: any): ResolutionEntryDTO {
+    return ResolutionEntryDTOToJSONTyped(json, false);
+}
+
+export function ResolutionEntryDTOToJSONTyped(value?: ResolutionEntryDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'source': SourceDTOToJSON(value.source),
-        'resolved': ResolutionEntryDTOResolvedToJSON(value.resolved),
+        'source': SourceDTOToJSON(value['source']),
+        'resolved': ResolutionEntryDTOResolvedToJSON(value['resolved']),
     };
 }
 

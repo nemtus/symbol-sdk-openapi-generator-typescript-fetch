@@ -12,25 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    HashLockTransactionBodyDTO,
-    HashLockTransactionBodyDTOFromJSON,
-    HashLockTransactionBodyDTOFromJSONTyped,
-    HashLockTransactionBodyDTOToJSON,
-} from './HashLockTransactionBodyDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
-import {
-    TransactionDTO,
-    TransactionDTOFromJSON,
-    TransactionDTOFromJSONTyped,
-    TransactionDTOToJSON,
-} from './TransactionDTO';
 
 /**
  * Transaction to lock funds before sending an aggregate bonded transaction.
@@ -89,6 +78,7 @@ export interface HashLockTransactionDTO {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof HashLockTransactionDTO
      */
@@ -113,12 +103,33 @@ export interface HashLockTransactionDTO {
     hash: string;
 }
 
+
+
+/**
+ * Check if a given object implements the HashLockTransactionDTO interface.
+ */
+export function instanceOfHashLockTransactionDTO(value: Record<string, any>): value is HashLockTransactionDTO {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('maxFee' in value) || value['maxFee'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('duration' in value) || value['duration'] === undefined) return false;
+    if (!('hash' in value) || value['hash'] === undefined) return false;
+    return true;
+}
+
 export function HashLockTransactionDTOFromJSON(json: any): HashLockTransactionDTO {
     return HashLockTransactionDTOFromJSONTyped(json, false);
 }
 
 export function HashLockTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): HashLockTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -138,27 +149,29 @@ export function HashLockTransactionDTOFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function HashLockTransactionDTOToJSON(value?: HashLockTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function HashLockTransactionDTOToJSON(json: any): HashLockTransactionDTO {
+    return HashLockTransactionDTOToJSONTyped(json, false);
+}
+
+export function HashLockTransactionDTOToJSONTyped(value?: HashLockTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'maxFee': value.maxFee,
-        'deadline': value.deadline,
-        'mosaicId': value.mosaicId,
-        'amount': value.amount,
-        'duration': value.duration,
-        'hash': value.hash,
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'maxFee': value['maxFee'],
+        'deadline': value['deadline'],
+        'mosaicId': value['mosaicId'],
+        'amount': value['amount'],
+        'duration': value['duration'],
+        'hash': value['hash'],
     };
 }
 

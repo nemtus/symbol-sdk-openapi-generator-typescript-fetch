@@ -31,6 +31,7 @@
  * * 0xE143 (57667 decimal) - Transaction_Group.
  * * 0xF143 (61763 decimal) - Address_Alias_Resolution.
  * * 0xF243 (62019 decimal) - Mosaic_Alias_Resolution.
+ * 
  * @export
  */
 export const ReceiptTypeEnum = {
@@ -54,6 +55,17 @@ export const ReceiptTypeEnum = {
 export type ReceiptTypeEnum = typeof ReceiptTypeEnum[keyof typeof ReceiptTypeEnum];
 
 
+export function instanceOfReceiptTypeEnum(value: any): boolean {
+    for (const key in ReceiptTypeEnum) {
+        if (Object.prototype.hasOwnProperty.call(ReceiptTypeEnum, key)) {
+            if (ReceiptTypeEnum[key as keyof typeof ReceiptTypeEnum] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function ReceiptTypeEnumFromJSON(json: any): ReceiptTypeEnum {
     return ReceiptTypeEnumFromJSONTyped(json, false);
 }
@@ -64,5 +76,9 @@ export function ReceiptTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boo
 
 export function ReceiptTypeEnumToJSON(value?: ReceiptTypeEnum | null): any {
     return value as any;
+}
+
+export function ReceiptTypeEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): ReceiptTypeEnum {
+    return value as ReceiptTypeEnum;
 }
 

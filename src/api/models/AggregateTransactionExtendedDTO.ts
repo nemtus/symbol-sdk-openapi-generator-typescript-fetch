@@ -12,37 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    AggregateTransactionBodyExtendedDTO,
-    AggregateTransactionBodyExtendedDTOFromJSON,
-    AggregateTransactionBodyExtendedDTOFromJSONTyped,
-    AggregateTransactionBodyExtendedDTOToJSON,
-} from './AggregateTransactionBodyExtendedDTO';
-import {
-    CosignatureDTO,
-    CosignatureDTOFromJSON,
-    CosignatureDTOFromJSONTyped,
-    CosignatureDTOToJSON,
-} from './CosignatureDTO';
-import {
-    EmbeddedTransactionInfoDTO,
-    EmbeddedTransactionInfoDTOFromJSON,
-    EmbeddedTransactionInfoDTOFromJSONTyped,
-    EmbeddedTransactionInfoDTOToJSON,
-} from './EmbeddedTransactionInfoDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { CosignatureDTO } from './CosignatureDTO';
 import {
-    TransactionDTO,
-    TransactionDTOFromJSON,
-    TransactionDTOFromJSONTyped,
-    TransactionDTOToJSON,
-} from './TransactionDTO';
+    CosignatureDTOFromJSON,
+    CosignatureDTOFromJSONTyped,
+    CosignatureDTOToJSON,
+    CosignatureDTOToJSONTyped,
+} from './CosignatureDTO';
+import type { EmbeddedTransactionInfoDTO } from './EmbeddedTransactionInfoDTO';
+import {
+    EmbeddedTransactionInfoDTOFromJSON,
+    EmbeddedTransactionInfoDTOFromJSONTyped,
+    EmbeddedTransactionInfoDTOToJSON,
+    EmbeddedTransactionInfoDTOToJSONTyped,
+} from './EmbeddedTransactionInfoDTO';
 
 /**
  * Transaction to combine multiple transactions together.
@@ -118,12 +109,32 @@ export interface AggregateTransactionExtendedDTO {
     transactions: Array<EmbeddedTransactionInfoDTO>;
 }
 
+
+
+/**
+ * Check if a given object implements the AggregateTransactionExtendedDTO interface.
+ */
+export function instanceOfAggregateTransactionExtendedDTO(value: Record<string, any>): value is AggregateTransactionExtendedDTO {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('maxFee' in value) || value['maxFee'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    if (!('transactionsHash' in value) || value['transactionsHash'] === undefined) return false;
+    if (!('cosignatures' in value) || value['cosignatures'] === undefined) return false;
+    if (!('transactions' in value) || value['transactions'] === undefined) return false;
+    return true;
+}
+
 export function AggregateTransactionExtendedDTOFromJSON(json: any): AggregateTransactionExtendedDTO {
     return AggregateTransactionExtendedDTOFromJSONTyped(json, false);
 }
 
 export function AggregateTransactionExtendedDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AggregateTransactionExtendedDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -142,26 +153,28 @@ export function AggregateTransactionExtendedDTOFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function AggregateTransactionExtendedDTOToJSON(value?: AggregateTransactionExtendedDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AggregateTransactionExtendedDTOToJSON(json: any): AggregateTransactionExtendedDTO {
+    return AggregateTransactionExtendedDTOToJSONTyped(json, false);
+}
+
+export function AggregateTransactionExtendedDTOToJSONTyped(value?: AggregateTransactionExtendedDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'maxFee': value.maxFee,
-        'deadline': value.deadline,
-        'transactionsHash': value.transactionsHash,
-        'cosignatures': ((value.cosignatures as Array<any>).map(CosignatureDTOToJSON)),
-        'transactions': ((value.transactions as Array<any>).map(EmbeddedTransactionInfoDTOToJSON)),
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'maxFee': value['maxFee'],
+        'deadline': value['deadline'],
+        'transactionsHash': value['transactionsHash'],
+        'cosignatures': ((value['cosignatures'] as Array<any>).map(CosignatureDTOToJSON)),
+        'transactions': ((value['transactions'] as Array<any>).map(EmbeddedTransactionInfoDTOToJSON)),
     };
 }
 

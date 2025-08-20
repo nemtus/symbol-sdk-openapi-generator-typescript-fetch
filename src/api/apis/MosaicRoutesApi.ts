@@ -14,26 +14,28 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  MerkleStateInfoDTO,
+  ModelError,
+  MosaicIds,
+  MosaicInfoDTO,
+  MosaicPage,
+  Order,
+} from '../models/index';
 import {
-    MerkleStateInfoDTO,
     MerkleStateInfoDTOFromJSON,
     MerkleStateInfoDTOToJSON,
-    ModelError,
     ModelErrorFromJSON,
     ModelErrorToJSON,
-    MosaicIds,
     MosaicIdsFromJSON,
     MosaicIdsToJSON,
-    MosaicInfoDTO,
     MosaicInfoDTOFromJSON,
     MosaicInfoDTOToJSON,
-    MosaicPage,
     MosaicPageFromJSON,
     MosaicPageToJSON,
-    Order,
     OrderFromJSON,
     OrderToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface GetMosaicRequest {
     mosaicId: string;
@@ -64,17 +66,24 @@ export class MosaicRoutesApi extends runtime.BaseAPI {
      * Gets the mosaic definition for a given mosaic identifier.
      * Get mosaic information
      */
-    async getMosaicRaw(requestParameters: GetMosaicRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<MosaicInfoDTO>> {
-        if (requestParameters.mosaicId === null || requestParameters.mosaicId === undefined) {
-            throw new runtime.RequiredError('mosaicId','Required parameter requestParameters.mosaicId was null or undefined when calling getMosaic.');
+    async getMosaicRaw(requestParameters: GetMosaicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MosaicInfoDTO>> {
+        if (requestParameters['mosaicId'] == null) {
+            throw new runtime.RequiredError(
+                'mosaicId',
+                'Required parameter "mosaicId" was null or undefined when calling getMosaic().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mosaics/{mosaicId}`;
+        urlPath = urlPath.replace(`{${"mosaicId"}}`, encodeURIComponent(String(requestParameters['mosaicId'])));
+
         const response = await this.request({
-            path: `/mosaics/{mosaicId}`.replace(`{${"mosaicId"}}`, encodeURIComponent(String(requestParameters.mosaicId))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -87,7 +96,7 @@ export class MosaicRoutesApi extends runtime.BaseAPI {
      * Gets the mosaic definition for a given mosaic identifier.
      * Get mosaic information
      */
-    async getMosaic(requestParameters: GetMosaicRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<MosaicInfoDTO> {
+    async getMosaic(requestParameters: GetMosaicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MosaicInfoDTO> {
         const response = await this.getMosaicRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -96,17 +105,24 @@ export class MosaicRoutesApi extends runtime.BaseAPI {
      * Gets the mosaic definition merkle for a given mosaic identifier.
      * Get mosaic merkle information
      */
-    async getMosaicMerkleRaw(requestParameters: GetMosaicMerkleRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<MerkleStateInfoDTO>> {
-        if (requestParameters.mosaicId === null || requestParameters.mosaicId === undefined) {
-            throw new runtime.RequiredError('mosaicId','Required parameter requestParameters.mosaicId was null or undefined when calling getMosaicMerkle.');
+    async getMosaicMerkleRaw(requestParameters: GetMosaicMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MerkleStateInfoDTO>> {
+        if (requestParameters['mosaicId'] == null) {
+            throw new runtime.RequiredError(
+                'mosaicId',
+                'Required parameter "mosaicId" was null or undefined when calling getMosaicMerkle().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mosaics/{mosaicId}/merkle`;
+        urlPath = urlPath.replace(`{${"mosaicId"}}`, encodeURIComponent(String(requestParameters['mosaicId'])));
+
         const response = await this.request({
-            path: `/mosaics/{mosaicId}/merkle`.replace(`{${"mosaicId"}}`, encodeURIComponent(String(requestParameters.mosaicId))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -119,7 +135,7 @@ export class MosaicRoutesApi extends runtime.BaseAPI {
      * Gets the mosaic definition merkle for a given mosaic identifier.
      * Get mosaic merkle information
      */
-    async getMosaicMerkle(requestParameters: GetMosaicMerkleRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<MerkleStateInfoDTO> {
+    async getMosaicMerkle(requestParameters: GetMosaicMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MerkleStateInfoDTO> {
         const response = await this.getMosaicMerkleRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -128,9 +144,12 @@ export class MosaicRoutesApi extends runtime.BaseAPI {
      * Gets an array of mosaic definition.
      * Get mosaics information for an array of mosaics
      */
-    async getMosaicsRaw(requestParameters: GetMosaicsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Array<MosaicInfoDTO>>> {
-        if (requestParameters.mosaicIds === null || requestParameters.mosaicIds === undefined) {
-            throw new runtime.RequiredError('mosaicIds','Required parameter requestParameters.mosaicIds was null or undefined when calling getMosaics.');
+    async getMosaicsRaw(requestParameters: GetMosaicsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<MosaicInfoDTO>>> {
+        if (requestParameters['mosaicIds'] == null) {
+            throw new runtime.RequiredError(
+                'mosaicIds',
+                'Required parameter "mosaicIds" was null or undefined when calling getMosaics().'
+            );
         }
 
         const queryParameters: any = {};
@@ -139,12 +158,15 @@ export class MosaicRoutesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/mosaics`;
+
         const response = await this.request({
-            path: `/mosaics`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: MosaicIdsToJSON(requestParameters.mosaicIds),
+            body: MosaicIdsToJSON(requestParameters['mosaicIds']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(MosaicInfoDTOFromJSON));
@@ -154,7 +176,7 @@ export class MosaicRoutesApi extends runtime.BaseAPI {
      * Gets an array of mosaic definition.
      * Get mosaics information for an array of mosaics
      */
-    async getMosaics(requestParameters: GetMosaicsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Array<MosaicInfoDTO>> {
+    async getMosaics(requestParameters: GetMosaicsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MosaicInfoDTO>> {
         const response = await this.getMosaicsRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -163,33 +185,36 @@ export class MosaicRoutesApi extends runtime.BaseAPI {
      * Gets an array of mosaics.
      * Search mosaics
      */
-    async searchMosaicsRaw(requestParameters: SearchMosaicsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<MosaicPage>> {
+    async searchMosaicsRaw(requestParameters: SearchMosaicsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MosaicPage>> {
         const queryParameters: any = {};
 
-        if (requestParameters.ownerAddress !== undefined) {
-            queryParameters['ownerAddress'] = requestParameters.ownerAddress;
+        if (requestParameters['ownerAddress'] != null) {
+            queryParameters['ownerAddress'] = requestParameters['ownerAddress'];
         }
 
-        if (requestParameters.pageSize !== undefined) {
-            queryParameters['pageSize'] = requestParameters.pageSize;
+        if (requestParameters['pageSize'] != null) {
+            queryParameters['pageSize'] = requestParameters['pageSize'];
         }
 
-        if (requestParameters.pageNumber !== undefined) {
-            queryParameters['pageNumber'] = requestParameters.pageNumber;
+        if (requestParameters['pageNumber'] != null) {
+            queryParameters['pageNumber'] = requestParameters['pageNumber'];
         }
 
-        if (requestParameters.offset !== undefined) {
-            queryParameters['offset'] = requestParameters.offset;
+        if (requestParameters['offset'] != null) {
+            queryParameters['offset'] = requestParameters['offset'];
         }
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/mosaics`;
+
         const response = await this.request({
-            path: `/mosaics`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -202,7 +227,7 @@ export class MosaicRoutesApi extends runtime.BaseAPI {
      * Gets an array of mosaics.
      * Search mosaics
      */
-    async searchMosaics(requestParameters: SearchMosaicsRequest = {}, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<MosaicPage> {
+    async searchMosaics(requestParameters: SearchMosaicsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MosaicPage> {
         const response = await this.searchMosaicsRaw(requestParameters, initOverrides);
         return await response.value();
     }

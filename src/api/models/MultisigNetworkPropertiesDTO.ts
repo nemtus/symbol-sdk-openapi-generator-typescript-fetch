@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -39,34 +39,43 @@ export interface MultisigNetworkPropertiesDTO {
     maxCosignedAccountsPerAccount?: string;
 }
 
+/**
+ * Check if a given object implements the MultisigNetworkPropertiesDTO interface.
+ */
+export function instanceOfMultisigNetworkPropertiesDTO(value: Record<string, any>): value is MultisigNetworkPropertiesDTO {
+    return true;
+}
+
 export function MultisigNetworkPropertiesDTOFromJSON(json: any): MultisigNetworkPropertiesDTO {
     return MultisigNetworkPropertiesDTOFromJSONTyped(json, false);
 }
 
 export function MultisigNetworkPropertiesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MultisigNetworkPropertiesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'maxMultisigDepth': !exists(json, 'maxMultisigDepth') ? undefined : json['maxMultisigDepth'],
-        'maxCosignatoriesPerAccount': !exists(json, 'maxCosignatoriesPerAccount') ? undefined : json['maxCosignatoriesPerAccount'],
-        'maxCosignedAccountsPerAccount': !exists(json, 'maxCosignedAccountsPerAccount') ? undefined : json['maxCosignedAccountsPerAccount'],
+        'maxMultisigDepth': json['maxMultisigDepth'] == null ? undefined : json['maxMultisigDepth'],
+        'maxCosignatoriesPerAccount': json['maxCosignatoriesPerAccount'] == null ? undefined : json['maxCosignatoriesPerAccount'],
+        'maxCosignedAccountsPerAccount': json['maxCosignedAccountsPerAccount'] == null ? undefined : json['maxCosignedAccountsPerAccount'],
     };
 }
 
-export function MultisigNetworkPropertiesDTOToJSON(value?: MultisigNetworkPropertiesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MultisigNetworkPropertiesDTOToJSON(json: any): MultisigNetworkPropertiesDTO {
+    return MultisigNetworkPropertiesDTOToJSONTyped(json, false);
+}
+
+export function MultisigNetworkPropertiesDTOToJSONTyped(value?: MultisigNetworkPropertiesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'maxMultisigDepth': value.maxMultisigDepth,
-        'maxCosignatoriesPerAccount': value.maxCosignatoriesPerAccount,
-        'maxCosignedAccountsPerAccount': value.maxCosignedAccountsPerAccount,
+        'maxMultisigDepth': value['maxMultisigDepth'],
+        'maxCosignatoriesPerAccount': value['maxCosignatoriesPerAccount'],
+        'maxCosignedAccountsPerAccount': value['maxCosignedAccountsPerAccount'],
     };
 }
 

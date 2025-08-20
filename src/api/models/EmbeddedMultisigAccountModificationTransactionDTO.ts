@@ -12,24 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    EmbeddedTransactionDTO,
-    EmbeddedTransactionDTOFromJSON,
-    EmbeddedTransactionDTOFromJSONTyped,
-    EmbeddedTransactionDTOToJSON,
-} from './EmbeddedTransactionDTO';
-import {
-    MultisigAccountModificationTransactionBodyDTO,
-    MultisigAccountModificationTransactionBodyDTOFromJSON,
-    MultisigAccountModificationTransactionBodyDTOFromJSONTyped,
-    MultisigAccountModificationTransactionBodyDTOToJSON,
-} from './MultisigAccountModificationTransactionBodyDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
 
 /**
@@ -65,6 +54,7 @@ export interface EmbeddedMultisigAccountModificationTransactionDTO {
     /**
      * Number of signatures needed to remove a cosignatory.
      * If we are modifying an existing multisig account, this indicates the relative change of the minimum cosignatories.
+     * 
      * @type {number}
      * @memberof EmbeddedMultisigAccountModificationTransactionDTO
      */
@@ -72,6 +62,7 @@ export interface EmbeddedMultisigAccountModificationTransactionDTO {
     /**
      * Number of signatures needed to approve a transaction.
      * If we are modifying an existing multisig account, this indicates the relative change of the minimum cosignatories.
+     * 
      * @type {number}
      * @memberof EmbeddedMultisigAccountModificationTransactionDTO
      */
@@ -90,12 +81,29 @@ export interface EmbeddedMultisigAccountModificationTransactionDTO {
     addressDeletions: Array<string>;
 }
 
+
+
+/**
+ * Check if a given object implements the EmbeddedMultisigAccountModificationTransactionDTO interface.
+ */
+export function instanceOfEmbeddedMultisigAccountModificationTransactionDTO(value: Record<string, any>): value is EmbeddedMultisigAccountModificationTransactionDTO {
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('minRemovalDelta' in value) || value['minRemovalDelta'] === undefined) return false;
+    if (!('minApprovalDelta' in value) || value['minApprovalDelta'] === undefined) return false;
+    if (!('addressAdditions' in value) || value['addressAdditions'] === undefined) return false;
+    if (!('addressDeletions' in value) || value['addressDeletions'] === undefined) return false;
+    return true;
+}
+
 export function EmbeddedMultisigAccountModificationTransactionDTOFromJSON(json: any): EmbeddedMultisigAccountModificationTransactionDTO {
     return EmbeddedMultisigAccountModificationTransactionDTOFromJSONTyped(json, false);
 }
 
 export function EmbeddedMultisigAccountModificationTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmbeddedMultisigAccountModificationTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -111,23 +119,25 @@ export function EmbeddedMultisigAccountModificationTransactionDTOFromJSONTyped(j
     };
 }
 
-export function EmbeddedMultisigAccountModificationTransactionDTOToJSON(value?: EmbeddedMultisigAccountModificationTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EmbeddedMultisigAccountModificationTransactionDTOToJSON(json: any): EmbeddedMultisigAccountModificationTransactionDTO {
+    return EmbeddedMultisigAccountModificationTransactionDTOToJSONTyped(json, false);
+}
+
+export function EmbeddedMultisigAccountModificationTransactionDTOToJSONTyped(value?: EmbeddedMultisigAccountModificationTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'minRemovalDelta': value.minRemovalDelta,
-        'minApprovalDelta': value.minApprovalDelta,
-        'addressAdditions': value.addressAdditions,
-        'addressDeletions': value.addressDeletions,
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'minRemovalDelta': value['minRemovalDelta'],
+        'minApprovalDelta': value['minApprovalDelta'],
+        'addressAdditions': value['addressAdditions'],
+        'addressDeletions': value['addressDeletions'],
     };
 }
 

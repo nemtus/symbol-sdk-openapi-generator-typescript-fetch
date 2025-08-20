@@ -12,35 +12,26 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    AccountKeyLinkTransactionBodyDTO,
-    AccountKeyLinkTransactionBodyDTOFromJSON,
-    AccountKeyLinkTransactionBodyDTOFromJSONTyped,
-    AccountKeyLinkTransactionBodyDTOToJSON,
-} from './AccountKeyLinkTransactionBodyDTO';
-import {
-    LinkActionEnum,
-    LinkActionEnumFromJSON,
-    LinkActionEnumFromJSONTyped,
-    LinkActionEnumToJSON,
-} from './LinkActionEnum';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { LinkActionEnum } from './LinkActionEnum';
 import {
-    TransactionDTO,
-    TransactionDTOFromJSON,
-    TransactionDTOFromJSONTyped,
-    TransactionDTOToJSON,
-} from './TransactionDTO';
+    LinkActionEnumFromJSON,
+    LinkActionEnumFromJSONTyped,
+    LinkActionEnumToJSON,
+    LinkActionEnumToJSONTyped,
+} from './LinkActionEnum';
 
 /**
  * Transaction to delegate the account importance score to a proxy account.
  * Required for all accounts willing to activate delegated harvesting.
+ * 
  * @export
  * @interface AccountKeyLinkTransactionDTO
  */
@@ -107,12 +98,31 @@ export interface AccountKeyLinkTransactionDTO {
     linkAction: LinkActionEnum;
 }
 
+
+
+/**
+ * Check if a given object implements the AccountKeyLinkTransactionDTO interface.
+ */
+export function instanceOfAccountKeyLinkTransactionDTO(value: Record<string, any>): value is AccountKeyLinkTransactionDTO {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('maxFee' in value) || value['maxFee'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    if (!('linkedPublicKey' in value) || value['linkedPublicKey'] === undefined) return false;
+    if (!('linkAction' in value) || value['linkAction'] === undefined) return false;
+    return true;
+}
+
 export function AccountKeyLinkTransactionDTOFromJSON(json: any): AccountKeyLinkTransactionDTO {
     return AccountKeyLinkTransactionDTOFromJSONTyped(json, false);
 }
 
 export function AccountKeyLinkTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountKeyLinkTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -130,25 +140,27 @@ export function AccountKeyLinkTransactionDTOFromJSONTyped(json: any, ignoreDiscr
     };
 }
 
-export function AccountKeyLinkTransactionDTOToJSON(value?: AccountKeyLinkTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountKeyLinkTransactionDTOToJSON(json: any): AccountKeyLinkTransactionDTO {
+    return AccountKeyLinkTransactionDTOToJSONTyped(json, false);
+}
+
+export function AccountKeyLinkTransactionDTOToJSONTyped(value?: AccountKeyLinkTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'maxFee': value.maxFee,
-        'deadline': value.deadline,
-        'linkedPublicKey': value.linkedPublicKey,
-        'linkAction': LinkActionEnumToJSON(value.linkAction),
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'maxFee': value['maxFee'],
+        'deadline': value['deadline'],
+        'linkedPublicKey': value['linkedPublicKey'],
+        'linkAction': LinkActionEnumToJSON(value['linkAction']),
     };
 }
 

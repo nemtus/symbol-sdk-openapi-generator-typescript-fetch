@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -33,32 +33,41 @@ export interface HashLockNetworkPropertiesDTO {
     maxHashLockDuration?: string;
 }
 
+/**
+ * Check if a given object implements the HashLockNetworkPropertiesDTO interface.
+ */
+export function instanceOfHashLockNetworkPropertiesDTO(value: Record<string, any>): value is HashLockNetworkPropertiesDTO {
+    return true;
+}
+
 export function HashLockNetworkPropertiesDTOFromJSON(json: any): HashLockNetworkPropertiesDTO {
     return HashLockNetworkPropertiesDTOFromJSONTyped(json, false);
 }
 
 export function HashLockNetworkPropertiesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): HashLockNetworkPropertiesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'lockedFundsPerAggregate': !exists(json, 'lockedFundsPerAggregate') ? undefined : json['lockedFundsPerAggregate'],
-        'maxHashLockDuration': !exists(json, 'maxHashLockDuration') ? undefined : json['maxHashLockDuration'],
+        'lockedFundsPerAggregate': json['lockedFundsPerAggregate'] == null ? undefined : json['lockedFundsPerAggregate'],
+        'maxHashLockDuration': json['maxHashLockDuration'] == null ? undefined : json['maxHashLockDuration'],
     };
 }
 
-export function HashLockNetworkPropertiesDTOToJSON(value?: HashLockNetworkPropertiesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function HashLockNetworkPropertiesDTOToJSON(json: any): HashLockNetworkPropertiesDTO {
+    return HashLockNetworkPropertiesDTOToJSONTyped(json, false);
+}
+
+export function HashLockNetworkPropertiesDTOToJSONTyped(value?: HashLockNetworkPropertiesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'lockedFundsPerAggregate': value.lockedFundsPerAggregate,
-        'maxHashLockDuration': value.maxHashLockDuration,
+        'lockedFundsPerAggregate': value['lockedFundsPerAggregate'],
+        'maxHashLockDuration': value['maxHashLockDuration'],
     };
 }
 

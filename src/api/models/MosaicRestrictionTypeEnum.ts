@@ -22,6 +22,7 @@
  * * 4 (LE) - Allow if less than or equal.
  * * 5 (GT) - Allow if greater than.
  * * 6 (GE) - Allow if greater than or equal.
+ * 
  * @export
  */
 export const MosaicRestrictionTypeEnum = {
@@ -36,6 +37,17 @@ export const MosaicRestrictionTypeEnum = {
 export type MosaicRestrictionTypeEnum = typeof MosaicRestrictionTypeEnum[keyof typeof MosaicRestrictionTypeEnum];
 
 
+export function instanceOfMosaicRestrictionTypeEnum(value: any): boolean {
+    for (const key in MosaicRestrictionTypeEnum) {
+        if (Object.prototype.hasOwnProperty.call(MosaicRestrictionTypeEnum, key)) {
+            if (MosaicRestrictionTypeEnum[key as keyof typeof MosaicRestrictionTypeEnum] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function MosaicRestrictionTypeEnumFromJSON(json: any): MosaicRestrictionTypeEnum {
     return MosaicRestrictionTypeEnumFromJSONTyped(json, false);
 }
@@ -46,5 +58,9 @@ export function MosaicRestrictionTypeEnumFromJSONTyped(json: any, ignoreDiscrimi
 
 export function MosaicRestrictionTypeEnumToJSON(value?: MosaicRestrictionTypeEnum | null): any {
     return value as any;
+}
+
+export function MosaicRestrictionTypeEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): MosaicRestrictionTypeEnum {
+    return value as MosaicRestrictionTypeEnum;
 }
 

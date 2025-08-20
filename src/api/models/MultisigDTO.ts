@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -57,12 +57,25 @@ export interface MultisigDTO {
     multisigAddresses: Array<string>;
 }
 
+/**
+ * Check if a given object implements the MultisigDTO interface.
+ */
+export function instanceOfMultisigDTO(value: Record<string, any>): value is MultisigDTO {
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('accountAddress' in value) || value['accountAddress'] === undefined) return false;
+    if (!('minApproval' in value) || value['minApproval'] === undefined) return false;
+    if (!('minRemoval' in value) || value['minRemoval'] === undefined) return false;
+    if (!('cosignatoryAddresses' in value) || value['cosignatoryAddresses'] === undefined) return false;
+    if (!('multisigAddresses' in value) || value['multisigAddresses'] === undefined) return false;
+    return true;
+}
+
 export function MultisigDTOFromJSON(json: any): MultisigDTO {
     return MultisigDTOFromJSONTyped(json, false);
 }
 
 export function MultisigDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MultisigDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,21 +89,23 @@ export function MultisigDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean
     };
 }
 
-export function MultisigDTOToJSON(value?: MultisigDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MultisigDTOToJSON(json: any): MultisigDTO {
+    return MultisigDTOToJSONTyped(json, false);
+}
+
+export function MultisigDTOToJSONTyped(value?: MultisigDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'version': value.version,
-        'accountAddress': value.accountAddress,
-        'minApproval': value.minApproval,
-        'minRemoval': value.minRemoval,
-        'cosignatoryAddresses': value.cosignatoryAddresses,
-        'multisigAddresses': value.multisigAddresses,
+        'version': value['version'],
+        'accountAddress': value['accountAddress'],
+        'minApproval': value['minApproval'],
+        'minRemoval': value['minRemoval'],
+        'cosignatoryAddresses': value['cosignatoryAddresses'],
+        'multisigAddresses': value['multisigAddresses'],
     };
 }
 

@@ -40,6 +40,7 @@
  * * 0x4151 (16721 decimal) - MosaicGlobalRestrictionTransaction.
  * * 0x4251 (16977 decimal) - MosaicAddressRestrictionTransaction.
  * * 0x4154 (16724 decimal) - TransferTransaction.
+ * 
  * @export
  */
 export const TransactionTypeEnum = {
@@ -72,6 +73,17 @@ export const TransactionTypeEnum = {
 export type TransactionTypeEnum = typeof TransactionTypeEnum[keyof typeof TransactionTypeEnum];
 
 
+export function instanceOfTransactionTypeEnum(value: any): boolean {
+    for (const key in TransactionTypeEnum) {
+        if (Object.prototype.hasOwnProperty.call(TransactionTypeEnum, key)) {
+            if (TransactionTypeEnum[key as keyof typeof TransactionTypeEnum] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function TransactionTypeEnumFromJSON(json: any): TransactionTypeEnum {
     return TransactionTypeEnumFromJSONTyped(json, false);
 }
@@ -82,5 +94,9 @@ export function TransactionTypeEnumFromJSONTyped(json: any, ignoreDiscriminator:
 
 export function TransactionTypeEnumToJSON(value?: TransactionTypeEnum | null): any {
     return value as any;
+}
+
+export function TransactionTypeEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): TransactionTypeEnum {
+    return value as TransactionTypeEnum;
 }
 

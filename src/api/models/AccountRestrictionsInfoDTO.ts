@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { AccountRestrictionsDTO } from './AccountRestrictionsDTO';
 import {
-    AccountRestrictionsDTO,
     AccountRestrictionsDTOFromJSON,
     AccountRestrictionsDTOFromJSONTyped,
     AccountRestrictionsDTOToJSON,
+    AccountRestrictionsDTOToJSONTyped,
 } from './AccountRestrictionsDTO';
 
 /**
@@ -34,12 +35,20 @@ export interface AccountRestrictionsInfoDTO {
     accountRestrictions: AccountRestrictionsDTO;
 }
 
+/**
+ * Check if a given object implements the AccountRestrictionsInfoDTO interface.
+ */
+export function instanceOfAccountRestrictionsInfoDTO(value: Record<string, any>): value is AccountRestrictionsInfoDTO {
+    if (!('accountRestrictions' in value) || value['accountRestrictions'] === undefined) return false;
+    return true;
+}
+
 export function AccountRestrictionsInfoDTOFromJSON(json: any): AccountRestrictionsInfoDTO {
     return AccountRestrictionsInfoDTOFromJSONTyped(json, false);
 }
 
 export function AccountRestrictionsInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountRestrictionsInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,16 +57,18 @@ export function AccountRestrictionsInfoDTOFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function AccountRestrictionsInfoDTOToJSON(value?: AccountRestrictionsInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountRestrictionsInfoDTOToJSON(json: any): AccountRestrictionsInfoDTO {
+    return AccountRestrictionsInfoDTOToJSONTyped(json, false);
+}
+
+export function AccountRestrictionsInfoDTOToJSONTyped(value?: AccountRestrictionsInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'accountRestrictions': AccountRestrictionsDTOToJSON(value.accountRestrictions),
+        'accountRestrictions': AccountRestrictionsDTOToJSON(value['accountRestrictions']),
     };
 }
 

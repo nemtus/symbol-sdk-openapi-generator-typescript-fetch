@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -27,12 +27,20 @@ export interface SizePrefixedEntityDTO {
     size: number;
 }
 
+/**
+ * Check if a given object implements the SizePrefixedEntityDTO interface.
+ */
+export function instanceOfSizePrefixedEntityDTO(value: Record<string, any>): value is SizePrefixedEntityDTO {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    return true;
+}
+
 export function SizePrefixedEntityDTOFromJSON(json: any): SizePrefixedEntityDTO {
     return SizePrefixedEntityDTOFromJSONTyped(json, false);
 }
 
 export function SizePrefixedEntityDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): SizePrefixedEntityDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -41,16 +49,18 @@ export function SizePrefixedEntityDTOFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function SizePrefixedEntityDTOToJSON(value?: SizePrefixedEntityDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SizePrefixedEntityDTOToJSON(json: any): SizePrefixedEntityDTO {
+    return SizePrefixedEntityDTOToJSONTyped(json, false);
+}
+
+export function SizePrefixedEntityDTOToJSONTyped(value?: SizePrefixedEntityDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
+        'size': value['size'],
     };
 }
 

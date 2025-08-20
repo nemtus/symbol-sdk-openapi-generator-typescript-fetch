@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -33,12 +33,21 @@ export interface Pagination {
     pageSize: number;
 }
 
+/**
+ * Check if a given object implements the Pagination interface.
+ */
+export function instanceOfPagination(value: Record<string, any>): value is Pagination {
+    if (!('pageNumber' in value) || value['pageNumber'] === undefined) return false;
+    if (!('pageSize' in value) || value['pageSize'] === undefined) return false;
+    return true;
+}
+
 export function PaginationFromJSON(json: any): Pagination {
     return PaginationFromJSONTyped(json, false);
 }
 
 export function PaginationFromJSONTyped(json: any, ignoreDiscriminator: boolean): Pagination {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,17 +57,19 @@ export function PaginationFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function PaginationToJSON(value?: Pagination | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PaginationToJSON(json: any): Pagination {
+    return PaginationToJSONTyped(json, false);
+}
+
+export function PaginationToJSONTyped(value?: Pagination | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'pageNumber': value.pageNumber,
-        'pageSize': value.pageSize,
+        'pageNumber': value['pageNumber'],
+        'pageSize': value['pageSize'],
     };
 }
 

@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { Pagination } from './Pagination';
 import {
-    Pagination,
     PaginationFromJSON,
     PaginationFromJSONTyped,
     PaginationToJSON,
+    PaginationToJSONTyped,
 } from './Pagination';
+import type { TransactionStatementInfoDTO } from './TransactionStatementInfoDTO';
 import {
-    TransactionStatementInfoDTO,
     TransactionStatementInfoDTOFromJSON,
     TransactionStatementInfoDTOFromJSONTyped,
     TransactionStatementInfoDTOToJSON,
+    TransactionStatementInfoDTOToJSONTyped,
 } from './TransactionStatementInfoDTO';
 
 /**
@@ -46,12 +48,21 @@ export interface TransactionStatementPage {
     pagination: Pagination;
 }
 
+/**
+ * Check if a given object implements the TransactionStatementPage interface.
+ */
+export function instanceOfTransactionStatementPage(value: Record<string, any>): value is TransactionStatementPage {
+    if (!('data' in value) || value['data'] === undefined) return false;
+    if (!('pagination' in value) || value['pagination'] === undefined) return false;
+    return true;
+}
+
 export function TransactionStatementPageFromJSON(json: any): TransactionStatementPage {
     return TransactionStatementPageFromJSONTyped(json, false);
 }
 
 export function TransactionStatementPageFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionStatementPage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,17 +72,19 @@ export function TransactionStatementPageFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-export function TransactionStatementPageToJSON(value?: TransactionStatementPage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionStatementPageToJSON(json: any): TransactionStatementPage {
+    return TransactionStatementPageToJSONTyped(json, false);
+}
+
+export function TransactionStatementPageToJSONTyped(value?: TransactionStatementPage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'data': ((value.data as Array<any>).map(TransactionStatementInfoDTOToJSON)),
-        'pagination': PaginationToJSON(value.pagination),
+        'data': ((value['data'] as Array<any>).map(TransactionStatementInfoDTOToJSON)),
+        'pagination': PaginationToJSON(value['pagination']),
     };
 }
 

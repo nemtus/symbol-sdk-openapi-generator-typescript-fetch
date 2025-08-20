@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { ServerDTO } from './ServerDTO';
 import {
-    ServerDTO,
     ServerDTOFromJSON,
     ServerDTOFromJSONTyped,
     ServerDTOToJSON,
+    ServerDTOToJSONTyped,
 } from './ServerDTO';
 
 /**
@@ -34,12 +35,20 @@ export interface ServerInfoDTO {
     serverInfo: ServerDTO;
 }
 
+/**
+ * Check if a given object implements the ServerInfoDTO interface.
+ */
+export function instanceOfServerInfoDTO(value: Record<string, any>): value is ServerInfoDTO {
+    if (!('serverInfo' in value) || value['serverInfo'] === undefined) return false;
+    return true;
+}
+
 export function ServerInfoDTOFromJSON(json: any): ServerInfoDTO {
     return ServerInfoDTOFromJSONTyped(json, false);
 }
 
 export function ServerInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): ServerInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,16 +57,18 @@ export function ServerInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function ServerInfoDTOToJSON(value?: ServerInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ServerInfoDTOToJSON(json: any): ServerInfoDTO {
+    return ServerInfoDTOToJSONTyped(json, false);
+}
+
+export function ServerInfoDTOToJSONTyped(value?: ServerInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'serverInfo': ServerDTOToJSON(value.serverInfo),
+        'serverInfo': ServerDTOToJSON(value['serverInfo']),
     };
 }
 

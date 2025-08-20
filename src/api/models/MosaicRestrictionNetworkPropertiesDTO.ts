@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -27,30 +27,39 @@ export interface MosaicRestrictionNetworkPropertiesDTO {
     maxMosaicRestrictionValues?: string;
 }
 
+/**
+ * Check if a given object implements the MosaicRestrictionNetworkPropertiesDTO interface.
+ */
+export function instanceOfMosaicRestrictionNetworkPropertiesDTO(value: Record<string, any>): value is MosaicRestrictionNetworkPropertiesDTO {
+    return true;
+}
+
 export function MosaicRestrictionNetworkPropertiesDTOFromJSON(json: any): MosaicRestrictionNetworkPropertiesDTO {
     return MosaicRestrictionNetworkPropertiesDTOFromJSONTyped(json, false);
 }
 
 export function MosaicRestrictionNetworkPropertiesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicRestrictionNetworkPropertiesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'maxMosaicRestrictionValues': !exists(json, 'maxMosaicRestrictionValues') ? undefined : json['maxMosaicRestrictionValues'],
+        'maxMosaicRestrictionValues': json['maxMosaicRestrictionValues'] == null ? undefined : json['maxMosaicRestrictionValues'],
     };
 }
 
-export function MosaicRestrictionNetworkPropertiesDTOToJSON(value?: MosaicRestrictionNetworkPropertiesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicRestrictionNetworkPropertiesDTOToJSON(json: any): MosaicRestrictionNetworkPropertiesDTO {
+    return MosaicRestrictionNetworkPropertiesDTOToJSONTyped(json, false);
+}
+
+export function MosaicRestrictionNetworkPropertiesDTOToJSONTyped(value?: MosaicRestrictionNetworkPropertiesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'maxMosaicRestrictionValues': value.maxMosaicRestrictionValues,
+        'maxMosaicRestrictionValues': value['maxMosaicRestrictionValues'],
     };
 }
 

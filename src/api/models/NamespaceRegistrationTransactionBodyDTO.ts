@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NamespaceRegistrationTypeEnum } from './NamespaceRegistrationTypeEnum';
 import {
-    NamespaceRegistrationTypeEnum,
     NamespaceRegistrationTypeEnumFromJSON,
     NamespaceRegistrationTypeEnumFromJSONTyped,
     NamespaceRegistrationTypeEnumToJSON,
+    NamespaceRegistrationTypeEnumToJSONTyped,
 } from './NamespaceRegistrationTypeEnum';
 
 /**
@@ -58,38 +59,52 @@ export interface NamespaceRegistrationTransactionBodyDTO {
     name: string;
 }
 
+
+
+/**
+ * Check if a given object implements the NamespaceRegistrationTransactionBodyDTO interface.
+ */
+export function instanceOfNamespaceRegistrationTransactionBodyDTO(value: Record<string, any>): value is NamespaceRegistrationTransactionBodyDTO {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('registrationType' in value) || value['registrationType'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    return true;
+}
+
 export function NamespaceRegistrationTransactionBodyDTOFromJSON(json: any): NamespaceRegistrationTransactionBodyDTO {
     return NamespaceRegistrationTransactionBodyDTOFromJSONTyped(json, false);
 }
 
 export function NamespaceRegistrationTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): NamespaceRegistrationTransactionBodyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'duration': !exists(json, 'duration') ? undefined : json['duration'],
-        'parentId': !exists(json, 'parentId') ? undefined : json['parentId'],
+        'duration': json['duration'] == null ? undefined : json['duration'],
+        'parentId': json['parentId'] == null ? undefined : json['parentId'],
         'id': json['id'],
         'registrationType': NamespaceRegistrationTypeEnumFromJSON(json['registrationType']),
         'name': json['name'],
     };
 }
 
-export function NamespaceRegistrationTransactionBodyDTOToJSON(value?: NamespaceRegistrationTransactionBodyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NamespaceRegistrationTransactionBodyDTOToJSON(json: any): NamespaceRegistrationTransactionBodyDTO {
+    return NamespaceRegistrationTransactionBodyDTOToJSONTyped(json, false);
+}
+
+export function NamespaceRegistrationTransactionBodyDTOToJSONTyped(value?: NamespaceRegistrationTransactionBodyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'duration': value.duration,
-        'parentId': value.parentId,
-        'id': value.id,
-        'registrationType': NamespaceRegistrationTypeEnumToJSON(value.registrationType),
-        'name': value.name,
+        'duration': value['duration'],
+        'parentId': value['parentId'],
+        'id': value['id'],
+        'registrationType': NamespaceRegistrationTypeEnumToJSON(value['registrationType']),
+        'name': value['name'],
     };
 }
 

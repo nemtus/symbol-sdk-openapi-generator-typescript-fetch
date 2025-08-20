@@ -12,31 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    AliasActionEnum,
-    AliasActionEnumFromJSON,
-    AliasActionEnumFromJSONTyped,
-    AliasActionEnumToJSON,
-} from './AliasActionEnum';
-import {
-    EmbeddedTransactionDTO,
-    EmbeddedTransactionDTOFromJSON,
-    EmbeddedTransactionDTOFromJSONTyped,
-    EmbeddedTransactionDTOToJSON,
-} from './EmbeddedTransactionDTO';
-import {
-    MosaicAliasTransactionBodyDTO,
-    MosaicAliasTransactionBodyDTOFromJSON,
-    MosaicAliasTransactionBodyDTOFromJSONTyped,
-    MosaicAliasTransactionBodyDTOToJSON,
-} from './MosaicAliasTransactionBodyDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { AliasActionEnum } from './AliasActionEnum';
+import {
+    AliasActionEnumFromJSON,
+    AliasActionEnumFromJSONTyped,
+    AliasActionEnumToJSON,
+    AliasActionEnumToJSONTyped,
+} from './AliasActionEnum';
 
 /**
  * 
@@ -88,12 +78,28 @@ export interface EmbeddedMosaicAliasTransactionDTO {
     aliasAction: AliasActionEnum;
 }
 
+
+
+/**
+ * Check if a given object implements the EmbeddedMosaicAliasTransactionDTO interface.
+ */
+export function instanceOfEmbeddedMosaicAliasTransactionDTO(value: Record<string, any>): value is EmbeddedMosaicAliasTransactionDTO {
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('namespaceId' in value) || value['namespaceId'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('aliasAction' in value) || value['aliasAction'] === undefined) return false;
+    return true;
+}
+
 export function EmbeddedMosaicAliasTransactionDTOFromJSON(json: any): EmbeddedMosaicAliasTransactionDTO {
     return EmbeddedMosaicAliasTransactionDTOFromJSONTyped(json, false);
 }
 
 export function EmbeddedMosaicAliasTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmbeddedMosaicAliasTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -108,22 +114,24 @@ export function EmbeddedMosaicAliasTransactionDTOFromJSONTyped(json: any, ignore
     };
 }
 
-export function EmbeddedMosaicAliasTransactionDTOToJSON(value?: EmbeddedMosaicAliasTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EmbeddedMosaicAliasTransactionDTOToJSON(json: any): EmbeddedMosaicAliasTransactionDTO {
+    return EmbeddedMosaicAliasTransactionDTOToJSONTyped(json, false);
+}
+
+export function EmbeddedMosaicAliasTransactionDTOToJSONTyped(value?: EmbeddedMosaicAliasTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'namespaceId': value.namespaceId,
-        'mosaicId': value.mosaicId,
-        'aliasAction': AliasActionEnumToJSON(value.aliasAction),
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'namespaceId': value['namespaceId'],
+        'mosaicId': value['mosaicId'],
+        'aliasAction': AliasActionEnumToJSON(value['aliasAction']),
     };
 }
 

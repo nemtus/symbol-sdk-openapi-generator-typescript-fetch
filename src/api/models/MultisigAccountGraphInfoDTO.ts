@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MultisigAccountInfoDTO } from './MultisigAccountInfoDTO';
 import {
-    MultisigAccountInfoDTO,
     MultisigAccountInfoDTOFromJSON,
     MultisigAccountInfoDTOFromJSONTyped,
     MultisigAccountInfoDTOToJSON,
+    MultisigAccountInfoDTOToJSONTyped,
 } from './MultisigAccountInfoDTO';
 
 /**
@@ -40,12 +41,21 @@ export interface MultisigAccountGraphInfoDTO {
     multisigEntries: Array<MultisigAccountInfoDTO>;
 }
 
+/**
+ * Check if a given object implements the MultisigAccountGraphInfoDTO interface.
+ */
+export function instanceOfMultisigAccountGraphInfoDTO(value: Record<string, any>): value is MultisigAccountGraphInfoDTO {
+    if (!('level' in value) || value['level'] === undefined) return false;
+    if (!('multisigEntries' in value) || value['multisigEntries'] === undefined) return false;
+    return true;
+}
+
 export function MultisigAccountGraphInfoDTOFromJSON(json: any): MultisigAccountGraphInfoDTO {
     return MultisigAccountGraphInfoDTOFromJSONTyped(json, false);
 }
 
 export function MultisigAccountGraphInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MultisigAccountGraphInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,17 +65,19 @@ export function MultisigAccountGraphInfoDTOFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function MultisigAccountGraphInfoDTOToJSON(value?: MultisigAccountGraphInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MultisigAccountGraphInfoDTOToJSON(json: any): MultisigAccountGraphInfoDTO {
+    return MultisigAccountGraphInfoDTOToJSONTyped(json, false);
+}
+
+export function MultisigAccountGraphInfoDTOToJSONTyped(value?: MultisigAccountGraphInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'level': value.level,
-        'multisigEntries': ((value.multisigEntries as Array<any>).map(MultisigAccountInfoDTOToJSON)),
+        'level': value['level'],
+        'multisigEntries': ((value['multisigEntries'] as Array<any>).map(MultisigAccountInfoDTOToJSON)),
     };
 }
 

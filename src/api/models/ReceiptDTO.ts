@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { ReceiptTypeEnum } from './ReceiptTypeEnum';
 import {
-    ReceiptTypeEnum,
     ReceiptTypeEnumFromJSON,
     ReceiptTypeEnumFromJSONTyped,
     ReceiptTypeEnumToJSON,
+    ReceiptTypeEnumToJSONTyped,
 } from './ReceiptTypeEnum';
 
 /**
@@ -40,12 +41,23 @@ export interface ReceiptDTO {
     type: ReceiptTypeEnum;
 }
 
+
+
+/**
+ * Check if a given object implements the ReceiptDTO interface.
+ */
+export function instanceOfReceiptDTO(value: Record<string, any>): value is ReceiptDTO {
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
+}
+
 export function ReceiptDTOFromJSON(json: any): ReceiptDTO {
     return ReceiptDTOFromJSONTyped(json, false);
 }
 
 export function ReceiptDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): ReceiptDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,17 +67,19 @@ export function ReceiptDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function ReceiptDTOToJSON(value?: ReceiptDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ReceiptDTOToJSON(json: any): ReceiptDTO {
+    return ReceiptDTOToJSONTyped(json, false);
+}
+
+export function ReceiptDTOToJSONTyped(value?: ReceiptDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'version': value.version,
-        'type': ReceiptTypeEnumToJSON(value.type),
+        'version': value['version'],
+        'type': ReceiptTypeEnumToJSON(value['type']),
     };
 }
 

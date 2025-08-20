@@ -18,6 +18,7 @@
  * * 0 - Prevote.
  * * 1 - Precommit.
  * * 2 - Count.
+ * 
  * @export
  */
 export const StageEnum = {
@@ -27,6 +28,17 @@ export const StageEnum = {
 } as const;
 export type StageEnum = typeof StageEnum[keyof typeof StageEnum];
 
+
+export function instanceOfStageEnum(value: any): boolean {
+    for (const key in StageEnum) {
+        if (Object.prototype.hasOwnProperty.call(StageEnum, key)) {
+            if (StageEnum[key as keyof typeof StageEnum] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function StageEnumFromJSON(json: any): StageEnum {
     return StageEnumFromJSONTyped(json, false);
@@ -38,5 +50,9 @@ export function StageEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean):
 
 export function StageEnumToJSON(value?: StageEnum | null): any {
     return value as any;
+}
+
+export function StageEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): StageEnum {
+    return value as StageEnum;
 }
 

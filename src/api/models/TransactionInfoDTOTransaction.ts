@@ -12,367 +12,427 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MosaicSupplyRevocationTransactionDTO } from './MosaicSupplyRevocationTransactionDTO';
 import {
-    AccountAddressRestrictionTransactionDTO,
-    AccountAddressRestrictionTransactionDTOFromJSON,
-    AccountAddressRestrictionTransactionDTOFromJSONTyped,
-    AccountAddressRestrictionTransactionDTOToJSON,
-} from './AccountAddressRestrictionTransactionDTO';
-import {
-    AccountKeyLinkTransactionDTO,
-    AccountKeyLinkTransactionDTOFromJSON,
-    AccountKeyLinkTransactionDTOFromJSONTyped,
-    AccountKeyLinkTransactionDTOToJSON,
-} from './AccountKeyLinkTransactionDTO';
-import {
-    AccountMetadataTransactionDTO,
-    AccountMetadataTransactionDTOFromJSON,
-    AccountMetadataTransactionDTOFromJSONTyped,
-    AccountMetadataTransactionDTOToJSON,
-} from './AccountMetadataTransactionDTO';
-import {
-    AccountMosaicRestrictionTransactionDTO,
-    AccountMosaicRestrictionTransactionDTOFromJSON,
-    AccountMosaicRestrictionTransactionDTOFromJSONTyped,
-    AccountMosaicRestrictionTransactionDTOToJSON,
-} from './AccountMosaicRestrictionTransactionDTO';
-import {
-    AccountOperationRestrictionTransactionDTO,
-    AccountOperationRestrictionTransactionDTOFromJSON,
-    AccountOperationRestrictionTransactionDTOFromJSONTyped,
-    AccountOperationRestrictionTransactionDTOToJSON,
-} from './AccountOperationRestrictionTransactionDTO';
-import {
-    AccountRestrictionFlagsEnum,
-    AccountRestrictionFlagsEnumFromJSON,
-    AccountRestrictionFlagsEnumFromJSONTyped,
-    AccountRestrictionFlagsEnumToJSON,
-} from './AccountRestrictionFlagsEnum';
-import {
-    AddressAliasTransactionDTO,
-    AddressAliasTransactionDTOFromJSON,
-    AddressAliasTransactionDTOFromJSONTyped,
-    AddressAliasTransactionDTOToJSON,
-} from './AddressAliasTransactionDTO';
-import {
-    AggregateTransactionDTO,
-    AggregateTransactionDTOFromJSON,
-    AggregateTransactionDTOFromJSONTyped,
-    AggregateTransactionDTOToJSON,
-} from './AggregateTransactionDTO';
-import {
-    AggregateTransactionExtendedDTO,
-    AggregateTransactionExtendedDTOFromJSON,
-    AggregateTransactionExtendedDTOFromJSONTyped,
-    AggregateTransactionExtendedDTOToJSON,
-} from './AggregateTransactionExtendedDTO';
-import {
-    AliasActionEnum,
-    AliasActionEnumFromJSON,
-    AliasActionEnumFromJSONTyped,
-    AliasActionEnumToJSON,
-} from './AliasActionEnum';
-import {
-    CosignatureDTO,
-    CosignatureDTOFromJSON,
-    CosignatureDTOFromJSONTyped,
-    CosignatureDTOToJSON,
-} from './CosignatureDTO';
-import {
-    EmbeddedAccountAddressRestrictionTransactionDTO,
-    EmbeddedAccountAddressRestrictionTransactionDTOFromJSON,
-    EmbeddedAccountAddressRestrictionTransactionDTOFromJSONTyped,
-    EmbeddedAccountAddressRestrictionTransactionDTOToJSON,
-} from './EmbeddedAccountAddressRestrictionTransactionDTO';
-import {
-    EmbeddedAccountKeyLinkTransactionDTO,
-    EmbeddedAccountKeyLinkTransactionDTOFromJSON,
-    EmbeddedAccountKeyLinkTransactionDTOFromJSONTyped,
-    EmbeddedAccountKeyLinkTransactionDTOToJSON,
-} from './EmbeddedAccountKeyLinkTransactionDTO';
-import {
-    EmbeddedAccountMetadataTransactionDTO,
-    EmbeddedAccountMetadataTransactionDTOFromJSON,
-    EmbeddedAccountMetadataTransactionDTOFromJSONTyped,
-    EmbeddedAccountMetadataTransactionDTOToJSON,
-} from './EmbeddedAccountMetadataTransactionDTO';
-import {
-    EmbeddedAccountMosaicRestrictionTransactionDTO,
-    EmbeddedAccountMosaicRestrictionTransactionDTOFromJSON,
-    EmbeddedAccountMosaicRestrictionTransactionDTOFromJSONTyped,
-    EmbeddedAccountMosaicRestrictionTransactionDTOToJSON,
-} from './EmbeddedAccountMosaicRestrictionTransactionDTO';
-import {
-    EmbeddedAccountOperationRestrictionTransactionDTO,
-    EmbeddedAccountOperationRestrictionTransactionDTOFromJSON,
-    EmbeddedAccountOperationRestrictionTransactionDTOFromJSONTyped,
-    EmbeddedAccountOperationRestrictionTransactionDTOToJSON,
-} from './EmbeddedAccountOperationRestrictionTransactionDTO';
-import {
-    EmbeddedAddressAliasTransactionDTO,
-    EmbeddedAddressAliasTransactionDTOFromJSON,
-    EmbeddedAddressAliasTransactionDTOFromJSONTyped,
-    EmbeddedAddressAliasTransactionDTOToJSON,
-} from './EmbeddedAddressAliasTransactionDTO';
-import {
-    EmbeddedHashLockTransactionDTO,
-    EmbeddedHashLockTransactionDTOFromJSON,
-    EmbeddedHashLockTransactionDTOFromJSONTyped,
-    EmbeddedHashLockTransactionDTOToJSON,
-} from './EmbeddedHashLockTransactionDTO';
-import {
-    EmbeddedMosaicAddressRestrictionTransactionDTO,
-    EmbeddedMosaicAddressRestrictionTransactionDTOFromJSON,
-    EmbeddedMosaicAddressRestrictionTransactionDTOFromJSONTyped,
-    EmbeddedMosaicAddressRestrictionTransactionDTOToJSON,
-} from './EmbeddedMosaicAddressRestrictionTransactionDTO';
-import {
-    EmbeddedMosaicAliasTransactionDTO,
-    EmbeddedMosaicAliasTransactionDTOFromJSON,
-    EmbeddedMosaicAliasTransactionDTOFromJSONTyped,
-    EmbeddedMosaicAliasTransactionDTOToJSON,
-} from './EmbeddedMosaicAliasTransactionDTO';
-import {
-    EmbeddedMosaicDefinitionTransactionDTO,
-    EmbeddedMosaicDefinitionTransactionDTOFromJSON,
-    EmbeddedMosaicDefinitionTransactionDTOFromJSONTyped,
-    EmbeddedMosaicDefinitionTransactionDTOToJSON,
-} from './EmbeddedMosaicDefinitionTransactionDTO';
-import {
-    EmbeddedMosaicGlobalRestrictionTransactionDTO,
-    EmbeddedMosaicGlobalRestrictionTransactionDTOFromJSON,
-    EmbeddedMosaicGlobalRestrictionTransactionDTOFromJSONTyped,
-    EmbeddedMosaicGlobalRestrictionTransactionDTOToJSON,
-} from './EmbeddedMosaicGlobalRestrictionTransactionDTO';
-import {
-    EmbeddedMosaicMetadataTransactionDTO,
-    EmbeddedMosaicMetadataTransactionDTOFromJSON,
-    EmbeddedMosaicMetadataTransactionDTOFromJSONTyped,
-    EmbeddedMosaicMetadataTransactionDTOToJSON,
-} from './EmbeddedMosaicMetadataTransactionDTO';
-import {
-    EmbeddedMosaicSupplyChangeTransactionDTO,
-    EmbeddedMosaicSupplyChangeTransactionDTOFromJSON,
-    EmbeddedMosaicSupplyChangeTransactionDTOFromJSONTyped,
-    EmbeddedMosaicSupplyChangeTransactionDTOToJSON,
-} from './EmbeddedMosaicSupplyChangeTransactionDTO';
-import {
-    EmbeddedMosaicSupplyRevocationTransactionDTO,
-    EmbeddedMosaicSupplyRevocationTransactionDTOFromJSON,
-    EmbeddedMosaicSupplyRevocationTransactionDTOFromJSONTyped,
-    EmbeddedMosaicSupplyRevocationTransactionDTOToJSON,
-} from './EmbeddedMosaicSupplyRevocationTransactionDTO';
-import {
-    EmbeddedMultisigAccountModificationTransactionDTO,
-    EmbeddedMultisigAccountModificationTransactionDTOFromJSON,
-    EmbeddedMultisigAccountModificationTransactionDTOFromJSONTyped,
-    EmbeddedMultisigAccountModificationTransactionDTOToJSON,
-} from './EmbeddedMultisigAccountModificationTransactionDTO';
-import {
-    EmbeddedNamespaceMetadataTransactionDTO,
-    EmbeddedNamespaceMetadataTransactionDTOFromJSON,
-    EmbeddedNamespaceMetadataTransactionDTOFromJSONTyped,
-    EmbeddedNamespaceMetadataTransactionDTOToJSON,
-} from './EmbeddedNamespaceMetadataTransactionDTO';
-import {
-    EmbeddedNamespaceRegistrationTransactionDTO,
-    EmbeddedNamespaceRegistrationTransactionDTOFromJSON,
-    EmbeddedNamespaceRegistrationTransactionDTOFromJSONTyped,
-    EmbeddedNamespaceRegistrationTransactionDTOToJSON,
-} from './EmbeddedNamespaceRegistrationTransactionDTO';
-import {
-    EmbeddedNodeKeyLinkTransactionDTO,
-    EmbeddedNodeKeyLinkTransactionDTOFromJSON,
-    EmbeddedNodeKeyLinkTransactionDTOFromJSONTyped,
-    EmbeddedNodeKeyLinkTransactionDTOToJSON,
-} from './EmbeddedNodeKeyLinkTransactionDTO';
-import {
-    EmbeddedSecretLockTransactionDTO,
-    EmbeddedSecretLockTransactionDTOFromJSON,
-    EmbeddedSecretLockTransactionDTOFromJSONTyped,
-    EmbeddedSecretLockTransactionDTOToJSON,
-} from './EmbeddedSecretLockTransactionDTO';
-import {
-    EmbeddedSecretProofTransactionDTO,
-    EmbeddedSecretProofTransactionDTOFromJSON,
-    EmbeddedSecretProofTransactionDTOFromJSONTyped,
-    EmbeddedSecretProofTransactionDTOToJSON,
-} from './EmbeddedSecretProofTransactionDTO';
-import {
-    EmbeddedTransactionInfoDTO,
-    EmbeddedTransactionInfoDTOFromJSON,
-    EmbeddedTransactionInfoDTOFromJSONTyped,
-    EmbeddedTransactionInfoDTOToJSON,
-} from './EmbeddedTransactionInfoDTO';
-import {
-    EmbeddedTransferTransactionDTO,
-    EmbeddedTransferTransactionDTOFromJSON,
-    EmbeddedTransferTransactionDTOFromJSONTyped,
-    EmbeddedTransferTransactionDTOToJSON,
-} from './EmbeddedTransferTransactionDTO';
-import {
-    EmbeddedVotingKeyLinkTransactionDTO,
-    EmbeddedVotingKeyLinkTransactionDTOFromJSON,
-    EmbeddedVotingKeyLinkTransactionDTOFromJSONTyped,
-    EmbeddedVotingKeyLinkTransactionDTOToJSON,
-} from './EmbeddedVotingKeyLinkTransactionDTO';
-import {
-    EmbeddedVrfKeyLinkTransactionDTO,
-    EmbeddedVrfKeyLinkTransactionDTOFromJSON,
-    EmbeddedVrfKeyLinkTransactionDTOFromJSONTyped,
-    EmbeddedVrfKeyLinkTransactionDTOToJSON,
-} from './EmbeddedVrfKeyLinkTransactionDTO';
-import {
-    HashLockTransactionDTO,
-    HashLockTransactionDTOFromJSON,
-    HashLockTransactionDTOFromJSONTyped,
-    HashLockTransactionDTOToJSON,
-} from './HashLockTransactionDTO';
-import {
-    LinkActionEnum,
-    LinkActionEnumFromJSON,
-    LinkActionEnumFromJSONTyped,
-    LinkActionEnumToJSON,
-} from './LinkActionEnum';
-import {
-    LockHashAlgorithmEnum,
-    LockHashAlgorithmEnumFromJSON,
-    LockHashAlgorithmEnumFromJSONTyped,
-    LockHashAlgorithmEnumToJSON,
-} from './LockHashAlgorithmEnum';
-import {
-    MosaicAddressRestrictionTransactionDTO,
-    MosaicAddressRestrictionTransactionDTOFromJSON,
-    MosaicAddressRestrictionTransactionDTOFromJSONTyped,
-    MosaicAddressRestrictionTransactionDTOToJSON,
-} from './MosaicAddressRestrictionTransactionDTO';
-import {
-    MosaicAliasTransactionDTO,
-    MosaicAliasTransactionDTOFromJSON,
-    MosaicAliasTransactionDTOFromJSONTyped,
-    MosaicAliasTransactionDTOToJSON,
-} from './MosaicAliasTransactionDTO';
-import {
-    MosaicDefinitionTransactionDTO,
-    MosaicDefinitionTransactionDTOFromJSON,
-    MosaicDefinitionTransactionDTOFromJSONTyped,
-    MosaicDefinitionTransactionDTOToJSON,
-} from './MosaicDefinitionTransactionDTO';
-import {
-    MosaicGlobalRestrictionTransactionDTO,
-    MosaicGlobalRestrictionTransactionDTOFromJSON,
-    MosaicGlobalRestrictionTransactionDTOFromJSONTyped,
-    MosaicGlobalRestrictionTransactionDTOToJSON,
-} from './MosaicGlobalRestrictionTransactionDTO';
-import {
-    MosaicMetadataTransactionDTO,
-    MosaicMetadataTransactionDTOFromJSON,
-    MosaicMetadataTransactionDTOFromJSONTyped,
-    MosaicMetadataTransactionDTOToJSON,
-} from './MosaicMetadataTransactionDTO';
-import {
-    MosaicRestrictionTypeEnum,
-    MosaicRestrictionTypeEnumFromJSON,
-    MosaicRestrictionTypeEnumFromJSONTyped,
-    MosaicRestrictionTypeEnumToJSON,
-} from './MosaicRestrictionTypeEnum';
-import {
-    MosaicSupplyChangeActionEnum,
-    MosaicSupplyChangeActionEnumFromJSON,
-    MosaicSupplyChangeActionEnumFromJSONTyped,
-    MosaicSupplyChangeActionEnumToJSON,
-} from './MosaicSupplyChangeActionEnum';
-import {
-    MosaicSupplyChangeTransactionDTO,
-    MosaicSupplyChangeTransactionDTOFromJSON,
-    MosaicSupplyChangeTransactionDTOFromJSONTyped,
-    MosaicSupplyChangeTransactionDTOToJSON,
-} from './MosaicSupplyChangeTransactionDTO';
-import {
-    MosaicSupplyRevocationTransactionDTO,
     MosaicSupplyRevocationTransactionDTOFromJSON,
     MosaicSupplyRevocationTransactionDTOFromJSONTyped,
     MosaicSupplyRevocationTransactionDTOToJSON,
+    MosaicSupplyRevocationTransactionDTOToJSONTyped,
 } from './MosaicSupplyRevocationTransactionDTO';
+import type { EmbeddedAddressAliasTransactionDTO } from './EmbeddedAddressAliasTransactionDTO';
 import {
-    MultisigAccountModificationTransactionDTO,
-    MultisigAccountModificationTransactionDTOFromJSON,
-    MultisigAccountModificationTransactionDTOFromJSONTyped,
-    MultisigAccountModificationTransactionDTOToJSON,
-} from './MultisigAccountModificationTransactionDTO';
+    EmbeddedAddressAliasTransactionDTOFromJSON,
+    EmbeddedAddressAliasTransactionDTOFromJSONTyped,
+    EmbeddedAddressAliasTransactionDTOToJSON,
+    EmbeddedAddressAliasTransactionDTOToJSONTyped,
+} from './EmbeddedAddressAliasTransactionDTO';
+import type { AccountMosaicRestrictionTransactionDTO } from './AccountMosaicRestrictionTransactionDTO';
 import {
-    NamespaceMetadataTransactionDTO,
-    NamespaceMetadataTransactionDTOFromJSON,
-    NamespaceMetadataTransactionDTOFromJSONTyped,
-    NamespaceMetadataTransactionDTOToJSON,
-} from './NamespaceMetadataTransactionDTO';
+    AccountMosaicRestrictionTransactionDTOFromJSON,
+    AccountMosaicRestrictionTransactionDTOFromJSONTyped,
+    AccountMosaicRestrictionTransactionDTOToJSON,
+    AccountMosaicRestrictionTransactionDTOToJSONTyped,
+} from './AccountMosaicRestrictionTransactionDTO';
+import type { TransactionTypeEnum } from './TransactionTypeEnum';
 import {
-    NamespaceRegistrationTransactionDTO,
-    NamespaceRegistrationTransactionDTOFromJSON,
-    NamespaceRegistrationTransactionDTOFromJSONTyped,
-    NamespaceRegistrationTransactionDTOToJSON,
-} from './NamespaceRegistrationTransactionDTO';
-import {
-    NamespaceRegistrationTypeEnum,
-    NamespaceRegistrationTypeEnumFromJSON,
-    NamespaceRegistrationTypeEnumFromJSONTyped,
-    NamespaceRegistrationTypeEnumToJSON,
-} from './NamespaceRegistrationTypeEnum';
-import {
-    NetworkTypeEnum,
-    NetworkTypeEnumFromJSON,
-    NetworkTypeEnumFromJSONTyped,
-    NetworkTypeEnumToJSON,
-} from './NetworkTypeEnum';
-import {
-    NodeKeyLinkTransactionDTO,
-    NodeKeyLinkTransactionDTOFromJSON,
-    NodeKeyLinkTransactionDTOFromJSONTyped,
-    NodeKeyLinkTransactionDTOToJSON,
-} from './NodeKeyLinkTransactionDTO';
-import {
-    SecretLockTransactionDTO,
-    SecretLockTransactionDTOFromJSON,
-    SecretLockTransactionDTOFromJSONTyped,
-    SecretLockTransactionDTOToJSON,
-} from './SecretLockTransactionDTO';
-import {
-    SecretProofTransactionDTO,
-    SecretProofTransactionDTOFromJSON,
-    SecretProofTransactionDTOFromJSONTyped,
-    SecretProofTransactionDTOToJSON,
-} from './SecretProofTransactionDTO';
-import {
-    TransactionTypeEnum,
     TransactionTypeEnumFromJSON,
     TransactionTypeEnumFromJSONTyped,
     TransactionTypeEnumToJSON,
+    TransactionTypeEnumToJSONTyped,
 } from './TransactionTypeEnum';
+import type { MultisigAccountModificationTransactionDTO } from './MultisigAccountModificationTransactionDTO';
 import {
-    TransferTransactionDTO,
+    MultisigAccountModificationTransactionDTOFromJSON,
+    MultisigAccountModificationTransactionDTOFromJSONTyped,
+    MultisigAccountModificationTransactionDTOToJSON,
+    MultisigAccountModificationTransactionDTOToJSONTyped,
+} from './MultisigAccountModificationTransactionDTO';
+import type { TransferTransactionDTO } from './TransferTransactionDTO';
+import {
     TransferTransactionDTOFromJSON,
     TransferTransactionDTOFromJSONTyped,
     TransferTransactionDTOToJSON,
+    TransferTransactionDTOToJSONTyped,
 } from './TransferTransactionDTO';
+import type { SecretLockTransactionDTO } from './SecretLockTransactionDTO';
 import {
-    UnresolvedMosaic,
+    SecretLockTransactionDTOFromJSON,
+    SecretLockTransactionDTOFromJSONTyped,
+    SecretLockTransactionDTOToJSON,
+    SecretLockTransactionDTOToJSONTyped,
+} from './SecretLockTransactionDTO';
+import type { EmbeddedAccountMosaicRestrictionTransactionDTO } from './EmbeddedAccountMosaicRestrictionTransactionDTO';
+import {
+    EmbeddedAccountMosaicRestrictionTransactionDTOFromJSON,
+    EmbeddedAccountMosaicRestrictionTransactionDTOFromJSONTyped,
+    EmbeddedAccountMosaicRestrictionTransactionDTOToJSON,
+    EmbeddedAccountMosaicRestrictionTransactionDTOToJSONTyped,
+} from './EmbeddedAccountMosaicRestrictionTransactionDTO';
+import type { NamespaceMetadataTransactionDTO } from './NamespaceMetadataTransactionDTO';
+import {
+    NamespaceMetadataTransactionDTOFromJSON,
+    NamespaceMetadataTransactionDTOFromJSONTyped,
+    NamespaceMetadataTransactionDTOToJSON,
+    NamespaceMetadataTransactionDTOToJSONTyped,
+} from './NamespaceMetadataTransactionDTO';
+import type { AliasActionEnum } from './AliasActionEnum';
+import {
+    AliasActionEnumFromJSON,
+    AliasActionEnumFromJSONTyped,
+    AliasActionEnumToJSON,
+    AliasActionEnumToJSONTyped,
+} from './AliasActionEnum';
+import type { EmbeddedMosaicSupplyRevocationTransactionDTO } from './EmbeddedMosaicSupplyRevocationTransactionDTO';
+import {
+    EmbeddedMosaicSupplyRevocationTransactionDTOFromJSON,
+    EmbeddedMosaicSupplyRevocationTransactionDTOFromJSONTyped,
+    EmbeddedMosaicSupplyRevocationTransactionDTOToJSON,
+    EmbeddedMosaicSupplyRevocationTransactionDTOToJSONTyped,
+} from './EmbeddedMosaicSupplyRevocationTransactionDTO';
+import type { EmbeddedVrfKeyLinkTransactionDTO } from './EmbeddedVrfKeyLinkTransactionDTO';
+import {
+    EmbeddedVrfKeyLinkTransactionDTOFromJSON,
+    EmbeddedVrfKeyLinkTransactionDTOFromJSONTyped,
+    EmbeddedVrfKeyLinkTransactionDTOToJSON,
+    EmbeddedVrfKeyLinkTransactionDTOToJSONTyped,
+} from './EmbeddedVrfKeyLinkTransactionDTO';
+import type { EmbeddedMosaicDefinitionTransactionDTO } from './EmbeddedMosaicDefinitionTransactionDTO';
+import {
+    EmbeddedMosaicDefinitionTransactionDTOFromJSON,
+    EmbeddedMosaicDefinitionTransactionDTOFromJSONTyped,
+    EmbeddedMosaicDefinitionTransactionDTOToJSON,
+    EmbeddedMosaicDefinitionTransactionDTOToJSONTyped,
+} from './EmbeddedMosaicDefinitionTransactionDTO';
+import type { AddressAliasTransactionDTO } from './AddressAliasTransactionDTO';
+import {
+    AddressAliasTransactionDTOFromJSON,
+    AddressAliasTransactionDTOFromJSONTyped,
+    AddressAliasTransactionDTOToJSON,
+    AddressAliasTransactionDTOToJSONTyped,
+} from './AddressAliasTransactionDTO';
+import type { MosaicDefinitionTransactionDTO } from './MosaicDefinitionTransactionDTO';
+import {
+    MosaicDefinitionTransactionDTOFromJSON,
+    MosaicDefinitionTransactionDTOFromJSONTyped,
+    MosaicDefinitionTransactionDTOToJSON,
+    MosaicDefinitionTransactionDTOToJSONTyped,
+} from './MosaicDefinitionTransactionDTO';
+import type { AccountOperationRestrictionTransactionDTO } from './AccountOperationRestrictionTransactionDTO';
+import {
+    AccountOperationRestrictionTransactionDTOFromJSON,
+    AccountOperationRestrictionTransactionDTOFromJSONTyped,
+    AccountOperationRestrictionTransactionDTOToJSON,
+    AccountOperationRestrictionTransactionDTOToJSONTyped,
+} from './AccountOperationRestrictionTransactionDTO';
+import type { MosaicMetadataTransactionDTO } from './MosaicMetadataTransactionDTO';
+import {
+    MosaicMetadataTransactionDTOFromJSON,
+    MosaicMetadataTransactionDTOFromJSONTyped,
+    MosaicMetadataTransactionDTOToJSON,
+    MosaicMetadataTransactionDTOToJSONTyped,
+} from './MosaicMetadataTransactionDTO';
+import type { EmbeddedMosaicAddressRestrictionTransactionDTO } from './EmbeddedMosaicAddressRestrictionTransactionDTO';
+import {
+    EmbeddedMosaicAddressRestrictionTransactionDTOFromJSON,
+    EmbeddedMosaicAddressRestrictionTransactionDTOFromJSONTyped,
+    EmbeddedMosaicAddressRestrictionTransactionDTOToJSON,
+    EmbeddedMosaicAddressRestrictionTransactionDTOToJSONTyped,
+} from './EmbeddedMosaicAddressRestrictionTransactionDTO';
+import type { EmbeddedMosaicMetadataTransactionDTO } from './EmbeddedMosaicMetadataTransactionDTO';
+import {
+    EmbeddedMosaicMetadataTransactionDTOFromJSON,
+    EmbeddedMosaicMetadataTransactionDTOFromJSONTyped,
+    EmbeddedMosaicMetadataTransactionDTOToJSON,
+    EmbeddedMosaicMetadataTransactionDTOToJSONTyped,
+} from './EmbeddedMosaicMetadataTransactionDTO';
+import type { SecretProofTransactionDTO } from './SecretProofTransactionDTO';
+import {
+    SecretProofTransactionDTOFromJSON,
+    SecretProofTransactionDTOFromJSONTyped,
+    SecretProofTransactionDTOToJSON,
+    SecretProofTransactionDTOToJSONTyped,
+} from './SecretProofTransactionDTO';
+import type { MosaicGlobalRestrictionTransactionDTO } from './MosaicGlobalRestrictionTransactionDTO';
+import {
+    MosaicGlobalRestrictionTransactionDTOFromJSON,
+    MosaicGlobalRestrictionTransactionDTOFromJSONTyped,
+    MosaicGlobalRestrictionTransactionDTOToJSON,
+    MosaicGlobalRestrictionTransactionDTOToJSONTyped,
+} from './MosaicGlobalRestrictionTransactionDTO';
+import type { CosignatureDTO } from './CosignatureDTO';
+import {
+    CosignatureDTOFromJSON,
+    CosignatureDTOFromJSONTyped,
+    CosignatureDTOToJSON,
+    CosignatureDTOToJSONTyped,
+} from './CosignatureDTO';
+import type { EmbeddedAccountMetadataTransactionDTO } from './EmbeddedAccountMetadataTransactionDTO';
+import {
+    EmbeddedAccountMetadataTransactionDTOFromJSON,
+    EmbeddedAccountMetadataTransactionDTOFromJSONTyped,
+    EmbeddedAccountMetadataTransactionDTOToJSON,
+    EmbeddedAccountMetadataTransactionDTOToJSONTyped,
+} from './EmbeddedAccountMetadataTransactionDTO';
+import type { MosaicAddressRestrictionTransactionDTO } from './MosaicAddressRestrictionTransactionDTO';
+import {
+    MosaicAddressRestrictionTransactionDTOFromJSON,
+    MosaicAddressRestrictionTransactionDTOFromJSONTyped,
+    MosaicAddressRestrictionTransactionDTOToJSON,
+    MosaicAddressRestrictionTransactionDTOToJSONTyped,
+} from './MosaicAddressRestrictionTransactionDTO';
+import type { AccountRestrictionFlagsEnum } from './AccountRestrictionFlagsEnum';
+import {
+    AccountRestrictionFlagsEnumFromJSON,
+    AccountRestrictionFlagsEnumFromJSONTyped,
+    AccountRestrictionFlagsEnumToJSON,
+    AccountRestrictionFlagsEnumToJSONTyped,
+} from './AccountRestrictionFlagsEnum';
+import type { LinkActionEnum } from './LinkActionEnum';
+import {
+    LinkActionEnumFromJSON,
+    LinkActionEnumFromJSONTyped,
+    LinkActionEnumToJSON,
+    LinkActionEnumToJSONTyped,
+} from './LinkActionEnum';
+import type { MosaicSupplyChangeActionEnum } from './MosaicSupplyChangeActionEnum';
+import {
+    MosaicSupplyChangeActionEnumFromJSON,
+    MosaicSupplyChangeActionEnumFromJSONTyped,
+    MosaicSupplyChangeActionEnumToJSON,
+    MosaicSupplyChangeActionEnumToJSONTyped,
+} from './MosaicSupplyChangeActionEnum';
+import type { UnresolvedMosaic } from './UnresolvedMosaic';
+import {
     UnresolvedMosaicFromJSON,
     UnresolvedMosaicFromJSONTyped,
     UnresolvedMosaicToJSON,
+    UnresolvedMosaicToJSONTyped,
 } from './UnresolvedMosaic';
+import type { EmbeddedMultisigAccountModificationTransactionDTO } from './EmbeddedMultisigAccountModificationTransactionDTO';
 import {
-    VotingKeyLinkTransactionDTO,
+    EmbeddedMultisigAccountModificationTransactionDTOFromJSON,
+    EmbeddedMultisigAccountModificationTransactionDTOFromJSONTyped,
+    EmbeddedMultisigAccountModificationTransactionDTOToJSON,
+    EmbeddedMultisigAccountModificationTransactionDTOToJSONTyped,
+} from './EmbeddedMultisigAccountModificationTransactionDTO';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
+import {
+    NetworkTypeEnumFromJSON,
+    NetworkTypeEnumFromJSONTyped,
+    NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
+} from './NetworkTypeEnum';
+import type { AggregateTransactionExtendedDTO } from './AggregateTransactionExtendedDTO';
+import {
+    AggregateTransactionExtendedDTOFromJSON,
+    AggregateTransactionExtendedDTOFromJSONTyped,
+    AggregateTransactionExtendedDTOToJSON,
+    AggregateTransactionExtendedDTOToJSONTyped,
+} from './AggregateTransactionExtendedDTO';
+import type { EmbeddedVotingKeyLinkTransactionDTO } from './EmbeddedVotingKeyLinkTransactionDTO';
+import {
+    EmbeddedVotingKeyLinkTransactionDTOFromJSON,
+    EmbeddedVotingKeyLinkTransactionDTOFromJSONTyped,
+    EmbeddedVotingKeyLinkTransactionDTOToJSON,
+    EmbeddedVotingKeyLinkTransactionDTOToJSONTyped,
+} from './EmbeddedVotingKeyLinkTransactionDTO';
+import type { EmbeddedHashLockTransactionDTO } from './EmbeddedHashLockTransactionDTO';
+import {
+    EmbeddedHashLockTransactionDTOFromJSON,
+    EmbeddedHashLockTransactionDTOFromJSONTyped,
+    EmbeddedHashLockTransactionDTOToJSON,
+    EmbeddedHashLockTransactionDTOToJSONTyped,
+} from './EmbeddedHashLockTransactionDTO';
+import type { EmbeddedAccountKeyLinkTransactionDTO } from './EmbeddedAccountKeyLinkTransactionDTO';
+import {
+    EmbeddedAccountKeyLinkTransactionDTOFromJSON,
+    EmbeddedAccountKeyLinkTransactionDTOFromJSONTyped,
+    EmbeddedAccountKeyLinkTransactionDTOToJSON,
+    EmbeddedAccountKeyLinkTransactionDTOToJSONTyped,
+} from './EmbeddedAccountKeyLinkTransactionDTO';
+import type { EmbeddedMosaicGlobalRestrictionTransactionDTO } from './EmbeddedMosaicGlobalRestrictionTransactionDTO';
+import {
+    EmbeddedMosaicGlobalRestrictionTransactionDTOFromJSON,
+    EmbeddedMosaicGlobalRestrictionTransactionDTOFromJSONTyped,
+    EmbeddedMosaicGlobalRestrictionTransactionDTOToJSON,
+    EmbeddedMosaicGlobalRestrictionTransactionDTOToJSONTyped,
+} from './EmbeddedMosaicGlobalRestrictionTransactionDTO';
+import type { EmbeddedSecretProofTransactionDTO } from './EmbeddedSecretProofTransactionDTO';
+import {
+    EmbeddedSecretProofTransactionDTOFromJSON,
+    EmbeddedSecretProofTransactionDTOFromJSONTyped,
+    EmbeddedSecretProofTransactionDTOToJSON,
+    EmbeddedSecretProofTransactionDTOToJSONTyped,
+} from './EmbeddedSecretProofTransactionDTO';
+import type { EmbeddedTransactionInfoDTO } from './EmbeddedTransactionInfoDTO';
+import {
+    EmbeddedTransactionInfoDTOFromJSON,
+    EmbeddedTransactionInfoDTOFromJSONTyped,
+    EmbeddedTransactionInfoDTOToJSON,
+    EmbeddedTransactionInfoDTOToJSONTyped,
+} from './EmbeddedTransactionInfoDTO';
+import type { MosaicAliasTransactionDTO } from './MosaicAliasTransactionDTO';
+import {
+    MosaicAliasTransactionDTOFromJSON,
+    MosaicAliasTransactionDTOFromJSONTyped,
+    MosaicAliasTransactionDTOToJSON,
+    MosaicAliasTransactionDTOToJSONTyped,
+} from './MosaicAliasTransactionDTO';
+import type { EmbeddedAccountAddressRestrictionTransactionDTO } from './EmbeddedAccountAddressRestrictionTransactionDTO';
+import {
+    EmbeddedAccountAddressRestrictionTransactionDTOFromJSON,
+    EmbeddedAccountAddressRestrictionTransactionDTOFromJSONTyped,
+    EmbeddedAccountAddressRestrictionTransactionDTOToJSON,
+    EmbeddedAccountAddressRestrictionTransactionDTOToJSONTyped,
+} from './EmbeddedAccountAddressRestrictionTransactionDTO';
+import type { EmbeddedNodeKeyLinkTransactionDTO } from './EmbeddedNodeKeyLinkTransactionDTO';
+import {
+    EmbeddedNodeKeyLinkTransactionDTOFromJSON,
+    EmbeddedNodeKeyLinkTransactionDTOFromJSONTyped,
+    EmbeddedNodeKeyLinkTransactionDTOToJSON,
+    EmbeddedNodeKeyLinkTransactionDTOToJSONTyped,
+} from './EmbeddedNodeKeyLinkTransactionDTO';
+import type { MosaicSupplyChangeTransactionDTO } from './MosaicSupplyChangeTransactionDTO';
+import {
+    MosaicSupplyChangeTransactionDTOFromJSON,
+    MosaicSupplyChangeTransactionDTOFromJSONTyped,
+    MosaicSupplyChangeTransactionDTOToJSON,
+    MosaicSupplyChangeTransactionDTOToJSONTyped,
+} from './MosaicSupplyChangeTransactionDTO';
+import type { AggregateTransactionDTO } from './AggregateTransactionDTO';
+import {
+    AggregateTransactionDTOFromJSON,
+    AggregateTransactionDTOFromJSONTyped,
+    AggregateTransactionDTOToJSON,
+    AggregateTransactionDTOToJSONTyped,
+} from './AggregateTransactionDTO';
+import type { MosaicRestrictionTypeEnum } from './MosaicRestrictionTypeEnum';
+import {
+    MosaicRestrictionTypeEnumFromJSON,
+    MosaicRestrictionTypeEnumFromJSONTyped,
+    MosaicRestrictionTypeEnumToJSON,
+    MosaicRestrictionTypeEnumToJSONTyped,
+} from './MosaicRestrictionTypeEnum';
+import type { EmbeddedAccountOperationRestrictionTransactionDTO } from './EmbeddedAccountOperationRestrictionTransactionDTO';
+import {
+    EmbeddedAccountOperationRestrictionTransactionDTOFromJSON,
+    EmbeddedAccountOperationRestrictionTransactionDTOFromJSONTyped,
+    EmbeddedAccountOperationRestrictionTransactionDTOToJSON,
+    EmbeddedAccountOperationRestrictionTransactionDTOToJSONTyped,
+} from './EmbeddedAccountOperationRestrictionTransactionDTO';
+import type { VotingKeyLinkTransactionDTO } from './VotingKeyLinkTransactionDTO';
+import {
     VotingKeyLinkTransactionDTOFromJSON,
     VotingKeyLinkTransactionDTOFromJSONTyped,
     VotingKeyLinkTransactionDTOToJSON,
+    VotingKeyLinkTransactionDTOToJSONTyped,
 } from './VotingKeyLinkTransactionDTO';
+import type { EmbeddedNamespaceRegistrationTransactionDTO } from './EmbeddedNamespaceRegistrationTransactionDTO';
 import {
-    VrfKeyLinkTransactionDTO,
+    EmbeddedNamespaceRegistrationTransactionDTOFromJSON,
+    EmbeddedNamespaceRegistrationTransactionDTOFromJSONTyped,
+    EmbeddedNamespaceRegistrationTransactionDTOToJSON,
+    EmbeddedNamespaceRegistrationTransactionDTOToJSONTyped,
+} from './EmbeddedNamespaceRegistrationTransactionDTO';
+import type { NodeKeyLinkTransactionDTO } from './NodeKeyLinkTransactionDTO';
+import {
+    NodeKeyLinkTransactionDTOFromJSON,
+    NodeKeyLinkTransactionDTOFromJSONTyped,
+    NodeKeyLinkTransactionDTOToJSON,
+    NodeKeyLinkTransactionDTOToJSONTyped,
+} from './NodeKeyLinkTransactionDTO';
+import type { EmbeddedMosaicSupplyChangeTransactionDTO } from './EmbeddedMosaicSupplyChangeTransactionDTO';
+import {
+    EmbeddedMosaicSupplyChangeTransactionDTOFromJSON,
+    EmbeddedMosaicSupplyChangeTransactionDTOFromJSONTyped,
+    EmbeddedMosaicSupplyChangeTransactionDTOToJSON,
+    EmbeddedMosaicSupplyChangeTransactionDTOToJSONTyped,
+} from './EmbeddedMosaicSupplyChangeTransactionDTO';
+import type { AccountMetadataTransactionDTO } from './AccountMetadataTransactionDTO';
+import {
+    AccountMetadataTransactionDTOFromJSON,
+    AccountMetadataTransactionDTOFromJSONTyped,
+    AccountMetadataTransactionDTOToJSON,
+    AccountMetadataTransactionDTOToJSONTyped,
+} from './AccountMetadataTransactionDTO';
+import type { EmbeddedNamespaceMetadataTransactionDTO } from './EmbeddedNamespaceMetadataTransactionDTO';
+import {
+    EmbeddedNamespaceMetadataTransactionDTOFromJSON,
+    EmbeddedNamespaceMetadataTransactionDTOFromJSONTyped,
+    EmbeddedNamespaceMetadataTransactionDTOToJSON,
+    EmbeddedNamespaceMetadataTransactionDTOToJSONTyped,
+} from './EmbeddedNamespaceMetadataTransactionDTO';
+import type { VrfKeyLinkTransactionDTO } from './VrfKeyLinkTransactionDTO';
+import {
     VrfKeyLinkTransactionDTOFromJSON,
     VrfKeyLinkTransactionDTOFromJSONTyped,
     VrfKeyLinkTransactionDTOToJSON,
+    VrfKeyLinkTransactionDTOToJSONTyped,
 } from './VrfKeyLinkTransactionDTO';
+import type { EmbeddedTransferTransactionDTO } from './EmbeddedTransferTransactionDTO';
+import {
+    EmbeddedTransferTransactionDTOFromJSON,
+    EmbeddedTransferTransactionDTOFromJSONTyped,
+    EmbeddedTransferTransactionDTOToJSON,
+    EmbeddedTransferTransactionDTOToJSONTyped,
+} from './EmbeddedTransferTransactionDTO';
+import type { HashLockTransactionDTO } from './HashLockTransactionDTO';
+import {
+    HashLockTransactionDTOFromJSON,
+    HashLockTransactionDTOFromJSONTyped,
+    HashLockTransactionDTOToJSON,
+    HashLockTransactionDTOToJSONTyped,
+} from './HashLockTransactionDTO';
+import type { EmbeddedMosaicAliasTransactionDTO } from './EmbeddedMosaicAliasTransactionDTO';
+import {
+    EmbeddedMosaicAliasTransactionDTOFromJSON,
+    EmbeddedMosaicAliasTransactionDTOFromJSONTyped,
+    EmbeddedMosaicAliasTransactionDTOToJSON,
+    EmbeddedMosaicAliasTransactionDTOToJSONTyped,
+} from './EmbeddedMosaicAliasTransactionDTO';
+import type { LockHashAlgorithmEnum } from './LockHashAlgorithmEnum';
+import {
+    LockHashAlgorithmEnumFromJSON,
+    LockHashAlgorithmEnumFromJSONTyped,
+    LockHashAlgorithmEnumToJSON,
+    LockHashAlgorithmEnumToJSONTyped,
+} from './LockHashAlgorithmEnum';
+import type { NamespaceRegistrationTypeEnum } from './NamespaceRegistrationTypeEnum';
+import {
+    NamespaceRegistrationTypeEnumFromJSON,
+    NamespaceRegistrationTypeEnumFromJSONTyped,
+    NamespaceRegistrationTypeEnumToJSON,
+    NamespaceRegistrationTypeEnumToJSONTyped,
+} from './NamespaceRegistrationTypeEnum';
+import type { EmbeddedSecretLockTransactionDTO } from './EmbeddedSecretLockTransactionDTO';
+import {
+    EmbeddedSecretLockTransactionDTOFromJSON,
+    EmbeddedSecretLockTransactionDTOFromJSONTyped,
+    EmbeddedSecretLockTransactionDTOToJSON,
+    EmbeddedSecretLockTransactionDTOToJSONTyped,
+} from './EmbeddedSecretLockTransactionDTO';
+import type { AccountKeyLinkTransactionDTO } from './AccountKeyLinkTransactionDTO';
+import {
+    AccountKeyLinkTransactionDTOFromJSON,
+    AccountKeyLinkTransactionDTOFromJSONTyped,
+    AccountKeyLinkTransactionDTOToJSON,
+    AccountKeyLinkTransactionDTOToJSONTyped,
+} from './AccountKeyLinkTransactionDTO';
+import type { NamespaceRegistrationTransactionDTO } from './NamespaceRegistrationTransactionDTO';
+import {
+    NamespaceRegistrationTransactionDTOFromJSON,
+    NamespaceRegistrationTransactionDTOFromJSONTyped,
+    NamespaceRegistrationTransactionDTOToJSON,
+    NamespaceRegistrationTransactionDTOToJSONTyped,
+} from './NamespaceRegistrationTransactionDTO';
+import type { AccountAddressRestrictionTransactionDTO } from './AccountAddressRestrictionTransactionDTO';
+import {
+    AccountAddressRestrictionTransactionDTOFromJSON,
+    AccountAddressRestrictionTransactionDTOFromJSONTyped,
+    AccountAddressRestrictionTransactionDTOToJSON,
+    AccountAddressRestrictionTransactionDTOToJSONTyped,
+} from './AccountAddressRestrictionTransactionDTO';
 
 /**
  * 
@@ -473,6 +533,7 @@ export interface TransactionInfoDTOTransaction {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof TransactionInfoDTOTransaction
      */
@@ -499,6 +560,7 @@ export interface TransactionInfoDTOTransaction {
      * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
      * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
      * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * 
      * @type {string}
      * @memberof TransactionInfoDTOTransaction
      */
@@ -525,6 +587,7 @@ export interface TransactionInfoDTOTransaction {
      * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
      * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
      * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * 
      * @type {string}
      * @memberof TransactionInfoDTOTransaction
      */
@@ -556,6 +619,7 @@ export interface TransactionInfoDTOTransaction {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof TransactionInfoDTOTransaction
      */
@@ -584,6 +648,7 @@ export interface TransactionInfoDTOTransaction {
      * - 0x02 (transferable) - Mosaic supports transfers between arbitrary accounts. When not set, mosaic can only be transferred to and from mosaic owner.
      * - 0x04 (restrictable) - Mosaic supports custom restrictions configured by mosaic owner.
      * - 0x08 (revokable) - Mosaic allows creator to revoke balances from another user.
+     * 
      * @type {number}
      * @memberof TransactionInfoDTOTransaction
      */
@@ -592,6 +657,7 @@ export interface TransactionInfoDTOTransaction {
      * Determines up to what decimal place the mosaic can be divided.
      * Divisibility of 3 means that a mosaic can be divided into smallest parts of 0.001 mosaics.
      * The divisibility must be in the range of 0 and 6.
+     * 
      * @type {number}
      * @memberof TransactionInfoDTOTransaction
      */
@@ -612,6 +678,7 @@ export interface TransactionInfoDTOTransaction {
      * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
      * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
      * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * 
      * @type {string}
      * @memberof TransactionInfoDTOTransaction
      */
@@ -655,6 +722,7 @@ export interface TransactionInfoDTOTransaction {
     /**
      * Number of signatures needed to remove a cosignatory.
      * If we are modifying an existing multisig account, this indicates the relative change of the minimum cosignatories.
+     * 
      * @type {number}
      * @memberof TransactionInfoDTOTransaction
      */
@@ -662,6 +730,7 @@ export interface TransactionInfoDTOTransaction {
     /**
      * Number of signatures needed to approve a transaction.
      * If we are modifying an existing multisig account, this indicates the relative change of the minimum cosignatories.
+     * 
      * @type {number}
      * @memberof TransactionInfoDTOTransaction
      */
@@ -699,6 +768,7 @@ export interface TransactionInfoDTOTransaction {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof TransactionInfoDTOTransaction
      */
@@ -735,6 +805,7 @@ export interface TransactionInfoDTOTransaction {
     newRestrictionType: MosaicRestrictionTypeEnum;
     /**
      * Array of mosaics sent to the recipient.
+     * 
      * @type {Array<UnresolvedMosaic>}
      * @memberof TransactionInfoDTOTransaction
      */
@@ -747,12 +818,76 @@ export interface TransactionInfoDTOTransaction {
     message?: string;
 }
 
+
+
+/**
+ * Check if a given object implements the TransactionInfoDTOTransaction interface.
+ */
+export function instanceOfTransactionInfoDTOTransaction(value: Record<string, any>): value is TransactionInfoDTOTransaction {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('maxFee' in value) || value['maxFee'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    if (!('linkedPublicKey' in value) || value['linkedPublicKey'] === undefined) return false;
+    if (!('linkAction' in value) || value['linkAction'] === undefined) return false;
+    if (!('startEpoch' in value) || value['startEpoch'] === undefined) return false;
+    if (!('endEpoch' in value) || value['endEpoch'] === undefined) return false;
+    if (!('transactionsHash' in value) || value['transactionsHash'] === undefined) return false;
+    if (!('cosignatures' in value) || value['cosignatures'] === undefined) return false;
+    if (!('transactions' in value) || value['transactions'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('duration' in value) || value['duration'] === undefined) return false;
+    if (!('hash' in value) || value['hash'] === undefined) return false;
+    if (!('recipientAddress' in value) || value['recipientAddress'] === undefined) return false;
+    if (!('secret' in value) || value['secret'] === undefined) return false;
+    if (!('hashAlgorithm' in value) || value['hashAlgorithm'] === undefined) return false;
+    if (!('proof' in value) || value['proof'] === undefined) return false;
+    if (!('targetAddress' in value) || value['targetAddress'] === undefined) return false;
+    if (!('scopedMetadataKey' in value) || value['scopedMetadataKey'] === undefined) return false;
+    if (!('valueSizeDelta' in value) || value['valueSizeDelta'] === undefined) return false;
+    if (!('valueSize' in value) || value['valueSize'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    if (!('targetMosaicId' in value) || value['targetMosaicId'] === undefined) return false;
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('nonce' in value) || value['nonce'] === undefined) return false;
+    if (!('flags' in value) || value['flags'] === undefined) return false;
+    if (!('divisibility' in value) || value['divisibility'] === undefined) return false;
+    if (!('delta' in value) || value['delta'] === undefined) return false;
+    if (!('action' in value) || value['action'] === undefined) return false;
+    if (!('sourceAddress' in value) || value['sourceAddress'] === undefined) return false;
+    if (!('registrationType' in value) || value['registrationType'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('namespaceId' in value) || value['namespaceId'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('aliasAction' in value) || value['aliasAction'] === undefined) return false;
+    if (!('minRemovalDelta' in value) || value['minRemovalDelta'] === undefined) return false;
+    if (!('minApprovalDelta' in value) || value['minApprovalDelta'] === undefined) return false;
+    if (!('addressAdditions' in value) || value['addressAdditions'] === undefined) return false;
+    if (!('addressDeletions' in value) || value['addressDeletions'] === undefined) return false;
+    if (!('restrictionFlags' in value) || value['restrictionFlags'] === undefined) return false;
+    if (!('restrictionAdditions' in value) || value['restrictionAdditions'] === undefined) return false;
+    if (!('restrictionDeletions' in value) || value['restrictionDeletions'] === undefined) return false;
+    if (!('referenceMosaicId' in value) || value['referenceMosaicId'] === undefined) return false;
+    if (!('restrictionKey' in value) || value['restrictionKey'] === undefined) return false;
+    if (!('previousRestrictionValue' in value) || value['previousRestrictionValue'] === undefined) return false;
+    if (!('newRestrictionValue' in value) || value['newRestrictionValue'] === undefined) return false;
+    if (!('previousRestrictionType' in value) || value['previousRestrictionType'] === undefined) return false;
+    if (!('newRestrictionType' in value) || value['newRestrictionType'] === undefined) return false;
+    if (!('mosaics' in value) || value['mosaics'] === undefined) return false;
+    return true;
+}
+
 export function TransactionInfoDTOTransactionFromJSON(json: any): TransactionInfoDTOTransaction {
     return TransactionInfoDTOTransactionFromJSONTyped(json, false);
 }
 
 export function TransactionInfoDTOTransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionInfoDTOTransaction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -786,7 +921,7 @@ export function TransactionInfoDTOTransactionFromJSONTyped(json: any, ignoreDisc
         'valueSize': json['valueSize'],
         'value': json['value'],
         'targetMosaicId': json['targetMosaicId'],
-        'targetNamespaceId': !exists(json, 'targetNamespaceId') ? undefined : json['targetNamespaceId'],
+        'targetNamespaceId': json['targetNamespaceId'] == null ? undefined : json['targetNamespaceId'],
         'id': json['id'],
         'nonce': json['nonce'],
         'flags': json['flags'],
@@ -794,7 +929,7 @@ export function TransactionInfoDTOTransactionFromJSONTyped(json: any, ignoreDisc
         'delta': json['delta'],
         'action': MosaicSupplyChangeActionEnumFromJSON(json['action']),
         'sourceAddress': json['sourceAddress'],
-        'parentId': !exists(json, 'parentId') ? undefined : json['parentId'],
+        'parentId': json['parentId'] == null ? undefined : json['parentId'],
         'registrationType': NamespaceRegistrationTypeEnumFromJSON(json['registrationType']),
         'name': json['name'],
         'namespaceId': json['namespaceId'],
@@ -814,77 +949,79 @@ export function TransactionInfoDTOTransactionFromJSONTyped(json: any, ignoreDisc
         'previousRestrictionType': MosaicRestrictionTypeEnumFromJSON(json['previousRestrictionType']),
         'newRestrictionType': MosaicRestrictionTypeEnumFromJSON(json['newRestrictionType']),
         'mosaics': ((json['mosaics'] as Array<any>).map(UnresolvedMosaicFromJSON)),
-        'message': !exists(json, 'message') ? undefined : json['message'],
+        'message': json['message'] == null ? undefined : json['message'],
     };
 }
 
-export function TransactionInfoDTOTransactionToJSON(value?: TransactionInfoDTOTransaction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionInfoDTOTransactionToJSON(json: any): TransactionInfoDTOTransaction {
+    return TransactionInfoDTOTransactionToJSONTyped(json, false);
+}
+
+export function TransactionInfoDTOTransactionToJSONTyped(value?: TransactionInfoDTOTransaction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'maxFee': value.maxFee,
-        'deadline': value.deadline,
-        'linkedPublicKey': value.linkedPublicKey,
-        'linkAction': LinkActionEnumToJSON(value.linkAction),
-        'startEpoch': value.startEpoch,
-        'endEpoch': value.endEpoch,
-        'transactionsHash': value.transactionsHash,
-        'cosignatures': ((value.cosignatures as Array<any>).map(CosignatureDTOToJSON)),
-        'transactions': ((value.transactions as Array<any>).map(EmbeddedTransactionInfoDTOToJSON)),
-        'mosaicId': value.mosaicId,
-        'amount': value.amount,
-        'duration': value.duration,
-        'hash': value.hash,
-        'recipientAddress': value.recipientAddress,
-        'secret': value.secret,
-        'hashAlgorithm': LockHashAlgorithmEnumToJSON(value.hashAlgorithm),
-        'proof': value.proof,
-        'targetAddress': value.targetAddress,
-        'scopedMetadataKey': value.scopedMetadataKey,
-        'valueSizeDelta': value.valueSizeDelta,
-        'valueSize': value.valueSize,
-        'value': value.value,
-        'targetMosaicId': value.targetMosaicId,
-        'targetNamespaceId': value.targetNamespaceId,
-        'id': value.id,
-        'nonce': value.nonce,
-        'flags': value.flags,
-        'divisibility': value.divisibility,
-        'delta': value.delta,
-        'action': MosaicSupplyChangeActionEnumToJSON(value.action),
-        'sourceAddress': value.sourceAddress,
-        'parentId': value.parentId,
-        'registrationType': NamespaceRegistrationTypeEnumToJSON(value.registrationType),
-        'name': value.name,
-        'namespaceId': value.namespaceId,
-        'address': value.address,
-        'aliasAction': AliasActionEnumToJSON(value.aliasAction),
-        'minRemovalDelta': value.minRemovalDelta,
-        'minApprovalDelta': value.minApprovalDelta,
-        'addressAdditions': value.addressAdditions,
-        'addressDeletions': value.addressDeletions,
-        'restrictionFlags': AccountRestrictionFlagsEnumToJSON(value.restrictionFlags),
-        'restrictionAdditions': ((value.restrictionAdditions as Array<any>).map(TransactionTypeEnumToJSON)),
-        'restrictionDeletions': ((value.restrictionDeletions as Array<any>).map(TransactionTypeEnumToJSON)),
-        'referenceMosaicId': value.referenceMosaicId,
-        'restrictionKey': value.restrictionKey,
-        'previousRestrictionValue': value.previousRestrictionValue,
-        'newRestrictionValue': value.newRestrictionValue,
-        'previousRestrictionType': MosaicRestrictionTypeEnumToJSON(value.previousRestrictionType),
-        'newRestrictionType': MosaicRestrictionTypeEnumToJSON(value.newRestrictionType),
-        'mosaics': ((value.mosaics as Array<any>).map(UnresolvedMosaicToJSON)),
-        'message': value.message,
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'maxFee': value['maxFee'],
+        'deadline': value['deadline'],
+        'linkedPublicKey': value['linkedPublicKey'],
+        'linkAction': LinkActionEnumToJSON(value['linkAction']),
+        'startEpoch': value['startEpoch'],
+        'endEpoch': value['endEpoch'],
+        'transactionsHash': value['transactionsHash'],
+        'cosignatures': ((value['cosignatures'] as Array<any>).map(CosignatureDTOToJSON)),
+        'transactions': ((value['transactions'] as Array<any>).map(EmbeddedTransactionInfoDTOToJSON)),
+        'mosaicId': value['mosaicId'],
+        'amount': value['amount'],
+        'duration': value['duration'],
+        'hash': value['hash'],
+        'recipientAddress': value['recipientAddress'],
+        'secret': value['secret'],
+        'hashAlgorithm': LockHashAlgorithmEnumToJSON(value['hashAlgorithm']),
+        'proof': value['proof'],
+        'targetAddress': value['targetAddress'],
+        'scopedMetadataKey': value['scopedMetadataKey'],
+        'valueSizeDelta': value['valueSizeDelta'],
+        'valueSize': value['valueSize'],
+        'value': value['value'],
+        'targetMosaicId': value['targetMosaicId'],
+        'targetNamespaceId': value['targetNamespaceId'],
+        'id': value['id'],
+        'nonce': value['nonce'],
+        'flags': value['flags'],
+        'divisibility': value['divisibility'],
+        'delta': value['delta'],
+        'action': MosaicSupplyChangeActionEnumToJSON(value['action']),
+        'sourceAddress': value['sourceAddress'],
+        'parentId': value['parentId'],
+        'registrationType': NamespaceRegistrationTypeEnumToJSON(value['registrationType']),
+        'name': value['name'],
+        'namespaceId': value['namespaceId'],
+        'address': value['address'],
+        'aliasAction': AliasActionEnumToJSON(value['aliasAction']),
+        'minRemovalDelta': value['minRemovalDelta'],
+        'minApprovalDelta': value['minApprovalDelta'],
+        'addressAdditions': value['addressAdditions'],
+        'addressDeletions': value['addressDeletions'],
+        'restrictionFlags': AccountRestrictionFlagsEnumToJSON(value['restrictionFlags']),
+        'restrictionAdditions': ((value['restrictionAdditions'] as Array<any>).map(TransactionTypeEnumToJSON)),
+        'restrictionDeletions': ((value['restrictionDeletions'] as Array<any>).map(TransactionTypeEnumToJSON)),
+        'referenceMosaicId': value['referenceMosaicId'],
+        'restrictionKey': value['restrictionKey'],
+        'previousRestrictionValue': value['previousRestrictionValue'],
+        'newRestrictionValue': value['newRestrictionValue'],
+        'previousRestrictionType': MosaicRestrictionTypeEnumToJSON(value['previousRestrictionType']),
+        'newRestrictionType': MosaicRestrictionTypeEnumToJSON(value['newRestrictionType']),
+        'mosaics': ((value['mosaics'] as Array<any>).map(UnresolvedMosaicToJSON)),
+        'message': value['message'],
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { ParentPublicKeySignaturePair } from './ParentPublicKeySignaturePair';
 import {
-    ParentPublicKeySignaturePair,
     ParentPublicKeySignaturePairFromJSON,
     ParentPublicKeySignaturePairFromJSONTyped,
     ParentPublicKeySignaturePairToJSON,
+    ParentPublicKeySignaturePairToJSONTyped,
 } from './ParentPublicKeySignaturePair';
 
 /**
@@ -40,12 +41,21 @@ export interface BmTreeSignature {
     bottom: ParentPublicKeySignaturePair;
 }
 
+/**
+ * Check if a given object implements the BmTreeSignature interface.
+ */
+export function instanceOfBmTreeSignature(value: Record<string, any>): value is BmTreeSignature {
+    if (!('root' in value) || value['root'] === undefined) return false;
+    if (!('bottom' in value) || value['bottom'] === undefined) return false;
+    return true;
+}
+
 export function BmTreeSignatureFromJSON(json: any): BmTreeSignature {
     return BmTreeSignatureFromJSONTyped(json, false);
 }
 
 export function BmTreeSignatureFromJSONTyped(json: any, ignoreDiscriminator: boolean): BmTreeSignature {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,17 +65,19 @@ export function BmTreeSignatureFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function BmTreeSignatureToJSON(value?: BmTreeSignature | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BmTreeSignatureToJSON(json: any): BmTreeSignature {
+    return BmTreeSignatureToJSONTyped(json, false);
+}
+
+export function BmTreeSignatureToJSONTyped(value?: BmTreeSignature | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'root': ParentPublicKeySignaturePairToJSON(value.root),
-        'bottom': ParentPublicKeySignaturePairToJSON(value.bottom),
+        'root': ParentPublicKeySignaturePairToJSON(value['root']),
+        'bottom': ParentPublicKeySignaturePairToJSON(value['bottom']),
     };
 }
 

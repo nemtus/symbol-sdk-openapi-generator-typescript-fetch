@@ -12,25 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    MosaicMetadataTransactionBodyDTO,
-    MosaicMetadataTransactionBodyDTOFromJSON,
-    MosaicMetadataTransactionBodyDTOFromJSONTyped,
-    MosaicMetadataTransactionBodyDTOToJSON,
-} from './MosaicMetadataTransactionBodyDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
-import {
-    TransactionDTO,
-    TransactionDTOFromJSON,
-    TransactionDTOFromJSONTyped,
-    TransactionDTOToJSON,
-} from './TransactionDTO';
 
 /**
  * Transaction to create or modify a multisig account.
@@ -90,6 +79,7 @@ export interface MosaicMetadataTransactionDTO {
      * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
      * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
      * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * 
      * @type {string}
      * @memberof MosaicMetadataTransactionDTO
      */
@@ -103,6 +93,7 @@ export interface MosaicMetadataTransactionDTO {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof MosaicMetadataTransactionDTO
      */
@@ -127,12 +118,35 @@ export interface MosaicMetadataTransactionDTO {
     value: string;
 }
 
+
+
+/**
+ * Check if a given object implements the MosaicMetadataTransactionDTO interface.
+ */
+export function instanceOfMosaicMetadataTransactionDTO(value: Record<string, any>): value is MosaicMetadataTransactionDTO {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('maxFee' in value) || value['maxFee'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    if (!('targetAddress' in value) || value['targetAddress'] === undefined) return false;
+    if (!('scopedMetadataKey' in value) || value['scopedMetadataKey'] === undefined) return false;
+    if (!('targetMosaicId' in value) || value['targetMosaicId'] === undefined) return false;
+    if (!('valueSizeDelta' in value) || value['valueSizeDelta'] === undefined) return false;
+    if (!('valueSize' in value) || value['valueSize'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    return true;
+}
+
 export function MosaicMetadataTransactionDTOFromJSON(json: any): MosaicMetadataTransactionDTO {
     return MosaicMetadataTransactionDTOFromJSONTyped(json, false);
 }
 
 export function MosaicMetadataTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicMetadataTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -154,29 +168,31 @@ export function MosaicMetadataTransactionDTOFromJSONTyped(json: any, ignoreDiscr
     };
 }
 
-export function MosaicMetadataTransactionDTOToJSON(value?: MosaicMetadataTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicMetadataTransactionDTOToJSON(json: any): MosaicMetadataTransactionDTO {
+    return MosaicMetadataTransactionDTOToJSONTyped(json, false);
+}
+
+export function MosaicMetadataTransactionDTOToJSONTyped(value?: MosaicMetadataTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'maxFee': value.maxFee,
-        'deadline': value.deadline,
-        'targetAddress': value.targetAddress,
-        'scopedMetadataKey': value.scopedMetadataKey,
-        'targetMosaicId': value.targetMosaicId,
-        'valueSizeDelta': value.valueSizeDelta,
-        'valueSize': value.valueSize,
-        'value': value.value,
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'maxFee': value['maxFee'],
+        'deadline': value['deadline'],
+        'targetAddress': value['targetAddress'],
+        'scopedMetadataKey': value['scopedMetadataKey'],
+        'targetMosaicId': value['targetMosaicId'],
+        'valueSizeDelta': value['valueSizeDelta'],
+        'valueSize': value['valueSize'],
+        'value': value['value'],
     };
 }
 

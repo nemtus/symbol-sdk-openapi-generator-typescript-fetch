@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -39,12 +39,22 @@ export interface AccountLinkVotingKeyDTO {
     endEpoch: number;
 }
 
+/**
+ * Check if a given object implements the AccountLinkVotingKeyDTO interface.
+ */
+export function instanceOfAccountLinkVotingKeyDTO(value: Record<string, any>): value is AccountLinkVotingKeyDTO {
+    if (!('publicKey' in value) || value['publicKey'] === undefined) return false;
+    if (!('startEpoch' in value) || value['startEpoch'] === undefined) return false;
+    if (!('endEpoch' in value) || value['endEpoch'] === undefined) return false;
+    return true;
+}
+
 export function AccountLinkVotingKeyDTOFromJSON(json: any): AccountLinkVotingKeyDTO {
     return AccountLinkVotingKeyDTOFromJSONTyped(json, false);
 }
 
 export function AccountLinkVotingKeyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountLinkVotingKeyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,18 +65,20 @@ export function AccountLinkVotingKeyDTOFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function AccountLinkVotingKeyDTOToJSON(value?: AccountLinkVotingKeyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountLinkVotingKeyDTOToJSON(json: any): AccountLinkVotingKeyDTO {
+    return AccountLinkVotingKeyDTOToJSONTyped(json, false);
+}
+
+export function AccountLinkVotingKeyDTOToJSONTyped(value?: AccountLinkVotingKeyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'publicKey': value.publicKey,
-        'startEpoch': value.startEpoch,
-        'endEpoch': value.endEpoch,
+        'publicKey': value['publicKey'],
+        'startEpoch': value['startEpoch'],
+        'endEpoch': value['endEpoch'],
     };
 }
 

@@ -16,6 +16,7 @@
 /**
  * - 0 - Mosaic address restriction.
  * - 1 - Mosaic global restriction.
+ * 
  * @export
  */
 export const MosaicRestrictionEntryTypeEnum = {
@@ -24,6 +25,17 @@ export const MosaicRestrictionEntryTypeEnum = {
 } as const;
 export type MosaicRestrictionEntryTypeEnum = typeof MosaicRestrictionEntryTypeEnum[keyof typeof MosaicRestrictionEntryTypeEnum];
 
+
+export function instanceOfMosaicRestrictionEntryTypeEnum(value: any): boolean {
+    for (const key in MosaicRestrictionEntryTypeEnum) {
+        if (Object.prototype.hasOwnProperty.call(MosaicRestrictionEntryTypeEnum, key)) {
+            if (MosaicRestrictionEntryTypeEnum[key as keyof typeof MosaicRestrictionEntryTypeEnum] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function MosaicRestrictionEntryTypeEnumFromJSON(json: any): MosaicRestrictionEntryTypeEnum {
     return MosaicRestrictionEntryTypeEnumFromJSONTyped(json, false);
@@ -35,5 +47,9 @@ export function MosaicRestrictionEntryTypeEnumFromJSONTyped(json: any, ignoreDis
 
 export function MosaicRestrictionEntryTypeEnumToJSON(value?: MosaicRestrictionEntryTypeEnum | null): any {
     return value as any;
+}
+
+export function MosaicRestrictionEntryTypeEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): MosaicRestrictionEntryTypeEnum {
+    return value as MosaicRestrictionEntryTypeEnum;
 }
 

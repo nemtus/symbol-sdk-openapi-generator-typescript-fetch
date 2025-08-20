@@ -12,24 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    EmbeddedTransactionDTO,
-    EmbeddedTransactionDTOFromJSON,
-    EmbeddedTransactionDTOFromJSONTyped,
-    EmbeddedTransactionDTOToJSON,
-} from './EmbeddedTransactionDTO';
-import {
-    MosaicDefinitionTransactionBodyDTO,
-    MosaicDefinitionTransactionBodyDTOFromJSON,
-    MosaicDefinitionTransactionBodyDTOFromJSONTyped,
-    MosaicDefinitionTransactionBodyDTOToJSON,
-} from './MosaicDefinitionTransactionBodyDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
 
 /**
@@ -86,6 +75,7 @@ export interface EmbeddedMosaicDefinitionTransactionDTO {
      * - 0x02 (transferable) - Mosaic supports transfers between arbitrary accounts. When not set, mosaic can only be transferred to and from mosaic owner.
      * - 0x04 (restrictable) - Mosaic supports custom restrictions configured by mosaic owner.
      * - 0x08 (revokable) - Mosaic allows creator to revoke balances from another user.
+     * 
      * @type {number}
      * @memberof EmbeddedMosaicDefinitionTransactionDTO
      */
@@ -94,10 +84,29 @@ export interface EmbeddedMosaicDefinitionTransactionDTO {
      * Determines up to what decimal place the mosaic can be divided.
      * Divisibility of 3 means that a mosaic can be divided into smallest parts of 0.001 mosaics.
      * The divisibility must be in the range of 0 and 6.
+     * 
      * @type {number}
      * @memberof EmbeddedMosaicDefinitionTransactionDTO
      */
     divisibility: number;
+}
+
+
+
+/**
+ * Check if a given object implements the EmbeddedMosaicDefinitionTransactionDTO interface.
+ */
+export function instanceOfEmbeddedMosaicDefinitionTransactionDTO(value: Record<string, any>): value is EmbeddedMosaicDefinitionTransactionDTO {
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('duration' in value) || value['duration'] === undefined) return false;
+    if (!('nonce' in value) || value['nonce'] === undefined) return false;
+    if (!('flags' in value) || value['flags'] === undefined) return false;
+    if (!('divisibility' in value) || value['divisibility'] === undefined) return false;
+    return true;
 }
 
 export function EmbeddedMosaicDefinitionTransactionDTOFromJSON(json: any): EmbeddedMosaicDefinitionTransactionDTO {
@@ -105,7 +114,7 @@ export function EmbeddedMosaicDefinitionTransactionDTOFromJSON(json: any): Embed
 }
 
 export function EmbeddedMosaicDefinitionTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmbeddedMosaicDefinitionTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -122,24 +131,26 @@ export function EmbeddedMosaicDefinitionTransactionDTOFromJSONTyped(json: any, i
     };
 }
 
-export function EmbeddedMosaicDefinitionTransactionDTOToJSON(value?: EmbeddedMosaicDefinitionTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EmbeddedMosaicDefinitionTransactionDTOToJSON(json: any): EmbeddedMosaicDefinitionTransactionDTO {
+    return EmbeddedMosaicDefinitionTransactionDTOToJSONTyped(json, false);
+}
+
+export function EmbeddedMosaicDefinitionTransactionDTOToJSONTyped(value?: EmbeddedMosaicDefinitionTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'id': value.id,
-        'duration': value.duration,
-        'nonce': value.nonce,
-        'flags': value.flags,
-        'divisibility': value.divisibility,
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'id': value['id'],
+        'duration': value['duration'],
+        'nonce': value['nonce'],
+        'flags': value['flags'],
+        'divisibility': value['divisibility'],
     };
 }
 

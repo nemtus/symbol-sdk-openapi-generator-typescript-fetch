@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { Pagination } from './Pagination';
 import {
-    BlockInfoDTO,
-    BlockInfoDTOFromJSON,
-    BlockInfoDTOFromJSONTyped,
-    BlockInfoDTOToJSON,
-} from './BlockInfoDTO';
-import {
-    Pagination,
     PaginationFromJSON,
     PaginationFromJSONTyped,
     PaginationToJSON,
+    PaginationToJSONTyped,
 } from './Pagination';
+import type { BlockInfoDTO } from './BlockInfoDTO';
+import {
+    BlockInfoDTOFromJSON,
+    BlockInfoDTOFromJSONTyped,
+    BlockInfoDTOToJSON,
+    BlockInfoDTOToJSONTyped,
+} from './BlockInfoDTO';
 
 /**
  * 
@@ -46,12 +48,21 @@ export interface BlockPage {
     pagination: Pagination;
 }
 
+/**
+ * Check if a given object implements the BlockPage interface.
+ */
+export function instanceOfBlockPage(value: Record<string, any>): value is BlockPage {
+    if (!('data' in value) || value['data'] === undefined) return false;
+    if (!('pagination' in value) || value['pagination'] === undefined) return false;
+    return true;
+}
+
 export function BlockPageFromJSON(json: any): BlockPage {
     return BlockPageFromJSONTyped(json, false);
 }
 
 export function BlockPageFromJSONTyped(json: any, ignoreDiscriminator: boolean): BlockPage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,17 +72,19 @@ export function BlockPageFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function BlockPageToJSON(value?: BlockPage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BlockPageToJSON(json: any): BlockPage {
+    return BlockPageToJSONTyped(json, false);
+}
+
+export function BlockPageToJSONTyped(value?: BlockPage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'data': ((value.data as Array<any>).map(BlockInfoDTOToJSON)),
-        'pagination': PaginationToJSON(value.pagination),
+        'data': ((value['data'] as Array<any>).map(BlockInfoDTOToJSON)),
+        'pagination': PaginationToJSON(value['pagination']),
     };
 }
 

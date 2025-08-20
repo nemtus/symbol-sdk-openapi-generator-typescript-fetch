@@ -12,37 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    BlockDTOAllOf,
-    BlockDTOAllOfFromJSON,
-    BlockDTOAllOfFromJSONTyped,
-    BlockDTOAllOfToJSON,
-} from './BlockDTOAllOf';
-import {
-    EntityDTO,
-    EntityDTOFromJSON,
-    EntityDTOFromJSONTyped,
-    EntityDTOToJSON,
-} from './EntityDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
-import {
-    SizePrefixedEntityDTO,
-    SizePrefixedEntityDTOFromJSON,
-    SizePrefixedEntityDTOFromJSONTyped,
-    SizePrefixedEntityDTOToJSON,
-} from './SizePrefixedEntityDTO';
-import {
-    VerifiableEntityDTO,
-    VerifiableEntityDTOFromJSON,
-    VerifiableEntityDTOFromJSONTyped,
-    VerifiableEntityDTOToJSON,
-} from './VerifiableEntityDTO';
 
 /**
  * 
@@ -160,12 +137,39 @@ export interface BlockDTO {
     feeMultiplier: number;
 }
 
+
+
+/**
+ * Check if a given object implements the BlockDTO interface.
+ */
+export function instanceOfBlockDTO(value: Record<string, any>): value is BlockDTO {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('height' in value) || value['height'] === undefined) return false;
+    if (!('timestamp' in value) || value['timestamp'] === undefined) return false;
+    if (!('difficulty' in value) || value['difficulty'] === undefined) return false;
+    if (!('proofGamma' in value) || value['proofGamma'] === undefined) return false;
+    if (!('proofVerificationHash' in value) || value['proofVerificationHash'] === undefined) return false;
+    if (!('proofScalar' in value) || value['proofScalar'] === undefined) return false;
+    if (!('previousBlockHash' in value) || value['previousBlockHash'] === undefined) return false;
+    if (!('transactionsHash' in value) || value['transactionsHash'] === undefined) return false;
+    if (!('receiptsHash' in value) || value['receiptsHash'] === undefined) return false;
+    if (!('stateHash' in value) || value['stateHash'] === undefined) return false;
+    if (!('beneficiaryAddress' in value) || value['beneficiaryAddress'] === undefined) return false;
+    if (!('feeMultiplier' in value) || value['feeMultiplier'] === undefined) return false;
+    return true;
+}
+
 export function BlockDTOFromJSON(json: any): BlockDTO {
     return BlockDTOFromJSONTyped(json, false);
 }
 
 export function BlockDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): BlockDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -191,33 +195,35 @@ export function BlockDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     };
 }
 
-export function BlockDTOToJSON(value?: BlockDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BlockDTOToJSON(json: any): BlockDTO {
+    return BlockDTOToJSONTyped(json, false);
+}
+
+export function BlockDTOToJSONTyped(value?: BlockDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'height': value.height,
-        'timestamp': value.timestamp,
-        'difficulty': value.difficulty,
-        'proofGamma': value.proofGamma,
-        'proofVerificationHash': value.proofVerificationHash,
-        'proofScalar': value.proofScalar,
-        'previousBlockHash': value.previousBlockHash,
-        'transactionsHash': value.transactionsHash,
-        'receiptsHash': value.receiptsHash,
-        'stateHash': value.stateHash,
-        'beneficiaryAddress': value.beneficiaryAddress,
-        'feeMultiplier': value.feeMultiplier,
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'height': value['height'],
+        'timestamp': value['timestamp'],
+        'difficulty': value['difficulty'],
+        'proofGamma': value['proofGamma'],
+        'proofVerificationHash': value['proofVerificationHash'],
+        'proofScalar': value['proofScalar'],
+        'previousBlockHash': value['previousBlockHash'],
+        'transactionsHash': value['transactionsHash'],
+        'receiptsHash': value['receiptsHash'],
+        'stateHash': value['stateHash'],
+        'beneficiaryAddress': value['beneficiaryAddress'],
+        'feeMultiplier': value['feeMultiplier'],
     };
 }
 

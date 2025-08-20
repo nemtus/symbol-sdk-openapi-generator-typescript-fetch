@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * Metadata related to the statment, including block information.
  * @export
@@ -27,12 +27,20 @@ export interface StatementMetaDTO {
     timestamp: string;
 }
 
+/**
+ * Check if a given object implements the StatementMetaDTO interface.
+ */
+export function instanceOfStatementMetaDTO(value: Record<string, any>): value is StatementMetaDTO {
+    if (!('timestamp' in value) || value['timestamp'] === undefined) return false;
+    return true;
+}
+
 export function StatementMetaDTOFromJSON(json: any): StatementMetaDTO {
     return StatementMetaDTOFromJSONTyped(json, false);
 }
 
 export function StatementMetaDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): StatementMetaDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -41,16 +49,18 @@ export function StatementMetaDTOFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function StatementMetaDTOToJSON(value?: StatementMetaDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StatementMetaDTOToJSON(json: any): StatementMetaDTO {
+    return StatementMetaDTOToJSONTyped(json, false);
+}
+
+export function StatementMetaDTOToJSONTyped(value?: StatementMetaDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'timestamp': value.timestamp,
+        'timestamp': value['timestamp'],
     };
 }
 

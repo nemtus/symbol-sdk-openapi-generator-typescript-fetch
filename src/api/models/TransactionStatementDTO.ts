@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { SourceDTO } from './SourceDTO';
 import {
-    SourceDTO,
     SourceDTOFromJSON,
     SourceDTOFromJSONTyped,
     SourceDTOToJSON,
+    SourceDTOToJSONTyped,
 } from './SourceDTO';
+import type { TransactionStatementDTOReceiptsInner } from './TransactionStatementDTOReceiptsInner';
 import {
-    TransactionStatementDTOReceiptsInner,
     TransactionStatementDTOReceiptsInnerFromJSON,
     TransactionStatementDTOReceiptsInnerFromJSONTyped,
     TransactionStatementDTOReceiptsInnerToJSON,
+    TransactionStatementDTOReceiptsInnerToJSONTyped,
 } from './TransactionStatementDTOReceiptsInner';
 
 /**
@@ -52,12 +54,22 @@ export interface TransactionStatementDTO {
     receipts: Array<TransactionStatementDTOReceiptsInner>;
 }
 
+/**
+ * Check if a given object implements the TransactionStatementDTO interface.
+ */
+export function instanceOfTransactionStatementDTO(value: Record<string, any>): value is TransactionStatementDTO {
+    if (!('height' in value) || value['height'] === undefined) return false;
+    if (!('source' in value) || value['source'] === undefined) return false;
+    if (!('receipts' in value) || value['receipts'] === undefined) return false;
+    return true;
+}
+
 export function TransactionStatementDTOFromJSON(json: any): TransactionStatementDTO {
     return TransactionStatementDTOFromJSONTyped(json, false);
 }
 
 export function TransactionStatementDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionStatementDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -68,18 +80,20 @@ export function TransactionStatementDTOFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function TransactionStatementDTOToJSON(value?: TransactionStatementDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionStatementDTOToJSON(json: any): TransactionStatementDTO {
+    return TransactionStatementDTOToJSONTyped(json, false);
+}
+
+export function TransactionStatementDTOToJSONTyped(value?: TransactionStatementDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'height': value.height,
-        'source': SourceDTOToJSON(value.source),
-        'receipts': ((value.receipts as Array<any>).map(TransactionStatementDTOReceiptsInnerToJSON)),
+        'height': value['height'],
+        'source': SourceDTOToJSON(value['source']),
+        'receipts': ((value['receipts'] as Array<any>).map(TransactionStatementDTOReceiptsInnerToJSON)),
     };
 }
 

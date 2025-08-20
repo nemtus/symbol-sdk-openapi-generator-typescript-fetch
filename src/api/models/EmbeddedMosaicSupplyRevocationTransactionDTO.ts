@@ -12,24 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    EmbeddedTransactionDTO,
-    EmbeddedTransactionDTOFromJSON,
-    EmbeddedTransactionDTOFromJSONTyped,
-    EmbeddedTransactionDTOToJSON,
-} from './EmbeddedTransactionDTO';
-import {
-    MosaicSupplyRevocationTransactionBodyDTO,
-    MosaicSupplyRevocationTransactionBodyDTOFromJSON,
-    MosaicSupplyRevocationTransactionBodyDTOFromJSONTyped,
-    MosaicSupplyRevocationTransactionBodyDTOToJSON,
-} from './MosaicSupplyRevocationTransactionBodyDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
 
 /**
@@ -66,6 +55,7 @@ export interface EmbeddedMosaicSupplyRevocationTransactionDTO {
      * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
      * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
      * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * 
      * @type {string}
      * @memberof EmbeddedMosaicSupplyRevocationTransactionDTO
      */
@@ -73,6 +63,7 @@ export interface EmbeddedMosaicSupplyRevocationTransactionDTO {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof EmbeddedMosaicSupplyRevocationTransactionDTO
      */
@@ -85,12 +76,28 @@ export interface EmbeddedMosaicSupplyRevocationTransactionDTO {
     amount: string;
 }
 
+
+
+/**
+ * Check if a given object implements the EmbeddedMosaicSupplyRevocationTransactionDTO interface.
+ */
+export function instanceOfEmbeddedMosaicSupplyRevocationTransactionDTO(value: Record<string, any>): value is EmbeddedMosaicSupplyRevocationTransactionDTO {
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('sourceAddress' in value) || value['sourceAddress'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    return true;
+}
+
 export function EmbeddedMosaicSupplyRevocationTransactionDTOFromJSON(json: any): EmbeddedMosaicSupplyRevocationTransactionDTO {
     return EmbeddedMosaicSupplyRevocationTransactionDTOFromJSONTyped(json, false);
 }
 
 export function EmbeddedMosaicSupplyRevocationTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmbeddedMosaicSupplyRevocationTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -105,22 +112,24 @@ export function EmbeddedMosaicSupplyRevocationTransactionDTOFromJSONTyped(json: 
     };
 }
 
-export function EmbeddedMosaicSupplyRevocationTransactionDTOToJSON(value?: EmbeddedMosaicSupplyRevocationTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EmbeddedMosaicSupplyRevocationTransactionDTOToJSON(json: any): EmbeddedMosaicSupplyRevocationTransactionDTO {
+    return EmbeddedMosaicSupplyRevocationTransactionDTOToJSONTyped(json, false);
+}
+
+export function EmbeddedMosaicSupplyRevocationTransactionDTOToJSONTyped(value?: EmbeddedMosaicSupplyRevocationTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'sourceAddress': value.sourceAddress,
-        'mosaicId': value.mosaicId,
-        'amount': value.amount,
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'sourceAddress': value['sourceAddress'],
+        'mosaicId': value['mosaicId'],
+        'amount': value['amount'],
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { LockStatus } from './LockStatus';
 import {
-    LockStatus,
     LockStatusFromJSON,
     LockStatusFromJSONTyped,
     LockStatusToJSON,
+    LockStatusToJSONTyped,
 } from './LockStatus';
 
 /**
@@ -70,12 +71,28 @@ export interface HashLockEntryDTO {
     hash: string;
 }
 
+
+
+/**
+ * Check if a given object implements the HashLockEntryDTO interface.
+ */
+export function instanceOfHashLockEntryDTO(value: Record<string, any>): value is HashLockEntryDTO {
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('ownerAddress' in value) || value['ownerAddress'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('endHeight' in value) || value['endHeight'] === undefined) return false;
+    if (!('status' in value) || value['status'] === undefined) return false;
+    if (!('hash' in value) || value['hash'] === undefined) return false;
+    return true;
+}
+
 export function HashLockEntryDTOFromJSON(json: any): HashLockEntryDTO {
     return HashLockEntryDTOFromJSONTyped(json, false);
 }
 
 export function HashLockEntryDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): HashLockEntryDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -90,22 +107,24 @@ export function HashLockEntryDTOFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function HashLockEntryDTOToJSON(value?: HashLockEntryDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function HashLockEntryDTOToJSON(json: any): HashLockEntryDTO {
+    return HashLockEntryDTOToJSONTyped(json, false);
+}
+
+export function HashLockEntryDTOToJSONTyped(value?: HashLockEntryDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'version': value.version,
-        'ownerAddress': value.ownerAddress,
-        'mosaicId': value.mosaicId,
-        'amount': value.amount,
-        'endHeight': value.endHeight,
-        'status': LockStatusToJSON(value.status),
-        'hash': value.hash,
+        'version': value['version'],
+        'ownerAddress': value['ownerAddress'],
+        'mosaicId': value['mosaicId'],
+        'amount': value['amount'],
+        'endHeight': value['endHeight'],
+        'status': LockStatusToJSON(value['status']),
+        'hash': value['hash'],
     };
 }
 

@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { BmTreeSignature } from './BmTreeSignature';
 import {
-    BmTreeSignature,
     BmTreeSignatureFromJSON,
     BmTreeSignatureFromJSONTyped,
     BmTreeSignatureToJSON,
+    BmTreeSignatureToJSONTyped,
 } from './BmTreeSignature';
+import type { StageEnum } from './StageEnum';
 import {
-    StageEnum,
     StageEnumFromJSON,
     StageEnumFromJSONTyped,
     StageEnumToJSON,
+    StageEnumToJSONTyped,
 } from './StageEnum';
 
 /**
@@ -58,12 +60,25 @@ export interface MessageGroup {
     signatures: Array<BmTreeSignature>;
 }
 
+
+
+/**
+ * Check if a given object implements the MessageGroup interface.
+ */
+export function instanceOfMessageGroup(value: Record<string, any>): value is MessageGroup {
+    if (!('stage' in value) || value['stage'] === undefined) return false;
+    if (!('height' in value) || value['height'] === undefined) return false;
+    if (!('hashes' in value) || value['hashes'] === undefined) return false;
+    if (!('signatures' in value) || value['signatures'] === undefined) return false;
+    return true;
+}
+
 export function MessageGroupFromJSON(json: any): MessageGroup {
     return MessageGroupFromJSONTyped(json, false);
 }
 
 export function MessageGroupFromJSONTyped(json: any, ignoreDiscriminator: boolean): MessageGroup {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -75,19 +90,21 @@ export function MessageGroupFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function MessageGroupToJSON(value?: MessageGroup | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MessageGroupToJSON(json: any): MessageGroup {
+    return MessageGroupToJSONTyped(json, false);
+}
+
+export function MessageGroupToJSONTyped(value?: MessageGroup | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'stage': StageEnumToJSON(value.stage),
-        'height': value.height,
-        'hashes': value.hashes,
-        'signatures': ((value.signatures as Array<any>).map(BmTreeSignatureToJSON)),
+        'stage': StageEnumToJSON(value['stage']),
+        'height': value['height'],
+        'hashes': value['hashes'],
+        'signatures': ((value['signatures'] as Array<any>).map(BmTreeSignatureToJSON)),
     };
 }
 

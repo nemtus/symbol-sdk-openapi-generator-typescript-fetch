@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -27,30 +27,39 @@ export interface TransactionIds {
     transactionIds?: Array<string>;
 }
 
+/**
+ * Check if a given object implements the TransactionIds interface.
+ */
+export function instanceOfTransactionIds(value: Record<string, any>): value is TransactionIds {
+    return true;
+}
+
 export function TransactionIdsFromJSON(json: any): TransactionIds {
     return TransactionIdsFromJSONTyped(json, false);
 }
 
 export function TransactionIdsFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionIds {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'transactionIds': !exists(json, 'transactionIds') ? undefined : json['transactionIds'],
+        'transactionIds': json['transactionIds'] == null ? undefined : json['transactionIds'],
     };
 }
 
-export function TransactionIdsToJSON(value?: TransactionIds | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionIdsToJSON(json: any): TransactionIds {
+    return TransactionIdsToJSONTyped(json, false);
+}
+
+export function TransactionIdsToJSONTyped(value?: TransactionIds | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transactionIds': value.transactionIds,
+        'transactionIds': value['transactionIds'],
     };
 }
 

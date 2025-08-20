@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MosaicGlobalRestrictionEntryRestrictionDTO } from './MosaicGlobalRestrictionEntryRestrictionDTO';
 import {
-    MosaicGlobalRestrictionEntryRestrictionDTO,
     MosaicGlobalRestrictionEntryRestrictionDTOFromJSON,
     MosaicGlobalRestrictionEntryRestrictionDTOFromJSONTyped,
     MosaicGlobalRestrictionEntryRestrictionDTOToJSON,
+    MosaicGlobalRestrictionEntryRestrictionDTOToJSONTyped,
 } from './MosaicGlobalRestrictionEntryRestrictionDTO';
 
 /**
@@ -40,12 +41,21 @@ export interface MosaicGlobalRestrictionEntryDTO {
     restriction: MosaicGlobalRestrictionEntryRestrictionDTO;
 }
 
+/**
+ * Check if a given object implements the MosaicGlobalRestrictionEntryDTO interface.
+ */
+export function instanceOfMosaicGlobalRestrictionEntryDTO(value: Record<string, any>): value is MosaicGlobalRestrictionEntryDTO {
+    if (!('key' in value) || value['key'] === undefined) return false;
+    if (!('restriction' in value) || value['restriction'] === undefined) return false;
+    return true;
+}
+
 export function MosaicGlobalRestrictionEntryDTOFromJSON(json: any): MosaicGlobalRestrictionEntryDTO {
     return MosaicGlobalRestrictionEntryDTOFromJSONTyped(json, false);
 }
 
 export function MosaicGlobalRestrictionEntryDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicGlobalRestrictionEntryDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,17 +65,19 @@ export function MosaicGlobalRestrictionEntryDTOFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function MosaicGlobalRestrictionEntryDTOToJSON(value?: MosaicGlobalRestrictionEntryDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicGlobalRestrictionEntryDTOToJSON(json: any): MosaicGlobalRestrictionEntryDTO {
+    return MosaicGlobalRestrictionEntryDTOToJSONTyped(json, false);
+}
+
+export function MosaicGlobalRestrictionEntryDTOToJSONTyped(value?: MosaicGlobalRestrictionEntryDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'key': value.key,
-        'restriction': MosaicGlobalRestrictionEntryRestrictionDTOToJSON(value.restriction),
+        'key': value['key'],
+        'restriction': MosaicGlobalRestrictionEntryRestrictionDTOToJSON(value['restriction']),
     };
 }
 

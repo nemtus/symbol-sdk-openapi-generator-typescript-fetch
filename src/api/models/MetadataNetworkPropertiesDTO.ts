@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -27,30 +27,39 @@ export interface MetadataNetworkPropertiesDTO {
     maxValueSize?: string;
 }
 
+/**
+ * Check if a given object implements the MetadataNetworkPropertiesDTO interface.
+ */
+export function instanceOfMetadataNetworkPropertiesDTO(value: Record<string, any>): value is MetadataNetworkPropertiesDTO {
+    return true;
+}
+
 export function MetadataNetworkPropertiesDTOFromJSON(json: any): MetadataNetworkPropertiesDTO {
     return MetadataNetworkPropertiesDTOFromJSONTyped(json, false);
 }
 
 export function MetadataNetworkPropertiesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MetadataNetworkPropertiesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'maxValueSize': !exists(json, 'maxValueSize') ? undefined : json['maxValueSize'],
+        'maxValueSize': json['maxValueSize'] == null ? undefined : json['maxValueSize'],
     };
 }
 
-export function MetadataNetworkPropertiesDTOToJSON(value?: MetadataNetworkPropertiesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MetadataNetworkPropertiesDTOToJSON(json: any): MetadataNetworkPropertiesDTO {
+    return MetadataNetworkPropertiesDTOToJSONTyped(json, false);
+}
+
+export function MetadataNetworkPropertiesDTOToJSONTyped(value?: MetadataNetworkPropertiesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'maxValueSize': value.maxValueSize,
+        'maxValueSize': value['maxValueSize'],
     };
 }
 

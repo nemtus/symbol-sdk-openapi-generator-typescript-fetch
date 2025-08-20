@@ -18,6 +18,7 @@
  * * 0 - Account.
  * * 1 - Mosaic.
  * * 2 - Namespace.
+ * 
  * @export
  */
 export const MetadataTypeEnum = {
@@ -27,6 +28,17 @@ export const MetadataTypeEnum = {
 } as const;
 export type MetadataTypeEnum = typeof MetadataTypeEnum[keyof typeof MetadataTypeEnum];
 
+
+export function instanceOfMetadataTypeEnum(value: any): boolean {
+    for (const key in MetadataTypeEnum) {
+        if (Object.prototype.hasOwnProperty.call(MetadataTypeEnum, key)) {
+            if (MetadataTypeEnum[key as keyof typeof MetadataTypeEnum] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function MetadataTypeEnumFromJSON(json: any): MetadataTypeEnum {
     return MetadataTypeEnumFromJSONTyped(json, false);
@@ -38,5 +50,9 @@ export function MetadataTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: bo
 
 export function MetadataTypeEnumToJSON(value?: MetadataTypeEnum | null): any {
     return value as any;
+}
+
+export function MetadataTypeEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): MetadataTypeEnum {
+    return value as MetadataTypeEnum;
 }
 

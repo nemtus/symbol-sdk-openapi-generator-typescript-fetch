@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NodeIdentityEqualityStrategy } from './NodeIdentityEqualityStrategy';
 import {
-    NodeIdentityEqualityStrategy,
     NodeIdentityEqualityStrategyFromJSON,
     NodeIdentityEqualityStrategyFromJSONTyped,
     NodeIdentityEqualityStrategyToJSON,
+    NodeIdentityEqualityStrategyToJSONTyped,
 } from './NodeIdentityEqualityStrategy';
 
 /**
@@ -58,38 +59,49 @@ export interface NetworkPropertiesDTO {
     epochAdjustment?: string;
 }
 
+
+
+/**
+ * Check if a given object implements the NetworkPropertiesDTO interface.
+ */
+export function instanceOfNetworkPropertiesDTO(value: Record<string, any>): value is NetworkPropertiesDTO {
+    return true;
+}
+
 export function NetworkPropertiesDTOFromJSON(json: any): NetworkPropertiesDTO {
     return NetworkPropertiesDTOFromJSONTyped(json, false);
 }
 
 export function NetworkPropertiesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): NetworkPropertiesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'identifier': !exists(json, 'identifier') ? undefined : json['identifier'],
-        'nodeEqualityStrategy': !exists(json, 'nodeEqualityStrategy') ? undefined : NodeIdentityEqualityStrategyFromJSON(json['nodeEqualityStrategy']),
-        'nemesisSignerPublicKey': !exists(json, 'nemesisSignerPublicKey') ? undefined : json['nemesisSignerPublicKey'],
-        'generationHashSeed': !exists(json, 'generationHashSeed') ? undefined : json['generationHashSeed'],
-        'epochAdjustment': !exists(json, 'epochAdjustment') ? undefined : json['epochAdjustment'],
+        'identifier': json['identifier'] == null ? undefined : json['identifier'],
+        'nodeEqualityStrategy': json['nodeEqualityStrategy'] == null ? undefined : NodeIdentityEqualityStrategyFromJSON(json['nodeEqualityStrategy']),
+        'nemesisSignerPublicKey': json['nemesisSignerPublicKey'] == null ? undefined : json['nemesisSignerPublicKey'],
+        'generationHashSeed': json['generationHashSeed'] == null ? undefined : json['generationHashSeed'],
+        'epochAdjustment': json['epochAdjustment'] == null ? undefined : json['epochAdjustment'],
     };
 }
 
-export function NetworkPropertiesDTOToJSON(value?: NetworkPropertiesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NetworkPropertiesDTOToJSON(json: any): NetworkPropertiesDTO {
+    return NetworkPropertiesDTOToJSONTyped(json, false);
+}
+
+export function NetworkPropertiesDTOToJSONTyped(value?: NetworkPropertiesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'identifier': value.identifier,
-        'nodeEqualityStrategy': NodeIdentityEqualityStrategyToJSON(value.nodeEqualityStrategy),
-        'nemesisSignerPublicKey': value.nemesisSignerPublicKey,
-        'generationHashSeed': value.generationHashSeed,
-        'epochAdjustment': value.epochAdjustment,
+        'identifier': value['identifier'],
+        'nodeEqualityStrategy': NodeIdentityEqualityStrategyToJSON(value['nodeEqualityStrategy']),
+        'nemesisSignerPublicKey': value['nemesisSignerPublicKey'],
+        'generationHashSeed': value['generationHashSeed'],
+        'epochAdjustment': value['epochAdjustment'],
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { AccountRestrictionDTO } from './AccountRestrictionDTO';
 import {
-    AccountRestrictionDTO,
     AccountRestrictionDTOFromJSON,
     AccountRestrictionDTOFromJSONTyped,
     AccountRestrictionDTOToJSON,
+    AccountRestrictionDTOToJSONTyped,
 } from './AccountRestrictionDTO';
 
 /**
@@ -46,12 +47,22 @@ export interface AccountRestrictionsDTO {
     restrictions: Array<AccountRestrictionDTO>;
 }
 
+/**
+ * Check if a given object implements the AccountRestrictionsDTO interface.
+ */
+export function instanceOfAccountRestrictionsDTO(value: Record<string, any>): value is AccountRestrictionsDTO {
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('restrictions' in value) || value['restrictions'] === undefined) return false;
+    return true;
+}
+
 export function AccountRestrictionsDTOFromJSON(json: any): AccountRestrictionsDTO {
     return AccountRestrictionsDTOFromJSONTyped(json, false);
 }
 
 export function AccountRestrictionsDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountRestrictionsDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -62,18 +73,20 @@ export function AccountRestrictionsDTOFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function AccountRestrictionsDTOToJSON(value?: AccountRestrictionsDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountRestrictionsDTOToJSON(json: any): AccountRestrictionsDTO {
+    return AccountRestrictionsDTOToJSONTyped(json, false);
+}
+
+export function AccountRestrictionsDTOToJSONTyped(value?: AccountRestrictionsDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'version': value.version,
-        'address': value.address,
-        'restrictions': ((value.restrictions as Array<any>).map(AccountRestrictionDTOToJSON)),
+        'version': value['version'],
+        'address': value['address'],
+        'restrictions': ((value['restrictions'] as Array<any>).map(AccountRestrictionDTOToJSON)),
     };
 }
 

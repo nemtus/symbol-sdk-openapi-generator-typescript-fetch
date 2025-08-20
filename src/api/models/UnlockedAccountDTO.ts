@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -27,12 +27,20 @@ export interface UnlockedAccountDTO {
     unlockedAccount: Array<string>;
 }
 
+/**
+ * Check if a given object implements the UnlockedAccountDTO interface.
+ */
+export function instanceOfUnlockedAccountDTO(value: Record<string, any>): value is UnlockedAccountDTO {
+    if (!('unlockedAccount' in value) || value['unlockedAccount'] === undefined) return false;
+    return true;
+}
+
 export function UnlockedAccountDTOFromJSON(json: any): UnlockedAccountDTO {
     return UnlockedAccountDTOFromJSONTyped(json, false);
 }
 
 export function UnlockedAccountDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): UnlockedAccountDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -41,16 +49,18 @@ export function UnlockedAccountDTOFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function UnlockedAccountDTOToJSON(value?: UnlockedAccountDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UnlockedAccountDTOToJSON(json: any): UnlockedAccountDTO {
+    return UnlockedAccountDTOToJSONTyped(json, false);
+}
+
+export function UnlockedAccountDTOToJSONTyped(value?: UnlockedAccountDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'unlockedAccount': value.unlockedAccount,
+        'unlockedAccount': value['unlockedAccount'],
     };
 }
 

@@ -12,37 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    AccountOperationRestrictionTransactionBodyDTO,
-    AccountOperationRestrictionTransactionBodyDTOFromJSON,
-    AccountOperationRestrictionTransactionBodyDTOFromJSONTyped,
-    AccountOperationRestrictionTransactionBodyDTOToJSON,
-} from './AccountOperationRestrictionTransactionBodyDTO';
-import {
-    AccountRestrictionFlagsEnum,
-    AccountRestrictionFlagsEnumFromJSON,
-    AccountRestrictionFlagsEnumFromJSONTyped,
-    AccountRestrictionFlagsEnumToJSON,
-} from './AccountRestrictionFlagsEnum';
-import {
-    EmbeddedTransactionDTO,
-    EmbeddedTransactionDTOFromJSON,
-    EmbeddedTransactionDTOFromJSONTyped,
-    EmbeddedTransactionDTOToJSON,
-} from './EmbeddedTransactionDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { TransactionTypeEnum } from './TransactionTypeEnum';
 import {
-    TransactionTypeEnum,
     TransactionTypeEnumFromJSON,
     TransactionTypeEnumFromJSONTyped,
     TransactionTypeEnumToJSON,
+    TransactionTypeEnumToJSONTyped,
 } from './TransactionTypeEnum';
+import type { AccountRestrictionFlagsEnum } from './AccountRestrictionFlagsEnum';
+import {
+    AccountRestrictionFlagsEnumFromJSON,
+    AccountRestrictionFlagsEnumFromJSONTyped,
+    AccountRestrictionFlagsEnumToJSON,
+    AccountRestrictionFlagsEnumToJSONTyped,
+} from './AccountRestrictionFlagsEnum';
 
 /**
  * 
@@ -94,12 +85,28 @@ export interface EmbeddedAccountOperationRestrictionTransactionDTO {
     restrictionDeletions: Array<TransactionTypeEnum>;
 }
 
+
+
+/**
+ * Check if a given object implements the EmbeddedAccountOperationRestrictionTransactionDTO interface.
+ */
+export function instanceOfEmbeddedAccountOperationRestrictionTransactionDTO(value: Record<string, any>): value is EmbeddedAccountOperationRestrictionTransactionDTO {
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('restrictionFlags' in value) || value['restrictionFlags'] === undefined) return false;
+    if (!('restrictionAdditions' in value) || value['restrictionAdditions'] === undefined) return false;
+    if (!('restrictionDeletions' in value) || value['restrictionDeletions'] === undefined) return false;
+    return true;
+}
+
 export function EmbeddedAccountOperationRestrictionTransactionDTOFromJSON(json: any): EmbeddedAccountOperationRestrictionTransactionDTO {
     return EmbeddedAccountOperationRestrictionTransactionDTOFromJSONTyped(json, false);
 }
 
 export function EmbeddedAccountOperationRestrictionTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmbeddedAccountOperationRestrictionTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -114,22 +121,24 @@ export function EmbeddedAccountOperationRestrictionTransactionDTOFromJSONTyped(j
     };
 }
 
-export function EmbeddedAccountOperationRestrictionTransactionDTOToJSON(value?: EmbeddedAccountOperationRestrictionTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EmbeddedAccountOperationRestrictionTransactionDTOToJSON(json: any): EmbeddedAccountOperationRestrictionTransactionDTO {
+    return EmbeddedAccountOperationRestrictionTransactionDTOToJSONTyped(json, false);
+}
+
+export function EmbeddedAccountOperationRestrictionTransactionDTOToJSONTyped(value?: EmbeddedAccountOperationRestrictionTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'restrictionFlags': AccountRestrictionFlagsEnumToJSON(value.restrictionFlags),
-        'restrictionAdditions': ((value.restrictionAdditions as Array<any>).map(TransactionTypeEnumToJSON)),
-        'restrictionDeletions': ((value.restrictionDeletions as Array<any>).map(TransactionTypeEnumToJSON)),
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'restrictionFlags': AccountRestrictionFlagsEnumToJSON(value['restrictionFlags']),
+        'restrictionAdditions': ((value['restrictionAdditions'] as Array<any>).map(TransactionTypeEnumToJSON)),
+        'restrictionDeletions': ((value['restrictionDeletions'] as Array<any>).map(TransactionTypeEnumToJSON)),
     };
 }
 

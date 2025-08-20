@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -27,30 +27,39 @@ export interface TransferNetworkPropertiesDTO {
     maxMessageSize?: string;
 }
 
+/**
+ * Check if a given object implements the TransferNetworkPropertiesDTO interface.
+ */
+export function instanceOfTransferNetworkPropertiesDTO(value: Record<string, any>): value is TransferNetworkPropertiesDTO {
+    return true;
+}
+
 export function TransferNetworkPropertiesDTOFromJSON(json: any): TransferNetworkPropertiesDTO {
     return TransferNetworkPropertiesDTOFromJSONTyped(json, false);
 }
 
 export function TransferNetworkPropertiesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransferNetworkPropertiesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'maxMessageSize': !exists(json, 'maxMessageSize') ? undefined : json['maxMessageSize'],
+        'maxMessageSize': json['maxMessageSize'] == null ? undefined : json['maxMessageSize'],
     };
 }
 
-export function TransferNetworkPropertiesDTOToJSON(value?: TransferNetworkPropertiesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransferNetworkPropertiesDTOToJSON(json: any): TransferNetworkPropertiesDTO {
+    return TransferNetworkPropertiesDTOToJSONTyped(json, false);
+}
+
+export function TransferNetworkPropertiesDTOToJSONTyped(value?: TransferNetworkPropertiesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'maxMessageSize': value.maxMessageSize,
+        'maxMessageSize': value['maxMessageSize'],
     };
 }
 

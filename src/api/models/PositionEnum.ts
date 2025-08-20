@@ -24,6 +24,17 @@ export const PositionEnum = {
 export type PositionEnum = typeof PositionEnum[keyof typeof PositionEnum];
 
 
+export function instanceOfPositionEnum(value: any): boolean {
+    for (const key in PositionEnum) {
+        if (Object.prototype.hasOwnProperty.call(PositionEnum, key)) {
+            if (PositionEnum[key as keyof typeof PositionEnum] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function PositionEnumFromJSON(json: any): PositionEnum {
     return PositionEnumFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function PositionEnumFromJSONTyped(json: any, ignoreDiscriminator: boolea
 
 export function PositionEnumToJSON(value?: PositionEnum | null): any {
     return value as any;
+}
+
+export function PositionEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): PositionEnum {
+    return value as PositionEnum;
 }
 

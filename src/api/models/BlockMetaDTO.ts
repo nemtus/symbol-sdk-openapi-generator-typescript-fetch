@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -44,23 +44,40 @@ export interface BlockMetaDTO {
      */
     stateHashSubCacheMerkleRoots: Array<string>;
     /**
-     * Total number of [transactions](https://docs.symbolplatform.com/concepts/transaction.html) confirmed in this block, including *embedded* transactions (i.e. transactions contained within aggregate transactions).
+     * Total number of [transactions](https://docs.symbol.dev/concepts/transaction.html) confirmed in this block, including *embedded* transactions (i.e. transactions contained within aggregate transactions).
+     * 
      * @type {number}
      * @memberof BlockMetaDTO
      */
     totalTransactionsCount: number;
     /**
-     * Number of [transactions](https://docs.symbolplatform.com/concepts/transaction.html) confirmed in this block. This does not count *embedded* transactions (i.e. transactions contained within aggregate transactions).
+     * Number of [transactions](https://docs.symbol.dev/concepts/transaction.html) confirmed in this block. This does not count *embedded* transactions (i.e. transactions contained within aggregate transactions).
+     * 
      * @type {number}
      * @memberof BlockMetaDTO
      */
     transactionsCount: number;
     /**
-     * Number of statements (of any kind) present in this block. Bear in mind that some of them (like [resolution statements](https://docs.symbolplatform.com/concepts/receipt.html#resolution-statement)) are triggered by transactions present in the block, but in general, [transaction statements](https://docs.symbolplatform.com/concepts/receipt.html#transaction-statement) are not.
+     * Number of statements (of any kind) present in this block. Bear in mind that some of them (like [resolution statements](https://docs.symbol.dev/concepts/receipt.html#resolution-statement)) are triggered by transactions present in the block, but in general, [transaction statements](https://docs.symbol.dev/concepts/receipt.html#transaction-statement) are not.
+     * 
      * @type {number}
      * @memberof BlockMetaDTO
      */
     statementsCount: number;
+}
+
+/**
+ * Check if a given object implements the BlockMetaDTO interface.
+ */
+export function instanceOfBlockMetaDTO(value: Record<string, any>): value is BlockMetaDTO {
+    if (!('hash' in value) || value['hash'] === undefined) return false;
+    if (!('totalFee' in value) || value['totalFee'] === undefined) return false;
+    if (!('generationHash' in value) || value['generationHash'] === undefined) return false;
+    if (!('stateHashSubCacheMerkleRoots' in value) || value['stateHashSubCacheMerkleRoots'] === undefined) return false;
+    if (!('totalTransactionsCount' in value) || value['totalTransactionsCount'] === undefined) return false;
+    if (!('transactionsCount' in value) || value['transactionsCount'] === undefined) return false;
+    if (!('statementsCount' in value) || value['statementsCount'] === undefined) return false;
+    return true;
 }
 
 export function BlockMetaDTOFromJSON(json: any): BlockMetaDTO {
@@ -68,7 +85,7 @@ export function BlockMetaDTOFromJSON(json: any): BlockMetaDTO {
 }
 
 export function BlockMetaDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): BlockMetaDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -83,22 +100,24 @@ export function BlockMetaDTOFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function BlockMetaDTOToJSON(value?: BlockMetaDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BlockMetaDTOToJSON(json: any): BlockMetaDTO {
+    return BlockMetaDTOToJSONTyped(json, false);
+}
+
+export function BlockMetaDTOToJSONTyped(value?: BlockMetaDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'hash': value.hash,
-        'totalFee': value.totalFee,
-        'generationHash': value.generationHash,
-        'stateHashSubCacheMerkleRoots': value.stateHashSubCacheMerkleRoots,
-        'totalTransactionsCount': value.totalTransactionsCount,
-        'transactionsCount': value.transactionsCount,
-        'statementsCount': value.statementsCount,
+        'hash': value['hash'],
+        'totalFee': value['totalFee'],
+        'generationHash': value['generationHash'],
+        'stateHashSubCacheMerkleRoots': value['stateHashSubCacheMerkleRoots'],
+        'totalTransactionsCount': value['totalTransactionsCount'],
+        'transactionsCount': value['transactionsCount'],
+        'statementsCount': value['statementsCount'],
     };
 }
 

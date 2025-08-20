@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    BlockDTO,
-    BlockDTOFromJSON,
-    BlockDTOFromJSONTyped,
-    BlockDTOToJSON,
-} from './BlockDTO';
-import {
-    ImportanceBlockDTO,
-    ImportanceBlockDTOFromJSON,
-    ImportanceBlockDTOFromJSONTyped,
-    ImportanceBlockDTOToJSON,
-} from './ImportanceBlockDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { ImportanceBlockDTO } from './ImportanceBlockDTO';
+import {
+    ImportanceBlockDTOFromJSON,
+    ImportanceBlockDTOFromJSONTyped,
+    ImportanceBlockDTOToJSON,
+    ImportanceBlockDTOToJSONTyped,
+} from './ImportanceBlockDTO';
+import type { BlockDTO } from './BlockDTO';
+import {
+    BlockDTOFromJSON,
+    BlockDTOFromJSONTyped,
+    BlockDTOToJSON,
+    BlockDTOToJSONTyped,
+} from './BlockDTO';
 
 /**
  * 
@@ -172,12 +175,43 @@ export interface BlockInfoDTOBlock {
     previousImportanceBlockHash: string;
 }
 
+
+
+/**
+ * Check if a given object implements the BlockInfoDTOBlock interface.
+ */
+export function instanceOfBlockInfoDTOBlock(value: Record<string, any>): value is BlockInfoDTOBlock {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('height' in value) || value['height'] === undefined) return false;
+    if (!('timestamp' in value) || value['timestamp'] === undefined) return false;
+    if (!('difficulty' in value) || value['difficulty'] === undefined) return false;
+    if (!('proofGamma' in value) || value['proofGamma'] === undefined) return false;
+    if (!('proofVerificationHash' in value) || value['proofVerificationHash'] === undefined) return false;
+    if (!('proofScalar' in value) || value['proofScalar'] === undefined) return false;
+    if (!('previousBlockHash' in value) || value['previousBlockHash'] === undefined) return false;
+    if (!('transactionsHash' in value) || value['transactionsHash'] === undefined) return false;
+    if (!('receiptsHash' in value) || value['receiptsHash'] === undefined) return false;
+    if (!('stateHash' in value) || value['stateHash'] === undefined) return false;
+    if (!('beneficiaryAddress' in value) || value['beneficiaryAddress'] === undefined) return false;
+    if (!('feeMultiplier' in value) || value['feeMultiplier'] === undefined) return false;
+    if (!('votingEligibleAccountsCount' in value) || value['votingEligibleAccountsCount'] === undefined) return false;
+    if (!('harvestingEligibleAccountsCount' in value) || value['harvestingEligibleAccountsCount'] === undefined) return false;
+    if (!('totalVotingBalance' in value) || value['totalVotingBalance'] === undefined) return false;
+    if (!('previousImportanceBlockHash' in value) || value['previousImportanceBlockHash'] === undefined) return false;
+    return true;
+}
+
 export function BlockInfoDTOBlockFromJSON(json: any): BlockInfoDTOBlock {
     return BlockInfoDTOBlockFromJSONTyped(json, false);
 }
 
 export function BlockInfoDTOBlockFromJSONTyped(json: any, ignoreDiscriminator: boolean): BlockInfoDTOBlock {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -207,37 +241,39 @@ export function BlockInfoDTOBlockFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function BlockInfoDTOBlockToJSON(value?: BlockInfoDTOBlock | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BlockInfoDTOBlockToJSON(json: any): BlockInfoDTOBlock {
+    return BlockInfoDTOBlockToJSONTyped(json, false);
+}
+
+export function BlockInfoDTOBlockToJSONTyped(value?: BlockInfoDTOBlock | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'height': value.height,
-        'timestamp': value.timestamp,
-        'difficulty': value.difficulty,
-        'proofGamma': value.proofGamma,
-        'proofVerificationHash': value.proofVerificationHash,
-        'proofScalar': value.proofScalar,
-        'previousBlockHash': value.previousBlockHash,
-        'transactionsHash': value.transactionsHash,
-        'receiptsHash': value.receiptsHash,
-        'stateHash': value.stateHash,
-        'beneficiaryAddress': value.beneficiaryAddress,
-        'feeMultiplier': value.feeMultiplier,
-        'votingEligibleAccountsCount': value.votingEligibleAccountsCount,
-        'harvestingEligibleAccountsCount': value.harvestingEligibleAccountsCount,
-        'totalVotingBalance': value.totalVotingBalance,
-        'previousImportanceBlockHash': value.previousImportanceBlockHash,
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'height': value['height'],
+        'timestamp': value['timestamp'],
+        'difficulty': value['difficulty'],
+        'proofGamma': value['proofGamma'],
+        'proofVerificationHash': value['proofVerificationHash'],
+        'proofScalar': value['proofScalar'],
+        'previousBlockHash': value['previousBlockHash'],
+        'transactionsHash': value['transactionsHash'],
+        'receiptsHash': value['receiptsHash'],
+        'stateHash': value['stateHash'],
+        'beneficiaryAddress': value['beneficiaryAddress'],
+        'feeMultiplier': value['feeMultiplier'],
+        'votingEligibleAccountsCount': value['votingEligibleAccountsCount'],
+        'harvestingEligibleAccountsCount': value['harvestingEligibleAccountsCount'],
+        'totalVotingBalance': value['totalVotingBalance'],
+        'previousImportanceBlockHash': value['previousImportanceBlockHash'],
     };
 }
 

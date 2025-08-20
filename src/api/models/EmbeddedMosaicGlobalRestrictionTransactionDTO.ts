@@ -12,31 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    EmbeddedTransactionDTO,
-    EmbeddedTransactionDTOFromJSON,
-    EmbeddedTransactionDTOFromJSONTyped,
-    EmbeddedTransactionDTOToJSON,
-} from './EmbeddedTransactionDTO';
-import {
-    MosaicGlobalRestrictionTransactionBodyDTO,
-    MosaicGlobalRestrictionTransactionBodyDTOFromJSON,
-    MosaicGlobalRestrictionTransactionBodyDTOFromJSONTyped,
-    MosaicGlobalRestrictionTransactionBodyDTOToJSON,
-} from './MosaicGlobalRestrictionTransactionBodyDTO';
-import {
-    MosaicRestrictionTypeEnum,
-    MosaicRestrictionTypeEnumFromJSON,
-    MosaicRestrictionTypeEnumFromJSONTyped,
-    MosaicRestrictionTypeEnumToJSON,
-} from './MosaicRestrictionTypeEnum';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { MosaicRestrictionTypeEnum } from './MosaicRestrictionTypeEnum';
+import {
+    MosaicRestrictionTypeEnumFromJSON,
+    MosaicRestrictionTypeEnumFromJSONTyped,
+    MosaicRestrictionTypeEnumToJSON,
+    MosaicRestrictionTypeEnumToJSONTyped,
+} from './MosaicRestrictionTypeEnum';
 
 /**
  * 
@@ -71,6 +61,7 @@ export interface EmbeddedMosaicGlobalRestrictionTransactionDTO {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof EmbeddedMosaicGlobalRestrictionTransactionDTO
      */
@@ -78,6 +69,7 @@ export interface EmbeddedMosaicGlobalRestrictionTransactionDTO {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof EmbeddedMosaicGlobalRestrictionTransactionDTO
      */
@@ -114,12 +106,32 @@ export interface EmbeddedMosaicGlobalRestrictionTransactionDTO {
     newRestrictionType: MosaicRestrictionTypeEnum;
 }
 
+
+
+/**
+ * Check if a given object implements the EmbeddedMosaicGlobalRestrictionTransactionDTO interface.
+ */
+export function instanceOfEmbeddedMosaicGlobalRestrictionTransactionDTO(value: Record<string, any>): value is EmbeddedMosaicGlobalRestrictionTransactionDTO {
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('referenceMosaicId' in value) || value['referenceMosaicId'] === undefined) return false;
+    if (!('restrictionKey' in value) || value['restrictionKey'] === undefined) return false;
+    if (!('previousRestrictionValue' in value) || value['previousRestrictionValue'] === undefined) return false;
+    if (!('newRestrictionValue' in value) || value['newRestrictionValue'] === undefined) return false;
+    if (!('previousRestrictionType' in value) || value['previousRestrictionType'] === undefined) return false;
+    if (!('newRestrictionType' in value) || value['newRestrictionType'] === undefined) return false;
+    return true;
+}
+
 export function EmbeddedMosaicGlobalRestrictionTransactionDTOFromJSON(json: any): EmbeddedMosaicGlobalRestrictionTransactionDTO {
     return EmbeddedMosaicGlobalRestrictionTransactionDTOFromJSONTyped(json, false);
 }
 
 export function EmbeddedMosaicGlobalRestrictionTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmbeddedMosaicGlobalRestrictionTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -138,26 +150,28 @@ export function EmbeddedMosaicGlobalRestrictionTransactionDTOFromJSONTyped(json:
     };
 }
 
-export function EmbeddedMosaicGlobalRestrictionTransactionDTOToJSON(value?: EmbeddedMosaicGlobalRestrictionTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EmbeddedMosaicGlobalRestrictionTransactionDTOToJSON(json: any): EmbeddedMosaicGlobalRestrictionTransactionDTO {
+    return EmbeddedMosaicGlobalRestrictionTransactionDTOToJSONTyped(json, false);
+}
+
+export function EmbeddedMosaicGlobalRestrictionTransactionDTOToJSONTyped(value?: EmbeddedMosaicGlobalRestrictionTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'mosaicId': value.mosaicId,
-        'referenceMosaicId': value.referenceMosaicId,
-        'restrictionKey': value.restrictionKey,
-        'previousRestrictionValue': value.previousRestrictionValue,
-        'newRestrictionValue': value.newRestrictionValue,
-        'previousRestrictionType': MosaicRestrictionTypeEnumToJSON(value.previousRestrictionType),
-        'newRestrictionType': MosaicRestrictionTypeEnumToJSON(value.newRestrictionType),
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'mosaicId': value['mosaicId'],
+        'referenceMosaicId': value['referenceMosaicId'],
+        'restrictionKey': value['restrictionKey'],
+        'previousRestrictionValue': value['previousRestrictionValue'],
+        'newRestrictionValue': value['newRestrictionValue'],
+        'previousRestrictionType': MosaicRestrictionTypeEnumToJSON(value['previousRestrictionType']),
+        'newRestrictionType': MosaicRestrictionTypeEnumToJSON(value['newRestrictionType']),
     };
 }
 

@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { AccountInfoDTO } from './AccountInfoDTO';
 import {
-    AccountInfoDTO,
     AccountInfoDTOFromJSON,
     AccountInfoDTOFromJSONTyped,
     AccountInfoDTOToJSON,
+    AccountInfoDTOToJSONTyped,
 } from './AccountInfoDTO';
+import type { Pagination } from './Pagination';
 import {
-    Pagination,
     PaginationFromJSON,
     PaginationFromJSONTyped,
     PaginationToJSON,
+    PaginationToJSONTyped,
 } from './Pagination';
 
 /**
@@ -46,12 +48,21 @@ export interface AccountPage {
     pagination: Pagination;
 }
 
+/**
+ * Check if a given object implements the AccountPage interface.
+ */
+export function instanceOfAccountPage(value: Record<string, any>): value is AccountPage {
+    if (!('data' in value) || value['data'] === undefined) return false;
+    if (!('pagination' in value) || value['pagination'] === undefined) return false;
+    return true;
+}
+
 export function AccountPageFromJSON(json: any): AccountPage {
     return AccountPageFromJSONTyped(json, false);
 }
 
 export function AccountPageFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountPage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,17 +72,19 @@ export function AccountPageFromJSONTyped(json: any, ignoreDiscriminator: boolean
     };
 }
 
-export function AccountPageToJSON(value?: AccountPage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountPageToJSON(json: any): AccountPage {
+    return AccountPageToJSONTyped(json, false);
+}
+
+export function AccountPageToJSONTyped(value?: AccountPage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'data': ((value.data as Array<any>).map(AccountInfoDTOToJSON)),
-        'pagination': PaginationToJSON(value.pagination),
+        'data': ((value['data'] as Array<any>).map(AccountInfoDTOToJSON)),
+        'pagination': PaginationToJSON(value['pagination']),
     };
 }
 

@@ -14,35 +14,37 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  AnnounceTransactionInfoDTO,
+  Cosignature,
+  ModelError,
+  Order,
+  TransactionIds,
+  TransactionInfoDTO,
+  TransactionPage,
+  TransactionPayload,
+  TransactionTypeEnum,
+} from '../models/index';
 import {
-    AnnounceTransactionInfoDTO,
     AnnounceTransactionInfoDTOFromJSON,
     AnnounceTransactionInfoDTOToJSON,
-    Cosignature,
     CosignatureFromJSON,
     CosignatureToJSON,
-    ModelError,
     ModelErrorFromJSON,
     ModelErrorToJSON,
-    Order,
     OrderFromJSON,
     OrderToJSON,
-    TransactionIds,
     TransactionIdsFromJSON,
     TransactionIdsToJSON,
-    TransactionInfoDTO,
     TransactionInfoDTOFromJSON,
     TransactionInfoDTOToJSON,
-    TransactionPage,
     TransactionPageFromJSON,
     TransactionPageToJSON,
-    TransactionPayload,
     TransactionPayloadFromJSON,
     TransactionPayloadToJSON,
-    TransactionTypeEnum,
     TransactionTypeEnumFromJSON,
     TransactionTypeEnumToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface AnnounceCosignatureTransactionRequest {
     cosignature: Cosignature;
@@ -143,9 +145,12 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Announces a cosignature transaction to the network.
      * Announce a cosignature transaction
      */
-    async announceCosignatureTransactionRaw(requestParameters: AnnounceCosignatureTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<AnnounceTransactionInfoDTO>> {
-        if (requestParameters.cosignature === null || requestParameters.cosignature === undefined) {
-            throw new runtime.RequiredError('cosignature','Required parameter requestParameters.cosignature was null or undefined when calling announceCosignatureTransaction.');
+    async announceCosignatureTransactionRaw(requestParameters: AnnounceCosignatureTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AnnounceTransactionInfoDTO>> {
+        if (requestParameters['cosignature'] == null) {
+            throw new runtime.RequiredError(
+                'cosignature',
+                'Required parameter "cosignature" was null or undefined when calling announceCosignatureTransaction().'
+            );
         }
 
         const queryParameters: any = {};
@@ -154,12 +159,15 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/transactions/cosignature`;
+
         const response = await this.request({
-            path: `/transactions/cosignature`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: CosignatureToJSON(requestParameters.cosignature),
+            body: CosignatureToJSON(requestParameters['cosignature']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AnnounceTransactionInfoDTOFromJSON(jsonValue));
@@ -169,7 +177,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Announces a cosignature transaction to the network.
      * Announce a cosignature transaction
      */
-    async announceCosignatureTransaction(requestParameters: AnnounceCosignatureTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<AnnounceTransactionInfoDTO> {
+    async announceCosignatureTransaction(requestParameters: AnnounceCosignatureTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AnnounceTransactionInfoDTO> {
         const response = await this.announceCosignatureTransactionRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -178,9 +186,12 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Announces an aggregate bonded transaction to the network.
      * Announce an aggregate bonded transaction
      */
-    async announcePartialTransactionRaw(requestParameters: AnnouncePartialTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<AnnounceTransactionInfoDTO>> {
-        if (requestParameters.transactionPayload === null || requestParameters.transactionPayload === undefined) {
-            throw new runtime.RequiredError('transactionPayload','Required parameter requestParameters.transactionPayload was null or undefined when calling announcePartialTransaction.');
+    async announcePartialTransactionRaw(requestParameters: AnnouncePartialTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AnnounceTransactionInfoDTO>> {
+        if (requestParameters['transactionPayload'] == null) {
+            throw new runtime.RequiredError(
+                'transactionPayload',
+                'Required parameter "transactionPayload" was null or undefined when calling announcePartialTransaction().'
+            );
         }
 
         const queryParameters: any = {};
@@ -189,12 +200,15 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/transactions/partial`;
+
         const response = await this.request({
-            path: `/transactions/partial`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: TransactionPayloadToJSON(requestParameters.transactionPayload),
+            body: TransactionPayloadToJSON(requestParameters['transactionPayload']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AnnounceTransactionInfoDTOFromJSON(jsonValue));
@@ -204,7 +218,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Announces an aggregate bonded transaction to the network.
      * Announce an aggregate bonded transaction
      */
-    async announcePartialTransaction(requestParameters: AnnouncePartialTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<AnnounceTransactionInfoDTO> {
+    async announcePartialTransaction(requestParameters: AnnouncePartialTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AnnounceTransactionInfoDTO> {
         const response = await this.announcePartialTransactionRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -213,9 +227,12 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Announces a transaction to the network. The [catbuffer library](https://github.com/nemtech/catbuffer) defines the protocol to serialize and deserialize Symbol entities. Catbuffers are integrated into [Symbol SDKs](https://nemtech.github.io/sdk.html).  It\'s recommended to use SDKs instead of calling the API endpoint directly to announce transactions. 
      * Announce a new transaction
      */
-    async announceTransactionRaw(requestParameters: AnnounceTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<AnnounceTransactionInfoDTO>> {
-        if (requestParameters.transactionPayload === null || requestParameters.transactionPayload === undefined) {
-            throw new runtime.RequiredError('transactionPayload','Required parameter requestParameters.transactionPayload was null or undefined when calling announceTransaction.');
+    async announceTransactionRaw(requestParameters: AnnounceTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AnnounceTransactionInfoDTO>> {
+        if (requestParameters['transactionPayload'] == null) {
+            throw new runtime.RequiredError(
+                'transactionPayload',
+                'Required parameter "transactionPayload" was null or undefined when calling announceTransaction().'
+            );
         }
 
         const queryParameters: any = {};
@@ -224,12 +241,15 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/transactions`;
+
         const response = await this.request({
-            path: `/transactions`,
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: TransactionPayloadToJSON(requestParameters.transactionPayload),
+            body: TransactionPayloadToJSON(requestParameters['transactionPayload']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AnnounceTransactionInfoDTOFromJSON(jsonValue));
@@ -239,7 +259,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Announces a transaction to the network. The [catbuffer library](https://github.com/nemtech/catbuffer) defines the protocol to serialize and deserialize Symbol entities. Catbuffers are integrated into [Symbol SDKs](https://nemtech.github.io/sdk.html).  It\'s recommended to use SDKs instead of calling the API endpoint directly to announce transactions. 
      * Announce a new transaction
      */
-    async announceTransaction(requestParameters: AnnounceTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<AnnounceTransactionInfoDTO> {
+    async announceTransaction(requestParameters: AnnounceTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AnnounceTransactionInfoDTO> {
         const response = await this.announceTransactionRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -248,17 +268,24 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Returns confirmed transaction information given a transactionId or hash.
      * Get confirmed transaction information
      */
-    async getConfirmedTransactionRaw(requestParameters: GetConfirmedTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<TransactionInfoDTO>> {
-        if (requestParameters.transactionId === null || requestParameters.transactionId === undefined) {
-            throw new runtime.RequiredError('transactionId','Required parameter requestParameters.transactionId was null or undefined when calling getConfirmedTransaction.');
+    async getConfirmedTransactionRaw(requestParameters: GetConfirmedTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionInfoDTO>> {
+        if (requestParameters['transactionId'] == null) {
+            throw new runtime.RequiredError(
+                'transactionId',
+                'Required parameter "transactionId" was null or undefined when calling getConfirmedTransaction().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/transactions/confirmed/{transactionId}`;
+        urlPath = urlPath.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters['transactionId'])));
+
         const response = await this.request({
-            path: `/transactions/confirmed/{transactionId}`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters.transactionId))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -271,7 +298,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Returns confirmed transaction information given a transactionId or hash.
      * Get confirmed transaction information
      */
-    async getConfirmedTransaction(requestParameters: GetConfirmedTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<TransactionInfoDTO> {
+    async getConfirmedTransaction(requestParameters: GetConfirmedTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionInfoDTO> {
         const response = await this.getConfirmedTransactionRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -280,9 +307,12 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Returns confirmed transactions information for a given array of transactionIds.
      * Get confirmed trasactions information
      */
-    async getConfirmedTransactionsRaw(requestParameters: GetConfirmedTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Array<TransactionInfoDTO>>> {
-        if (requestParameters.transactionIds === null || requestParameters.transactionIds === undefined) {
-            throw new runtime.RequiredError('transactionIds','Required parameter requestParameters.transactionIds was null or undefined when calling getConfirmedTransactions.');
+    async getConfirmedTransactionsRaw(requestParameters: GetConfirmedTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TransactionInfoDTO>>> {
+        if (requestParameters['transactionIds'] == null) {
+            throw new runtime.RequiredError(
+                'transactionIds',
+                'Required parameter "transactionIds" was null or undefined when calling getConfirmedTransactions().'
+            );
         }
 
         const queryParameters: any = {};
@@ -291,12 +321,15 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/transactions/confirmed`;
+
         const response = await this.request({
-            path: `/transactions/confirmed`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TransactionIdsToJSON(requestParameters.transactionIds),
+            body: TransactionIdsToJSON(requestParameters['transactionIds']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TransactionInfoDTOFromJSON));
@@ -306,7 +339,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Returns confirmed transactions information for a given array of transactionIds.
      * Get confirmed trasactions information
      */
-    async getConfirmedTransactions(requestParameters: GetConfirmedTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Array<TransactionInfoDTO>> {
+    async getConfirmedTransactions(requestParameters: GetConfirmedTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TransactionInfoDTO>> {
         const response = await this.getConfirmedTransactionsRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -315,17 +348,24 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Returns partial transaction information given a transactionId or hash.
      * Get partial transaction information
      */
-    async getPartialTransactionRaw(requestParameters: GetPartialTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<TransactionInfoDTO>> {
-        if (requestParameters.transactionId === null || requestParameters.transactionId === undefined) {
-            throw new runtime.RequiredError('transactionId','Required parameter requestParameters.transactionId was null or undefined when calling getPartialTransaction.');
+    async getPartialTransactionRaw(requestParameters: GetPartialTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionInfoDTO>> {
+        if (requestParameters['transactionId'] == null) {
+            throw new runtime.RequiredError(
+                'transactionId',
+                'Required parameter "transactionId" was null or undefined when calling getPartialTransaction().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/transactions/partial/{transactionId}`;
+        urlPath = urlPath.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters['transactionId'])));
+
         const response = await this.request({
-            path: `/transactions/partial/{transactionId}`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters.transactionId))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -338,7 +378,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Returns partial transaction information given a transactionId or hash.
      * Get partial transaction information
      */
-    async getPartialTransaction(requestParameters: GetPartialTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<TransactionInfoDTO> {
+    async getPartialTransaction(requestParameters: GetPartialTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionInfoDTO> {
         const response = await this.getPartialTransactionRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -347,9 +387,12 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Returns partial transactions information for a given array of transactionIds.
      * Get partial trasactions information
      */
-    async getPartialTransactionsRaw(requestParameters: GetPartialTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Array<TransactionInfoDTO>>> {
-        if (requestParameters.transactionIds === null || requestParameters.transactionIds === undefined) {
-            throw new runtime.RequiredError('transactionIds','Required parameter requestParameters.transactionIds was null or undefined when calling getPartialTransactions.');
+    async getPartialTransactionsRaw(requestParameters: GetPartialTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TransactionInfoDTO>>> {
+        if (requestParameters['transactionIds'] == null) {
+            throw new runtime.RequiredError(
+                'transactionIds',
+                'Required parameter "transactionIds" was null or undefined when calling getPartialTransactions().'
+            );
         }
 
         const queryParameters: any = {};
@@ -358,12 +401,15 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/transactions/partial`;
+
         const response = await this.request({
-            path: `/transactions/partial`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TransactionIdsToJSON(requestParameters.transactionIds),
+            body: TransactionIdsToJSON(requestParameters['transactionIds']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TransactionInfoDTOFromJSON));
@@ -373,7 +419,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Returns partial transactions information for a given array of transactionIds.
      * Get partial trasactions information
      */
-    async getPartialTransactions(requestParameters: GetPartialTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Array<TransactionInfoDTO>> {
+    async getPartialTransactions(requestParameters: GetPartialTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TransactionInfoDTO>> {
         const response = await this.getPartialTransactionsRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -382,17 +428,24 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Returns unconfirmed transaction information given a transactionId or hash.
      * Get unconfirmed transaction information
      */
-    async getUnconfirmedTransactionRaw(requestParameters: GetUnconfirmedTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<TransactionInfoDTO>> {
-        if (requestParameters.transactionId === null || requestParameters.transactionId === undefined) {
-            throw new runtime.RequiredError('transactionId','Required parameter requestParameters.transactionId was null or undefined when calling getUnconfirmedTransaction.');
+    async getUnconfirmedTransactionRaw(requestParameters: GetUnconfirmedTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionInfoDTO>> {
+        if (requestParameters['transactionId'] == null) {
+            throw new runtime.RequiredError(
+                'transactionId',
+                'Required parameter "transactionId" was null or undefined when calling getUnconfirmedTransaction().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/transactions/unconfirmed/{transactionId}`;
+        urlPath = urlPath.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters['transactionId'])));
+
         const response = await this.request({
-            path: `/transactions/unconfirmed/{transactionId}`.replace(`{${"transactionId"}}`, encodeURIComponent(String(requestParameters.transactionId))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -405,7 +458,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Returns unconfirmed transaction information given a transactionId or hash.
      * Get unconfirmed transaction information
      */
-    async getUnconfirmedTransaction(requestParameters: GetUnconfirmedTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<TransactionInfoDTO> {
+    async getUnconfirmedTransaction(requestParameters: GetUnconfirmedTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionInfoDTO> {
         const response = await this.getUnconfirmedTransactionRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -414,9 +467,12 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Returns unconfirmed transactions information for a given array of transactionIds.
      * Get unconfirmed trasactions information
      */
-    async getUnconfirmedTransactionsRaw(requestParameters: GetUnconfirmedTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Array<TransactionInfoDTO>>> {
-        if (requestParameters.transactionIds === null || requestParameters.transactionIds === undefined) {
-            throw new runtime.RequiredError('transactionIds','Required parameter requestParameters.transactionIds was null or undefined when calling getUnconfirmedTransactions.');
+    async getUnconfirmedTransactionsRaw(requestParameters: GetUnconfirmedTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TransactionInfoDTO>>> {
+        if (requestParameters['transactionIds'] == null) {
+            throw new runtime.RequiredError(
+                'transactionIds',
+                'Required parameter "transactionIds" was null or undefined when calling getUnconfirmedTransactions().'
+            );
         }
 
         const queryParameters: any = {};
@@ -425,12 +481,15 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/transactions/unconfirmed`;
+
         const response = await this.request({
-            path: `/transactions/unconfirmed`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TransactionIdsToJSON(requestParameters.transactionIds),
+            body: TransactionIdsToJSON(requestParameters['transactionIds']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TransactionInfoDTOFromJSON));
@@ -440,7 +499,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Returns unconfirmed transactions information for a given array of transactionIds.
      * Get unconfirmed trasactions information
      */
-    async getUnconfirmedTransactions(requestParameters: GetUnconfirmedTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Array<TransactionInfoDTO>> {
+    async getUnconfirmedTransactions(requestParameters: GetUnconfirmedTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TransactionInfoDTO>> {
         const response = await this.getUnconfirmedTransactionsRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -449,73 +508,76 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Returns an array of confirmed transactions. If a transaction was announced with an alias rather than an address, the address that will be considered when querying is the one that was resolved from the alias at confirmation time. 
      * Search confirmed transactions
      */
-    async searchConfirmedTransactionsRaw(requestParameters: SearchConfirmedTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<TransactionPage>> {
+    async searchConfirmedTransactionsRaw(requestParameters: SearchConfirmedTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionPage>> {
         const queryParameters: any = {};
 
-        if (requestParameters.address !== undefined) {
-            queryParameters['address'] = requestParameters.address;
+        if (requestParameters['address'] != null) {
+            queryParameters['address'] = requestParameters['address'];
         }
 
-        if (requestParameters.recipientAddress !== undefined) {
-            queryParameters['recipientAddress'] = requestParameters.recipientAddress;
+        if (requestParameters['recipientAddress'] != null) {
+            queryParameters['recipientAddress'] = requestParameters['recipientAddress'];
         }
 
-        if (requestParameters.signerPublicKey !== undefined) {
-            queryParameters['signerPublicKey'] = requestParameters.signerPublicKey;
+        if (requestParameters['signerPublicKey'] != null) {
+            queryParameters['signerPublicKey'] = requestParameters['signerPublicKey'];
         }
 
-        if (requestParameters.height !== undefined) {
-            queryParameters['height'] = requestParameters.height;
+        if (requestParameters['height'] != null) {
+            queryParameters['height'] = requestParameters['height'];
         }
 
-        if (requestParameters.fromHeight !== undefined) {
-            queryParameters['fromHeight'] = requestParameters.fromHeight;
+        if (requestParameters['fromHeight'] != null) {
+            queryParameters['fromHeight'] = requestParameters['fromHeight'];
         }
 
-        if (requestParameters.toHeight !== undefined) {
-            queryParameters['toHeight'] = requestParameters.toHeight;
+        if (requestParameters['toHeight'] != null) {
+            queryParameters['toHeight'] = requestParameters['toHeight'];
         }
 
-        if (requestParameters.fromTransferAmount !== undefined) {
-            queryParameters['fromTransferAmount'] = requestParameters.fromTransferAmount;
+        if (requestParameters['fromTransferAmount'] != null) {
+            queryParameters['fromTransferAmount'] = requestParameters['fromTransferAmount'];
         }
 
-        if (requestParameters.toTransferAmount !== undefined) {
-            queryParameters['toTransferAmount'] = requestParameters.toTransferAmount;
+        if (requestParameters['toTransferAmount'] != null) {
+            queryParameters['toTransferAmount'] = requestParameters['toTransferAmount'];
         }
 
-        if (requestParameters.type) {
-            queryParameters['type'] = requestParameters.type;
+        if (requestParameters['type'] != null) {
+            queryParameters['type'] = requestParameters['type'];
         }
 
-        if (requestParameters.embedded !== undefined) {
-            queryParameters['embedded'] = requestParameters.embedded;
+        if (requestParameters['embedded'] != null) {
+            queryParameters['embedded'] = requestParameters['embedded'];
         }
 
-        if (requestParameters.transferMosaicId !== undefined) {
-            queryParameters['transferMosaicId'] = requestParameters.transferMosaicId;
+        if (requestParameters['transferMosaicId'] != null) {
+            queryParameters['transferMosaicId'] = requestParameters['transferMosaicId'];
         }
 
-        if (requestParameters.pageSize !== undefined) {
-            queryParameters['pageSize'] = requestParameters.pageSize;
+        if (requestParameters['pageSize'] != null) {
+            queryParameters['pageSize'] = requestParameters['pageSize'];
         }
 
-        if (requestParameters.pageNumber !== undefined) {
-            queryParameters['pageNumber'] = requestParameters.pageNumber;
+        if (requestParameters['pageNumber'] != null) {
+            queryParameters['pageNumber'] = requestParameters['pageNumber'];
         }
 
-        if (requestParameters.offset !== undefined) {
-            queryParameters['offset'] = requestParameters.offset;
+        if (requestParameters['offset'] != null) {
+            queryParameters['offset'] = requestParameters['offset'];
         }
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/transactions/confirmed`;
+
         const response = await this.request({
-            path: `/transactions/confirmed`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -528,7 +590,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Returns an array of confirmed transactions. If a transaction was announced with an alias rather than an address, the address that will be considered when querying is the one that was resolved from the alias at confirmation time. 
      * Search confirmed transactions
      */
-    async searchConfirmedTransactions(requestParameters: SearchConfirmedTransactionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<TransactionPage> {
+    async searchConfirmedTransactions(requestParameters: SearchConfirmedTransactionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionPage> {
         const response = await this.searchConfirmedTransactionsRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -537,73 +599,76 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Returns an array of partial transactions.
      * Search partial transactions
      */
-    async searchPartialTransactionsRaw(requestParameters: SearchPartialTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<TransactionPage>> {
+    async searchPartialTransactionsRaw(requestParameters: SearchPartialTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionPage>> {
         const queryParameters: any = {};
 
-        if (requestParameters.address !== undefined) {
-            queryParameters['address'] = requestParameters.address;
+        if (requestParameters['address'] != null) {
+            queryParameters['address'] = requestParameters['address'];
         }
 
-        if (requestParameters.recipientAddress !== undefined) {
-            queryParameters['recipientAddress'] = requestParameters.recipientAddress;
+        if (requestParameters['recipientAddress'] != null) {
+            queryParameters['recipientAddress'] = requestParameters['recipientAddress'];
         }
 
-        if (requestParameters.signerPublicKey !== undefined) {
-            queryParameters['signerPublicKey'] = requestParameters.signerPublicKey;
+        if (requestParameters['signerPublicKey'] != null) {
+            queryParameters['signerPublicKey'] = requestParameters['signerPublicKey'];
         }
 
-        if (requestParameters.height !== undefined) {
-            queryParameters['height'] = requestParameters.height;
+        if (requestParameters['height'] != null) {
+            queryParameters['height'] = requestParameters['height'];
         }
 
-        if (requestParameters.fromHeight !== undefined) {
-            queryParameters['fromHeight'] = requestParameters.fromHeight;
+        if (requestParameters['fromHeight'] != null) {
+            queryParameters['fromHeight'] = requestParameters['fromHeight'];
         }
 
-        if (requestParameters.toHeight !== undefined) {
-            queryParameters['toHeight'] = requestParameters.toHeight;
+        if (requestParameters['toHeight'] != null) {
+            queryParameters['toHeight'] = requestParameters['toHeight'];
         }
 
-        if (requestParameters.fromTransferAmount !== undefined) {
-            queryParameters['fromTransferAmount'] = requestParameters.fromTransferAmount;
+        if (requestParameters['fromTransferAmount'] != null) {
+            queryParameters['fromTransferAmount'] = requestParameters['fromTransferAmount'];
         }
 
-        if (requestParameters.toTransferAmount !== undefined) {
-            queryParameters['toTransferAmount'] = requestParameters.toTransferAmount;
+        if (requestParameters['toTransferAmount'] != null) {
+            queryParameters['toTransferAmount'] = requestParameters['toTransferAmount'];
         }
 
-        if (requestParameters.type) {
-            queryParameters['type'] = requestParameters.type;
+        if (requestParameters['type'] != null) {
+            queryParameters['type'] = requestParameters['type'];
         }
 
-        if (requestParameters.embedded !== undefined) {
-            queryParameters['embedded'] = requestParameters.embedded;
+        if (requestParameters['embedded'] != null) {
+            queryParameters['embedded'] = requestParameters['embedded'];
         }
 
-        if (requestParameters.transferMosaicId !== undefined) {
-            queryParameters['transferMosaicId'] = requestParameters.transferMosaicId;
+        if (requestParameters['transferMosaicId'] != null) {
+            queryParameters['transferMosaicId'] = requestParameters['transferMosaicId'];
         }
 
-        if (requestParameters.pageSize !== undefined) {
-            queryParameters['pageSize'] = requestParameters.pageSize;
+        if (requestParameters['pageSize'] != null) {
+            queryParameters['pageSize'] = requestParameters['pageSize'];
         }
 
-        if (requestParameters.pageNumber !== undefined) {
-            queryParameters['pageNumber'] = requestParameters.pageNumber;
+        if (requestParameters['pageNumber'] != null) {
+            queryParameters['pageNumber'] = requestParameters['pageNumber'];
         }
 
-        if (requestParameters.offset !== undefined) {
-            queryParameters['offset'] = requestParameters.offset;
+        if (requestParameters['offset'] != null) {
+            queryParameters['offset'] = requestParameters['offset'];
         }
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/transactions/partial`;
+
         const response = await this.request({
-            path: `/transactions/partial`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -616,7 +681,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Returns an array of partial transactions.
      * Search partial transactions
      */
-    async searchPartialTransactions(requestParameters: SearchPartialTransactionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<TransactionPage> {
+    async searchPartialTransactions(requestParameters: SearchPartialTransactionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionPage> {
         const response = await this.searchPartialTransactionsRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -625,73 +690,76 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Returns an array of unconfirmed transactions.
      * Search unconfirmed transactions
      */
-    async searchUnconfirmedTransactionsRaw(requestParameters: SearchUnconfirmedTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<TransactionPage>> {
+    async searchUnconfirmedTransactionsRaw(requestParameters: SearchUnconfirmedTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionPage>> {
         const queryParameters: any = {};
 
-        if (requestParameters.address !== undefined) {
-            queryParameters['address'] = requestParameters.address;
+        if (requestParameters['address'] != null) {
+            queryParameters['address'] = requestParameters['address'];
         }
 
-        if (requestParameters.recipientAddress !== undefined) {
-            queryParameters['recipientAddress'] = requestParameters.recipientAddress;
+        if (requestParameters['recipientAddress'] != null) {
+            queryParameters['recipientAddress'] = requestParameters['recipientAddress'];
         }
 
-        if (requestParameters.signerPublicKey !== undefined) {
-            queryParameters['signerPublicKey'] = requestParameters.signerPublicKey;
+        if (requestParameters['signerPublicKey'] != null) {
+            queryParameters['signerPublicKey'] = requestParameters['signerPublicKey'];
         }
 
-        if (requestParameters.height !== undefined) {
-            queryParameters['height'] = requestParameters.height;
+        if (requestParameters['height'] != null) {
+            queryParameters['height'] = requestParameters['height'];
         }
 
-        if (requestParameters.fromHeight !== undefined) {
-            queryParameters['fromHeight'] = requestParameters.fromHeight;
+        if (requestParameters['fromHeight'] != null) {
+            queryParameters['fromHeight'] = requestParameters['fromHeight'];
         }
 
-        if (requestParameters.toHeight !== undefined) {
-            queryParameters['toHeight'] = requestParameters.toHeight;
+        if (requestParameters['toHeight'] != null) {
+            queryParameters['toHeight'] = requestParameters['toHeight'];
         }
 
-        if (requestParameters.fromTransferAmount !== undefined) {
-            queryParameters['fromTransferAmount'] = requestParameters.fromTransferAmount;
+        if (requestParameters['fromTransferAmount'] != null) {
+            queryParameters['fromTransferAmount'] = requestParameters['fromTransferAmount'];
         }
 
-        if (requestParameters.toTransferAmount !== undefined) {
-            queryParameters['toTransferAmount'] = requestParameters.toTransferAmount;
+        if (requestParameters['toTransferAmount'] != null) {
+            queryParameters['toTransferAmount'] = requestParameters['toTransferAmount'];
         }
 
-        if (requestParameters.type) {
-            queryParameters['type'] = requestParameters.type;
+        if (requestParameters['type'] != null) {
+            queryParameters['type'] = requestParameters['type'];
         }
 
-        if (requestParameters.embedded !== undefined) {
-            queryParameters['embedded'] = requestParameters.embedded;
+        if (requestParameters['embedded'] != null) {
+            queryParameters['embedded'] = requestParameters['embedded'];
         }
 
-        if (requestParameters.transferMosaicId !== undefined) {
-            queryParameters['transferMosaicId'] = requestParameters.transferMosaicId;
+        if (requestParameters['transferMosaicId'] != null) {
+            queryParameters['transferMosaicId'] = requestParameters['transferMosaicId'];
         }
 
-        if (requestParameters.pageSize !== undefined) {
-            queryParameters['pageSize'] = requestParameters.pageSize;
+        if (requestParameters['pageSize'] != null) {
+            queryParameters['pageSize'] = requestParameters['pageSize'];
         }
 
-        if (requestParameters.pageNumber !== undefined) {
-            queryParameters['pageNumber'] = requestParameters.pageNumber;
+        if (requestParameters['pageNumber'] != null) {
+            queryParameters['pageNumber'] = requestParameters['pageNumber'];
         }
 
-        if (requestParameters.offset !== undefined) {
-            queryParameters['offset'] = requestParameters.offset;
+        if (requestParameters['offset'] != null) {
+            queryParameters['offset'] = requestParameters['offset'];
         }
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/transactions/unconfirmed`;
+
         const response = await this.request({
-            path: `/transactions/unconfirmed`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -704,7 +772,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
      * Returns an array of unconfirmed transactions.
      * Search unconfirmed transactions
      */
-    async searchUnconfirmedTransactions(requestParameters: SearchUnconfirmedTransactionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<TransactionPage> {
+    async searchUnconfirmedTransactions(requestParameters: SearchUnconfirmedTransactionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionPage> {
         const response = await this.searchUnconfirmedTransactionsRaw(requestParameters, initOverrides);
         return await response.value();
     }

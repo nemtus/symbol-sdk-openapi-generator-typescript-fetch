@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { Pagination } from './Pagination';
 import {
-    MosaicInfoDTO,
-    MosaicInfoDTOFromJSON,
-    MosaicInfoDTOFromJSONTyped,
-    MosaicInfoDTOToJSON,
-} from './MosaicInfoDTO';
-import {
-    Pagination,
     PaginationFromJSON,
     PaginationFromJSONTyped,
     PaginationToJSON,
+    PaginationToJSONTyped,
 } from './Pagination';
+import type { MosaicInfoDTO } from './MosaicInfoDTO';
+import {
+    MosaicInfoDTOFromJSON,
+    MosaicInfoDTOFromJSONTyped,
+    MosaicInfoDTOToJSON,
+    MosaicInfoDTOToJSONTyped,
+} from './MosaicInfoDTO';
 
 /**
  * 
@@ -46,12 +48,21 @@ export interface MosaicPage {
     pagination: Pagination;
 }
 
+/**
+ * Check if a given object implements the MosaicPage interface.
+ */
+export function instanceOfMosaicPage(value: Record<string, any>): value is MosaicPage {
+    if (!('data' in value) || value['data'] === undefined) return false;
+    if (!('pagination' in value) || value['pagination'] === undefined) return false;
+    return true;
+}
+
 export function MosaicPageFromJSON(json: any): MosaicPage {
     return MosaicPageFromJSONTyped(json, false);
 }
 
 export function MosaicPageFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicPage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,17 +72,19 @@ export function MosaicPageFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function MosaicPageToJSON(value?: MosaicPage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicPageToJSON(json: any): MosaicPage {
+    return MosaicPageToJSONTyped(json, false);
+}
+
+export function MosaicPageToJSONTyped(value?: MosaicPage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'data': ((value.data as Array<any>).map(MosaicInfoDTOToJSON)),
-        'pagination': PaginationToJSON(value.pagination),
+        'data': ((value['data'] as Array<any>).map(MosaicInfoDTOToJSON)),
+        'pagination': PaginationToJSON(value['pagination']),
     };
 }
 

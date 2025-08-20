@@ -177,6 +177,7 @@
  * * Failure_Extension_Partial_Transaction_Cache_Prune - Validation failed because the partial transaction was pruned from the temporal cache.
  * * Failure_Extension_Partial_Transaction_Dependency_Removed - Validation failed because the partial transaction was pruned from the temporal cache due to its dependency being removed.
  * * Failure_Extension_Read_Rate_Limit_Exceeded - Validation failed because socket read rate limit was exceeded.
+ * 
  * @export
  */
 export const TransactionStatusEnum = {
@@ -346,6 +347,17 @@ export const TransactionStatusEnum = {
 export type TransactionStatusEnum = typeof TransactionStatusEnum[keyof typeof TransactionStatusEnum];
 
 
+export function instanceOfTransactionStatusEnum(value: any): boolean {
+    for (const key in TransactionStatusEnum) {
+        if (Object.prototype.hasOwnProperty.call(TransactionStatusEnum, key)) {
+            if (TransactionStatusEnum[key as keyof typeof TransactionStatusEnum] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function TransactionStatusEnumFromJSON(json: any): TransactionStatusEnum {
     return TransactionStatusEnumFromJSONTyped(json, false);
 }
@@ -356,5 +368,9 @@ export function TransactionStatusEnumFromJSONTyped(json: any, ignoreDiscriminato
 
 export function TransactionStatusEnumToJSON(value?: TransactionStatusEnum | null): any {
     return value as any;
+}
+
+export function TransactionStatusEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): TransactionStatusEnum {
+    return value as TransactionStatusEnum;
 }
 

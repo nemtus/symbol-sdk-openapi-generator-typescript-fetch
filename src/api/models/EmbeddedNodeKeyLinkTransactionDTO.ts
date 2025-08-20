@@ -12,31 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    EmbeddedTransactionDTO,
-    EmbeddedTransactionDTOFromJSON,
-    EmbeddedTransactionDTOFromJSONTyped,
-    EmbeddedTransactionDTOToJSON,
-} from './EmbeddedTransactionDTO';
-import {
-    LinkActionEnum,
-    LinkActionEnumFromJSON,
-    LinkActionEnumFromJSONTyped,
-    LinkActionEnumToJSON,
-} from './LinkActionEnum';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { LinkActionEnum } from './LinkActionEnum';
 import {
-    NodeKeyLinkTransactionBodyDTO,
-    NodeKeyLinkTransactionBodyDTOFromJSON,
-    NodeKeyLinkTransactionBodyDTOFromJSONTyped,
-    NodeKeyLinkTransactionBodyDTOToJSON,
-} from './NodeKeyLinkTransactionBodyDTO';
+    LinkActionEnumFromJSON,
+    LinkActionEnumFromJSONTyped,
+    LinkActionEnumToJSON,
+    LinkActionEnumToJSONTyped,
+} from './LinkActionEnum';
 
 /**
  * 
@@ -82,12 +72,27 @@ export interface EmbeddedNodeKeyLinkTransactionDTO {
     linkAction: LinkActionEnum;
 }
 
+
+
+/**
+ * Check if a given object implements the EmbeddedNodeKeyLinkTransactionDTO interface.
+ */
+export function instanceOfEmbeddedNodeKeyLinkTransactionDTO(value: Record<string, any>): value is EmbeddedNodeKeyLinkTransactionDTO {
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('linkedPublicKey' in value) || value['linkedPublicKey'] === undefined) return false;
+    if (!('linkAction' in value) || value['linkAction'] === undefined) return false;
+    return true;
+}
+
 export function EmbeddedNodeKeyLinkTransactionDTOFromJSON(json: any): EmbeddedNodeKeyLinkTransactionDTO {
     return EmbeddedNodeKeyLinkTransactionDTOFromJSONTyped(json, false);
 }
 
 export function EmbeddedNodeKeyLinkTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmbeddedNodeKeyLinkTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -101,21 +106,23 @@ export function EmbeddedNodeKeyLinkTransactionDTOFromJSONTyped(json: any, ignore
     };
 }
 
-export function EmbeddedNodeKeyLinkTransactionDTOToJSON(value?: EmbeddedNodeKeyLinkTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EmbeddedNodeKeyLinkTransactionDTOToJSON(json: any): EmbeddedNodeKeyLinkTransactionDTO {
+    return EmbeddedNodeKeyLinkTransactionDTOToJSONTyped(json, false);
+}
+
+export function EmbeddedNodeKeyLinkTransactionDTOToJSONTyped(value?: EmbeddedNodeKeyLinkTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'linkedPublicKey': value.linkedPublicKey,
-        'linkAction': LinkActionEnumToJSON(value.linkAction),
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'linkedPublicKey': value['linkedPublicKey'],
+        'linkAction': LinkActionEnumToJSON(value['linkAction']),
     };
 }
 

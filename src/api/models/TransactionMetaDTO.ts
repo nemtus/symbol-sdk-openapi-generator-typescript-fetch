@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -57,12 +57,23 @@ export interface TransactionMetaDTO {
     feeMultiplier?: number;
 }
 
+/**
+ * Check if a given object implements the TransactionMetaDTO interface.
+ */
+export function instanceOfTransactionMetaDTO(value: Record<string, any>): value is TransactionMetaDTO {
+    if (!('height' in value) || value['height'] === undefined) return false;
+    if (!('hash' in value) || value['hash'] === undefined) return false;
+    if (!('merkleComponentHash' in value) || value['merkleComponentHash'] === undefined) return false;
+    if (!('index' in value) || value['index'] === undefined) return false;
+    return true;
+}
+
 export function TransactionMetaDTOFromJSON(json: any): TransactionMetaDTO {
     return TransactionMetaDTOFromJSONTyped(json, false);
 }
 
 export function TransactionMetaDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionMetaDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -71,26 +82,28 @@ export function TransactionMetaDTOFromJSONTyped(json: any, ignoreDiscriminator: 
         'hash': json['hash'],
         'merkleComponentHash': json['merkleComponentHash'],
         'index': json['index'],
-        'timestamp': !exists(json, 'timestamp') ? undefined : json['timestamp'],
-        'feeMultiplier': !exists(json, 'feeMultiplier') ? undefined : json['feeMultiplier'],
+        'timestamp': json['timestamp'] == null ? undefined : json['timestamp'],
+        'feeMultiplier': json['feeMultiplier'] == null ? undefined : json['feeMultiplier'],
     };
 }
 
-export function TransactionMetaDTOToJSON(value?: TransactionMetaDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionMetaDTOToJSON(json: any): TransactionMetaDTO {
+    return TransactionMetaDTOToJSONTyped(json, false);
+}
+
+export function TransactionMetaDTOToJSONTyped(value?: TransactionMetaDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'height': value.height,
-        'hash': value.hash,
-        'merkleComponentHash': value.merkleComponentHash,
-        'index': value.index,
-        'timestamp': value.timestamp,
-        'feeMultiplier': value.feeMultiplier,
+        'height': value['height'],
+        'hash': value['hash'],
+        'merkleComponentHash': value['merkleComponentHash'],
+        'index': value['index'],
+        'timestamp': value['timestamp'],
+        'feeMultiplier': value['feeMultiplier'],
     };
 }
 

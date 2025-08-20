@@ -12,31 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    AccountAddressRestrictionTransactionBodyDTO,
-    AccountAddressRestrictionTransactionBodyDTOFromJSON,
-    AccountAddressRestrictionTransactionBodyDTOFromJSONTyped,
-    AccountAddressRestrictionTransactionBodyDTOToJSON,
-} from './AccountAddressRestrictionTransactionBodyDTO';
-import {
-    AccountRestrictionFlagsEnum,
-    AccountRestrictionFlagsEnumFromJSON,
-    AccountRestrictionFlagsEnumFromJSONTyped,
-    AccountRestrictionFlagsEnumToJSON,
-} from './AccountRestrictionFlagsEnum';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { AccountRestrictionFlagsEnum } from './AccountRestrictionFlagsEnum';
 import {
-    TransactionDTO,
-    TransactionDTOFromJSON,
-    TransactionDTOFromJSONTyped,
-    TransactionDTOToJSON,
-} from './TransactionDTO';
+    AccountRestrictionFlagsEnumFromJSON,
+    AccountRestrictionFlagsEnumFromJSONTyped,
+    AccountRestrictionFlagsEnumToJSON,
+    AccountRestrictionFlagsEnumToJSONTyped,
+} from './AccountRestrictionFlagsEnum';
 
 /**
  * Transaction to prevent incoming and outgoing transactions for a given a set of addresses.
@@ -112,12 +102,32 @@ export interface AccountAddressRestrictionTransactionDTO {
     restrictionDeletions: Array<string>;
 }
 
+
+
+/**
+ * Check if a given object implements the AccountAddressRestrictionTransactionDTO interface.
+ */
+export function instanceOfAccountAddressRestrictionTransactionDTO(value: Record<string, any>): value is AccountAddressRestrictionTransactionDTO {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('maxFee' in value) || value['maxFee'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    if (!('restrictionFlags' in value) || value['restrictionFlags'] === undefined) return false;
+    if (!('restrictionAdditions' in value) || value['restrictionAdditions'] === undefined) return false;
+    if (!('restrictionDeletions' in value) || value['restrictionDeletions'] === undefined) return false;
+    return true;
+}
+
 export function AccountAddressRestrictionTransactionDTOFromJSON(json: any): AccountAddressRestrictionTransactionDTO {
     return AccountAddressRestrictionTransactionDTOFromJSONTyped(json, false);
 }
 
 export function AccountAddressRestrictionTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountAddressRestrictionTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -136,26 +146,28 @@ export function AccountAddressRestrictionTransactionDTOFromJSONTyped(json: any, 
     };
 }
 
-export function AccountAddressRestrictionTransactionDTOToJSON(value?: AccountAddressRestrictionTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountAddressRestrictionTransactionDTOToJSON(json: any): AccountAddressRestrictionTransactionDTO {
+    return AccountAddressRestrictionTransactionDTOToJSONTyped(json, false);
+}
+
+export function AccountAddressRestrictionTransactionDTOToJSONTyped(value?: AccountAddressRestrictionTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'maxFee': value.maxFee,
-        'deadline': value.deadline,
-        'restrictionFlags': AccountRestrictionFlagsEnumToJSON(value.restrictionFlags),
-        'restrictionAdditions': value.restrictionAdditions,
-        'restrictionDeletions': value.restrictionDeletions,
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'maxFee': value['maxFee'],
+        'deadline': value['deadline'],
+        'restrictionFlags': AccountRestrictionFlagsEnumToJSON(value['restrictionFlags']),
+        'restrictionAdditions': value['restrictionAdditions'],
+        'restrictionDeletions': value['restrictionDeletions'],
     };
 }
 

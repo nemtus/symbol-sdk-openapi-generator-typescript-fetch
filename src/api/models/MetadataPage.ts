@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { Pagination } from './Pagination';
 import {
-    MetadataInfoDTO,
-    MetadataInfoDTOFromJSON,
-    MetadataInfoDTOFromJSONTyped,
-    MetadataInfoDTOToJSON,
-} from './MetadataInfoDTO';
-import {
-    Pagination,
     PaginationFromJSON,
     PaginationFromJSONTyped,
     PaginationToJSON,
+    PaginationToJSONTyped,
 } from './Pagination';
+import type { MetadataInfoDTO } from './MetadataInfoDTO';
+import {
+    MetadataInfoDTOFromJSON,
+    MetadataInfoDTOFromJSONTyped,
+    MetadataInfoDTOToJSON,
+    MetadataInfoDTOToJSONTyped,
+} from './MetadataInfoDTO';
 
 /**
  * 
@@ -46,12 +48,21 @@ export interface MetadataPage {
     pagination: Pagination;
 }
 
+/**
+ * Check if a given object implements the MetadataPage interface.
+ */
+export function instanceOfMetadataPage(value: Record<string, any>): value is MetadataPage {
+    if (!('data' in value) || value['data'] === undefined) return false;
+    if (!('pagination' in value) || value['pagination'] === undefined) return false;
+    return true;
+}
+
 export function MetadataPageFromJSON(json: any): MetadataPage {
     return MetadataPageFromJSONTyped(json, false);
 }
 
 export function MetadataPageFromJSONTyped(json: any, ignoreDiscriminator: boolean): MetadataPage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,17 +72,19 @@ export function MetadataPageFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function MetadataPageToJSON(value?: MetadataPage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MetadataPageToJSON(json: any): MetadataPage {
+    return MetadataPageToJSONTyped(json, false);
+}
+
+export function MetadataPageToJSONTyped(value?: MetadataPage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'data': ((value.data as Array<any>).map(MetadataInfoDTOToJSON)),
-        'pagination': PaginationToJSON(value.pagination),
+        'data': ((value['data'] as Array<any>).map(MetadataInfoDTOToJSON)),
+        'pagination': PaginationToJSON(value['pagination']),
     };
 }
 

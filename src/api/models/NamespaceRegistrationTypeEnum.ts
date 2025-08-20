@@ -17,6 +17,7 @@
  * Type of namespace:
  * * 0 - Root namespace.
  * * 1 - Subnamespace.
+ * 
  * @export
  */
 export const NamespaceRegistrationTypeEnum = {
@@ -25,6 +26,17 @@ export const NamespaceRegistrationTypeEnum = {
 } as const;
 export type NamespaceRegistrationTypeEnum = typeof NamespaceRegistrationTypeEnum[keyof typeof NamespaceRegistrationTypeEnum];
 
+
+export function instanceOfNamespaceRegistrationTypeEnum(value: any): boolean {
+    for (const key in NamespaceRegistrationTypeEnum) {
+        if (Object.prototype.hasOwnProperty.call(NamespaceRegistrationTypeEnum, key)) {
+            if (NamespaceRegistrationTypeEnum[key as keyof typeof NamespaceRegistrationTypeEnum] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function NamespaceRegistrationTypeEnumFromJSON(json: any): NamespaceRegistrationTypeEnum {
     return NamespaceRegistrationTypeEnumFromJSONTyped(json, false);
@@ -36,5 +48,9 @@ export function NamespaceRegistrationTypeEnumFromJSONTyped(json: any, ignoreDisc
 
 export function NamespaceRegistrationTypeEnumToJSON(value?: NamespaceRegistrationTypeEnum | null): any {
     return value as any;
+}
+
+export function NamespaceRegistrationTypeEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): NamespaceRegistrationTypeEnum {
+    return value as NamespaceRegistrationTypeEnum;
 }
 

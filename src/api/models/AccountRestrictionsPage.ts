@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { Pagination } from './Pagination';
 import {
-    AccountRestrictionsInfoDTO,
-    AccountRestrictionsInfoDTOFromJSON,
-    AccountRestrictionsInfoDTOFromJSONTyped,
-    AccountRestrictionsInfoDTOToJSON,
-} from './AccountRestrictionsInfoDTO';
-import {
-    Pagination,
     PaginationFromJSON,
     PaginationFromJSONTyped,
     PaginationToJSON,
+    PaginationToJSONTyped,
 } from './Pagination';
+import type { AccountRestrictionsInfoDTO } from './AccountRestrictionsInfoDTO';
+import {
+    AccountRestrictionsInfoDTOFromJSON,
+    AccountRestrictionsInfoDTOFromJSONTyped,
+    AccountRestrictionsInfoDTOToJSON,
+    AccountRestrictionsInfoDTOToJSONTyped,
+} from './AccountRestrictionsInfoDTO';
 
 /**
  * 
@@ -46,12 +48,21 @@ export interface AccountRestrictionsPage {
     pagination: Pagination;
 }
 
+/**
+ * Check if a given object implements the AccountRestrictionsPage interface.
+ */
+export function instanceOfAccountRestrictionsPage(value: Record<string, any>): value is AccountRestrictionsPage {
+    if (!('data' in value) || value['data'] === undefined) return false;
+    if (!('pagination' in value) || value['pagination'] === undefined) return false;
+    return true;
+}
+
 export function AccountRestrictionsPageFromJSON(json: any): AccountRestrictionsPage {
     return AccountRestrictionsPageFromJSONTyped(json, false);
 }
 
 export function AccountRestrictionsPageFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountRestrictionsPage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,17 +72,19 @@ export function AccountRestrictionsPageFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function AccountRestrictionsPageToJSON(value?: AccountRestrictionsPage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountRestrictionsPageToJSON(json: any): AccountRestrictionsPage {
+    return AccountRestrictionsPageToJSONTyped(json, false);
+}
+
+export function AccountRestrictionsPageToJSONTyped(value?: AccountRestrictionsPage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'data': ((value.data as Array<any>).map(AccountRestrictionsInfoDTOToJSON)),
-        'pagination': PaginationToJSON(value.pagination),
+        'data': ((value['data'] as Array<any>).map(AccountRestrictionsInfoDTOToJSON)),
+        'pagination': PaginationToJSON(value['pagination']),
     };
 }
 

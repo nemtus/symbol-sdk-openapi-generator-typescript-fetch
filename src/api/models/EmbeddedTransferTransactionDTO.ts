@@ -12,30 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    EmbeddedTransactionDTO,
-    EmbeddedTransactionDTOFromJSON,
-    EmbeddedTransactionDTOFromJSONTyped,
-    EmbeddedTransactionDTOToJSON,
-} from './EmbeddedTransactionDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { UnresolvedMosaic } from './UnresolvedMosaic';
 import {
-    TransferTransactionBodyDTO,
-    TransferTransactionBodyDTOFromJSON,
-    TransferTransactionBodyDTOFromJSONTyped,
-    TransferTransactionBodyDTOToJSON,
-} from './TransferTransactionBodyDTO';
-import {
-    UnresolvedMosaic,
     UnresolvedMosaicFromJSON,
     UnresolvedMosaicFromJSONTyped,
     UnresolvedMosaicToJSON,
+    UnresolvedMosaicToJSONTyped,
 } from './UnresolvedMosaic';
 
 /**
@@ -72,12 +62,14 @@ export interface EmbeddedTransferTransactionDTO {
      * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
      * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
      * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * 
      * @type {string}
      * @memberof EmbeddedTransferTransactionDTO
      */
     recipientAddress: string;
     /**
      * Array of mosaics sent to the recipient.
+     * 
      * @type {Array<UnresolvedMosaic>}
      * @memberof EmbeddedTransferTransactionDTO
      */
@@ -90,12 +82,27 @@ export interface EmbeddedTransferTransactionDTO {
     message?: string;
 }
 
+
+
+/**
+ * Check if a given object implements the EmbeddedTransferTransactionDTO interface.
+ */
+export function instanceOfEmbeddedTransferTransactionDTO(value: Record<string, any>): value is EmbeddedTransferTransactionDTO {
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('recipientAddress' in value) || value['recipientAddress'] === undefined) return false;
+    if (!('mosaics' in value) || value['mosaics'] === undefined) return false;
+    return true;
+}
+
 export function EmbeddedTransferTransactionDTOFromJSON(json: any): EmbeddedTransferTransactionDTO {
     return EmbeddedTransferTransactionDTOFromJSONTyped(json, false);
 }
 
 export function EmbeddedTransferTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmbeddedTransferTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -106,26 +113,28 @@ export function EmbeddedTransferTransactionDTOFromJSONTyped(json: any, ignoreDis
         'type': json['type'],
         'recipientAddress': json['recipientAddress'],
         'mosaics': ((json['mosaics'] as Array<any>).map(UnresolvedMosaicFromJSON)),
-        'message': !exists(json, 'message') ? undefined : json['message'],
+        'message': json['message'] == null ? undefined : json['message'],
     };
 }
 
-export function EmbeddedTransferTransactionDTOToJSON(value?: EmbeddedTransferTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EmbeddedTransferTransactionDTOToJSON(json: any): EmbeddedTransferTransactionDTO {
+    return EmbeddedTransferTransactionDTOToJSONTyped(json, false);
+}
+
+export function EmbeddedTransferTransactionDTOToJSONTyped(value?: EmbeddedTransferTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'recipientAddress': value.recipientAddress,
-        'mosaics': ((value.mosaics as Array<any>).map(UnresolvedMosaicToJSON)),
-        'message': value.message,
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'recipientAddress': value['recipientAddress'],
+        'mosaics': ((value['mosaics'] as Array<any>).map(UnresolvedMosaicToJSON)),
+        'message': value['message'],
     };
 }
 

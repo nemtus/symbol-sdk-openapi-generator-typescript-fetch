@@ -12,24 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    EmbeddedTransactionDTO,
-    EmbeddedTransactionDTOFromJSON,
-    EmbeddedTransactionDTOFromJSONTyped,
-    EmbeddedTransactionDTOToJSON,
-} from './EmbeddedTransactionDTO';
-import {
-    HashLockTransactionBodyDTO,
-    HashLockTransactionBodyDTOFromJSON,
-    HashLockTransactionBodyDTOFromJSONTyped,
-    HashLockTransactionBodyDTOToJSON,
-} from './HashLockTransactionBodyDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
 
 /**
@@ -65,6 +54,7 @@ export interface EmbeddedHashLockTransactionDTO {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof EmbeddedHashLockTransactionDTO
      */
@@ -89,12 +79,29 @@ export interface EmbeddedHashLockTransactionDTO {
     hash: string;
 }
 
+
+
+/**
+ * Check if a given object implements the EmbeddedHashLockTransactionDTO interface.
+ */
+export function instanceOfEmbeddedHashLockTransactionDTO(value: Record<string, any>): value is EmbeddedHashLockTransactionDTO {
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('duration' in value) || value['duration'] === undefined) return false;
+    if (!('hash' in value) || value['hash'] === undefined) return false;
+    return true;
+}
+
 export function EmbeddedHashLockTransactionDTOFromJSON(json: any): EmbeddedHashLockTransactionDTO {
     return EmbeddedHashLockTransactionDTOFromJSONTyped(json, false);
 }
 
 export function EmbeddedHashLockTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmbeddedHashLockTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -110,23 +117,25 @@ export function EmbeddedHashLockTransactionDTOFromJSONTyped(json: any, ignoreDis
     };
 }
 
-export function EmbeddedHashLockTransactionDTOToJSON(value?: EmbeddedHashLockTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EmbeddedHashLockTransactionDTOToJSON(json: any): EmbeddedHashLockTransactionDTO {
+    return EmbeddedHashLockTransactionDTOToJSONTyped(json, false);
+}
+
+export function EmbeddedHashLockTransactionDTOToJSONTyped(value?: EmbeddedHashLockTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'mosaicId': value.mosaicId,
-        'amount': value.amount,
-        'duration': value.duration,
-        'hash': value.hash,
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'mosaicId': value['mosaicId'],
+        'amount': value['amount'],
+        'duration': value['duration'],
+        'hash': value['hash'],
     };
 }
 

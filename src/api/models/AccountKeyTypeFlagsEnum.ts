@@ -19,6 +19,7 @@
  * * 1 - Linked account public key.
  * * 2 - Node public key on which remote is allowed to harvest.
  * * 4 - VRF public key.
+ * 
  * @export
  */
 export const AccountKeyTypeFlagsEnum = {
@@ -30,6 +31,17 @@ export const AccountKeyTypeFlagsEnum = {
 export type AccountKeyTypeFlagsEnum = typeof AccountKeyTypeFlagsEnum[keyof typeof AccountKeyTypeFlagsEnum];
 
 
+export function instanceOfAccountKeyTypeFlagsEnum(value: any): boolean {
+    for (const key in AccountKeyTypeFlagsEnum) {
+        if (Object.prototype.hasOwnProperty.call(AccountKeyTypeFlagsEnum, key)) {
+            if (AccountKeyTypeFlagsEnum[key as keyof typeof AccountKeyTypeFlagsEnum] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function AccountKeyTypeFlagsEnumFromJSON(json: any): AccountKeyTypeFlagsEnum {
     return AccountKeyTypeFlagsEnumFromJSONTyped(json, false);
 }
@@ -40,5 +52,9 @@ export function AccountKeyTypeFlagsEnumFromJSONTyped(json: any, ignoreDiscrimina
 
 export function AccountKeyTypeFlagsEnumToJSON(value?: AccountKeyTypeFlagsEnum | null): any {
     return value as any;
+}
+
+export function AccountKeyTypeFlagsEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): AccountKeyTypeFlagsEnum {
+    return value as AccountKeyTypeFlagsEnum;
 }
 

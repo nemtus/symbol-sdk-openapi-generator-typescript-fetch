@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { ResolutionStatementDTOUnresolved } from './ResolutionStatementDTOUnresolved';
 import {
-    ResolutionEntryDTO,
-    ResolutionEntryDTOFromJSON,
-    ResolutionEntryDTOFromJSONTyped,
-    ResolutionEntryDTOToJSON,
-} from './ResolutionEntryDTO';
-import {
-    ResolutionStatementDTOUnresolved,
     ResolutionStatementDTOUnresolvedFromJSON,
     ResolutionStatementDTOUnresolvedFromJSONTyped,
     ResolutionStatementDTOUnresolvedToJSON,
+    ResolutionStatementDTOUnresolvedToJSONTyped,
 } from './ResolutionStatementDTOUnresolved';
+import type { ResolutionEntryDTO } from './ResolutionEntryDTO';
+import {
+    ResolutionEntryDTOFromJSON,
+    ResolutionEntryDTOFromJSONTyped,
+    ResolutionEntryDTOToJSON,
+    ResolutionEntryDTOToJSONTyped,
+} from './ResolutionEntryDTO';
 
 /**
  * 
@@ -48,10 +50,21 @@ export interface ResolutionStatementDTO {
      * Array of resolution entries linked to the unresolved namespaceId.
      * It is an array instead of a single resolution entry since
      * within one block the resolution might change for different sources due to alias related transactions.
+     * 
      * @type {Array<ResolutionEntryDTO>}
      * @memberof ResolutionStatementDTO
      */
     resolutionEntries: Array<ResolutionEntryDTO>;
+}
+
+/**
+ * Check if a given object implements the ResolutionStatementDTO interface.
+ */
+export function instanceOfResolutionStatementDTO(value: Record<string, any>): value is ResolutionStatementDTO {
+    if (!('height' in value) || value['height'] === undefined) return false;
+    if (!('unresolved' in value) || value['unresolved'] === undefined) return false;
+    if (!('resolutionEntries' in value) || value['resolutionEntries'] === undefined) return false;
+    return true;
 }
 
 export function ResolutionStatementDTOFromJSON(json: any): ResolutionStatementDTO {
@@ -59,7 +72,7 @@ export function ResolutionStatementDTOFromJSON(json: any): ResolutionStatementDT
 }
 
 export function ResolutionStatementDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResolutionStatementDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -70,18 +83,20 @@ export function ResolutionStatementDTOFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function ResolutionStatementDTOToJSON(value?: ResolutionStatementDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ResolutionStatementDTOToJSON(json: any): ResolutionStatementDTO {
+    return ResolutionStatementDTOToJSONTyped(json, false);
+}
+
+export function ResolutionStatementDTOToJSONTyped(value?: ResolutionStatementDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'height': value.height,
-        'unresolved': ResolutionStatementDTOUnresolvedToJSON(value.unresolved),
-        'resolutionEntries': ((value.resolutionEntries as Array<any>).map(ResolutionEntryDTOToJSON)),
+        'height': value['height'],
+        'unresolved': ResolutionStatementDTOUnresolvedToJSON(value['unresolved']),
+        'resolutionEntries': ((value['resolutionEntries'] as Array<any>).map(ResolutionEntryDTOToJSON)),
     };
 }
 

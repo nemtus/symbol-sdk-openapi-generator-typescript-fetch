@@ -12,13 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
  * @interface MetadataEntryDTOTargetId
  */
 export interface MetadataEntryDTOTargetId {
+}
+
+/**
+ * Check if a given object implements the MetadataEntryDTOTargetId interface.
+ */
+export function instanceOfMetadataEntryDTOTargetId(value: Record<string, any>): value is MetadataEntryDTOTargetId {
+    return true;
 }
 
 export function MetadataEntryDTOTargetIdFromJSON(json: any): MetadataEntryDTOTargetId {
@@ -29,7 +36,11 @@ export function MetadataEntryDTOTargetIdFromJSONTyped(json: any, ignoreDiscrimin
     return json;
 }
 
-export function MetadataEntryDTOTargetIdToJSON(value?: MetadataEntryDTOTargetId | null): any {
+export function MetadataEntryDTOTargetIdToJSON(json: any): MetadataEntryDTOTargetId {
+    return MetadataEntryDTOTargetIdToJSONTyped(json, false);
+}
+
+export function MetadataEntryDTOTargetIdToJSONTyped(value?: MetadataEntryDTOTargetId | null, ignoreDiscriminator: boolean = false): any {
     return value;
 }
 

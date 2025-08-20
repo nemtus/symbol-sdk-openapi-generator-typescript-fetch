@@ -12,11 +12,12 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * Supplementary data stored for importance recalculation.
  * At each importance recalculation, existing buckets are shifted, the working bucket is finalized and a new working bucket is created.
  * Each bucket influences at most five importance recalculations.
+ * 
  * @export
  * @interface ActivityBucketDTO
  */
@@ -47,12 +48,23 @@ export interface ActivityBucketDTO {
     rawScore: string;
 }
 
+/**
+ * Check if a given object implements the ActivityBucketDTO interface.
+ */
+export function instanceOfActivityBucketDTO(value: Record<string, any>): value is ActivityBucketDTO {
+    if (!('startHeight' in value) || value['startHeight'] === undefined) return false;
+    if (!('totalFeesPaid' in value) || value['totalFeesPaid'] === undefined) return false;
+    if (!('beneficiaryCount' in value) || value['beneficiaryCount'] === undefined) return false;
+    if (!('rawScore' in value) || value['rawScore'] === undefined) return false;
+    return true;
+}
+
 export function ActivityBucketDTOFromJSON(json: any): ActivityBucketDTO {
     return ActivityBucketDTOFromJSONTyped(json, false);
 }
 
 export function ActivityBucketDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): ActivityBucketDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -64,19 +76,21 @@ export function ActivityBucketDTOFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function ActivityBucketDTOToJSON(value?: ActivityBucketDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ActivityBucketDTOToJSON(json: any): ActivityBucketDTO {
+    return ActivityBucketDTOToJSONTyped(json, false);
+}
+
+export function ActivityBucketDTOToJSONTyped(value?: ActivityBucketDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'startHeight': value.startHeight,
-        'totalFeesPaid': value.totalFeesPaid,
-        'beneficiaryCount': value.beneficiaryCount,
-        'rawScore': value.rawScore,
+        'startHeight': value['startHeight'],
+        'totalFeesPaid': value['totalFeesPaid'],
+        'beneficiaryCount': value['beneficiaryCount'],
+        'rawScore': value['rawScore'],
     };
 }
 

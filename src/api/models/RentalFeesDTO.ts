@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -39,12 +39,22 @@ export interface RentalFeesDTO {
     effectiveMosaicRentalFee: string;
 }
 
+/**
+ * Check if a given object implements the RentalFeesDTO interface.
+ */
+export function instanceOfRentalFeesDTO(value: Record<string, any>): value is RentalFeesDTO {
+    if (!('effectiveRootNamespaceRentalFeePerBlock' in value) || value['effectiveRootNamespaceRentalFeePerBlock'] === undefined) return false;
+    if (!('effectiveChildNamespaceRentalFee' in value) || value['effectiveChildNamespaceRentalFee'] === undefined) return false;
+    if (!('effectiveMosaicRentalFee' in value) || value['effectiveMosaicRentalFee'] === undefined) return false;
+    return true;
+}
+
 export function RentalFeesDTOFromJSON(json: any): RentalFeesDTO {
     return RentalFeesDTOFromJSONTyped(json, false);
 }
 
 export function RentalFeesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): RentalFeesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,18 +65,20 @@ export function RentalFeesDTOFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function RentalFeesDTOToJSON(value?: RentalFeesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RentalFeesDTOToJSON(json: any): RentalFeesDTO {
+    return RentalFeesDTOToJSONTyped(json, false);
+}
+
+export function RentalFeesDTOToJSONTyped(value?: RentalFeesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'effectiveRootNamespaceRentalFeePerBlock': value.effectiveRootNamespaceRentalFeePerBlock,
-        'effectiveChildNamespaceRentalFee': value.effectiveChildNamespaceRentalFee,
-        'effectiveMosaicRentalFee': value.effectiveMosaicRentalFee,
+        'effectiveRootNamespaceRentalFeePerBlock': value['effectiveRootNamespaceRentalFeePerBlock'],
+        'effectiveChildNamespaceRentalFee': value['effectiveChildNamespaceRentalFee'],
+        'effectiveMosaicRentalFee': value['effectiveMosaicRentalFee'],
     };
 }
 

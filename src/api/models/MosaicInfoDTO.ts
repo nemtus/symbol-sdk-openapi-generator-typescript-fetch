@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MosaicDTO } from './MosaicDTO';
 import {
-    MosaicDTO,
     MosaicDTOFromJSON,
     MosaicDTOFromJSONTyped,
     MosaicDTOToJSON,
+    MosaicDTOToJSONTyped,
 } from './MosaicDTO';
 
 /**
@@ -40,12 +41,21 @@ export interface MosaicInfoDTO {
     mosaic: MosaicDTO;
 }
 
+/**
+ * Check if a given object implements the MosaicInfoDTO interface.
+ */
+export function instanceOfMosaicInfoDTO(value: Record<string, any>): value is MosaicInfoDTO {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('mosaic' in value) || value['mosaic'] === undefined) return false;
+    return true;
+}
+
 export function MosaicInfoDTOFromJSON(json: any): MosaicInfoDTO {
     return MosaicInfoDTOFromJSONTyped(json, false);
 }
 
 export function MosaicInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,17 +65,19 @@ export function MosaicInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function MosaicInfoDTOToJSON(value?: MosaicInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicInfoDTOToJSON(json: any): MosaicInfoDTO {
+    return MosaicInfoDTOToJSONTyped(json, false);
+}
+
+export function MosaicInfoDTOToJSONTyped(value?: MosaicInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'mosaic': MosaicDTOToJSON(value.mosaic),
+        'id': value['id'],
+        'mosaic': MosaicDTOToJSON(value['mosaic']),
     };
 }
 

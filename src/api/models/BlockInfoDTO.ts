@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { BlockMetaDTO } from './BlockMetaDTO';
 import {
-    BlockInfoDTOBlock,
-    BlockInfoDTOBlockFromJSON,
-    BlockInfoDTOBlockFromJSONTyped,
-    BlockInfoDTOBlockToJSON,
-} from './BlockInfoDTOBlock';
-import {
-    BlockMetaDTO,
     BlockMetaDTOFromJSON,
     BlockMetaDTOFromJSONTyped,
     BlockMetaDTOToJSON,
+    BlockMetaDTOToJSONTyped,
 } from './BlockMetaDTO';
+import type { BlockInfoDTOBlock } from './BlockInfoDTOBlock';
+import {
+    BlockInfoDTOBlockFromJSON,
+    BlockInfoDTOBlockFromJSONTyped,
+    BlockInfoDTOBlockToJSON,
+    BlockInfoDTOBlockToJSONTyped,
+} from './BlockInfoDTOBlock';
 
 /**
  * 
@@ -52,12 +54,22 @@ export interface BlockInfoDTO {
     block: BlockInfoDTOBlock;
 }
 
+/**
+ * Check if a given object implements the BlockInfoDTO interface.
+ */
+export function instanceOfBlockInfoDTO(value: Record<string, any>): value is BlockInfoDTO {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('meta' in value) || value['meta'] === undefined) return false;
+    if (!('block' in value) || value['block'] === undefined) return false;
+    return true;
+}
+
 export function BlockInfoDTOFromJSON(json: any): BlockInfoDTO {
     return BlockInfoDTOFromJSONTyped(json, false);
 }
 
 export function BlockInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): BlockInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -68,18 +80,20 @@ export function BlockInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function BlockInfoDTOToJSON(value?: BlockInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BlockInfoDTOToJSON(json: any): BlockInfoDTO {
+    return BlockInfoDTOToJSONTyped(json, false);
+}
+
+export function BlockInfoDTOToJSONTyped(value?: BlockInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'meta': BlockMetaDTOToJSON(value.meta),
-        'block': BlockInfoDTOBlockToJSON(value.block),
+        'id': value['id'],
+        'meta': BlockMetaDTOToJSON(value['meta']),
+        'block': BlockInfoDTOBlockToJSON(value['block']),
     };
 }
 

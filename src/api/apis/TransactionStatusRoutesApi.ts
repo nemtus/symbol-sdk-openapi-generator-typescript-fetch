@@ -14,17 +14,19 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  ModelError,
+  TransactionHashes,
+  TransactionStatusDTO,
+} from '../models/index';
 import {
-    ModelError,
     ModelErrorFromJSON,
     ModelErrorToJSON,
-    TransactionHashes,
     TransactionHashesFromJSON,
     TransactionHashesToJSON,
-    TransactionStatusDTO,
     TransactionStatusDTOFromJSON,
     TransactionStatusDTOToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface GetTransactionStatusRequest {
     hash: string;
@@ -43,17 +45,24 @@ export class TransactionStatusRoutesApi extends runtime.BaseAPI {
      * Returns the transaction status for a given hash.
      * Get transaction status
      */
-    async getTransactionStatusRaw(requestParameters: GetTransactionStatusRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<TransactionStatusDTO>> {
-        if (requestParameters.hash === null || requestParameters.hash === undefined) {
-            throw new runtime.RequiredError('hash','Required parameter requestParameters.hash was null or undefined when calling getTransactionStatus.');
+    async getTransactionStatusRaw(requestParameters: GetTransactionStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionStatusDTO>> {
+        if (requestParameters['hash'] == null) {
+            throw new runtime.RequiredError(
+                'hash',
+                'Required parameter "hash" was null or undefined when calling getTransactionStatus().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/transactionStatus/{hash}`;
+        urlPath = urlPath.replace(`{${"hash"}}`, encodeURIComponent(String(requestParameters['hash'])));
+
         const response = await this.request({
-            path: `/transactionStatus/{hash}`.replace(`{${"hash"}}`, encodeURIComponent(String(requestParameters.hash))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -66,7 +75,7 @@ export class TransactionStatusRoutesApi extends runtime.BaseAPI {
      * Returns the transaction status for a given hash.
      * Get transaction status
      */
-    async getTransactionStatus(requestParameters: GetTransactionStatusRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<TransactionStatusDTO> {
+    async getTransactionStatus(requestParameters: GetTransactionStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionStatusDTO> {
         const response = await this.getTransactionStatusRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -75,9 +84,12 @@ export class TransactionStatusRoutesApi extends runtime.BaseAPI {
      * Returns an array of transaction statuses for a given array of transaction hashes.
      * Get transaction statuses
      */
-    async getTransactionStatusesRaw(requestParameters: GetTransactionStatusesRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Array<TransactionStatusDTO>>> {
-        if (requestParameters.transactionHashes === null || requestParameters.transactionHashes === undefined) {
-            throw new runtime.RequiredError('transactionHashes','Required parameter requestParameters.transactionHashes was null or undefined when calling getTransactionStatuses.');
+    async getTransactionStatusesRaw(requestParameters: GetTransactionStatusesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TransactionStatusDTO>>> {
+        if (requestParameters['transactionHashes'] == null) {
+            throw new runtime.RequiredError(
+                'transactionHashes',
+                'Required parameter "transactionHashes" was null or undefined when calling getTransactionStatuses().'
+            );
         }
 
         const queryParameters: any = {};
@@ -86,12 +98,15 @@ export class TransactionStatusRoutesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+
+        let urlPath = `/transactionStatus`;
+
         const response = await this.request({
-            path: `/transactionStatus`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TransactionHashesToJSON(requestParameters.transactionHashes),
+            body: TransactionHashesToJSON(requestParameters['transactionHashes']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TransactionStatusDTOFromJSON));
@@ -101,7 +116,7 @@ export class TransactionStatusRoutesApi extends runtime.BaseAPI {
      * Returns an array of transaction statuses for a given array of transaction hashes.
      * Get transaction statuses
      */
-    async getTransactionStatuses(requestParameters: GetTransactionStatusesRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Array<TransactionStatusDTO>> {
+    async getTransactionStatuses(requestParameters: GetTransactionStatusesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TransactionStatusDTO>> {
         const response = await this.getTransactionStatusesRaw(requestParameters, initOverrides);
         return await response.value();
     }

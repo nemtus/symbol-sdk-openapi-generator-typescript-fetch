@@ -12,16 +12,18 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MerkleStateInfoDTOTreeInner } from './MerkleStateInfoDTOTreeInner';
 import {
-    MerkleStateInfoDTOTreeInner,
     MerkleStateInfoDTOTreeInnerFromJSON,
     MerkleStateInfoDTOTreeInnerFromJSONTyped,
     MerkleStateInfoDTOTreeInnerToJSON,
+    MerkleStateInfoDTOTreeInnerToJSONTyped,
 } from './MerkleStateInfoDTOTreeInner';
 
 /**
  * The merkle path information clients can use to proof the state of the given entity.
+ * 
  * @export
  * @interface MerkleStateInfoDTO
  */
@@ -29,6 +31,7 @@ export interface MerkleStateInfoDTO {
     /**
      * The hex information of the complete merkle tree as returned by server api.
      * More information can be found in chapter 4.3 of the catapult whitepaper.
+     * 
      * @type {string}
      * @memberof MerkleStateInfoDTO
      */
@@ -41,12 +44,21 @@ export interface MerkleStateInfoDTO {
     tree: Array<MerkleStateInfoDTOTreeInner>;
 }
 
+/**
+ * Check if a given object implements the MerkleStateInfoDTO interface.
+ */
+export function instanceOfMerkleStateInfoDTO(value: Record<string, any>): value is MerkleStateInfoDTO {
+    if (!('raw' in value) || value['raw'] === undefined) return false;
+    if (!('tree' in value) || value['tree'] === undefined) return false;
+    return true;
+}
+
 export function MerkleStateInfoDTOFromJSON(json: any): MerkleStateInfoDTO {
     return MerkleStateInfoDTOFromJSONTyped(json, false);
 }
 
 export function MerkleStateInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MerkleStateInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -56,17 +68,19 @@ export function MerkleStateInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function MerkleStateInfoDTOToJSON(value?: MerkleStateInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MerkleStateInfoDTOToJSON(json: any): MerkleStateInfoDTO {
+    return MerkleStateInfoDTOToJSONTyped(json, false);
+}
+
+export function MerkleStateInfoDTOToJSONTyped(value?: MerkleStateInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'raw': value.raw,
-        'tree': ((value.tree as Array<any>).map(MerkleStateInfoDTOTreeInnerToJSON)),
+        'raw': value['raw'],
+        'tree': ((value['tree'] as Array<any>).map(MerkleStateInfoDTOTreeInnerToJSON)),
     };
 }
 

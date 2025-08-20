@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MultisigDTO } from './MultisigDTO';
 import {
-    MultisigDTO,
     MultisigDTOFromJSON,
     MultisigDTOFromJSONTyped,
     MultisigDTOToJSON,
+    MultisigDTOToJSONTyped,
 } from './MultisigDTO';
 
 /**
@@ -34,12 +35,20 @@ export interface MultisigAccountInfoDTO {
     multisig: MultisigDTO;
 }
 
+/**
+ * Check if a given object implements the MultisigAccountInfoDTO interface.
+ */
+export function instanceOfMultisigAccountInfoDTO(value: Record<string, any>): value is MultisigAccountInfoDTO {
+    if (!('multisig' in value) || value['multisig'] === undefined) return false;
+    return true;
+}
+
 export function MultisigAccountInfoDTOFromJSON(json: any): MultisigAccountInfoDTO {
     return MultisigAccountInfoDTOFromJSONTyped(json, false);
 }
 
 export function MultisigAccountInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MultisigAccountInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,16 +57,18 @@ export function MultisigAccountInfoDTOFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function MultisigAccountInfoDTOToJSON(value?: MultisigAccountInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MultisigAccountInfoDTOToJSON(json: any): MultisigAccountInfoDTO {
+    return MultisigAccountInfoDTOToJSONTyped(json, false);
+}
+
+export function MultisigAccountInfoDTOToJSONTyped(value?: MultisigAccountInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'multisig': MultisigDTOToJSON(value.multisig),
+        'multisig': MultisigDTOToJSON(value['multisig']),
     };
 }
 

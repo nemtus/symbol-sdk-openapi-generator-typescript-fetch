@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * Merkle tree branch link.
  * @export
@@ -33,12 +33,21 @@ export interface MerkleTreeBranchLinkDTO {
     link: string;
 }
 
+/**
+ * Check if a given object implements the MerkleTreeBranchLinkDTO interface.
+ */
+export function instanceOfMerkleTreeBranchLinkDTO(value: Record<string, any>): value is MerkleTreeBranchLinkDTO {
+    if (!('bit' in value) || value['bit'] === undefined) return false;
+    if (!('link' in value) || value['link'] === undefined) return false;
+    return true;
+}
+
 export function MerkleTreeBranchLinkDTOFromJSON(json: any): MerkleTreeBranchLinkDTO {
     return MerkleTreeBranchLinkDTOFromJSONTyped(json, false);
 }
 
 export function MerkleTreeBranchLinkDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MerkleTreeBranchLinkDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,17 +57,19 @@ export function MerkleTreeBranchLinkDTOFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function MerkleTreeBranchLinkDTOToJSON(value?: MerkleTreeBranchLinkDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MerkleTreeBranchLinkDTOToJSON(json: any): MerkleTreeBranchLinkDTO {
+    return MerkleTreeBranchLinkDTOToJSONTyped(json, false);
+}
+
+export function MerkleTreeBranchLinkDTOToJSONTyped(value?: MerkleTreeBranchLinkDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'bit': value.bit,
-        'link': value.link,
+        'bit': value['bit'],
+        'link': value['link'],
     };
 }
 

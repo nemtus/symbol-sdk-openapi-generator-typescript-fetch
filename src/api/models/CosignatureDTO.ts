@@ -12,20 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import {
-    CosignatureDTOAllOf,
-    CosignatureDTOAllOfFromJSON,
-    CosignatureDTOAllOfFromJSONTyped,
-    CosignatureDTOAllOfToJSON,
-} from './CosignatureDTOAllOf';
-import {
-    VerifiableEntityDTO,
-    VerifiableEntityDTOFromJSON,
-    VerifiableEntityDTOFromJSONTyped,
-    VerifiableEntityDTOToJSON,
-} from './VerifiableEntityDTO';
-
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -52,12 +39,22 @@ export interface CosignatureDTO {
     signerPublicKey: string;
 }
 
+/**
+ * Check if a given object implements the CosignatureDTO interface.
+ */
+export function instanceOfCosignatureDTO(value: Record<string, any>): value is CosignatureDTO {
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    return true;
+}
+
 export function CosignatureDTOFromJSON(json: any): CosignatureDTO {
     return CosignatureDTOFromJSONTyped(json, false);
 }
 
 export function CosignatureDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosignatureDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -68,18 +65,20 @@ export function CosignatureDTOFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function CosignatureDTOToJSON(value?: CosignatureDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosignatureDTOToJSON(json: any): CosignatureDTO {
+    return CosignatureDTOToJSONTyped(json, false);
+}
+
+export function CosignatureDTOToJSONTyped(value?: CosignatureDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signature': value.signature,
-        'version': value.version,
-        'signerPublicKey': value.signerPublicKey,
+        'signature': value['signature'],
+        'version': value['version'],
+        'signerPublicKey': value['signerPublicKey'],
     };
 }
 

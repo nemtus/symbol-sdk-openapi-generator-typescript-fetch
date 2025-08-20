@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -33,12 +33,21 @@ export interface NetworkTypeDTO {
     description: string;
 }
 
+/**
+ * Check if a given object implements the NetworkTypeDTO interface.
+ */
+export function instanceOfNetworkTypeDTO(value: Record<string, any>): value is NetworkTypeDTO {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('description' in value) || value['description'] === undefined) return false;
+    return true;
+}
+
 export function NetworkTypeDTOFromJSON(json: any): NetworkTypeDTO {
     return NetworkTypeDTOFromJSONTyped(json, false);
 }
 
 export function NetworkTypeDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): NetworkTypeDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,17 +57,19 @@ export function NetworkTypeDTOFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function NetworkTypeDTOToJSON(value?: NetworkTypeDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NetworkTypeDTOToJSON(json: any): NetworkTypeDTO {
+    return NetworkTypeDTOToJSONTyped(json, false);
+}
+
+export function NetworkTypeDTOToJSONTyped(value?: NetworkTypeDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'description': value.description,
+        'name': value['name'],
+        'description': value['description'],
     };
 }
 

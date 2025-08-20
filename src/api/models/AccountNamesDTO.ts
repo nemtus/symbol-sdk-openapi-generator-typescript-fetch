@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -33,12 +33,21 @@ export interface AccountNamesDTO {
     names: Array<string>;
 }
 
+/**
+ * Check if a given object implements the AccountNamesDTO interface.
+ */
+export function instanceOfAccountNamesDTO(value: Record<string, any>): value is AccountNamesDTO {
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('names' in value) || value['names'] === undefined) return false;
+    return true;
+}
+
 export function AccountNamesDTOFromJSON(json: any): AccountNamesDTO {
     return AccountNamesDTOFromJSONTyped(json, false);
 }
 
 export function AccountNamesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountNamesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,17 +57,19 @@ export function AccountNamesDTOFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function AccountNamesDTOToJSON(value?: AccountNamesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountNamesDTOToJSON(json: any): AccountNamesDTO {
+    return AccountNamesDTOToJSONTyped(json, false);
+}
+
+export function AccountNamesDTOToJSONTyped(value?: AccountNamesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'address': value.address,
-        'names': value.names,
+        'address': value['address'],
+        'names': value['names'],
     };
 }
 

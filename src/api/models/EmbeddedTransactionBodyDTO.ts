@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { EmbeddedTransactionInfoDTO } from './EmbeddedTransactionInfoDTO';
 import {
-    EmbeddedTransactionInfoDTO,
     EmbeddedTransactionInfoDTOFromJSON,
     EmbeddedTransactionInfoDTOFromJSONTyped,
     EmbeddedTransactionInfoDTOToJSON,
+    EmbeddedTransactionInfoDTOToJSONTyped,
 } from './EmbeddedTransactionInfoDTO';
 
 /**
@@ -34,12 +35,20 @@ export interface EmbeddedTransactionBodyDTO {
     transactions: Array<EmbeddedTransactionInfoDTO>;
 }
 
+/**
+ * Check if a given object implements the EmbeddedTransactionBodyDTO interface.
+ */
+export function instanceOfEmbeddedTransactionBodyDTO(value: Record<string, any>): value is EmbeddedTransactionBodyDTO {
+    if (!('transactions' in value) || value['transactions'] === undefined) return false;
+    return true;
+}
+
 export function EmbeddedTransactionBodyDTOFromJSON(json: any): EmbeddedTransactionBodyDTO {
     return EmbeddedTransactionBodyDTOFromJSONTyped(json, false);
 }
 
 export function EmbeddedTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmbeddedTransactionBodyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,16 +57,18 @@ export function EmbeddedTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function EmbeddedTransactionBodyDTOToJSON(value?: EmbeddedTransactionBodyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EmbeddedTransactionBodyDTOToJSON(json: any): EmbeddedTransactionBodyDTO {
+    return EmbeddedTransactionBodyDTOToJSONTyped(json, false);
+}
+
+export function EmbeddedTransactionBodyDTOToJSONTyped(value?: EmbeddedTransactionBodyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transactions': ((value.transactions as Array<any>).map(EmbeddedTransactionInfoDTOToJSON)),
+        'transactions': ((value['transactions'] as Array<any>).map(EmbeddedTransactionInfoDTOToJSON)),
     };
 }
 

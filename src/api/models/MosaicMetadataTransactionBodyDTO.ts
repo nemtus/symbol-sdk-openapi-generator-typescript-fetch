@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -23,6 +23,7 @@ export interface MosaicMetadataTransactionBodyDTO {
      * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
      * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
      * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * 
      * @type {string}
      * @memberof MosaicMetadataTransactionBodyDTO
      */
@@ -36,6 +37,7 @@ export interface MosaicMetadataTransactionBodyDTO {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof MosaicMetadataTransactionBodyDTO
      */
@@ -60,12 +62,25 @@ export interface MosaicMetadataTransactionBodyDTO {
     value: string;
 }
 
+/**
+ * Check if a given object implements the MosaicMetadataTransactionBodyDTO interface.
+ */
+export function instanceOfMosaicMetadataTransactionBodyDTO(value: Record<string, any>): value is MosaicMetadataTransactionBodyDTO {
+    if (!('targetAddress' in value) || value['targetAddress'] === undefined) return false;
+    if (!('scopedMetadataKey' in value) || value['scopedMetadataKey'] === undefined) return false;
+    if (!('targetMosaicId' in value) || value['targetMosaicId'] === undefined) return false;
+    if (!('valueSizeDelta' in value) || value['valueSizeDelta'] === undefined) return false;
+    if (!('valueSize' in value) || value['valueSize'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    return true;
+}
+
 export function MosaicMetadataTransactionBodyDTOFromJSON(json: any): MosaicMetadataTransactionBodyDTO {
     return MosaicMetadataTransactionBodyDTOFromJSONTyped(json, false);
 }
 
 export function MosaicMetadataTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicMetadataTransactionBodyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -79,21 +94,23 @@ export function MosaicMetadataTransactionBodyDTOFromJSONTyped(json: any, ignoreD
     };
 }
 
-export function MosaicMetadataTransactionBodyDTOToJSON(value?: MosaicMetadataTransactionBodyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicMetadataTransactionBodyDTOToJSON(json: any): MosaicMetadataTransactionBodyDTO {
+    return MosaicMetadataTransactionBodyDTOToJSONTyped(json, false);
+}
+
+export function MosaicMetadataTransactionBodyDTOToJSONTyped(value?: MosaicMetadataTransactionBodyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'targetAddress': value.targetAddress,
-        'scopedMetadataKey': value.scopedMetadataKey,
-        'targetMosaicId': value.targetMosaicId,
-        'valueSizeDelta': value.valueSizeDelta,
-        'valueSize': value.valueSize,
-        'value': value.value,
+        'targetAddress': value['targetAddress'],
+        'scopedMetadataKey': value['scopedMetadataKey'],
+        'targetMosaicId': value['targetMosaicId'],
+        'valueSizeDelta': value['valueSizeDelta'],
+        'valueSize': value['valueSize'],
+        'value': value['value'],
     };
 }
 

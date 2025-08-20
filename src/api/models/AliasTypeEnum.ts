@@ -18,6 +18,7 @@
  * * 0 - No alias.
  * * 1 - Mosaic id alias.
  * * 2 - Addres alias.
+ * 
  * @export
  */
 export const AliasTypeEnum = {
@@ -27,6 +28,17 @@ export const AliasTypeEnum = {
 } as const;
 export type AliasTypeEnum = typeof AliasTypeEnum[keyof typeof AliasTypeEnum];
 
+
+export function instanceOfAliasTypeEnum(value: any): boolean {
+    for (const key in AliasTypeEnum) {
+        if (Object.prototype.hasOwnProperty.call(AliasTypeEnum, key)) {
+            if (AliasTypeEnum[key as keyof typeof AliasTypeEnum] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function AliasTypeEnumFromJSON(json: any): AliasTypeEnum {
     return AliasTypeEnumFromJSONTyped(json, false);
@@ -38,5 +50,9 @@ export function AliasTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boole
 
 export function AliasTypeEnumToJSON(value?: AliasTypeEnum | null): any {
     return value as any;
+}
+
+export function AliasTypeEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): AliasTypeEnum {
+    return value as AliasTypeEnum;
 }
 

@@ -14,26 +14,28 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  MerkleStateInfoDTO,
+  ModelError,
+  MosaicRestrictionDTO,
+  MosaicRestrictionEntryTypeEnum,
+  MosaicRestrictionsPage,
+  Order,
+} from '../models/index';
 import {
-    MerkleStateInfoDTO,
     MerkleStateInfoDTOFromJSON,
     MerkleStateInfoDTOToJSON,
-    ModelError,
     ModelErrorFromJSON,
     ModelErrorToJSON,
-    MosaicRestrictionDTO,
     MosaicRestrictionDTOFromJSON,
     MosaicRestrictionDTOToJSON,
-    MosaicRestrictionEntryTypeEnum,
     MosaicRestrictionEntryTypeEnumFromJSON,
     MosaicRestrictionEntryTypeEnumToJSON,
-    MosaicRestrictionsPage,
     MosaicRestrictionsPageFromJSON,
     MosaicRestrictionsPageToJSON,
-    Order,
     OrderFromJSON,
     OrderToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface GetMosaicRestrictionsRequest {
     compositeHash: string;
@@ -62,17 +64,24 @@ export class RestrictionMosaicRoutesApi extends runtime.BaseAPI {
      * Returns the mosaic restrictions for a composite hash.
      * Get the mosaic restrictions
      */
-    async getMosaicRestrictionsRaw(requestParameters: GetMosaicRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<MosaicRestrictionDTO>> {
-        if (requestParameters.compositeHash === null || requestParameters.compositeHash === undefined) {
-            throw new runtime.RequiredError('compositeHash','Required parameter requestParameters.compositeHash was null or undefined when calling getMosaicRestrictions.');
+    async getMosaicRestrictionsRaw(requestParameters: GetMosaicRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MosaicRestrictionDTO>> {
+        if (requestParameters['compositeHash'] == null) {
+            throw new runtime.RequiredError(
+                'compositeHash',
+                'Required parameter "compositeHash" was null or undefined when calling getMosaicRestrictions().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/restrictions/mosaic/{compositeHash}`;
+        urlPath = urlPath.replace(`{${"compositeHash"}}`, encodeURIComponent(String(requestParameters['compositeHash'])));
+
         const response = await this.request({
-            path: `/restrictions/mosaic/{compositeHash}`.replace(`{${"compositeHash"}}`, encodeURIComponent(String(requestParameters.compositeHash))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -85,7 +94,7 @@ export class RestrictionMosaicRoutesApi extends runtime.BaseAPI {
      * Returns the mosaic restrictions for a composite hash.
      * Get the mosaic restrictions
      */
-    async getMosaicRestrictions(requestParameters: GetMosaicRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<MosaicRestrictionDTO> {
+    async getMosaicRestrictions(requestParameters: GetMosaicRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MosaicRestrictionDTO> {
         const response = await this.getMosaicRestrictionsRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -94,17 +103,24 @@ export class RestrictionMosaicRoutesApi extends runtime.BaseAPI {
      * Returns the mosaic restrictions merkle for a given composite hash.
      * Get the mosaic restrictions merkle
      */
-    async getMosaicRestrictionsMerkleRaw(requestParameters: GetMosaicRestrictionsMerkleRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<MerkleStateInfoDTO>> {
-        if (requestParameters.compositeHash === null || requestParameters.compositeHash === undefined) {
-            throw new runtime.RequiredError('compositeHash','Required parameter requestParameters.compositeHash was null or undefined when calling getMosaicRestrictionsMerkle.');
+    async getMosaicRestrictionsMerkleRaw(requestParameters: GetMosaicRestrictionsMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MerkleStateInfoDTO>> {
+        if (requestParameters['compositeHash'] == null) {
+            throw new runtime.RequiredError(
+                'compositeHash',
+                'Required parameter "compositeHash" was null or undefined when calling getMosaicRestrictionsMerkle().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/restrictions/mosaic/{compositeHash}/merkle`;
+        urlPath = urlPath.replace(`{${"compositeHash"}}`, encodeURIComponent(String(requestParameters['compositeHash'])));
+
         const response = await this.request({
-            path: `/restrictions/mosaic/{compositeHash}/merkle`.replace(`{${"compositeHash"}}`, encodeURIComponent(String(requestParameters.compositeHash))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -117,7 +133,7 @@ export class RestrictionMosaicRoutesApi extends runtime.BaseAPI {
      * Returns the mosaic restrictions merkle for a given composite hash.
      * Get the mosaic restrictions merkle
      */
-    async getMosaicRestrictionsMerkle(requestParameters: GetMosaicRestrictionsMerkleRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<MerkleStateInfoDTO> {
+    async getMosaicRestrictionsMerkle(requestParameters: GetMosaicRestrictionsMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MerkleStateInfoDTO> {
         const response = await this.getMosaicRestrictionsMerkleRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -126,41 +142,44 @@ export class RestrictionMosaicRoutesApi extends runtime.BaseAPI {
      * Returns an array of mosaic restrictions.
      * Search mosaic restrictions
      */
-    async searchMosaicRestrictionsRaw(requestParameters: SearchMosaicRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<MosaicRestrictionsPage>> {
+    async searchMosaicRestrictionsRaw(requestParameters: SearchMosaicRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MosaicRestrictionsPage>> {
         const queryParameters: any = {};
 
-        if (requestParameters.mosaicId !== undefined) {
-            queryParameters['mosaicId'] = requestParameters.mosaicId;
+        if (requestParameters['mosaicId'] != null) {
+            queryParameters['mosaicId'] = requestParameters['mosaicId'];
         }
 
-        if (requestParameters.entryType !== undefined) {
-            queryParameters['entryType'] = requestParameters.entryType;
+        if (requestParameters['entryType'] != null) {
+            queryParameters['entryType'] = requestParameters['entryType'];
         }
 
-        if (requestParameters.targetAddress !== undefined) {
-            queryParameters['targetAddress'] = requestParameters.targetAddress;
+        if (requestParameters['targetAddress'] != null) {
+            queryParameters['targetAddress'] = requestParameters['targetAddress'];
         }
 
-        if (requestParameters.pageSize !== undefined) {
-            queryParameters['pageSize'] = requestParameters.pageSize;
+        if (requestParameters['pageSize'] != null) {
+            queryParameters['pageSize'] = requestParameters['pageSize'];
         }
 
-        if (requestParameters.pageNumber !== undefined) {
-            queryParameters['pageNumber'] = requestParameters.pageNumber;
+        if (requestParameters['pageNumber'] != null) {
+            queryParameters['pageNumber'] = requestParameters['pageNumber'];
         }
 
-        if (requestParameters.offset !== undefined) {
-            queryParameters['offset'] = requestParameters.offset;
+        if (requestParameters['offset'] != null) {
+            queryParameters['offset'] = requestParameters['offset'];
         }
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/restrictions/mosaic`;
+
         const response = await this.request({
-            path: `/restrictions/mosaic`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -173,7 +192,7 @@ export class RestrictionMosaicRoutesApi extends runtime.BaseAPI {
      * Returns an array of mosaic restrictions.
      * Search mosaic restrictions
      */
-    async searchMosaicRestrictions(requestParameters: SearchMosaicRestrictionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<MosaicRestrictionsPage> {
+    async searchMosaicRestrictions(requestParameters: SearchMosaicRestrictionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MosaicRestrictionsPage> {
         const response = await this.searchMosaicRestrictionsRaw(requestParameters, initOverrides);
         return await response.value();
     }

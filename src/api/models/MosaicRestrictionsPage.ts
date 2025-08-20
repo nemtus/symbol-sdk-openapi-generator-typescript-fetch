@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MosaicRestrictionsPageDataInner } from './MosaicRestrictionsPageDataInner';
 import {
-    MosaicRestrictionsPageDataInner,
     MosaicRestrictionsPageDataInnerFromJSON,
     MosaicRestrictionsPageDataInnerFromJSONTyped,
     MosaicRestrictionsPageDataInnerToJSON,
+    MosaicRestrictionsPageDataInnerToJSONTyped,
 } from './MosaicRestrictionsPageDataInner';
+import type { Pagination } from './Pagination';
 import {
-    Pagination,
     PaginationFromJSON,
     PaginationFromJSONTyped,
     PaginationToJSON,
+    PaginationToJSONTyped,
 } from './Pagination';
 
 /**
@@ -46,12 +48,21 @@ export interface MosaicRestrictionsPage {
     pagination: Pagination;
 }
 
+/**
+ * Check if a given object implements the MosaicRestrictionsPage interface.
+ */
+export function instanceOfMosaicRestrictionsPage(value: Record<string, any>): value is MosaicRestrictionsPage {
+    if (!('data' in value) || value['data'] === undefined) return false;
+    if (!('pagination' in value) || value['pagination'] === undefined) return false;
+    return true;
+}
+
 export function MosaicRestrictionsPageFromJSON(json: any): MosaicRestrictionsPage {
     return MosaicRestrictionsPageFromJSONTyped(json, false);
 }
 
 export function MosaicRestrictionsPageFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicRestrictionsPage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,17 +72,19 @@ export function MosaicRestrictionsPageFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function MosaicRestrictionsPageToJSON(value?: MosaicRestrictionsPage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicRestrictionsPageToJSON(json: any): MosaicRestrictionsPage {
+    return MosaicRestrictionsPageToJSONTyped(json, false);
+}
+
+export function MosaicRestrictionsPageToJSONTyped(value?: MosaicRestrictionsPage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'data': ((value.data as Array<any>).map(MosaicRestrictionsPageDataInnerToJSON)),
-        'pagination': PaginationToJSON(value.pagination),
+        'data': ((value['data'] as Array<any>).map(MosaicRestrictionsPageDataInnerToJSON)),
+        'pagination': PaginationToJSON(value['pagination']),
     };
 }
 

@@ -18,6 +18,7 @@
  * * 1 - Balance-holding account that is linked to a remote harvester account.
  * * 2 - Remote harvester account that is linked to a balance-holding account.
  * * 3 - Remote harvester eligible account that is unlinked.
+ * 
  * @export
  */
 export const AccountTypeEnum = {
@@ -29,6 +30,17 @@ export const AccountTypeEnum = {
 export type AccountTypeEnum = typeof AccountTypeEnum[keyof typeof AccountTypeEnum];
 
 
+export function instanceOfAccountTypeEnum(value: any): boolean {
+    for (const key in AccountTypeEnum) {
+        if (Object.prototype.hasOwnProperty.call(AccountTypeEnum, key)) {
+            if (AccountTypeEnum[key as keyof typeof AccountTypeEnum] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function AccountTypeEnumFromJSON(json: any): AccountTypeEnum {
     return AccountTypeEnumFromJSONTyped(json, false);
 }
@@ -39,5 +51,9 @@ export function AccountTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boo
 
 export function AccountTypeEnumToJSON(value?: AccountTypeEnum | null): any {
     return value as any;
+}
+
+export function AccountTypeEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): AccountTypeEnum {
+    return value as AccountTypeEnum;
 }
 

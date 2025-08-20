@@ -12,24 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { ReceiptTypeEnum } from './ReceiptTypeEnum';
 import {
-    InflationReceiptDTOAllOf,
-    InflationReceiptDTOAllOfFromJSON,
-    InflationReceiptDTOAllOfFromJSONTyped,
-    InflationReceiptDTOAllOfToJSON,
-} from './InflationReceiptDTOAllOf';
-import {
-    ReceiptDTO,
-    ReceiptDTOFromJSON,
-    ReceiptDTOFromJSONTyped,
-    ReceiptDTOToJSON,
-} from './ReceiptDTO';
-import {
-    ReceiptTypeEnum,
     ReceiptTypeEnumFromJSON,
     ReceiptTypeEnumFromJSONTyped,
     ReceiptTypeEnumToJSON,
+    ReceiptTypeEnumToJSONTyped,
 } from './ReceiptTypeEnum';
 
 /**
@@ -64,12 +53,25 @@ export interface InflationReceiptDTO {
     amount: string;
 }
 
+
+
+/**
+ * Check if a given object implements the InflationReceiptDTO interface.
+ */
+export function instanceOfInflationReceiptDTO(value: Record<string, any>): value is InflationReceiptDTO {
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    return true;
+}
+
 export function InflationReceiptDTOFromJSON(json: any): InflationReceiptDTO {
     return InflationReceiptDTOFromJSONTyped(json, false);
 }
 
 export function InflationReceiptDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): InflationReceiptDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -81,19 +83,21 @@ export function InflationReceiptDTOFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function InflationReceiptDTOToJSON(value?: InflationReceiptDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function InflationReceiptDTOToJSON(json: any): InflationReceiptDTO {
+    return InflationReceiptDTOToJSONTyped(json, false);
+}
+
+export function InflationReceiptDTOToJSONTyped(value?: InflationReceiptDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'version': value.version,
-        'type': ReceiptTypeEnumToJSON(value.type),
-        'mosaicId': value.mosaicId,
-        'amount': value.amount,
+        'version': value['version'],
+        'type': ReceiptTypeEnumToJSON(value['type']),
+        'mosaicId': value['mosaicId'],
+        'amount': value['amount'],
     };
 }
 
