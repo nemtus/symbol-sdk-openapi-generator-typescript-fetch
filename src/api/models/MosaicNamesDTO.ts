@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -33,12 +33,21 @@ export interface MosaicNamesDTO {
     names: Array<string>;
 }
 
+/**
+ * Check if a given object implements the MosaicNamesDTO interface.
+ */
+export function instanceOfMosaicNamesDTO(value: Record<string, any>): value is MosaicNamesDTO {
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('names' in value) || value['names'] === undefined) return false;
+    return true;
+}
+
 export function MosaicNamesDTOFromJSON(json: any): MosaicNamesDTO {
     return MosaicNamesDTOFromJSONTyped(json, false);
 }
 
 export function MosaicNamesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicNamesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,17 +57,19 @@ export function MosaicNamesDTOFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function MosaicNamesDTOToJSON(value?: MosaicNamesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicNamesDTOToJSON(json: any): MosaicNamesDTO {
+    return MosaicNamesDTOToJSONTyped(json, false);
+}
+
+export function MosaicNamesDTOToJSONTyped(value?: MosaicNamesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'mosaicId': value.mosaicId,
-        'names': value.names,
+        'mosaicId': value['mosaicId'],
+        'names': value['names'],
     };
 }
 

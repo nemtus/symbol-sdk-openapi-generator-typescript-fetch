@@ -12,31 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    EmbeddedTransactionDTO,
-    EmbeddedTransactionDTOFromJSON,
-    EmbeddedTransactionDTOFromJSONTyped,
-    EmbeddedTransactionDTOToJSON,
-} from './EmbeddedTransactionDTO';
-import {
-    MosaicSupplyChangeActionEnum,
-    MosaicSupplyChangeActionEnumFromJSON,
-    MosaicSupplyChangeActionEnumFromJSONTyped,
-    MosaicSupplyChangeActionEnumToJSON,
-} from './MosaicSupplyChangeActionEnum';
-import {
-    MosaicSupplyChangeTransactionBodyDTO,
-    MosaicSupplyChangeTransactionBodyDTOFromJSON,
-    MosaicSupplyChangeTransactionBodyDTOFromJSONTyped,
-    MosaicSupplyChangeTransactionBodyDTOToJSON,
-} from './MosaicSupplyChangeTransactionBodyDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { MosaicSupplyChangeActionEnum } from './MosaicSupplyChangeActionEnum';
+import {
+    MosaicSupplyChangeActionEnumFromJSON,
+    MosaicSupplyChangeActionEnumFromJSONTyped,
+    MosaicSupplyChangeActionEnumToJSON,
+    MosaicSupplyChangeActionEnumToJSONTyped,
+} from './MosaicSupplyChangeActionEnum';
 
 /**
  * 
@@ -71,6 +61,7 @@ export interface EmbeddedMosaicSupplyChangeTransactionDTO {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof EmbeddedMosaicSupplyChangeTransactionDTO
      */
@@ -89,12 +80,28 @@ export interface EmbeddedMosaicSupplyChangeTransactionDTO {
     action: MosaicSupplyChangeActionEnum;
 }
 
+
+
+/**
+ * Check if a given object implements the EmbeddedMosaicSupplyChangeTransactionDTO interface.
+ */
+export function instanceOfEmbeddedMosaicSupplyChangeTransactionDTO(value: Record<string, any>): value is EmbeddedMosaicSupplyChangeTransactionDTO {
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('delta' in value) || value['delta'] === undefined) return false;
+    if (!('action' in value) || value['action'] === undefined) return false;
+    return true;
+}
+
 export function EmbeddedMosaicSupplyChangeTransactionDTOFromJSON(json: any): EmbeddedMosaicSupplyChangeTransactionDTO {
     return EmbeddedMosaicSupplyChangeTransactionDTOFromJSONTyped(json, false);
 }
 
 export function EmbeddedMosaicSupplyChangeTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmbeddedMosaicSupplyChangeTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -109,22 +116,24 @@ export function EmbeddedMosaicSupplyChangeTransactionDTOFromJSONTyped(json: any,
     };
 }
 
-export function EmbeddedMosaicSupplyChangeTransactionDTOToJSON(value?: EmbeddedMosaicSupplyChangeTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EmbeddedMosaicSupplyChangeTransactionDTOToJSON(json: any): EmbeddedMosaicSupplyChangeTransactionDTO {
+    return EmbeddedMosaicSupplyChangeTransactionDTOToJSONTyped(json, false);
+}
+
+export function EmbeddedMosaicSupplyChangeTransactionDTOToJSONTyped(value?: EmbeddedMosaicSupplyChangeTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'mosaicId': value.mosaicId,
-        'delta': value.delta,
-        'action': MosaicSupplyChangeActionEnumToJSON(value.action),
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'mosaicId': value['mosaicId'],
+        'delta': value['delta'],
+        'action': MosaicSupplyChangeActionEnumToJSON(value['action']),
     };
 }
 

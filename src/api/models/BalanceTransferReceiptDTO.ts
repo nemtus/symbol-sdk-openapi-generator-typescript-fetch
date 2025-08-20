@@ -12,24 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { ReceiptTypeEnum } from './ReceiptTypeEnum';
 import {
-    BalanceTransferReceiptDTOAllOf,
-    BalanceTransferReceiptDTOAllOfFromJSON,
-    BalanceTransferReceiptDTOAllOfFromJSONTyped,
-    BalanceTransferReceiptDTOAllOfToJSON,
-} from './BalanceTransferReceiptDTOAllOf';
-import {
-    ReceiptDTO,
-    ReceiptDTOFromJSON,
-    ReceiptDTOFromJSONTyped,
-    ReceiptDTOToJSON,
-} from './ReceiptDTO';
-import {
-    ReceiptTypeEnum,
     ReceiptTypeEnumFromJSON,
     ReceiptTypeEnumFromJSONTyped,
     ReceiptTypeEnumToJSON,
+    ReceiptTypeEnumToJSONTyped,
 } from './ReceiptTypeEnum';
 
 /**
@@ -76,12 +65,27 @@ export interface BalanceTransferReceiptDTO {
     recipientAddress: string;
 }
 
+
+
+/**
+ * Check if a given object implements the BalanceTransferReceiptDTO interface.
+ */
+export function instanceOfBalanceTransferReceiptDTO(value: Record<string, any>): value is BalanceTransferReceiptDTO {
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('senderAddress' in value) || value['senderAddress'] === undefined) return false;
+    if (!('recipientAddress' in value) || value['recipientAddress'] === undefined) return false;
+    return true;
+}
+
 export function BalanceTransferReceiptDTOFromJSON(json: any): BalanceTransferReceiptDTO {
     return BalanceTransferReceiptDTOFromJSONTyped(json, false);
 }
 
 export function BalanceTransferReceiptDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): BalanceTransferReceiptDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -95,21 +99,23 @@ export function BalanceTransferReceiptDTOFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function BalanceTransferReceiptDTOToJSON(value?: BalanceTransferReceiptDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BalanceTransferReceiptDTOToJSON(json: any): BalanceTransferReceiptDTO {
+    return BalanceTransferReceiptDTOToJSONTyped(json, false);
+}
+
+export function BalanceTransferReceiptDTOToJSONTyped(value?: BalanceTransferReceiptDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'version': value.version,
-        'type': ReceiptTypeEnumToJSON(value.type),
-        'mosaicId': value.mosaicId,
-        'amount': value.amount,
-        'senderAddress': value.senderAddress,
-        'recipientAddress': value.recipientAddress,
+        'version': value['version'],
+        'type': ReceiptTypeEnumToJSON(value['type']),
+        'mosaicId': value['mosaicId'],
+        'amount': value['amount'],
+        'senderAddress': value['senderAddress'],
+        'recipientAddress': value['recipientAddress'],
     };
 }
 

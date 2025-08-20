@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MerklePathItemDTO } from './MerklePathItemDTO';
 import {
-    MerklePathItemDTO,
     MerklePathItemDTOFromJSON,
     MerklePathItemDTOFromJSONTyped,
     MerklePathItemDTOToJSON,
+    MerklePathItemDTOToJSONTyped,
 } from './MerklePathItemDTO';
 
 /**
@@ -34,30 +35,39 @@ export interface MerkleProofInfoDTO {
     merklePath?: Array<MerklePathItemDTO>;
 }
 
+/**
+ * Check if a given object implements the MerkleProofInfoDTO interface.
+ */
+export function instanceOfMerkleProofInfoDTO(value: Record<string, any>): value is MerkleProofInfoDTO {
+    return true;
+}
+
 export function MerkleProofInfoDTOFromJSON(json: any): MerkleProofInfoDTO {
     return MerkleProofInfoDTOFromJSONTyped(json, false);
 }
 
 export function MerkleProofInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MerkleProofInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'merklePath': !exists(json, 'merklePath') ? undefined : ((json['merklePath'] as Array<any>).map(MerklePathItemDTOFromJSON)),
+        'merklePath': json['merklePath'] == null ? undefined : ((json['merklePath'] as Array<any>).map(MerklePathItemDTOFromJSON)),
     };
 }
 
-export function MerkleProofInfoDTOToJSON(value?: MerkleProofInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MerkleProofInfoDTOToJSON(json: any): MerkleProofInfoDTO {
+    return MerkleProofInfoDTOToJSONTyped(json, false);
+}
+
+export function MerkleProofInfoDTOToJSONTyped(value?: MerkleProofInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'merklePath': value.merklePath === undefined ? undefined : ((value.merklePath as Array<any>).map(MerklePathItemDTOToJSON)),
+        'merklePath': value['merklePath'] == null ? undefined : ((value['merklePath'] as Array<any>).map(MerklePathItemDTOToJSON)),
     };
 }
 

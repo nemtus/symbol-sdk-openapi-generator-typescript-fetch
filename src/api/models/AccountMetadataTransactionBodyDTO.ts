@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -23,6 +23,7 @@ export interface AccountMetadataTransactionBodyDTO {
      * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
      * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
      * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * 
      * @type {string}
      * @memberof AccountMetadataTransactionBodyDTO
      */
@@ -53,12 +54,24 @@ export interface AccountMetadataTransactionBodyDTO {
     value: string;
 }
 
+/**
+ * Check if a given object implements the AccountMetadataTransactionBodyDTO interface.
+ */
+export function instanceOfAccountMetadataTransactionBodyDTO(value: Record<string, any>): value is AccountMetadataTransactionBodyDTO {
+    if (!('targetAddress' in value) || value['targetAddress'] === undefined) return false;
+    if (!('scopedMetadataKey' in value) || value['scopedMetadataKey'] === undefined) return false;
+    if (!('valueSizeDelta' in value) || value['valueSizeDelta'] === undefined) return false;
+    if (!('valueSize' in value) || value['valueSize'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    return true;
+}
+
 export function AccountMetadataTransactionBodyDTOFromJSON(json: any): AccountMetadataTransactionBodyDTO {
     return AccountMetadataTransactionBodyDTOFromJSONTyped(json, false);
 }
 
 export function AccountMetadataTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountMetadataTransactionBodyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -71,20 +84,22 @@ export function AccountMetadataTransactionBodyDTOFromJSONTyped(json: any, ignore
     };
 }
 
-export function AccountMetadataTransactionBodyDTOToJSON(value?: AccountMetadataTransactionBodyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountMetadataTransactionBodyDTOToJSON(json: any): AccountMetadataTransactionBodyDTO {
+    return AccountMetadataTransactionBodyDTOToJSONTyped(json, false);
+}
+
+export function AccountMetadataTransactionBodyDTOToJSONTyped(value?: AccountMetadataTransactionBodyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'targetAddress': value.targetAddress,
-        'scopedMetadataKey': value.scopedMetadataKey,
-        'valueSizeDelta': value.valueSizeDelta,
-        'valueSize': value.valueSize,
-        'value': value.value,
+        'targetAddress': value['targetAddress'],
+        'scopedMetadataKey': value['scopedMetadataKey'],
+        'valueSizeDelta': value['valueSizeDelta'],
+        'valueSize': value['valueSize'],
+        'value': value['value'],
     };
 }
 

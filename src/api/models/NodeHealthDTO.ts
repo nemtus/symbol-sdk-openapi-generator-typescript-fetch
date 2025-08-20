@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NodeStatusEnum } from './NodeStatusEnum';
 import {
-    NodeStatusEnum,
     NodeStatusEnumFromJSON,
     NodeStatusEnumFromJSONTyped,
     NodeStatusEnumToJSON,
+    NodeStatusEnumToJSONTyped,
 } from './NodeStatusEnum';
 
 /**
@@ -40,12 +41,23 @@ export interface NodeHealthDTO {
     db: NodeStatusEnum;
 }
 
+
+
+/**
+ * Check if a given object implements the NodeHealthDTO interface.
+ */
+export function instanceOfNodeHealthDTO(value: Record<string, any>): value is NodeHealthDTO {
+    if (!('apiNode' in value) || value['apiNode'] === undefined) return false;
+    if (!('db' in value) || value['db'] === undefined) return false;
+    return true;
+}
+
 export function NodeHealthDTOFromJSON(json: any): NodeHealthDTO {
     return NodeHealthDTOFromJSONTyped(json, false);
 }
 
 export function NodeHealthDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): NodeHealthDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,17 +67,19 @@ export function NodeHealthDTOFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function NodeHealthDTOToJSON(value?: NodeHealthDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NodeHealthDTOToJSON(json: any): NodeHealthDTO {
+    return NodeHealthDTOToJSONTyped(json, false);
+}
+
+export function NodeHealthDTOToJSONTyped(value?: NodeHealthDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'apiNode': NodeStatusEnumToJSON(value.apiNode),
-        'db': NodeStatusEnumToJSON(value.db),
+        'apiNode': NodeStatusEnumToJSON(value['apiNode']),
+        'db': NodeStatusEnumToJSON(value['db']),
     };
 }
 

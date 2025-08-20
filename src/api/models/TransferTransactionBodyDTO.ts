@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { UnresolvedMosaic } from './UnresolvedMosaic';
 import {
-    UnresolvedMosaic,
     UnresolvedMosaicFromJSON,
     UnresolvedMosaicFromJSONTyped,
     UnresolvedMosaicToJSON,
+    UnresolvedMosaicToJSONTyped,
 } from './UnresolvedMosaic';
 
 /**
@@ -30,12 +31,14 @@ export interface TransferTransactionBodyDTO {
      * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
      * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
      * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * 
      * @type {string}
      * @memberof TransferTransactionBodyDTO
      */
     recipientAddress: string;
     /**
      * Array of mosaics sent to the recipient.
+     * 
      * @type {Array<UnresolvedMosaic>}
      * @memberof TransferTransactionBodyDTO
      */
@@ -48,34 +51,45 @@ export interface TransferTransactionBodyDTO {
     message?: string;
 }
 
+/**
+ * Check if a given object implements the TransferTransactionBodyDTO interface.
+ */
+export function instanceOfTransferTransactionBodyDTO(value: Record<string, any>): value is TransferTransactionBodyDTO {
+    if (!('recipientAddress' in value) || value['recipientAddress'] === undefined) return false;
+    if (!('mosaics' in value) || value['mosaics'] === undefined) return false;
+    return true;
+}
+
 export function TransferTransactionBodyDTOFromJSON(json: any): TransferTransactionBodyDTO {
     return TransferTransactionBodyDTOFromJSONTyped(json, false);
 }
 
 export function TransferTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransferTransactionBodyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'recipientAddress': json['recipientAddress'],
         'mosaics': ((json['mosaics'] as Array<any>).map(UnresolvedMosaicFromJSON)),
-        'message': !exists(json, 'message') ? undefined : json['message'],
+        'message': json['message'] == null ? undefined : json['message'],
     };
 }
 
-export function TransferTransactionBodyDTOToJSON(value?: TransferTransactionBodyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransferTransactionBodyDTOToJSON(json: any): TransferTransactionBodyDTO {
+    return TransferTransactionBodyDTOToJSONTyped(json, false);
+}
+
+export function TransferTransactionBodyDTOToJSONTyped(value?: TransferTransactionBodyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'recipientAddress': value.recipientAddress,
-        'mosaics': ((value.mosaics as Array<any>).map(UnresolvedMosaicToJSON)),
-        'message': value.message,
+        'recipientAddress': value['recipientAddress'],
+        'mosaics': ((value['mosaics'] as Array<any>).map(UnresolvedMosaicToJSON)),
+        'message': value['message'],
     };
 }
 

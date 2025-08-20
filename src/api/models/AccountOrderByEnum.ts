@@ -24,6 +24,17 @@ export const AccountOrderByEnum = {
 export type AccountOrderByEnum = typeof AccountOrderByEnum[keyof typeof AccountOrderByEnum];
 
 
+export function instanceOfAccountOrderByEnum(value: any): boolean {
+    for (const key in AccountOrderByEnum) {
+        if (Object.prototype.hasOwnProperty.call(AccountOrderByEnum, key)) {
+            if (AccountOrderByEnum[key as keyof typeof AccountOrderByEnum] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function AccountOrderByEnumFromJSON(json: any): AccountOrderByEnum {
     return AccountOrderByEnumFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function AccountOrderByEnumFromJSONTyped(json: any, ignoreDiscriminator: 
 
 export function AccountOrderByEnumToJSON(value?: AccountOrderByEnum | null): any {
     return value as any;
+}
+
+export function AccountOrderByEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): AccountOrderByEnum {
+    return value as AccountOrderByEnum;
 }
 

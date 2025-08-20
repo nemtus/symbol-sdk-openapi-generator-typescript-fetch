@@ -14,26 +14,28 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  MerkleStateInfoDTO,
+  MetadataInfoDTO,
+  MetadataPage,
+  MetadataTypeEnum,
+  ModelError,
+  Order,
+} from '../models/index';
 import {
-    MerkleStateInfoDTO,
     MerkleStateInfoDTOFromJSON,
     MerkleStateInfoDTOToJSON,
-    MetadataInfoDTO,
     MetadataInfoDTOFromJSON,
     MetadataInfoDTOToJSON,
-    MetadataPage,
     MetadataPageFromJSON,
     MetadataPageToJSON,
-    MetadataTypeEnum,
     MetadataTypeEnumFromJSON,
     MetadataTypeEnumToJSON,
-    ModelError,
     ModelErrorFromJSON,
     ModelErrorToJSON,
-    Order,
     OrderFromJSON,
     OrderToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface GetMetadataRequest {
     compositeHash: string;
@@ -64,17 +66,24 @@ export class MetadataRoutesApi extends runtime.BaseAPI {
      * Gets the metadata for a given composite hash.
      * Get metadata information
      */
-    async getMetadataRaw(requestParameters: GetMetadataRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<MetadataInfoDTO>> {
-        if (requestParameters.compositeHash === null || requestParameters.compositeHash === undefined) {
-            throw new runtime.RequiredError('compositeHash','Required parameter requestParameters.compositeHash was null or undefined when calling getMetadata.');
+    async getMetadataRaw(requestParameters: GetMetadataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MetadataInfoDTO>> {
+        if (requestParameters['compositeHash'] == null) {
+            throw new runtime.RequiredError(
+                'compositeHash',
+                'Required parameter "compositeHash" was null or undefined when calling getMetadata().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/metadata/{compositeHash}`;
+        urlPath = urlPath.replace(`{${"compositeHash"}}`, encodeURIComponent(String(requestParameters['compositeHash'])));
+
         const response = await this.request({
-            path: `/metadata/{compositeHash}`.replace(`{${"compositeHash"}}`, encodeURIComponent(String(requestParameters.compositeHash))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -87,7 +96,7 @@ export class MetadataRoutesApi extends runtime.BaseAPI {
      * Gets the metadata for a given composite hash.
      * Get metadata information
      */
-    async getMetadata(requestParameters: GetMetadataRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<MetadataInfoDTO> {
+    async getMetadata(requestParameters: GetMetadataRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MetadataInfoDTO> {
         const response = await this.getMetadataRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -96,17 +105,24 @@ export class MetadataRoutesApi extends runtime.BaseAPI {
      * Gets the metadata merkle for a given composite hash.
      * Get metadata merkle information
      */
-    async getMetadataMerkleRaw(requestParameters: GetMetadataMerkleRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<MerkleStateInfoDTO>> {
-        if (requestParameters.compositeHash === null || requestParameters.compositeHash === undefined) {
-            throw new runtime.RequiredError('compositeHash','Required parameter requestParameters.compositeHash was null or undefined when calling getMetadataMerkle.');
+    async getMetadataMerkleRaw(requestParameters: GetMetadataMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MerkleStateInfoDTO>> {
+        if (requestParameters['compositeHash'] == null) {
+            throw new runtime.RequiredError(
+                'compositeHash',
+                'Required parameter "compositeHash" was null or undefined when calling getMetadataMerkle().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/metadata/{compositeHash}/merkle`;
+        urlPath = urlPath.replace(`{${"compositeHash"}}`, encodeURIComponent(String(requestParameters['compositeHash'])));
+
         const response = await this.request({
-            path: `/metadata/{compositeHash}/merkle`.replace(`{${"compositeHash"}}`, encodeURIComponent(String(requestParameters.compositeHash))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -119,7 +135,7 @@ export class MetadataRoutesApi extends runtime.BaseAPI {
      * Gets the metadata merkle for a given composite hash.
      * Get metadata merkle information
      */
-    async getMetadataMerkle(requestParameters: GetMetadataMerkleRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<MerkleStateInfoDTO> {
+    async getMetadataMerkle(requestParameters: GetMetadataMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MerkleStateInfoDTO> {
         const response = await this.getMetadataMerkleRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -128,49 +144,52 @@ export class MetadataRoutesApi extends runtime.BaseAPI {
      * Returns an array of metadata.
      * Search metadata entries
      */
-    async searchMetadataEntriesRaw(requestParameters: SearchMetadataEntriesRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<MetadataPage>> {
+    async searchMetadataEntriesRaw(requestParameters: SearchMetadataEntriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MetadataPage>> {
         const queryParameters: any = {};
 
-        if (requestParameters.sourceAddress !== undefined) {
-            queryParameters['sourceAddress'] = requestParameters.sourceAddress;
+        if (requestParameters['sourceAddress'] != null) {
+            queryParameters['sourceAddress'] = requestParameters['sourceAddress'];
         }
 
-        if (requestParameters.targetAddress !== undefined) {
-            queryParameters['targetAddress'] = requestParameters.targetAddress;
+        if (requestParameters['targetAddress'] != null) {
+            queryParameters['targetAddress'] = requestParameters['targetAddress'];
         }
 
-        if (requestParameters.scopedMetadataKey !== undefined) {
-            queryParameters['scopedMetadataKey'] = requestParameters.scopedMetadataKey;
+        if (requestParameters['scopedMetadataKey'] != null) {
+            queryParameters['scopedMetadataKey'] = requestParameters['scopedMetadataKey'];
         }
 
-        if (requestParameters.targetId !== undefined) {
-            queryParameters['targetId'] = requestParameters.targetId;
+        if (requestParameters['targetId'] != null) {
+            queryParameters['targetId'] = requestParameters['targetId'];
         }
 
-        if (requestParameters.metadataType !== undefined) {
-            queryParameters['metadataType'] = requestParameters.metadataType;
+        if (requestParameters['metadataType'] != null) {
+            queryParameters['metadataType'] = requestParameters['metadataType'];
         }
 
-        if (requestParameters.pageSize !== undefined) {
-            queryParameters['pageSize'] = requestParameters.pageSize;
+        if (requestParameters['pageSize'] != null) {
+            queryParameters['pageSize'] = requestParameters['pageSize'];
         }
 
-        if (requestParameters.pageNumber !== undefined) {
-            queryParameters['pageNumber'] = requestParameters.pageNumber;
+        if (requestParameters['pageNumber'] != null) {
+            queryParameters['pageNumber'] = requestParameters['pageNumber'];
         }
 
-        if (requestParameters.offset !== undefined) {
-            queryParameters['offset'] = requestParameters.offset;
+        if (requestParameters['offset'] != null) {
+            queryParameters['offset'] = requestParameters['offset'];
         }
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/metadata`;
+
         const response = await this.request({
-            path: `/metadata`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -183,7 +202,7 @@ export class MetadataRoutesApi extends runtime.BaseAPI {
      * Returns an array of metadata.
      * Search metadata entries
      */
-    async searchMetadataEntries(requestParameters: SearchMetadataEntriesRequest = {}, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<MetadataPage> {
+    async searchMetadataEntries(requestParameters: SearchMetadataEntriesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MetadataPage> {
         const response = await this.searchMetadataEntriesRaw(requestParameters, initOverrides);
         return await response.value();
     }

@@ -12,36 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    LinkActionEnum,
-    LinkActionEnumFromJSON,
-    LinkActionEnumFromJSONTyped,
-    LinkActionEnumToJSON,
-} from './LinkActionEnum';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { LinkActionEnum } from './LinkActionEnum';
 import {
-    TransactionDTO,
-    TransactionDTOFromJSON,
-    TransactionDTOFromJSONTyped,
-    TransactionDTOToJSON,
-} from './TransactionDTO';
-import {
-    VrfKeyLinkTransactionBodyDTO,
-    VrfKeyLinkTransactionBodyDTOFromJSON,
-    VrfKeyLinkTransactionBodyDTOFromJSONTyped,
-    VrfKeyLinkTransactionBodyDTOToJSON,
-} from './VrfKeyLinkTransactionBodyDTO';
+    LinkActionEnumFromJSON,
+    LinkActionEnumFromJSONTyped,
+    LinkActionEnumToJSON,
+    LinkActionEnumToJSONTyped,
+} from './LinkActionEnum';
 
 /**
  * Transaction to link an account with a VRF public key.
  * The key is used to randomize block production and leader/participant selection.
  * Required for all harvesting eligible accounts.
+ * 
  * @export
  * @interface VrfKeyLinkTransactionDTO
  */
@@ -108,12 +99,31 @@ export interface VrfKeyLinkTransactionDTO {
     linkAction: LinkActionEnum;
 }
 
+
+
+/**
+ * Check if a given object implements the VrfKeyLinkTransactionDTO interface.
+ */
+export function instanceOfVrfKeyLinkTransactionDTO(value: Record<string, any>): value is VrfKeyLinkTransactionDTO {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('maxFee' in value) || value['maxFee'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    if (!('linkedPublicKey' in value) || value['linkedPublicKey'] === undefined) return false;
+    if (!('linkAction' in value) || value['linkAction'] === undefined) return false;
+    return true;
+}
+
 export function VrfKeyLinkTransactionDTOFromJSON(json: any): VrfKeyLinkTransactionDTO {
     return VrfKeyLinkTransactionDTOFromJSONTyped(json, false);
 }
 
 export function VrfKeyLinkTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): VrfKeyLinkTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -131,25 +141,27 @@ export function VrfKeyLinkTransactionDTOFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-export function VrfKeyLinkTransactionDTOToJSON(value?: VrfKeyLinkTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function VrfKeyLinkTransactionDTOToJSON(json: any): VrfKeyLinkTransactionDTO {
+    return VrfKeyLinkTransactionDTOToJSONTyped(json, false);
+}
+
+export function VrfKeyLinkTransactionDTOToJSONTyped(value?: VrfKeyLinkTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'maxFee': value.maxFee,
-        'deadline': value.deadline,
-        'linkedPublicKey': value.linkedPublicKey,
-        'linkAction': LinkActionEnumToJSON(value.linkAction),
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'maxFee': value['maxFee'],
+        'deadline': value['deadline'],
+        'linkedPublicKey': value['linkedPublicKey'],
+        'linkAction': LinkActionEnumToJSON(value['linkAction']),
     };
 }
 

@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { Pagination } from './Pagination';
 import {
-    Pagination,
     PaginationFromJSON,
     PaginationFromJSONTyped,
     PaginationToJSON,
+    PaginationToJSONTyped,
 } from './Pagination';
+import type { ResolutionStatementInfoDTO } from './ResolutionStatementInfoDTO';
 import {
-    ResolutionStatementInfoDTO,
     ResolutionStatementInfoDTOFromJSON,
     ResolutionStatementInfoDTOFromJSONTyped,
     ResolutionStatementInfoDTOToJSON,
+    ResolutionStatementInfoDTOToJSONTyped,
 } from './ResolutionStatementInfoDTO';
 
 /**
@@ -46,12 +48,21 @@ export interface ResolutionStatementPage {
     pagination: Pagination;
 }
 
+/**
+ * Check if a given object implements the ResolutionStatementPage interface.
+ */
+export function instanceOfResolutionStatementPage(value: Record<string, any>): value is ResolutionStatementPage {
+    if (!('data' in value) || value['data'] === undefined) return false;
+    if (!('pagination' in value) || value['pagination'] === undefined) return false;
+    return true;
+}
+
 export function ResolutionStatementPageFromJSON(json: any): ResolutionStatementPage {
     return ResolutionStatementPageFromJSONTyped(json, false);
 }
 
 export function ResolutionStatementPageFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResolutionStatementPage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,17 +72,19 @@ export function ResolutionStatementPageFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function ResolutionStatementPageToJSON(value?: ResolutionStatementPage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ResolutionStatementPageToJSON(json: any): ResolutionStatementPage {
+    return ResolutionStatementPageToJSONTyped(json, false);
+}
+
+export function ResolutionStatementPageToJSONTyped(value?: ResolutionStatementPage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'data': ((value.data as Array<any>).map(ResolutionStatementInfoDTOToJSON)),
-        'pagination': PaginationToJSON(value.pagination),
+        'data': ((value['data'] as Array<any>).map(ResolutionStatementInfoDTOToJSON)),
+        'pagination': PaginationToJSON(value['pagination']),
     };
 }
 

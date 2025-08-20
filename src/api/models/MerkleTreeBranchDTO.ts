@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MerkleTreeBranchLinkDTO } from './MerkleTreeBranchLinkDTO';
 import {
-    MerkleTreeBranchLinkDTO,
     MerkleTreeBranchLinkDTOFromJSON,
     MerkleTreeBranchLinkDTOFromJSONTyped,
     MerkleTreeBranchLinkDTOToJSON,
+    MerkleTreeBranchLinkDTOToJSONTyped,
 } from './MerkleTreeBranchLinkDTO';
+import type { MerkleTreeNodeTypeEnum } from './MerkleTreeNodeTypeEnum';
 import {
-    MerkleTreeNodeTypeEnum,
     MerkleTreeNodeTypeEnumFromJSON,
     MerkleTreeNodeTypeEnumFromJSONTyped,
     MerkleTreeNodeTypeEnumToJSON,
+    MerkleTreeNodeTypeEnumToJSONTyped,
 } from './MerkleTreeNodeTypeEnum';
 
 /**
@@ -76,12 +78,28 @@ export interface MerkleTreeBranchDTO {
     branchHash: string;
 }
 
+
+
+/**
+ * Check if a given object implements the MerkleTreeBranchDTO interface.
+ */
+export function instanceOfMerkleTreeBranchDTO(value: Record<string, any>): value is MerkleTreeBranchDTO {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('path' in value) || value['path'] === undefined) return false;
+    if (!('encodedPath' in value) || value['encodedPath'] === undefined) return false;
+    if (!('nibbleCount' in value) || value['nibbleCount'] === undefined) return false;
+    if (!('linkMask' in value) || value['linkMask'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
+    if (!('branchHash' in value) || value['branchHash'] === undefined) return false;
+    return true;
+}
+
 export function MerkleTreeBranchDTOFromJSON(json: any): MerkleTreeBranchDTO {
     return MerkleTreeBranchDTOFromJSONTyped(json, false);
 }
 
 export function MerkleTreeBranchDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MerkleTreeBranchDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -96,22 +114,24 @@ export function MerkleTreeBranchDTOFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function MerkleTreeBranchDTOToJSON(value?: MerkleTreeBranchDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MerkleTreeBranchDTOToJSON(json: any): MerkleTreeBranchDTO {
+    return MerkleTreeBranchDTOToJSONTyped(json, false);
+}
+
+export function MerkleTreeBranchDTOToJSONTyped(value?: MerkleTreeBranchDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': MerkleTreeNodeTypeEnumToJSON(value.type),
-        'path': value.path,
-        'encodedPath': value.encodedPath,
-        'nibbleCount': value.nibbleCount,
-        'linkMask': value.linkMask,
-        'links': ((value.links as Array<any>).map(MerkleTreeBranchLinkDTOToJSON)),
-        'branchHash': value.branchHash,
+        'type': MerkleTreeNodeTypeEnumToJSON(value['type']),
+        'path': value['path'],
+        'encodedPath': value['encodedPath'],
+        'nibbleCount': value['nibbleCount'],
+        'linkMask': value['linkMask'],
+        'links': ((value['links'] as Array<any>).map(MerkleTreeBranchLinkDTOToJSON)),
+        'branchHash': value['branchHash'],
     };
 }
 

@@ -14,20 +14,22 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  MerkleStateInfoDTO,
+  ModelError,
+  MultisigAccountGraphInfoDTO,
+  MultisigAccountInfoDTO,
+} from '../models/index';
 import {
-    MerkleStateInfoDTO,
     MerkleStateInfoDTOFromJSON,
     MerkleStateInfoDTOToJSON,
-    ModelError,
     ModelErrorFromJSON,
     ModelErrorToJSON,
-    MultisigAccountGraphInfoDTO,
     MultisigAccountGraphInfoDTOFromJSON,
     MultisigAccountGraphInfoDTOToJSON,
-    MultisigAccountInfoDTO,
     MultisigAccountInfoDTOFromJSON,
     MultisigAccountInfoDTOToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface GetAccountMultisigRequest {
     address: string;
@@ -50,17 +52,24 @@ export class MultisigRoutesApi extends runtime.BaseAPI {
      * Returns the multisig account information.
      * Get multisig account information
      */
-    async getAccountMultisigRaw(requestParameters: GetAccountMultisigRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<MultisigAccountInfoDTO>> {
-        if (requestParameters.address === null || requestParameters.address === undefined) {
-            throw new runtime.RequiredError('address','Required parameter requestParameters.address was null or undefined when calling getAccountMultisig.');
+    async getAccountMultisigRaw(requestParameters: GetAccountMultisigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultisigAccountInfoDTO>> {
+        if (requestParameters['address'] == null) {
+            throw new runtime.RequiredError(
+                'address',
+                'Required parameter "address" was null or undefined when calling getAccountMultisig().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/account/{address}/multisig`;
+        urlPath = urlPath.replace(`{${"address"}}`, encodeURIComponent(String(requestParameters['address'])));
+
         const response = await this.request({
-            path: `/account/{address}/multisig`.replace(`{${"address"}}`, encodeURIComponent(String(requestParameters.address))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -73,7 +82,7 @@ export class MultisigRoutesApi extends runtime.BaseAPI {
      * Returns the multisig account information.
      * Get multisig account information
      */
-    async getAccountMultisig(requestParameters: GetAccountMultisigRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<MultisigAccountInfoDTO> {
+    async getAccountMultisig(requestParameters: GetAccountMultisigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultisigAccountInfoDTO> {
         const response = await this.getAccountMultisigRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -82,17 +91,24 @@ export class MultisigRoutesApi extends runtime.BaseAPI {
      * Returns the multisig account graph.
      * Get multisig account graph information
      */
-    async getAccountMultisigGraphRaw(requestParameters: GetAccountMultisigGraphRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Array<MultisigAccountGraphInfoDTO>>> {
-        if (requestParameters.address === null || requestParameters.address === undefined) {
-            throw new runtime.RequiredError('address','Required parameter requestParameters.address was null or undefined when calling getAccountMultisigGraph.');
+    async getAccountMultisigGraphRaw(requestParameters: GetAccountMultisigGraphRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<MultisigAccountGraphInfoDTO>>> {
+        if (requestParameters['address'] == null) {
+            throw new runtime.RequiredError(
+                'address',
+                'Required parameter "address" was null or undefined when calling getAccountMultisigGraph().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/account/{address}/multisig/graph`;
+        urlPath = urlPath.replace(`{${"address"}}`, encodeURIComponent(String(requestParameters['address'])));
+
         const response = await this.request({
-            path: `/account/{address}/multisig/graph`.replace(`{${"address"}}`, encodeURIComponent(String(requestParameters.address))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -105,7 +121,7 @@ export class MultisigRoutesApi extends runtime.BaseAPI {
      * Returns the multisig account graph.
      * Get multisig account graph information
      */
-    async getAccountMultisigGraph(requestParameters: GetAccountMultisigGraphRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Array<MultisigAccountGraphInfoDTO>> {
+    async getAccountMultisigGraph(requestParameters: GetAccountMultisigGraphRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MultisigAccountGraphInfoDTO>> {
         const response = await this.getAccountMultisigGraphRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -114,17 +130,24 @@ export class MultisigRoutesApi extends runtime.BaseAPI {
      * Returns the multisig account merkle information.
      * Get multisig account merkle information
      */
-    async getAccountMultisigMerkleRaw(requestParameters: GetAccountMultisigMerkleRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<MerkleStateInfoDTO>> {
-        if (requestParameters.address === null || requestParameters.address === undefined) {
-            throw new runtime.RequiredError('address','Required parameter requestParameters.address was null or undefined when calling getAccountMultisigMerkle.');
+    async getAccountMultisigMerkleRaw(requestParameters: GetAccountMultisigMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MerkleStateInfoDTO>> {
+        if (requestParameters['address'] == null) {
+            throw new runtime.RequiredError(
+                'address',
+                'Required parameter "address" was null or undefined when calling getAccountMultisigMerkle().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/account/{address}/multisig/merkle`;
+        urlPath = urlPath.replace(`{${"address"}}`, encodeURIComponent(String(requestParameters['address'])));
+
         const response = await this.request({
-            path: `/account/{address}/multisig/merkle`.replace(`{${"address"}}`, encodeURIComponent(String(requestParameters.address))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -137,7 +160,7 @@ export class MultisigRoutesApi extends runtime.BaseAPI {
      * Returns the multisig account merkle information.
      * Get multisig account merkle information
      */
-    async getAccountMultisigMerkle(requestParameters: GetAccountMultisigMerkleRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<MerkleStateInfoDTO> {
+    async getAccountMultisigMerkle(requestParameters: GetAccountMultisigMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MerkleStateInfoDTO> {
         const response = await this.getAccountMultisigMerkleRaw(requestParameters, initOverrides);
         return await response.value();
     }

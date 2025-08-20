@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -27,12 +27,20 @@ export interface VerifiableEntityDTO {
     signature: string;
 }
 
+/**
+ * Check if a given object implements the VerifiableEntityDTO interface.
+ */
+export function instanceOfVerifiableEntityDTO(value: Record<string, any>): value is VerifiableEntityDTO {
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    return true;
+}
+
 export function VerifiableEntityDTOFromJSON(json: any): VerifiableEntityDTO {
     return VerifiableEntityDTOFromJSONTyped(json, false);
 }
 
 export function VerifiableEntityDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): VerifiableEntityDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -41,16 +49,18 @@ export function VerifiableEntityDTOFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function VerifiableEntityDTOToJSON(value?: VerifiableEntityDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function VerifiableEntityDTOToJSON(json: any): VerifiableEntityDTO {
+    return VerifiableEntityDTOToJSONTyped(json, false);
+}
+
+export function VerifiableEntityDTOToJSONTyped(value?: VerifiableEntityDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signature': value.signature,
+        'signature': value['signature'],
     };
 }
 

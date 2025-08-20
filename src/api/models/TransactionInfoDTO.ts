@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { TransactionInfoDTOTransaction } from './TransactionInfoDTOTransaction';
 import {
-    TransactionInfoDTOMeta,
-    TransactionInfoDTOMetaFromJSON,
-    TransactionInfoDTOMetaFromJSONTyped,
-    TransactionInfoDTOMetaToJSON,
-} from './TransactionInfoDTOMeta';
-import {
-    TransactionInfoDTOTransaction,
     TransactionInfoDTOTransactionFromJSON,
     TransactionInfoDTOTransactionFromJSONTyped,
     TransactionInfoDTOTransactionToJSON,
+    TransactionInfoDTOTransactionToJSONTyped,
 } from './TransactionInfoDTOTransaction';
+import type { TransactionInfoDTOMeta } from './TransactionInfoDTOMeta';
+import {
+    TransactionInfoDTOMetaFromJSON,
+    TransactionInfoDTOMetaFromJSONTyped,
+    TransactionInfoDTOMetaToJSON,
+    TransactionInfoDTOMetaToJSONTyped,
+} from './TransactionInfoDTOMeta';
 
 /**
  * 
@@ -52,12 +54,22 @@ export interface TransactionInfoDTO {
     transaction: TransactionInfoDTOTransaction;
 }
 
+/**
+ * Check if a given object implements the TransactionInfoDTO interface.
+ */
+export function instanceOfTransactionInfoDTO(value: Record<string, any>): value is TransactionInfoDTO {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('meta' in value) || value['meta'] === undefined) return false;
+    if (!('transaction' in value) || value['transaction'] === undefined) return false;
+    return true;
+}
+
 export function TransactionInfoDTOFromJSON(json: any): TransactionInfoDTO {
     return TransactionInfoDTOFromJSONTyped(json, false);
 }
 
 export function TransactionInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -68,18 +80,20 @@ export function TransactionInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function TransactionInfoDTOToJSON(value?: TransactionInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionInfoDTOToJSON(json: any): TransactionInfoDTO {
+    return TransactionInfoDTOToJSONTyped(json, false);
+}
+
+export function TransactionInfoDTOToJSONTyped(value?: TransactionInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'meta': TransactionInfoDTOMetaToJSON(value.meta),
-        'transaction': TransactionInfoDTOTransactionToJSON(value.transaction),
+        'id': value['id'],
+        'meta': TransactionInfoDTOMetaToJSON(value['meta']),
+        'transaction': TransactionInfoDTOTransactionToJSON(value['transaction']),
     };
 }
 

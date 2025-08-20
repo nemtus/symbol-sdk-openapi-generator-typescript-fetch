@@ -14,26 +14,28 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  NodeHealthInfoDTO,
+  NodeInfoDTO,
+  NodeTimeDTO,
+  ServerInfoDTO,
+  StorageInfoDTO,
+  UnlockedAccountDTO,
+} from '../models/index';
 import {
-    NodeHealthInfoDTO,
     NodeHealthInfoDTOFromJSON,
     NodeHealthInfoDTOToJSON,
-    NodeInfoDTO,
     NodeInfoDTOFromJSON,
     NodeInfoDTOToJSON,
-    NodeTimeDTO,
     NodeTimeDTOFromJSON,
     NodeTimeDTOToJSON,
-    ServerInfoDTO,
     ServerInfoDTOFromJSON,
     ServerInfoDTOToJSON,
-    StorageInfoDTO,
     StorageInfoDTOFromJSON,
     StorageInfoDTOToJSON,
-    UnlockedAccountDTO,
     UnlockedAccountDTOFromJSON,
     UnlockedAccountDTOToJSON,
-} from '../models';
+} from '../models/index';
 
 /**
  * 
@@ -44,13 +46,16 @@ export class NodeRoutesApi extends runtime.BaseAPI {
      * Supplies information regarding the connection and services status.
      * Get the node health information
      */
-    async getNodeHealthRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NodeHealthInfoDTO>> {
+    async getNodeHealthRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NodeHealthInfoDTO>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/node/health`;
+
         const response = await this.request({
-            path: `/node/health`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -63,7 +68,7 @@ export class NodeRoutesApi extends runtime.BaseAPI {
      * Supplies information regarding the connection and services status.
      * Get the node health information
      */
-    async getNodeHealth(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NodeHealthInfoDTO> {
+    async getNodeHealth(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NodeHealthInfoDTO> {
         const response = await this.getNodeHealthRaw(initOverrides);
         return await response.value();
     }
@@ -72,13 +77,16 @@ export class NodeRoutesApi extends runtime.BaseAPI {
      * Supplies additional information about the application running on a node.
      * Get the node information
      */
-    async getNodeInfoRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NodeInfoDTO>> {
+    async getNodeInfoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NodeInfoDTO>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/node/info`;
+
         const response = await this.request({
-            path: `/node/info`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -91,7 +99,7 @@ export class NodeRoutesApi extends runtime.BaseAPI {
      * Supplies additional information about the application running on a node.
      * Get the node information
      */
-    async getNodeInfo(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NodeInfoDTO> {
+    async getNodeInfo(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NodeInfoDTO> {
         const response = await this.getNodeInfoRaw(initOverrides);
         return await response.value();
     }
@@ -100,13 +108,16 @@ export class NodeRoutesApi extends runtime.BaseAPI {
      * Gets the list of peers visible by the node.
      * Get peers information
      */
-    async getNodePeersRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Array<NodeInfoDTO>>> {
+    async getNodePeersRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<NodeInfoDTO>>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/node/peers`;
+
         const response = await this.request({
-            path: `/node/peers`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -119,7 +130,7 @@ export class NodeRoutesApi extends runtime.BaseAPI {
      * Gets the list of peers visible by the node.
      * Get peers information
      */
-    async getNodePeers(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Array<NodeInfoDTO>> {
+    async getNodePeers(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<NodeInfoDTO>> {
         const response = await this.getNodePeersRaw(initOverrides);
         return await response.value();
     }
@@ -128,13 +139,16 @@ export class NodeRoutesApi extends runtime.BaseAPI {
      * Returns storage information about the node.
      * Get the storage information of the node
      */
-    async getNodeStorageRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<StorageInfoDTO>> {
+    async getNodeStorageRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StorageInfoDTO>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/node/storage`;
+
         const response = await this.request({
-            path: `/node/storage`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -147,7 +161,7 @@ export class NodeRoutesApi extends runtime.BaseAPI {
      * Returns storage information about the node.
      * Get the storage information of the node
      */
-    async getNodeStorage(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<StorageInfoDTO> {
+    async getNodeStorage(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StorageInfoDTO> {
         const response = await this.getNodeStorageRaw(initOverrides);
         return await response.value();
     }
@@ -156,13 +170,16 @@ export class NodeRoutesApi extends runtime.BaseAPI {
      * Gets the node time at the moment the reply was sent and received.
      * Get the node time
      */
-    async getNodeTimeRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NodeTimeDTO>> {
+    async getNodeTimeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NodeTimeDTO>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/node/time`;
+
         const response = await this.request({
-            path: `/node/time`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -175,7 +192,7 @@ export class NodeRoutesApi extends runtime.BaseAPI {
      * Gets the node time at the moment the reply was sent and received.
      * Get the node time
      */
-    async getNodeTime(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NodeTimeDTO> {
+    async getNodeTime(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NodeTimeDTO> {
         const response = await this.getNodeTimeRaw(initOverrides);
         return await response.value();
     }
@@ -184,13 +201,16 @@ export class NodeRoutesApi extends runtime.BaseAPI {
      * Returns the version of the running catapult-rest component.
      * Get the version of the running REST component
      */
-    async getServerInfoRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<ServerInfoDTO>> {
+    async getServerInfoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ServerInfoDTO>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/node/server`;
+
         const response = await this.request({
-            path: `/node/server`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -203,7 +223,7 @@ export class NodeRoutesApi extends runtime.BaseAPI {
      * Returns the version of the running catapult-rest component.
      * Get the version of the running REST component
      */
-    async getServerInfo(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<ServerInfoDTO> {
+    async getServerInfo(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ServerInfoDTO> {
         const response = await this.getServerInfoRaw(initOverrides);
         return await response.value();
     }
@@ -212,13 +232,16 @@ export class NodeRoutesApi extends runtime.BaseAPI {
      * Returns array of unlocked account public keys.
      * Get the unlocked harvesting account public keys.
      */
-    async getUnlockedAccountRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<UnlockedAccountDTO>> {
+    async getUnlockedAccountRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UnlockedAccountDTO>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/node/unlockedaccount`;
+
         const response = await this.request({
-            path: `/node/unlockedaccount`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -231,7 +254,7 @@ export class NodeRoutesApi extends runtime.BaseAPI {
      * Returns array of unlocked account public keys.
      * Get the unlocked harvesting account public keys.
      */
-    async getUnlockedAccount(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<UnlockedAccountDTO> {
+    async getUnlockedAccount(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UnlockedAccountDTO> {
         const response = await this.getUnlockedAccountRaw(initOverrides);
         return await response.value();
     }

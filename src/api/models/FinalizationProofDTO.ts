@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MessageGroup } from './MessageGroup';
 import {
-    MessageGroup,
     MessageGroupFromJSON,
     MessageGroupFromJSONTyped,
     MessageGroupToJSON,
+    MessageGroupToJSONTyped,
 } from './MessageGroup';
 
 /**
@@ -64,12 +65,25 @@ export interface FinalizationProofDTO {
     messageGroups: Array<MessageGroup>;
 }
 
+/**
+ * Check if a given object implements the FinalizationProofDTO interface.
+ */
+export function instanceOfFinalizationProofDTO(value: Record<string, any>): value is FinalizationProofDTO {
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('finalizationEpoch' in value) || value['finalizationEpoch'] === undefined) return false;
+    if (!('finalizationPoint' in value) || value['finalizationPoint'] === undefined) return false;
+    if (!('height' in value) || value['height'] === undefined) return false;
+    if (!('hash' in value) || value['hash'] === undefined) return false;
+    if (!('messageGroups' in value) || value['messageGroups'] === undefined) return false;
+    return true;
+}
+
 export function FinalizationProofDTOFromJSON(json: any): FinalizationProofDTO {
     return FinalizationProofDTOFromJSONTyped(json, false);
 }
 
 export function FinalizationProofDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): FinalizationProofDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -83,21 +97,23 @@ export function FinalizationProofDTOFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function FinalizationProofDTOToJSON(value?: FinalizationProofDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function FinalizationProofDTOToJSON(json: any): FinalizationProofDTO {
+    return FinalizationProofDTOToJSONTyped(json, false);
+}
+
+export function FinalizationProofDTOToJSONTyped(value?: FinalizationProofDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'version': value.version,
-        'finalizationEpoch': value.finalizationEpoch,
-        'finalizationPoint': value.finalizationPoint,
-        'height': value.height,
-        'hash': value.hash,
-        'messageGroups': ((value.messageGroups as Array<any>).map(MessageGroupToJSON)),
+        'version': value['version'],
+        'finalizationEpoch': value['finalizationEpoch'],
+        'finalizationPoint': value['finalizationPoint'],
+        'height': value['height'],
+        'hash': value['hash'],
+        'messageGroups': ((value['messageGroups'] as Array<any>).map(MessageGroupToJSON)),
     };
 }
 

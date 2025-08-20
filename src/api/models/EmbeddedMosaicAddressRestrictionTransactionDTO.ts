@@ -12,24 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    EmbeddedTransactionDTO,
-    EmbeddedTransactionDTOFromJSON,
-    EmbeddedTransactionDTOFromJSONTyped,
-    EmbeddedTransactionDTOToJSON,
-} from './EmbeddedTransactionDTO';
-import {
-    MosaicAddressRestrictionTransactionBodyDTO,
-    MosaicAddressRestrictionTransactionBodyDTOFromJSON,
-    MosaicAddressRestrictionTransactionBodyDTOFromJSONTyped,
-    MosaicAddressRestrictionTransactionBodyDTOToJSON,
-} from './MosaicAddressRestrictionTransactionBodyDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
 
 /**
@@ -65,6 +54,7 @@ export interface EmbeddedMosaicAddressRestrictionTransactionDTO {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof EmbeddedMosaicAddressRestrictionTransactionDTO
      */
@@ -91,10 +81,29 @@ export interface EmbeddedMosaicAddressRestrictionTransactionDTO {
      * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
      * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
      * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * 
      * @type {string}
      * @memberof EmbeddedMosaicAddressRestrictionTransactionDTO
      */
     targetAddress: string;
+}
+
+
+
+/**
+ * Check if a given object implements the EmbeddedMosaicAddressRestrictionTransactionDTO interface.
+ */
+export function instanceOfEmbeddedMosaicAddressRestrictionTransactionDTO(value: Record<string, any>): value is EmbeddedMosaicAddressRestrictionTransactionDTO {
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('restrictionKey' in value) || value['restrictionKey'] === undefined) return false;
+    if (!('previousRestrictionValue' in value) || value['previousRestrictionValue'] === undefined) return false;
+    if (!('newRestrictionValue' in value) || value['newRestrictionValue'] === undefined) return false;
+    if (!('targetAddress' in value) || value['targetAddress'] === undefined) return false;
+    return true;
 }
 
 export function EmbeddedMosaicAddressRestrictionTransactionDTOFromJSON(json: any): EmbeddedMosaicAddressRestrictionTransactionDTO {
@@ -102,7 +111,7 @@ export function EmbeddedMosaicAddressRestrictionTransactionDTOFromJSON(json: any
 }
 
 export function EmbeddedMosaicAddressRestrictionTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmbeddedMosaicAddressRestrictionTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -119,24 +128,26 @@ export function EmbeddedMosaicAddressRestrictionTransactionDTOFromJSONTyped(json
     };
 }
 
-export function EmbeddedMosaicAddressRestrictionTransactionDTOToJSON(value?: EmbeddedMosaicAddressRestrictionTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EmbeddedMosaicAddressRestrictionTransactionDTOToJSON(json: any): EmbeddedMosaicAddressRestrictionTransactionDTO {
+    return EmbeddedMosaicAddressRestrictionTransactionDTOToJSONTyped(json, false);
+}
+
+export function EmbeddedMosaicAddressRestrictionTransactionDTOToJSONTyped(value?: EmbeddedMosaicAddressRestrictionTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'mosaicId': value.mosaicId,
-        'restrictionKey': value.restrictionKey,
-        'previousRestrictionValue': value.previousRestrictionValue,
-        'newRestrictionValue': value.newRestrictionValue,
-        'targetAddress': value.targetAddress,
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'mosaicId': value['mosaicId'],
+        'restrictionKey': value['restrictionKey'],
+        'previousRestrictionValue': value['previousRestrictionValue'],
+        'newRestrictionValue': value['newRestrictionValue'],
+        'targetAddress': value['targetAddress'],
     };
 }
 

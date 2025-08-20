@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { CosignatureDTO } from './CosignatureDTO';
 import {
-    CosignatureDTO,
     CosignatureDTOFromJSON,
     CosignatureDTOFromJSONTyped,
     CosignatureDTOToJSON,
+    CosignatureDTOToJSONTyped,
 } from './CosignatureDTO';
 
 /**
@@ -40,12 +41,21 @@ export interface AggregateTransactionBodyDTO {
     cosignatures: Array<CosignatureDTO>;
 }
 
+/**
+ * Check if a given object implements the AggregateTransactionBodyDTO interface.
+ */
+export function instanceOfAggregateTransactionBodyDTO(value: Record<string, any>): value is AggregateTransactionBodyDTO {
+    if (!('transactionsHash' in value) || value['transactionsHash'] === undefined) return false;
+    if (!('cosignatures' in value) || value['cosignatures'] === undefined) return false;
+    return true;
+}
+
 export function AggregateTransactionBodyDTOFromJSON(json: any): AggregateTransactionBodyDTO {
     return AggregateTransactionBodyDTOFromJSONTyped(json, false);
 }
 
 export function AggregateTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AggregateTransactionBodyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,17 +65,19 @@ export function AggregateTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function AggregateTransactionBodyDTOToJSON(value?: AggregateTransactionBodyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AggregateTransactionBodyDTOToJSON(json: any): AggregateTransactionBodyDTO {
+    return AggregateTransactionBodyDTOToJSONTyped(json, false);
+}
+
+export function AggregateTransactionBodyDTOToJSONTyped(value?: AggregateTransactionBodyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transactionsHash': value.transactionsHash,
-        'cosignatures': ((value.cosignatures as Array<any>).map(CosignatureDTOToJSON)),
+        'transactionsHash': value['transactionsHash'],
+        'cosignatures': ((value['cosignatures'] as Array<any>).map(CosignatureDTOToJSON)),
     };
 }
 

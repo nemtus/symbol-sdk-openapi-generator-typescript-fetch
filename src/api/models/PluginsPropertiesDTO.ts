@@ -12,73 +12,84 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { AccountRestrictionNetworkPropertiesDTO } from './AccountRestrictionNetworkPropertiesDTO';
 import {
-    AccountKeyLinkNetworkPropertiesDTO,
-    AccountKeyLinkNetworkPropertiesDTOFromJSON,
-    AccountKeyLinkNetworkPropertiesDTOFromJSONTyped,
-    AccountKeyLinkNetworkPropertiesDTOToJSON,
-} from './AccountKeyLinkNetworkPropertiesDTO';
-import {
-    AccountRestrictionNetworkPropertiesDTO,
     AccountRestrictionNetworkPropertiesDTOFromJSON,
     AccountRestrictionNetworkPropertiesDTOFromJSONTyped,
     AccountRestrictionNetworkPropertiesDTOToJSON,
+    AccountRestrictionNetworkPropertiesDTOToJSONTyped,
 } from './AccountRestrictionNetworkPropertiesDTO';
+import type { MetadataNetworkPropertiesDTO } from './MetadataNetworkPropertiesDTO';
 import {
-    AggregateNetworkPropertiesDTO,
-    AggregateNetworkPropertiesDTOFromJSON,
-    AggregateNetworkPropertiesDTOFromJSONTyped,
-    AggregateNetworkPropertiesDTOToJSON,
-} from './AggregateNetworkPropertiesDTO';
-import {
-    HashLockNetworkPropertiesDTO,
-    HashLockNetworkPropertiesDTOFromJSON,
-    HashLockNetworkPropertiesDTOFromJSONTyped,
-    HashLockNetworkPropertiesDTOToJSON,
-} from './HashLockNetworkPropertiesDTO';
-import {
-    MetadataNetworkPropertiesDTO,
     MetadataNetworkPropertiesDTOFromJSON,
     MetadataNetworkPropertiesDTOFromJSONTyped,
     MetadataNetworkPropertiesDTOToJSON,
+    MetadataNetworkPropertiesDTOToJSONTyped,
 } from './MetadataNetworkPropertiesDTO';
+import type { NamespaceNetworkPropertiesDTO } from './NamespaceNetworkPropertiesDTO';
 import {
-    MosaicNetworkPropertiesDTO,
-    MosaicNetworkPropertiesDTOFromJSON,
-    MosaicNetworkPropertiesDTOFromJSONTyped,
-    MosaicNetworkPropertiesDTOToJSON,
-} from './MosaicNetworkPropertiesDTO';
-import {
-    MosaicRestrictionNetworkPropertiesDTO,
-    MosaicRestrictionNetworkPropertiesDTOFromJSON,
-    MosaicRestrictionNetworkPropertiesDTOFromJSONTyped,
-    MosaicRestrictionNetworkPropertiesDTOToJSON,
-} from './MosaicRestrictionNetworkPropertiesDTO';
-import {
-    MultisigNetworkPropertiesDTO,
-    MultisigNetworkPropertiesDTOFromJSON,
-    MultisigNetworkPropertiesDTOFromJSONTyped,
-    MultisigNetworkPropertiesDTOToJSON,
-} from './MultisigNetworkPropertiesDTO';
-import {
-    NamespaceNetworkPropertiesDTO,
     NamespaceNetworkPropertiesDTOFromJSON,
     NamespaceNetworkPropertiesDTOFromJSONTyped,
     NamespaceNetworkPropertiesDTOToJSON,
+    NamespaceNetworkPropertiesDTOToJSONTyped,
 } from './NamespaceNetworkPropertiesDTO';
+import type { HashLockNetworkPropertiesDTO } from './HashLockNetworkPropertiesDTO';
 import {
-    SecretLockNetworkPropertiesDTO,
+    HashLockNetworkPropertiesDTOFromJSON,
+    HashLockNetworkPropertiesDTOFromJSONTyped,
+    HashLockNetworkPropertiesDTOToJSON,
+    HashLockNetworkPropertiesDTOToJSONTyped,
+} from './HashLockNetworkPropertiesDTO';
+import type { MultisigNetworkPropertiesDTO } from './MultisigNetworkPropertiesDTO';
+import {
+    MultisigNetworkPropertiesDTOFromJSON,
+    MultisigNetworkPropertiesDTOFromJSONTyped,
+    MultisigNetworkPropertiesDTOToJSON,
+    MultisigNetworkPropertiesDTOToJSONTyped,
+} from './MultisigNetworkPropertiesDTO';
+import type { SecretLockNetworkPropertiesDTO } from './SecretLockNetworkPropertiesDTO';
+import {
     SecretLockNetworkPropertiesDTOFromJSON,
     SecretLockNetworkPropertiesDTOFromJSONTyped,
     SecretLockNetworkPropertiesDTOToJSON,
+    SecretLockNetworkPropertiesDTOToJSONTyped,
 } from './SecretLockNetworkPropertiesDTO';
+import type { MosaicNetworkPropertiesDTO } from './MosaicNetworkPropertiesDTO';
 import {
-    TransferNetworkPropertiesDTO,
+    MosaicNetworkPropertiesDTOFromJSON,
+    MosaicNetworkPropertiesDTOFromJSONTyped,
+    MosaicNetworkPropertiesDTOToJSON,
+    MosaicNetworkPropertiesDTOToJSONTyped,
+} from './MosaicNetworkPropertiesDTO';
+import type { MosaicRestrictionNetworkPropertiesDTO } from './MosaicRestrictionNetworkPropertiesDTO';
+import {
+    MosaicRestrictionNetworkPropertiesDTOFromJSON,
+    MosaicRestrictionNetworkPropertiesDTOFromJSONTyped,
+    MosaicRestrictionNetworkPropertiesDTOToJSON,
+    MosaicRestrictionNetworkPropertiesDTOToJSONTyped,
+} from './MosaicRestrictionNetworkPropertiesDTO';
+import type { AggregateNetworkPropertiesDTO } from './AggregateNetworkPropertiesDTO';
+import {
+    AggregateNetworkPropertiesDTOFromJSON,
+    AggregateNetworkPropertiesDTOFromJSONTyped,
+    AggregateNetworkPropertiesDTOToJSON,
+    AggregateNetworkPropertiesDTOToJSONTyped,
+} from './AggregateNetworkPropertiesDTO';
+import type { TransferNetworkPropertiesDTO } from './TransferNetworkPropertiesDTO';
+import {
     TransferNetworkPropertiesDTOFromJSON,
     TransferNetworkPropertiesDTOFromJSONTyped,
     TransferNetworkPropertiesDTOToJSON,
+    TransferNetworkPropertiesDTOToJSONTyped,
 } from './TransferNetworkPropertiesDTO';
+import type { AccountKeyLinkNetworkPropertiesDTO } from './AccountKeyLinkNetworkPropertiesDTO';
+import {
+    AccountKeyLinkNetworkPropertiesDTOFromJSON,
+    AccountKeyLinkNetworkPropertiesDTOFromJSONTyped,
+    AccountKeyLinkNetworkPropertiesDTOToJSON,
+    AccountKeyLinkNetworkPropertiesDTOToJSONTyped,
+} from './AccountKeyLinkNetworkPropertiesDTO';
 
 /**
  * Plugin related configuration properties.
@@ -154,50 +165,59 @@ export interface PluginsPropertiesDTO {
     transfer?: TransferNetworkPropertiesDTO;
 }
 
+/**
+ * Check if a given object implements the PluginsPropertiesDTO interface.
+ */
+export function instanceOfPluginsPropertiesDTO(value: Record<string, any>): value is PluginsPropertiesDTO {
+    return true;
+}
+
 export function PluginsPropertiesDTOFromJSON(json: any): PluginsPropertiesDTO {
     return PluginsPropertiesDTOFromJSONTyped(json, false);
 }
 
 export function PluginsPropertiesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): PluginsPropertiesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'accountlink': !exists(json, 'accountlink') ? undefined : AccountKeyLinkNetworkPropertiesDTOFromJSON(json['accountlink']),
-        'aggregate': !exists(json, 'aggregate') ? undefined : AggregateNetworkPropertiesDTOFromJSON(json['aggregate']),
-        'lockhash': !exists(json, 'lockhash') ? undefined : HashLockNetworkPropertiesDTOFromJSON(json['lockhash']),
-        'locksecret': !exists(json, 'locksecret') ? undefined : SecretLockNetworkPropertiesDTOFromJSON(json['locksecret']),
-        'metadata': !exists(json, 'metadata') ? undefined : MetadataNetworkPropertiesDTOFromJSON(json['metadata']),
-        'mosaic': !exists(json, 'mosaic') ? undefined : MosaicNetworkPropertiesDTOFromJSON(json['mosaic']),
-        'multisig': !exists(json, 'multisig') ? undefined : MultisigNetworkPropertiesDTOFromJSON(json['multisig']),
-        'namespace': !exists(json, 'namespace') ? undefined : NamespaceNetworkPropertiesDTOFromJSON(json['namespace']),
-        'restrictionaccount': !exists(json, 'restrictionaccount') ? undefined : AccountRestrictionNetworkPropertiesDTOFromJSON(json['restrictionaccount']),
-        'restrictionmosaic': !exists(json, 'restrictionmosaic') ? undefined : MosaicRestrictionNetworkPropertiesDTOFromJSON(json['restrictionmosaic']),
-        'transfer': !exists(json, 'transfer') ? undefined : TransferNetworkPropertiesDTOFromJSON(json['transfer']),
+        'accountlink': json['accountlink'] == null ? undefined : AccountKeyLinkNetworkPropertiesDTOFromJSON(json['accountlink']),
+        'aggregate': json['aggregate'] == null ? undefined : AggregateNetworkPropertiesDTOFromJSON(json['aggregate']),
+        'lockhash': json['lockhash'] == null ? undefined : HashLockNetworkPropertiesDTOFromJSON(json['lockhash']),
+        'locksecret': json['locksecret'] == null ? undefined : SecretLockNetworkPropertiesDTOFromJSON(json['locksecret']),
+        'metadata': json['metadata'] == null ? undefined : MetadataNetworkPropertiesDTOFromJSON(json['metadata']),
+        'mosaic': json['mosaic'] == null ? undefined : MosaicNetworkPropertiesDTOFromJSON(json['mosaic']),
+        'multisig': json['multisig'] == null ? undefined : MultisigNetworkPropertiesDTOFromJSON(json['multisig']),
+        'namespace': json['namespace'] == null ? undefined : NamespaceNetworkPropertiesDTOFromJSON(json['namespace']),
+        'restrictionaccount': json['restrictionaccount'] == null ? undefined : AccountRestrictionNetworkPropertiesDTOFromJSON(json['restrictionaccount']),
+        'restrictionmosaic': json['restrictionmosaic'] == null ? undefined : MosaicRestrictionNetworkPropertiesDTOFromJSON(json['restrictionmosaic']),
+        'transfer': json['transfer'] == null ? undefined : TransferNetworkPropertiesDTOFromJSON(json['transfer']),
     };
 }
 
-export function PluginsPropertiesDTOToJSON(value?: PluginsPropertiesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PluginsPropertiesDTOToJSON(json: any): PluginsPropertiesDTO {
+    return PluginsPropertiesDTOToJSONTyped(json, false);
+}
+
+export function PluginsPropertiesDTOToJSONTyped(value?: PluginsPropertiesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'accountlink': AccountKeyLinkNetworkPropertiesDTOToJSON(value.accountlink),
-        'aggregate': AggregateNetworkPropertiesDTOToJSON(value.aggregate),
-        'lockhash': HashLockNetworkPropertiesDTOToJSON(value.lockhash),
-        'locksecret': SecretLockNetworkPropertiesDTOToJSON(value.locksecret),
-        'metadata': MetadataNetworkPropertiesDTOToJSON(value.metadata),
-        'mosaic': MosaicNetworkPropertiesDTOToJSON(value.mosaic),
-        'multisig': MultisigNetworkPropertiesDTOToJSON(value.multisig),
-        'namespace': NamespaceNetworkPropertiesDTOToJSON(value.namespace),
-        'restrictionaccount': AccountRestrictionNetworkPropertiesDTOToJSON(value.restrictionaccount),
-        'restrictionmosaic': MosaicRestrictionNetworkPropertiesDTOToJSON(value.restrictionmosaic),
-        'transfer': TransferNetworkPropertiesDTOToJSON(value.transfer),
+        'accountlink': AccountKeyLinkNetworkPropertiesDTOToJSON(value['accountlink']),
+        'aggregate': AggregateNetworkPropertiesDTOToJSON(value['aggregate']),
+        'lockhash': HashLockNetworkPropertiesDTOToJSON(value['lockhash']),
+        'locksecret': SecretLockNetworkPropertiesDTOToJSON(value['locksecret']),
+        'metadata': MetadataNetworkPropertiesDTOToJSON(value['metadata']),
+        'mosaic': MosaicNetworkPropertiesDTOToJSON(value['mosaic']),
+        'multisig': MultisigNetworkPropertiesDTOToJSON(value['multisig']),
+        'namespace': NamespaceNetworkPropertiesDTOToJSON(value['namespace']),
+        'restrictionaccount': AccountRestrictionNetworkPropertiesDTOToJSON(value['restrictionaccount']),
+        'restrictionmosaic': MosaicRestrictionNetworkPropertiesDTOToJSON(value['restrictionmosaic']),
+        'transfer': TransferNetworkPropertiesDTOToJSON(value['transfer']),
     };
 }
 

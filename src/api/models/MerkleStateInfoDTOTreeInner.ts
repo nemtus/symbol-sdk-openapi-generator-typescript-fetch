@@ -12,31 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MerkleTreeLeafDTO } from './MerkleTreeLeafDTO';
 import {
-    MerkleTreeBranchDTO,
-    MerkleTreeBranchDTOFromJSON,
-    MerkleTreeBranchDTOFromJSONTyped,
-    MerkleTreeBranchDTOToJSON,
-} from './MerkleTreeBranchDTO';
-import {
-    MerkleTreeBranchLinkDTO,
-    MerkleTreeBranchLinkDTOFromJSON,
-    MerkleTreeBranchLinkDTOFromJSONTyped,
-    MerkleTreeBranchLinkDTOToJSON,
-} from './MerkleTreeBranchLinkDTO';
-import {
-    MerkleTreeLeafDTO,
     MerkleTreeLeafDTOFromJSON,
     MerkleTreeLeafDTOFromJSONTyped,
     MerkleTreeLeafDTOToJSON,
+    MerkleTreeLeafDTOToJSONTyped,
 } from './MerkleTreeLeafDTO';
+import type { MerkleTreeBranchLinkDTO } from './MerkleTreeBranchLinkDTO';
 import {
-    MerkleTreeNodeTypeEnum,
+    MerkleTreeBranchLinkDTOFromJSON,
+    MerkleTreeBranchLinkDTOFromJSONTyped,
+    MerkleTreeBranchLinkDTOToJSON,
+    MerkleTreeBranchLinkDTOToJSONTyped,
+} from './MerkleTreeBranchLinkDTO';
+import type { MerkleTreeNodeTypeEnum } from './MerkleTreeNodeTypeEnum';
+import {
     MerkleTreeNodeTypeEnumFromJSON,
     MerkleTreeNodeTypeEnumFromJSONTyped,
     MerkleTreeNodeTypeEnumToJSON,
+    MerkleTreeNodeTypeEnumToJSONTyped,
 } from './MerkleTreeNodeTypeEnum';
+import type { MerkleTreeBranchDTO } from './MerkleTreeBranchDTO';
+import {
+    MerkleTreeBranchDTOFromJSON,
+    MerkleTreeBranchDTOFromJSONTyped,
+    MerkleTreeBranchDTOToJSON,
+    MerkleTreeBranchDTOToJSONTyped,
+} from './MerkleTreeBranchDTO';
 
 /**
  * 
@@ -100,12 +104,30 @@ export interface MerkleStateInfoDTOTreeInner {
     leafHash: string;
 }
 
+
+
+/**
+ * Check if a given object implements the MerkleStateInfoDTOTreeInner interface.
+ */
+export function instanceOfMerkleStateInfoDTOTreeInner(value: Record<string, any>): value is MerkleStateInfoDTOTreeInner {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('path' in value) || value['path'] === undefined) return false;
+    if (!('encodedPath' in value) || value['encodedPath'] === undefined) return false;
+    if (!('nibbleCount' in value) || value['nibbleCount'] === undefined) return false;
+    if (!('linkMask' in value) || value['linkMask'] === undefined) return false;
+    if (!('links' in value) || value['links'] === undefined) return false;
+    if (!('branchHash' in value) || value['branchHash'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    if (!('leafHash' in value) || value['leafHash'] === undefined) return false;
+    return true;
+}
+
 export function MerkleStateInfoDTOTreeInnerFromJSON(json: any): MerkleStateInfoDTOTreeInner {
     return MerkleStateInfoDTOTreeInnerFromJSONTyped(json, false);
 }
 
 export function MerkleStateInfoDTOTreeInnerFromJSONTyped(json: any, ignoreDiscriminator: boolean): MerkleStateInfoDTOTreeInner {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -122,24 +144,26 @@ export function MerkleStateInfoDTOTreeInnerFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function MerkleStateInfoDTOTreeInnerToJSON(value?: MerkleStateInfoDTOTreeInner | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MerkleStateInfoDTOTreeInnerToJSON(json: any): MerkleStateInfoDTOTreeInner {
+    return MerkleStateInfoDTOTreeInnerToJSONTyped(json, false);
+}
+
+export function MerkleStateInfoDTOTreeInnerToJSONTyped(value?: MerkleStateInfoDTOTreeInner | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': MerkleTreeNodeTypeEnumToJSON(value.type),
-        'path': value.path,
-        'encodedPath': value.encodedPath,
-        'nibbleCount': value.nibbleCount,
-        'linkMask': value.linkMask,
-        'links': ((value.links as Array<any>).map(MerkleTreeBranchLinkDTOToJSON)),
-        'branchHash': value.branchHash,
-        'value': value.value,
-        'leafHash': value.leafHash,
+        'type': MerkleTreeNodeTypeEnumToJSON(value['type']),
+        'path': value['path'],
+        'encodedPath': value['encodedPath'],
+        'nibbleCount': value['nibbleCount'],
+        'linkMask': value['linkMask'],
+        'links': ((value['links'] as Array<any>).map(MerkleTreeBranchLinkDTOToJSON)),
+        'branchHash': value['branchHash'],
+        'value': value['value'],
+        'leafHash': value['leafHash'],
     };
 }
 

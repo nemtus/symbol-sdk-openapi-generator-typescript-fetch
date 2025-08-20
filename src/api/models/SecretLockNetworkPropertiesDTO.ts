@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -39,34 +39,43 @@ export interface SecretLockNetworkPropertiesDTO {
     maxProofSize?: string;
 }
 
+/**
+ * Check if a given object implements the SecretLockNetworkPropertiesDTO interface.
+ */
+export function instanceOfSecretLockNetworkPropertiesDTO(value: Record<string, any>): value is SecretLockNetworkPropertiesDTO {
+    return true;
+}
+
 export function SecretLockNetworkPropertiesDTOFromJSON(json: any): SecretLockNetworkPropertiesDTO {
     return SecretLockNetworkPropertiesDTOFromJSONTyped(json, false);
 }
 
 export function SecretLockNetworkPropertiesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): SecretLockNetworkPropertiesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'maxSecretLockDuration': !exists(json, 'maxSecretLockDuration') ? undefined : json['maxSecretLockDuration'],
-        'minProofSize': !exists(json, 'minProofSize') ? undefined : json['minProofSize'],
-        'maxProofSize': !exists(json, 'maxProofSize') ? undefined : json['maxProofSize'],
+        'maxSecretLockDuration': json['maxSecretLockDuration'] == null ? undefined : json['maxSecretLockDuration'],
+        'minProofSize': json['minProofSize'] == null ? undefined : json['minProofSize'],
+        'maxProofSize': json['maxProofSize'] == null ? undefined : json['maxProofSize'],
     };
 }
 
-export function SecretLockNetworkPropertiesDTOToJSON(value?: SecretLockNetworkPropertiesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SecretLockNetworkPropertiesDTOToJSON(json: any): SecretLockNetworkPropertiesDTO {
+    return SecretLockNetworkPropertiesDTOToJSONTyped(json, false);
+}
+
+export function SecretLockNetworkPropertiesDTOToJSONTyped(value?: SecretLockNetworkPropertiesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'maxSecretLockDuration': value.maxSecretLockDuration,
-        'minProofSize': value.minProofSize,
-        'maxProofSize': value.maxProofSize,
+        'maxSecretLockDuration': value['maxSecretLockDuration'],
+        'minProofSize': value['minProofSize'],
+        'maxProofSize': value['maxProofSize'],
     };
 }
 

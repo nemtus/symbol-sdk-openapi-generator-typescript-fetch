@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -33,32 +33,41 @@ export interface CommunicationTimestampsDTO {
     receiveTimestamp?: string;
 }
 
+/**
+ * Check if a given object implements the CommunicationTimestampsDTO interface.
+ */
+export function instanceOfCommunicationTimestampsDTO(value: Record<string, any>): value is CommunicationTimestampsDTO {
+    return true;
+}
+
 export function CommunicationTimestampsDTOFromJSON(json: any): CommunicationTimestampsDTO {
     return CommunicationTimestampsDTOFromJSONTyped(json, false);
 }
 
 export function CommunicationTimestampsDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): CommunicationTimestampsDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'sendTimestamp': !exists(json, 'sendTimestamp') ? undefined : json['sendTimestamp'],
-        'receiveTimestamp': !exists(json, 'receiveTimestamp') ? undefined : json['receiveTimestamp'],
+        'sendTimestamp': json['sendTimestamp'] == null ? undefined : json['sendTimestamp'],
+        'receiveTimestamp': json['receiveTimestamp'] == null ? undefined : json['receiveTimestamp'],
     };
 }
 
-export function CommunicationTimestampsDTOToJSON(value?: CommunicationTimestampsDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CommunicationTimestampsDTOToJSON(json: any): CommunicationTimestampsDTO {
+    return CommunicationTimestampsDTOToJSONTyped(json, false);
+}
+
+export function CommunicationTimestampsDTOToJSONTyped(value?: CommunicationTimestampsDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'sendTimestamp': value.sendTimestamp,
-        'receiveTimestamp': value.receiveTimestamp,
+        'sendTimestamp': value['sendTimestamp'],
+        'receiveTimestamp': value['receiveTimestamp'],
     };
 }
 

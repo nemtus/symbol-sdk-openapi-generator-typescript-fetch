@@ -12,31 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    EmbeddedTransactionDTO,
-    EmbeddedTransactionDTOFromJSON,
-    EmbeddedTransactionDTOFromJSONTyped,
-    EmbeddedTransactionDTOToJSON,
-} from './EmbeddedTransactionDTO';
-import {
-    NamespaceRegistrationTransactionBodyDTO,
-    NamespaceRegistrationTransactionBodyDTOFromJSON,
-    NamespaceRegistrationTransactionBodyDTOFromJSONTyped,
-    NamespaceRegistrationTransactionBodyDTOToJSON,
-} from './NamespaceRegistrationTransactionBodyDTO';
-import {
-    NamespaceRegistrationTypeEnum,
-    NamespaceRegistrationTypeEnumFromJSON,
-    NamespaceRegistrationTypeEnumFromJSONTyped,
-    NamespaceRegistrationTypeEnumToJSON,
-} from './NamespaceRegistrationTypeEnum';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { NamespaceRegistrationTypeEnum } from './NamespaceRegistrationTypeEnum';
+import {
+    NamespaceRegistrationTypeEnumFromJSON,
+    NamespaceRegistrationTypeEnumFromJSONTyped,
+    NamespaceRegistrationTypeEnumToJSON,
+    NamespaceRegistrationTypeEnumToJSONTyped,
+} from './NamespaceRegistrationTypeEnum';
 
 /**
  * 
@@ -100,12 +90,28 @@ export interface EmbeddedNamespaceRegistrationTransactionDTO {
     name: string;
 }
 
+
+
+/**
+ * Check if a given object implements the EmbeddedNamespaceRegistrationTransactionDTO interface.
+ */
+export function instanceOfEmbeddedNamespaceRegistrationTransactionDTO(value: Record<string, any>): value is EmbeddedNamespaceRegistrationTransactionDTO {
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('registrationType' in value) || value['registrationType'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    return true;
+}
+
 export function EmbeddedNamespaceRegistrationTransactionDTOFromJSON(json: any): EmbeddedNamespaceRegistrationTransactionDTO {
     return EmbeddedNamespaceRegistrationTransactionDTOFromJSONTyped(json, false);
 }
 
 export function EmbeddedNamespaceRegistrationTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmbeddedNamespaceRegistrationTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -114,32 +120,34 @@ export function EmbeddedNamespaceRegistrationTransactionDTOFromJSONTyped(json: a
         'version': json['version'],
         'network': NetworkTypeEnumFromJSON(json['network']),
         'type': json['type'],
-        'duration': !exists(json, 'duration') ? undefined : json['duration'],
-        'parentId': !exists(json, 'parentId') ? undefined : json['parentId'],
+        'duration': json['duration'] == null ? undefined : json['duration'],
+        'parentId': json['parentId'] == null ? undefined : json['parentId'],
         'id': json['id'],
         'registrationType': NamespaceRegistrationTypeEnumFromJSON(json['registrationType']),
         'name': json['name'],
     };
 }
 
-export function EmbeddedNamespaceRegistrationTransactionDTOToJSON(value?: EmbeddedNamespaceRegistrationTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EmbeddedNamespaceRegistrationTransactionDTOToJSON(json: any): EmbeddedNamespaceRegistrationTransactionDTO {
+    return EmbeddedNamespaceRegistrationTransactionDTOToJSONTyped(json, false);
+}
+
+export function EmbeddedNamespaceRegistrationTransactionDTOToJSONTyped(value?: EmbeddedNamespaceRegistrationTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'duration': value.duration,
-        'parentId': value.parentId,
-        'id': value.id,
-        'registrationType': NamespaceRegistrationTypeEnumToJSON(value.registrationType),
-        'name': value.name,
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'duration': value['duration'],
+        'parentId': value['parentId'],
+        'id': value['id'],
+        'registrationType': NamespaceRegistrationTypeEnumToJSON(value['registrationType']),
+        'name': value['name'],
     };
 }
 

@@ -12,24 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { ReceiptTypeEnum } from './ReceiptTypeEnum';
 import {
-    NamespaceExpiryReceiptDTOAllOf,
-    NamespaceExpiryReceiptDTOAllOfFromJSON,
-    NamespaceExpiryReceiptDTOAllOfFromJSONTyped,
-    NamespaceExpiryReceiptDTOAllOfToJSON,
-} from './NamespaceExpiryReceiptDTOAllOf';
-import {
-    ReceiptDTO,
-    ReceiptDTOFromJSON,
-    ReceiptDTOFromJSONTyped,
-    ReceiptDTOToJSON,
-} from './ReceiptDTO';
-import {
-    ReceiptTypeEnum,
     ReceiptTypeEnumFromJSON,
     ReceiptTypeEnumFromJSONTyped,
     ReceiptTypeEnumToJSON,
+    ReceiptTypeEnumToJSONTyped,
 } from './ReceiptTypeEnum';
 
 /**
@@ -58,12 +47,24 @@ export interface NamespaceExpiryReceiptDTO {
     artifactId: string;
 }
 
+
+
+/**
+ * Check if a given object implements the NamespaceExpiryReceiptDTO interface.
+ */
+export function instanceOfNamespaceExpiryReceiptDTO(value: Record<string, any>): value is NamespaceExpiryReceiptDTO {
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('artifactId' in value) || value['artifactId'] === undefined) return false;
+    return true;
+}
+
 export function NamespaceExpiryReceiptDTOFromJSON(json: any): NamespaceExpiryReceiptDTO {
     return NamespaceExpiryReceiptDTOFromJSONTyped(json, false);
 }
 
 export function NamespaceExpiryReceiptDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): NamespaceExpiryReceiptDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -74,18 +75,20 @@ export function NamespaceExpiryReceiptDTOFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function NamespaceExpiryReceiptDTOToJSON(value?: NamespaceExpiryReceiptDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NamespaceExpiryReceiptDTOToJSON(json: any): NamespaceExpiryReceiptDTO {
+    return NamespaceExpiryReceiptDTOToJSONTyped(json, false);
+}
+
+export function NamespaceExpiryReceiptDTOToJSONTyped(value?: NamespaceExpiryReceiptDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'version': value.version,
-        'type': ReceiptTypeEnumToJSON(value.type),
-        'artifactId': value.artifactId,
+        'version': value['version'],
+        'type': ReceiptTypeEnumToJSON(value['type']),
+        'artifactId': value['artifactId'],
     };
 }
 

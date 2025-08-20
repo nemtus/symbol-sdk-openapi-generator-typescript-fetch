@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -27,30 +27,39 @@ export interface MosaicIds {
     mosaicIds?: Array<string>;
 }
 
+/**
+ * Check if a given object implements the MosaicIds interface.
+ */
+export function instanceOfMosaicIds(value: Record<string, any>): value is MosaicIds {
+    return true;
+}
+
 export function MosaicIdsFromJSON(json: any): MosaicIds {
     return MosaicIdsFromJSONTyped(json, false);
 }
 
 export function MosaicIdsFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicIds {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'mosaicIds': !exists(json, 'mosaicIds') ? undefined : json['mosaicIds'],
+        'mosaicIds': json['mosaicIds'] == null ? undefined : json['mosaicIds'],
     };
 }
 
-export function MosaicIdsToJSON(value?: MosaicIds | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicIdsToJSON(json: any): MosaicIds {
+    return MosaicIdsToJSONTyped(json, false);
+}
+
+export function MosaicIdsToJSONTyped(value?: MosaicIds | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'mosaicIds': value.mosaicIds,
+        'mosaicIds': value['mosaicIds'],
     };
 }
 

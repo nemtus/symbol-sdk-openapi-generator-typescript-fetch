@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -51,38 +51,47 @@ export interface AggregateNetworkPropertiesDTO {
     maxBondedTransactionLifetime?: string;
 }
 
+/**
+ * Check if a given object implements the AggregateNetworkPropertiesDTO interface.
+ */
+export function instanceOfAggregateNetworkPropertiesDTO(value: Record<string, any>): value is AggregateNetworkPropertiesDTO {
+    return true;
+}
+
 export function AggregateNetworkPropertiesDTOFromJSON(json: any): AggregateNetworkPropertiesDTO {
     return AggregateNetworkPropertiesDTOFromJSONTyped(json, false);
 }
 
 export function AggregateNetworkPropertiesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AggregateNetworkPropertiesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'maxTransactionsPerAggregate': !exists(json, 'maxTransactionsPerAggregate') ? undefined : json['maxTransactionsPerAggregate'],
-        'maxCosignaturesPerAggregate': !exists(json, 'maxCosignaturesPerAggregate') ? undefined : json['maxCosignaturesPerAggregate'],
-        'enableStrictCosignatureCheck': !exists(json, 'enableStrictCosignatureCheck') ? undefined : json['enableStrictCosignatureCheck'],
-        'enableBondedAggregateSupport': !exists(json, 'enableBondedAggregateSupport') ? undefined : json['enableBondedAggregateSupport'],
-        'maxBondedTransactionLifetime': !exists(json, 'maxBondedTransactionLifetime') ? undefined : json['maxBondedTransactionLifetime'],
+        'maxTransactionsPerAggregate': json['maxTransactionsPerAggregate'] == null ? undefined : json['maxTransactionsPerAggregate'],
+        'maxCosignaturesPerAggregate': json['maxCosignaturesPerAggregate'] == null ? undefined : json['maxCosignaturesPerAggregate'],
+        'enableStrictCosignatureCheck': json['enableStrictCosignatureCheck'] == null ? undefined : json['enableStrictCosignatureCheck'],
+        'enableBondedAggregateSupport': json['enableBondedAggregateSupport'] == null ? undefined : json['enableBondedAggregateSupport'],
+        'maxBondedTransactionLifetime': json['maxBondedTransactionLifetime'] == null ? undefined : json['maxBondedTransactionLifetime'],
     };
 }
 
-export function AggregateNetworkPropertiesDTOToJSON(value?: AggregateNetworkPropertiesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AggregateNetworkPropertiesDTOToJSON(json: any): AggregateNetworkPropertiesDTO {
+    return AggregateNetworkPropertiesDTOToJSONTyped(json, false);
+}
+
+export function AggregateNetworkPropertiesDTOToJSONTyped(value?: AggregateNetworkPropertiesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'maxTransactionsPerAggregate': value.maxTransactionsPerAggregate,
-        'maxCosignaturesPerAggregate': value.maxCosignaturesPerAggregate,
-        'enableStrictCosignatureCheck': value.enableStrictCosignatureCheck,
-        'enableBondedAggregateSupport': value.enableBondedAggregateSupport,
-        'maxBondedTransactionLifetime': value.maxBondedTransactionLifetime,
+        'maxTransactionsPerAggregate': value['maxTransactionsPerAggregate'],
+        'maxCosignaturesPerAggregate': value['maxCosignaturesPerAggregate'],
+        'enableStrictCosignatureCheck': value['enableStrictCosignatureCheck'],
+        'enableBondedAggregateSupport': value['enableBondedAggregateSupport'],
+        'maxBondedTransactionLifetime': value['maxBondedTransactionLifetime'],
     };
 }
 

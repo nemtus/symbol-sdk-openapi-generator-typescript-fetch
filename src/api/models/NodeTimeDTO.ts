@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { CommunicationTimestampsDTO } from './CommunicationTimestampsDTO';
 import {
-    CommunicationTimestampsDTO,
     CommunicationTimestampsDTOFromJSON,
     CommunicationTimestampsDTOFromJSONTyped,
     CommunicationTimestampsDTOToJSON,
+    CommunicationTimestampsDTOToJSONTyped,
 } from './CommunicationTimestampsDTO';
 
 /**
@@ -34,12 +35,20 @@ export interface NodeTimeDTO {
     communicationTimestamps: CommunicationTimestampsDTO;
 }
 
+/**
+ * Check if a given object implements the NodeTimeDTO interface.
+ */
+export function instanceOfNodeTimeDTO(value: Record<string, any>): value is NodeTimeDTO {
+    if (!('communicationTimestamps' in value) || value['communicationTimestamps'] === undefined) return false;
+    return true;
+}
+
 export function NodeTimeDTOFromJSON(json: any): NodeTimeDTO {
     return NodeTimeDTOFromJSONTyped(json, false);
 }
 
 export function NodeTimeDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): NodeTimeDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,16 +57,18 @@ export function NodeTimeDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean
     };
 }
 
-export function NodeTimeDTOToJSON(value?: NodeTimeDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NodeTimeDTOToJSON(json: any): NodeTimeDTO {
+    return NodeTimeDTOToJSONTyped(json, false);
+}
+
+export function NodeTimeDTOToJSONTyped(value?: NodeTimeDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'communicationTimestamps': CommunicationTimestampsDTOToJSON(value.communicationTimestamps),
+        'communicationTimestamps': CommunicationTimestampsDTOToJSON(value['communicationTimestamps']),
     };
 }
 

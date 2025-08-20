@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -33,32 +33,41 @@ export interface AccountIds {
     addresses?: Array<string>;
 }
 
+/**
+ * Check if a given object implements the AccountIds interface.
+ */
+export function instanceOfAccountIds(value: Record<string, any>): value is AccountIds {
+    return true;
+}
+
 export function AccountIdsFromJSON(json: any): AccountIds {
     return AccountIdsFromJSONTyped(json, false);
 }
 
 export function AccountIdsFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountIds {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'publicKeys': !exists(json, 'publicKeys') ? undefined : json['publicKeys'],
-        'addresses': !exists(json, 'addresses') ? undefined : json['addresses'],
+        'publicKeys': json['publicKeys'] == null ? undefined : json['publicKeys'],
+        'addresses': json['addresses'] == null ? undefined : json['addresses'],
     };
 }
 
-export function AccountIdsToJSON(value?: AccountIds | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountIdsToJSON(json: any): AccountIds {
+    return AccountIdsToJSONTyped(json, false);
+}
+
+export function AccountIdsToJSONTyped(value?: AccountIds | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'publicKeys': value.publicKeys,
-        'addresses': value.addresses,
+        'publicKeys': value['publicKeys'],
+        'addresses': value['addresses'],
     };
 }
 

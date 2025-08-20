@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MosaicGlobalRestrictionDTO } from './MosaicGlobalRestrictionDTO';
 import {
-    MosaicAddressRestrictionDTO,
-    MosaicAddressRestrictionDTOFromJSON,
-    MosaicAddressRestrictionDTOFromJSONTyped,
-    MosaicAddressRestrictionDTOToJSON,
-} from './MosaicAddressRestrictionDTO';
-import {
-    MosaicGlobalRestrictionDTO,
     MosaicGlobalRestrictionDTOFromJSON,
     MosaicGlobalRestrictionDTOFromJSONTyped,
     MosaicGlobalRestrictionDTOToJSON,
+    MosaicGlobalRestrictionDTOToJSONTyped,
 } from './MosaicGlobalRestrictionDTO';
+import type { MosaicAddressRestrictionDTO } from './MosaicAddressRestrictionDTO';
 import {
-    MosaicGlobalRestrictionEntryWrapperDTO,
+    MosaicAddressRestrictionDTOFromJSON,
+    MosaicAddressRestrictionDTOFromJSONTyped,
+    MosaicAddressRestrictionDTOToJSON,
+    MosaicAddressRestrictionDTOToJSONTyped,
+} from './MosaicAddressRestrictionDTO';
+import type { MosaicGlobalRestrictionEntryWrapperDTO } from './MosaicGlobalRestrictionEntryWrapperDTO';
+import {
     MosaicGlobalRestrictionEntryWrapperDTOFromJSON,
     MosaicGlobalRestrictionEntryWrapperDTOFromJSONTyped,
     MosaicGlobalRestrictionEntryWrapperDTOToJSON,
+    MosaicGlobalRestrictionEntryWrapperDTOToJSONTyped,
 } from './MosaicGlobalRestrictionEntryWrapperDTO';
 
 /**
@@ -52,12 +55,21 @@ export interface MosaicRestrictionsPageDataInner {
     mosaicRestrictionEntry: MosaicGlobalRestrictionEntryWrapperDTO;
 }
 
+/**
+ * Check if a given object implements the MosaicRestrictionsPageDataInner interface.
+ */
+export function instanceOfMosaicRestrictionsPageDataInner(value: Record<string, any>): value is MosaicRestrictionsPageDataInner {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('mosaicRestrictionEntry' in value) || value['mosaicRestrictionEntry'] === undefined) return false;
+    return true;
+}
+
 export function MosaicRestrictionsPageDataInnerFromJSON(json: any): MosaicRestrictionsPageDataInner {
     return MosaicRestrictionsPageDataInnerFromJSONTyped(json, false);
 }
 
 export function MosaicRestrictionsPageDataInnerFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicRestrictionsPageDataInner {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,17 +79,19 @@ export function MosaicRestrictionsPageDataInnerFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function MosaicRestrictionsPageDataInnerToJSON(value?: MosaicRestrictionsPageDataInner | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicRestrictionsPageDataInnerToJSON(json: any): MosaicRestrictionsPageDataInner {
+    return MosaicRestrictionsPageDataInnerToJSONTyped(json, false);
+}
+
+export function MosaicRestrictionsPageDataInnerToJSONTyped(value?: MosaicRestrictionsPageDataInner | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'mosaicRestrictionEntry': MosaicGlobalRestrictionEntryWrapperDTOToJSON(value.mosaicRestrictionEntry),
+        'id': value['id'],
+        'mosaicRestrictionEntry': MosaicGlobalRestrictionEntryWrapperDTOToJSON(value['mosaicRestrictionEntry']),
     };
 }
 

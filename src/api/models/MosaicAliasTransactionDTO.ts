@@ -12,31 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    AliasActionEnum,
-    AliasActionEnumFromJSON,
-    AliasActionEnumFromJSONTyped,
-    AliasActionEnumToJSON,
-} from './AliasActionEnum';
-import {
-    MosaicAliasTransactionBodyDTO,
-    MosaicAliasTransactionBodyDTOFromJSON,
-    MosaicAliasTransactionBodyDTOFromJSONTyped,
-    MosaicAliasTransactionBodyDTOToJSON,
-} from './MosaicAliasTransactionBodyDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { AliasActionEnum } from './AliasActionEnum';
 import {
-    TransactionDTO,
-    TransactionDTOFromJSON,
-    TransactionDTOFromJSONTyped,
-    TransactionDTOToJSON,
-} from './TransactionDTO';
+    AliasActionEnumFromJSON,
+    AliasActionEnumFromJSONTyped,
+    AliasActionEnumToJSON,
+    AliasActionEnumToJSONTyped,
+} from './AliasActionEnum';
 
 /**
  * Transaction to link a namespace to a mosaic.
@@ -112,12 +102,32 @@ export interface MosaicAliasTransactionDTO {
     aliasAction: AliasActionEnum;
 }
 
+
+
+/**
+ * Check if a given object implements the MosaicAliasTransactionDTO interface.
+ */
+export function instanceOfMosaicAliasTransactionDTO(value: Record<string, any>): value is MosaicAliasTransactionDTO {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('maxFee' in value) || value['maxFee'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    if (!('namespaceId' in value) || value['namespaceId'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('aliasAction' in value) || value['aliasAction'] === undefined) return false;
+    return true;
+}
+
 export function MosaicAliasTransactionDTOFromJSON(json: any): MosaicAliasTransactionDTO {
     return MosaicAliasTransactionDTOFromJSONTyped(json, false);
 }
 
 export function MosaicAliasTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicAliasTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -136,26 +146,28 @@ export function MosaicAliasTransactionDTOFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function MosaicAliasTransactionDTOToJSON(value?: MosaicAliasTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicAliasTransactionDTOToJSON(json: any): MosaicAliasTransactionDTO {
+    return MosaicAliasTransactionDTOToJSONTyped(json, false);
+}
+
+export function MosaicAliasTransactionDTOToJSONTyped(value?: MosaicAliasTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'maxFee': value.maxFee,
-        'deadline': value.deadline,
-        'namespaceId': value.namespaceId,
-        'mosaicId': value.mosaicId,
-        'aliasAction': AliasActionEnumToJSON(value.aliasAction),
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'maxFee': value['maxFee'],
+        'deadline': value['deadline'],
+        'namespaceId': value['namespaceId'],
+        'mosaicId': value['mosaicId'],
+        'aliasAction': AliasActionEnumToJSON(value['aliasAction']),
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -33,12 +33,21 @@ export interface TransactionBodyDTO {
     deadline: string;
 }
 
+/**
+ * Check if a given object implements the TransactionBodyDTO interface.
+ */
+export function instanceOfTransactionBodyDTO(value: Record<string, any>): value is TransactionBodyDTO {
+    if (!('maxFee' in value) || value['maxFee'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    return true;
+}
+
 export function TransactionBodyDTOFromJSON(json: any): TransactionBodyDTO {
     return TransactionBodyDTOFromJSONTyped(json, false);
 }
 
 export function TransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionBodyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,17 +57,19 @@ export function TransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function TransactionBodyDTOToJSON(value?: TransactionBodyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionBodyDTOToJSON(json: any): TransactionBodyDTO {
+    return TransactionBodyDTOToJSONTyped(json, false);
+}
+
+export function TransactionBodyDTOToJSONTyped(value?: TransactionBodyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'maxFee': value.maxFee,
-        'deadline': value.deadline,
+        'maxFee': value['maxFee'],
+        'deadline': value['deadline'],
     };
 }
 

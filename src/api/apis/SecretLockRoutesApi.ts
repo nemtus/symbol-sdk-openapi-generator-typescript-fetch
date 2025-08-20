@@ -14,23 +14,25 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  MerkleStateInfoDTO,
+  ModelError,
+  Order,
+  SecretLockInfoDTO,
+  SecretLockPage,
+} from '../models/index';
 import {
-    MerkleStateInfoDTO,
     MerkleStateInfoDTOFromJSON,
     MerkleStateInfoDTOToJSON,
-    ModelError,
     ModelErrorFromJSON,
     ModelErrorToJSON,
-    Order,
     OrderFromJSON,
     OrderToJSON,
-    SecretLockInfoDTO,
     SecretLockInfoDTOFromJSON,
     SecretLockInfoDTOToJSON,
-    SecretLockPage,
     SecretLockPageFromJSON,
     SecretLockPageToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface GetSecretLockRequest {
     compositeHash: string;
@@ -58,17 +60,24 @@ export class SecretLockRoutesApi extends runtime.BaseAPI {
      * Gets the hash lock for a given composite hash.
      * Get secret lock information
      */
-    async getSecretLockRaw(requestParameters: GetSecretLockRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<SecretLockInfoDTO>> {
-        if (requestParameters.compositeHash === null || requestParameters.compositeHash === undefined) {
-            throw new runtime.RequiredError('compositeHash','Required parameter requestParameters.compositeHash was null or undefined when calling getSecretLock.');
+    async getSecretLockRaw(requestParameters: GetSecretLockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecretLockInfoDTO>> {
+        if (requestParameters['compositeHash'] == null) {
+            throw new runtime.RequiredError(
+                'compositeHash',
+                'Required parameter "compositeHash" was null or undefined when calling getSecretLock().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/lock/secret/{compositeHash}`;
+        urlPath = urlPath.replace(`{${"compositeHash"}}`, encodeURIComponent(String(requestParameters['compositeHash'])));
+
         const response = await this.request({
-            path: `/lock/secret/{compositeHash}`.replace(`{${"compositeHash"}}`, encodeURIComponent(String(requestParameters.compositeHash))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -81,7 +90,7 @@ export class SecretLockRoutesApi extends runtime.BaseAPI {
      * Gets the hash lock for a given composite hash.
      * Get secret lock information
      */
-    async getSecretLock(requestParameters: GetSecretLockRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<SecretLockInfoDTO> {
+    async getSecretLock(requestParameters: GetSecretLockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SecretLockInfoDTO> {
         const response = await this.getSecretLockRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -90,17 +99,24 @@ export class SecretLockRoutesApi extends runtime.BaseAPI {
      * Gets the hash lock merkle for a given composite hash.
      * Get secret lock merkle information
      */
-    async getSecretLockMerkleRaw(requestParameters: GetSecretLockMerkleRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<MerkleStateInfoDTO>> {
-        if (requestParameters.compositeHash === null || requestParameters.compositeHash === undefined) {
-            throw new runtime.RequiredError('compositeHash','Required parameter requestParameters.compositeHash was null or undefined when calling getSecretLockMerkle.');
+    async getSecretLockMerkleRaw(requestParameters: GetSecretLockMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MerkleStateInfoDTO>> {
+        if (requestParameters['compositeHash'] == null) {
+            throw new runtime.RequiredError(
+                'compositeHash',
+                'Required parameter "compositeHash" was null or undefined when calling getSecretLockMerkle().'
+            );
         }
 
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/lock/secret/{compositeHash}/merkle`;
+        urlPath = urlPath.replace(`{${"compositeHash"}}`, encodeURIComponent(String(requestParameters['compositeHash'])));
+
         const response = await this.request({
-            path: `/lock/secret/{compositeHash}/merkle`.replace(`{${"compositeHash"}}`, encodeURIComponent(String(requestParameters.compositeHash))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -113,7 +129,7 @@ export class SecretLockRoutesApi extends runtime.BaseAPI {
      * Gets the hash lock merkle for a given composite hash.
      * Get secret lock merkle information
      */
-    async getSecretLockMerkle(requestParameters: GetSecretLockMerkleRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<MerkleStateInfoDTO> {
+    async getSecretLockMerkle(requestParameters: GetSecretLockMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MerkleStateInfoDTO> {
         const response = await this.getSecretLockMerkleRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -122,37 +138,40 @@ export class SecretLockRoutesApi extends runtime.BaseAPI {
      * Returns an array of secret locks.
      * Search secret lock entries
      */
-    async searchSecretLockRaw(requestParameters: SearchSecretLockRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<SecretLockPage>> {
+    async searchSecretLockRaw(requestParameters: SearchSecretLockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecretLockPage>> {
         const queryParameters: any = {};
 
-        if (requestParameters.address !== undefined) {
-            queryParameters['address'] = requestParameters.address;
+        if (requestParameters['address'] != null) {
+            queryParameters['address'] = requestParameters['address'];
         }
 
-        if (requestParameters.secret !== undefined) {
-            queryParameters['secret'] = requestParameters.secret;
+        if (requestParameters['secret'] != null) {
+            queryParameters['secret'] = requestParameters['secret'];
         }
 
-        if (requestParameters.pageSize !== undefined) {
-            queryParameters['pageSize'] = requestParameters.pageSize;
+        if (requestParameters['pageSize'] != null) {
+            queryParameters['pageSize'] = requestParameters['pageSize'];
         }
 
-        if (requestParameters.pageNumber !== undefined) {
-            queryParameters['pageNumber'] = requestParameters.pageNumber;
+        if (requestParameters['pageNumber'] != null) {
+            queryParameters['pageNumber'] = requestParameters['pageNumber'];
         }
 
-        if (requestParameters.offset !== undefined) {
-            queryParameters['offset'] = requestParameters.offset;
+        if (requestParameters['offset'] != null) {
+            queryParameters['offset'] = requestParameters['offset'];
         }
 
-        if (requestParameters.order !== undefined) {
-            queryParameters['order'] = requestParameters.order;
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/lock/secret`;
+
         const response = await this.request({
-            path: `/lock/secret`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -165,7 +184,7 @@ export class SecretLockRoutesApi extends runtime.BaseAPI {
      * Returns an array of secret locks.
      * Search secret lock entries
      */
-    async searchSecretLock(requestParameters: SearchSecretLockRequest = {}, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<SecretLockPage> {
+    async searchSecretLock(requestParameters: SearchSecretLockRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SecretLockPage> {
         const response = await this.searchSecretLockRaw(requestParameters, initOverrides);
         return await response.value();
     }

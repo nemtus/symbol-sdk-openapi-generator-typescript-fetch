@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MosaicSupplyChangeActionEnum } from './MosaicSupplyChangeActionEnum';
 import {
-    MosaicSupplyChangeActionEnum,
     MosaicSupplyChangeActionEnumFromJSON,
     MosaicSupplyChangeActionEnumFromJSONTyped,
     MosaicSupplyChangeActionEnumToJSON,
+    MosaicSupplyChangeActionEnumToJSONTyped,
 } from './MosaicSupplyChangeActionEnum';
 
 /**
@@ -29,6 +30,7 @@ export interface MosaicSupplyChangeTransactionBodyDTO {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof MosaicSupplyChangeTransactionBodyDTO
      */
@@ -47,12 +49,24 @@ export interface MosaicSupplyChangeTransactionBodyDTO {
     action: MosaicSupplyChangeActionEnum;
 }
 
+
+
+/**
+ * Check if a given object implements the MosaicSupplyChangeTransactionBodyDTO interface.
+ */
+export function instanceOfMosaicSupplyChangeTransactionBodyDTO(value: Record<string, any>): value is MosaicSupplyChangeTransactionBodyDTO {
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('delta' in value) || value['delta'] === undefined) return false;
+    if (!('action' in value) || value['action'] === undefined) return false;
+    return true;
+}
+
 export function MosaicSupplyChangeTransactionBodyDTOFromJSON(json: any): MosaicSupplyChangeTransactionBodyDTO {
     return MosaicSupplyChangeTransactionBodyDTOFromJSONTyped(json, false);
 }
 
 export function MosaicSupplyChangeTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicSupplyChangeTransactionBodyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -63,18 +77,20 @@ export function MosaicSupplyChangeTransactionBodyDTOFromJSONTyped(json: any, ign
     };
 }
 
-export function MosaicSupplyChangeTransactionBodyDTOToJSON(value?: MosaicSupplyChangeTransactionBodyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicSupplyChangeTransactionBodyDTOToJSON(json: any): MosaicSupplyChangeTransactionBodyDTO {
+    return MosaicSupplyChangeTransactionBodyDTOToJSONTyped(json, false);
+}
+
+export function MosaicSupplyChangeTransactionBodyDTOToJSONTyped(value?: MosaicSupplyChangeTransactionBodyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'mosaicId': value.mosaicId,
-        'delta': value.delta,
-        'action': MosaicSupplyChangeActionEnumToJSON(value.action),
+        'mosaicId': value['mosaicId'],
+        'delta': value['delta'],
+        'action': MosaicSupplyChangeActionEnumToJSON(value['action']),
     };
 }
 

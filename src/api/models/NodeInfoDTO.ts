@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -51,6 +51,7 @@ export interface NodeInfoDTO {
      * 3 = Peer and Api node.
      * 7 = Peer, Api and Voting node.
      * 65 = IPv4 and Peer node.
+     * 
      * @type {number}
      * @memberof NodeInfoDTO
      */
@@ -87,12 +88,27 @@ export interface NodeInfoDTO {
     nodePublicKey?: string;
 }
 
+/**
+ * Check if a given object implements the NodeInfoDTO interface.
+ */
+export function instanceOfNodeInfoDTO(value: Record<string, any>): value is NodeInfoDTO {
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('publicKey' in value) || value['publicKey'] === undefined) return false;
+    if (!('networkGenerationHashSeed' in value) || value['networkGenerationHashSeed'] === undefined) return false;
+    if (!('roles' in value) || value['roles'] === undefined) return false;
+    if (!('port' in value) || value['port'] === undefined) return false;
+    if (!('networkIdentifier' in value) || value['networkIdentifier'] === undefined) return false;
+    if (!('friendlyName' in value) || value['friendlyName'] === undefined) return false;
+    if (!('host' in value) || value['host'] === undefined) return false;
+    return true;
+}
+
 export function NodeInfoDTOFromJSON(json: any): NodeInfoDTO {
     return NodeInfoDTOFromJSONTyped(json, false);
 }
 
 export function NodeInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): NodeInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -105,28 +121,30 @@ export function NodeInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'networkIdentifier': json['networkIdentifier'],
         'friendlyName': json['friendlyName'],
         'host': json['host'],
-        'nodePublicKey': !exists(json, 'nodePublicKey') ? undefined : json['nodePublicKey'],
+        'nodePublicKey': json['nodePublicKey'] == null ? undefined : json['nodePublicKey'],
     };
 }
 
-export function NodeInfoDTOToJSON(value?: NodeInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NodeInfoDTOToJSON(json: any): NodeInfoDTO {
+    return NodeInfoDTOToJSONTyped(json, false);
+}
+
+export function NodeInfoDTOToJSONTyped(value?: NodeInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'version': value.version,
-        'publicKey': value.publicKey,
-        'networkGenerationHashSeed': value.networkGenerationHashSeed,
-        'roles': value.roles,
-        'port': value.port,
-        'networkIdentifier': value.networkIdentifier,
-        'friendlyName': value.friendlyName,
-        'host': value.host,
-        'nodePublicKey': value.nodePublicKey,
+        'version': value['version'],
+        'publicKey': value['publicKey'],
+        'networkGenerationHashSeed': value['networkGenerationHashSeed'],
+        'roles': value['roles'],
+        'port': value['port'],
+        'networkIdentifier': value['networkIdentifier'],
+        'friendlyName': value['friendlyName'],
+        'host': value['host'],
+        'nodePublicKey': value['nodePublicKey'],
     };
 }
 

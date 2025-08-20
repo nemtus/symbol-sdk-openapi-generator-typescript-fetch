@@ -12,31 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    EmbeddedTransactionDTO,
-    EmbeddedTransactionDTOFromJSON,
-    EmbeddedTransactionDTOFromJSONTyped,
-    EmbeddedTransactionDTOToJSON,
-} from './EmbeddedTransactionDTO';
-import {
-    LockHashAlgorithmEnum,
-    LockHashAlgorithmEnumFromJSON,
-    LockHashAlgorithmEnumFromJSONTyped,
-    LockHashAlgorithmEnumToJSON,
-} from './LockHashAlgorithmEnum';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { LockHashAlgorithmEnum } from './LockHashAlgorithmEnum';
 import {
-    SecretLockTransactionBodyDTO,
-    SecretLockTransactionBodyDTOFromJSON,
-    SecretLockTransactionBodyDTOFromJSONTyped,
-    SecretLockTransactionBodyDTOToJSON,
-} from './SecretLockTransactionBodyDTO';
+    LockHashAlgorithmEnumFromJSON,
+    LockHashAlgorithmEnumFromJSONTyped,
+    LockHashAlgorithmEnumToJSON,
+    LockHashAlgorithmEnumToJSONTyped,
+} from './LockHashAlgorithmEnum';
 
 /**
  * 
@@ -72,6 +62,7 @@ export interface EmbeddedSecretLockTransactionDTO {
      * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
      * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
      * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * 
      * @type {string}
      * @memberof EmbeddedSecretLockTransactionDTO
      */
@@ -85,6 +76,7 @@ export interface EmbeddedSecretLockTransactionDTO {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof EmbeddedSecretLockTransactionDTO
      */
@@ -109,12 +101,31 @@ export interface EmbeddedSecretLockTransactionDTO {
     hashAlgorithm: LockHashAlgorithmEnum;
 }
 
+
+
+/**
+ * Check if a given object implements the EmbeddedSecretLockTransactionDTO interface.
+ */
+export function instanceOfEmbeddedSecretLockTransactionDTO(value: Record<string, any>): value is EmbeddedSecretLockTransactionDTO {
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('recipientAddress' in value) || value['recipientAddress'] === undefined) return false;
+    if (!('secret' in value) || value['secret'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('duration' in value) || value['duration'] === undefined) return false;
+    if (!('hashAlgorithm' in value) || value['hashAlgorithm'] === undefined) return false;
+    return true;
+}
+
 export function EmbeddedSecretLockTransactionDTOFromJSON(json: any): EmbeddedSecretLockTransactionDTO {
     return EmbeddedSecretLockTransactionDTOFromJSONTyped(json, false);
 }
 
 export function EmbeddedSecretLockTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmbeddedSecretLockTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -132,25 +143,27 @@ export function EmbeddedSecretLockTransactionDTOFromJSONTyped(json: any, ignoreD
     };
 }
 
-export function EmbeddedSecretLockTransactionDTOToJSON(value?: EmbeddedSecretLockTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EmbeddedSecretLockTransactionDTOToJSON(json: any): EmbeddedSecretLockTransactionDTO {
+    return EmbeddedSecretLockTransactionDTOToJSONTyped(json, false);
+}
+
+export function EmbeddedSecretLockTransactionDTOToJSONTyped(value?: EmbeddedSecretLockTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'recipientAddress': value.recipientAddress,
-        'secret': value.secret,
-        'mosaicId': value.mosaicId,
-        'amount': value.amount,
-        'duration': value.duration,
-        'hashAlgorithm': LockHashAlgorithmEnumToJSON(value.hashAlgorithm),
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'recipientAddress': value['recipientAddress'],
+        'secret': value['secret'],
+        'mosaicId': value['mosaicId'],
+        'amount': value['amount'],
+        'duration': value['duration'],
+        'hashAlgorithm': LockHashAlgorithmEnumToJSON(value['hashAlgorithm']),
     };
 }
 

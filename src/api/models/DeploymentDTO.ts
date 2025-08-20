@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -39,12 +39,22 @@ export interface DeploymentDTO {
     lastUpdatedDate: string;
 }
 
+/**
+ * Check if a given object implements the DeploymentDTO interface.
+ */
+export function instanceOfDeploymentDTO(value: Record<string, any>): value is DeploymentDTO {
+    if (!('deploymentTool' in value) || value['deploymentTool'] === undefined) return false;
+    if (!('deploymentToolVersion' in value) || value['deploymentToolVersion'] === undefined) return false;
+    if (!('lastUpdatedDate' in value) || value['lastUpdatedDate'] === undefined) return false;
+    return true;
+}
+
 export function DeploymentDTOFromJSON(json: any): DeploymentDTO {
     return DeploymentDTOFromJSONTyped(json, false);
 }
 
 export function DeploymentDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): DeploymentDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,18 +65,20 @@ export function DeploymentDTOFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function DeploymentDTOToJSON(value?: DeploymentDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DeploymentDTOToJSON(json: any): DeploymentDTO {
+    return DeploymentDTOToJSONTyped(json, false);
+}
+
+export function DeploymentDTOToJSONTyped(value?: DeploymentDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'deploymentTool': value.deploymentTool,
-        'deploymentToolVersion': value.deploymentToolVersion,
-        'lastUpdatedDate': value.lastUpdatedDate,
+        'deploymentTool': value['deploymentTool'],
+        'deploymentToolVersion': value['deploymentToolVersion'],
+        'lastUpdatedDate': value['lastUpdatedDate'],
     };
 }
 

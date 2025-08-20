@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MetadataTypeEnum } from './MetadataTypeEnum';
 import {
-    MetadataEntryDTOTargetId,
-    MetadataEntryDTOTargetIdFromJSON,
-    MetadataEntryDTOTargetIdFromJSONTyped,
-    MetadataEntryDTOTargetIdToJSON,
-} from './MetadataEntryDTOTargetId';
-import {
-    MetadataTypeEnum,
     MetadataTypeEnumFromJSON,
     MetadataTypeEnumFromJSONTyped,
     MetadataTypeEnumToJSON,
+    MetadataTypeEnumToJSONTyped,
 } from './MetadataTypeEnum';
+import type { MetadataEntryDTOTargetId } from './MetadataEntryDTOTargetId';
+import {
+    MetadataEntryDTOTargetIdFromJSON,
+    MetadataEntryDTOTargetIdFromJSONTyped,
+    MetadataEntryDTOTargetIdToJSON,
+    MetadataEntryDTOTargetIdToJSONTyped,
+} from './MetadataEntryDTOTargetId';
 
 /**
  * 
@@ -82,12 +84,28 @@ export interface MetadataEntryDTO {
     value: string;
 }
 
+
+
+/**
+ * Check if a given object implements the MetadataEntryDTO interface.
+ */
+export function instanceOfMetadataEntryDTO(value: Record<string, any>): value is MetadataEntryDTO {
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('compositeHash' in value) || value['compositeHash'] === undefined) return false;
+    if (!('sourceAddress' in value) || value['sourceAddress'] === undefined) return false;
+    if (!('targetAddress' in value) || value['targetAddress'] === undefined) return false;
+    if (!('scopedMetadataKey' in value) || value['scopedMetadataKey'] === undefined) return false;
+    if (!('metadataType' in value) || value['metadataType'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    return true;
+}
+
 export function MetadataEntryDTOFromJSON(json: any): MetadataEntryDTO {
     return MetadataEntryDTOFromJSONTyped(json, false);
 }
 
 export function MetadataEntryDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MetadataEntryDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -97,29 +115,31 @@ export function MetadataEntryDTOFromJSONTyped(json: any, ignoreDiscriminator: bo
         'sourceAddress': json['sourceAddress'],
         'targetAddress': json['targetAddress'],
         'scopedMetadataKey': json['scopedMetadataKey'],
-        'targetId': !exists(json, 'targetId') ? undefined : MetadataEntryDTOTargetIdFromJSON(json['targetId']),
+        'targetId': json['targetId'] == null ? undefined : MetadataEntryDTOTargetIdFromJSON(json['targetId']),
         'metadataType': MetadataTypeEnumFromJSON(json['metadataType']),
         'value': json['value'],
     };
 }
 
-export function MetadataEntryDTOToJSON(value?: MetadataEntryDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MetadataEntryDTOToJSON(json: any): MetadataEntryDTO {
+    return MetadataEntryDTOToJSONTyped(json, false);
+}
+
+export function MetadataEntryDTOToJSONTyped(value?: MetadataEntryDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'version': value.version,
-        'compositeHash': value.compositeHash,
-        'sourceAddress': value.sourceAddress,
-        'targetAddress': value.targetAddress,
-        'scopedMetadataKey': value.scopedMetadataKey,
-        'targetId': MetadataEntryDTOTargetIdToJSON(value.targetId),
-        'metadataType': MetadataTypeEnumToJSON(value.metadataType),
-        'value': value.value,
+        'version': value['version'],
+        'compositeHash': value['compositeHash'],
+        'sourceAddress': value['sourceAddress'],
+        'targetAddress': value['targetAddress'],
+        'scopedMetadataKey': value['scopedMetadataKey'],
+        'targetId': MetadataEntryDTOTargetIdToJSON(value['targetId']),
+        'metadataType': MetadataTypeEnumToJSON(value['metadataType']),
+        'value': value['value'],
     };
 }
 

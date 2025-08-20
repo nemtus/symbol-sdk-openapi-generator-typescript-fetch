@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -27,30 +27,39 @@ export interface NamespaceIds {
     namespaceIds?: Array<string>;
 }
 
+/**
+ * Check if a given object implements the NamespaceIds interface.
+ */
+export function instanceOfNamespaceIds(value: Record<string, any>): value is NamespaceIds {
+    return true;
+}
+
 export function NamespaceIdsFromJSON(json: any): NamespaceIds {
     return NamespaceIdsFromJSONTyped(json, false);
 }
 
 export function NamespaceIdsFromJSONTyped(json: any, ignoreDiscriminator: boolean): NamespaceIds {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'namespaceIds': !exists(json, 'namespaceIds') ? undefined : json['namespaceIds'],
+        'namespaceIds': json['namespaceIds'] == null ? undefined : json['namespaceIds'],
     };
 }
 
-export function NamespaceIdsToJSON(value?: NamespaceIds | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NamespaceIdsToJSON(json: any): NamespaceIds {
+    return NamespaceIdsToJSONTyped(json, false);
+}
+
+export function NamespaceIdsToJSONTyped(value?: NamespaceIds | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'namespaceIds': value.namespaceIds,
+        'namespaceIds': value['namespaceIds'],
     };
 }
 

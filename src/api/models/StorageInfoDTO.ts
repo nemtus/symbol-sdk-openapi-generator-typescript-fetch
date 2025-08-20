@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -39,12 +39,22 @@ export interface StorageInfoDTO {
     numAccounts: number;
 }
 
+/**
+ * Check if a given object implements the StorageInfoDTO interface.
+ */
+export function instanceOfStorageInfoDTO(value: Record<string, any>): value is StorageInfoDTO {
+    if (!('numBlocks' in value) || value['numBlocks'] === undefined) return false;
+    if (!('numTransactions' in value) || value['numTransactions'] === undefined) return false;
+    if (!('numAccounts' in value) || value['numAccounts'] === undefined) return false;
+    return true;
+}
+
 export function StorageInfoDTOFromJSON(json: any): StorageInfoDTO {
     return StorageInfoDTOFromJSONTyped(json, false);
 }
 
 export function StorageInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): StorageInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,18 +65,20 @@ export function StorageInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function StorageInfoDTOToJSON(value?: StorageInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StorageInfoDTOToJSON(json: any): StorageInfoDTO {
+    return StorageInfoDTOToJSONTyped(json, false);
+}
+
+export function StorageInfoDTOToJSONTyped(value?: StorageInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'numBlocks': value.numBlocks,
-        'numTransactions': value.numTransactions,
-        'numAccounts': value.numAccounts,
+        'numBlocks': value['numBlocks'],
+        'numTransactions': value['numTransactions'],
+        'numAccounts': value['numAccounts'],
     };
 }
 

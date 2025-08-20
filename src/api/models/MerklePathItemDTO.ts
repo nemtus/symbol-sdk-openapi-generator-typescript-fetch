@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { PositionEnum } from './PositionEnum';
 import {
-    PositionEnum,
     PositionEnumFromJSON,
     PositionEnumFromJSONTyped,
     PositionEnumToJSON,
+    PositionEnumToJSONTyped,
 } from './PositionEnum';
 
 /**
@@ -40,32 +41,43 @@ export interface MerklePathItemDTO {
     hash?: string;
 }
 
+
+
+/**
+ * Check if a given object implements the MerklePathItemDTO interface.
+ */
+export function instanceOfMerklePathItemDTO(value: Record<string, any>): value is MerklePathItemDTO {
+    return true;
+}
+
 export function MerklePathItemDTOFromJSON(json: any): MerklePathItemDTO {
     return MerklePathItemDTOFromJSONTyped(json, false);
 }
 
 export function MerklePathItemDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MerklePathItemDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'position': !exists(json, 'position') ? undefined : PositionEnumFromJSON(json['position']),
-        'hash': !exists(json, 'hash') ? undefined : json['hash'],
+        'position': json['position'] == null ? undefined : PositionEnumFromJSON(json['position']),
+        'hash': json['hash'] == null ? undefined : json['hash'],
     };
 }
 
-export function MerklePathItemDTOToJSON(value?: MerklePathItemDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MerklePathItemDTOToJSON(json: any): MerklePathItemDTO {
+    return MerklePathItemDTOToJSONTyped(json, false);
+}
+
+export function MerklePathItemDTOToJSONTyped(value?: MerklePathItemDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'position': PositionEnumToJSON(value.position),
-        'hash': value.hash,
+        'position': PositionEnumToJSON(value['position']),
+        'hash': value['hash'],
     };
 }
 

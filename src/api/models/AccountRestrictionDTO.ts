@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { AccountRestrictionDTOValuesInner } from './AccountRestrictionDTOValuesInner';
 import {
-    AccountRestrictionDTOValuesInner,
     AccountRestrictionDTOValuesInnerFromJSON,
     AccountRestrictionDTOValuesInnerFromJSONTyped,
     AccountRestrictionDTOValuesInnerToJSON,
+    AccountRestrictionDTOValuesInnerToJSONTyped,
 } from './AccountRestrictionDTOValuesInner';
+import type { AccountRestrictionFlagsEnum } from './AccountRestrictionFlagsEnum';
 import {
-    AccountRestrictionFlagsEnum,
     AccountRestrictionFlagsEnumFromJSON,
     AccountRestrictionFlagsEnumFromJSONTyped,
     AccountRestrictionFlagsEnumToJSON,
+    AccountRestrictionFlagsEnumToJSONTyped,
 } from './AccountRestrictionFlagsEnum';
 
 /**
@@ -46,12 +48,23 @@ export interface AccountRestrictionDTO {
     values: Array<AccountRestrictionDTOValuesInner>;
 }
 
+
+
+/**
+ * Check if a given object implements the AccountRestrictionDTO interface.
+ */
+export function instanceOfAccountRestrictionDTO(value: Record<string, any>): value is AccountRestrictionDTO {
+    if (!('restrictionFlags' in value) || value['restrictionFlags'] === undefined) return false;
+    if (!('values' in value) || value['values'] === undefined) return false;
+    return true;
+}
+
 export function AccountRestrictionDTOFromJSON(json: any): AccountRestrictionDTO {
     return AccountRestrictionDTOFromJSONTyped(json, false);
 }
 
 export function AccountRestrictionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountRestrictionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,17 +74,19 @@ export function AccountRestrictionDTOFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function AccountRestrictionDTOToJSON(value?: AccountRestrictionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountRestrictionDTOToJSON(json: any): AccountRestrictionDTO {
+    return AccountRestrictionDTOToJSONTyped(json, false);
+}
+
+export function AccountRestrictionDTOToJSONTyped(value?: AccountRestrictionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'restrictionFlags': AccountRestrictionFlagsEnumToJSON(value.restrictionFlags),
-        'values': ((value.values as Array<any>).map(AccountRestrictionDTOValuesInnerToJSON)),
+        'restrictionFlags': AccountRestrictionFlagsEnumToJSON(value['restrictionFlags']),
+        'values': ((value['values'] as Array<any>).map(AccountRestrictionDTOValuesInnerToJSON)),
     };
 }
 

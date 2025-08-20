@@ -14,23 +14,25 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  ModelError,
+  NetworkConfigurationDTO,
+  NetworkTypeDTO,
+  RentalFeesDTO,
+  TransactionFeesDTO,
+} from '../models/index';
 import {
-    ModelError,
     ModelErrorFromJSON,
     ModelErrorToJSON,
-    NetworkConfigurationDTO,
     NetworkConfigurationDTOFromJSON,
     NetworkConfigurationDTOToJSON,
-    NetworkTypeDTO,
     NetworkTypeDTOFromJSON,
     NetworkTypeDTOToJSON,
-    RentalFeesDTO,
     RentalFeesDTOFromJSON,
     RentalFeesDTOToJSON,
-    TransactionFeesDTO,
     TransactionFeesDTOFromJSON,
     TransactionFeesDTOToJSON,
-} from '../models';
+} from '../models/index';
 
 /**
  * 
@@ -41,13 +43,16 @@ export class NetworkRoutesApi extends runtime.BaseAPI {
      * Returns the content from a catapult-server network configuration file (resources/config-network.properties). To enable this feature, the REST setting \"network.propertiesFilePath\" must define where the file is located. This is adjustable via the configuration file (rest/resources/rest.json) per REST instance. 
      * Get the network properties
      */
-    async getNetworkPropertiesRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NetworkConfigurationDTO>> {
+    async getNetworkPropertiesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NetworkConfigurationDTO>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/network/properties`;
+
         const response = await this.request({
-            path: `/network/properties`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -60,7 +65,7 @@ export class NetworkRoutesApi extends runtime.BaseAPI {
      * Returns the content from a catapult-server network configuration file (resources/config-network.properties). To enable this feature, the REST setting \"network.propertiesFilePath\" must define where the file is located. This is adjustable via the configuration file (rest/resources/rest.json) per REST instance. 
      * Get the network properties
      */
-    async getNetworkProperties(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NetworkConfigurationDTO> {
+    async getNetworkProperties(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NetworkConfigurationDTO> {
         const response = await this.getNetworkPropertiesRaw(initOverrides);
         return await response.value();
     }
@@ -69,13 +74,16 @@ export class NetworkRoutesApi extends runtime.BaseAPI {
      * Returns the current network type.
      * Get the current network type of the chain
      */
-    async getNetworkTypeRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NetworkTypeDTO>> {
+    async getNetworkTypeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NetworkTypeDTO>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/network`;
+
         const response = await this.request({
-            path: `/network`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -88,7 +96,7 @@ export class NetworkRoutesApi extends runtime.BaseAPI {
      * Returns the current network type.
      * Get the current network type of the chain
      */
-    async getNetworkType(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NetworkTypeDTO> {
+    async getNetworkType(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NetworkTypeDTO> {
         const response = await this.getNetworkTypeRaw(initOverrides);
         return await response.value();
     }
@@ -97,13 +105,16 @@ export class NetworkRoutesApi extends runtime.BaseAPI {
      * Returns the estimated effective rental fees for namespaces and mosaics. This endpoint is only available if the REST instance has access to catapult-server ``resources/config-network.properties`` file. To activate this feature, add the setting \"network.propertiesFilePath\" in the configuration file (rest/resources/rest.json). 
      * Get rental fees information
      */
-    async getRentalFeesRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<RentalFeesDTO>> {
+    async getRentalFeesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RentalFeesDTO>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/network/fees/rental`;
+
         const response = await this.request({
-            path: `/network/fees/rental`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -116,7 +127,7 @@ export class NetworkRoutesApi extends runtime.BaseAPI {
      * Returns the estimated effective rental fees for namespaces and mosaics. This endpoint is only available if the REST instance has access to catapult-server ``resources/config-network.properties`` file. To activate this feature, add the setting \"network.propertiesFilePath\" in the configuration file (rest/resources/rest.json). 
      * Get rental fees information
      */
-    async getRentalFees(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<RentalFeesDTO> {
+    async getRentalFees(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RentalFeesDTO> {
         const response = await this.getRentalFeesRaw(initOverrides);
         return await response.value();
     }
@@ -125,13 +136,16 @@ export class NetworkRoutesApi extends runtime.BaseAPI {
      * Returns the average, median, highest and lower fee multiplier over the last \"numBlocksTransactionFeeStats\". The setting \"numBlocksTransactionFeeStats\" is adjustable via the configuration file (rest/resources/rest.json) per REST instance. 
      * Get transaction fees information
      */
-    async getTransactionFeesRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<TransactionFeesDTO>> {
+    async getTransactionFeesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionFeesDTO>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+        let urlPath = `/network/fees/transaction`;
+
         const response = await this.request({
-            path: `/network/fees/transaction`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -144,7 +158,7 @@ export class NetworkRoutesApi extends runtime.BaseAPI {
      * Returns the average, median, highest and lower fee multiplier over the last \"numBlocksTransactionFeeStats\". The setting \"numBlocksTransactionFeeStats\" is adjustable via the configuration file (rest/resources/rest.json) per REST instance. 
      * Get transaction fees information
      */
-    async getTransactionFees(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<TransactionFeesDTO> {
+    async getTransactionFees(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionFeesDTO> {
         const response = await this.getTransactionFeesRaw(initOverrides);
         return await response.value();
     }

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { MosaicNamesDTO } from './MosaicNamesDTO';
 import {
-    MosaicNamesDTO,
     MosaicNamesDTOFromJSON,
     MosaicNamesDTOFromJSONTyped,
     MosaicNamesDTOToJSON,
+    MosaicNamesDTOToJSONTyped,
 } from './MosaicNamesDTO';
 
 /**
@@ -34,12 +35,20 @@ export interface MosaicsNamesDTO {
     mosaicNames: Array<MosaicNamesDTO>;
 }
 
+/**
+ * Check if a given object implements the MosaicsNamesDTO interface.
+ */
+export function instanceOfMosaicsNamesDTO(value: Record<string, any>): value is MosaicsNamesDTO {
+    if (!('mosaicNames' in value) || value['mosaicNames'] === undefined) return false;
+    return true;
+}
+
 export function MosaicsNamesDTOFromJSON(json: any): MosaicsNamesDTO {
     return MosaicsNamesDTOFromJSONTyped(json, false);
 }
 
 export function MosaicsNamesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicsNamesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,16 +57,18 @@ export function MosaicsNamesDTOFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function MosaicsNamesDTOToJSON(value?: MosaicsNamesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicsNamesDTOToJSON(json: any): MosaicsNamesDTO {
+    return MosaicsNamesDTOToJSONTyped(json, false);
+}
+
+export function MosaicsNamesDTOToJSONTyped(value?: MosaicsNamesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'mosaicNames': ((value.mosaicNames as Array<any>).map(MosaicNamesDTOToJSON)),
+        'mosaicNames': ((value['mosaicNames'] as Array<any>).map(MosaicNamesDTOToJSON)),
     };
 }
 

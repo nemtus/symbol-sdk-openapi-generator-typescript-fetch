@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -22,6 +22,7 @@ export interface HashLockTransactionBodyDTO {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof HashLockTransactionBodyDTO
      */
@@ -46,12 +47,23 @@ export interface HashLockTransactionBodyDTO {
     hash: string;
 }
 
+/**
+ * Check if a given object implements the HashLockTransactionBodyDTO interface.
+ */
+export function instanceOfHashLockTransactionBodyDTO(value: Record<string, any>): value is HashLockTransactionBodyDTO {
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('duration' in value) || value['duration'] === undefined) return false;
+    if (!('hash' in value) || value['hash'] === undefined) return false;
+    return true;
+}
+
 export function HashLockTransactionBodyDTOFromJSON(json: any): HashLockTransactionBodyDTO {
     return HashLockTransactionBodyDTOFromJSONTyped(json, false);
 }
 
 export function HashLockTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): HashLockTransactionBodyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -63,19 +75,21 @@ export function HashLockTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function HashLockTransactionBodyDTOToJSON(value?: HashLockTransactionBodyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function HashLockTransactionBodyDTOToJSON(json: any): HashLockTransactionBodyDTO {
+    return HashLockTransactionBodyDTOToJSONTyped(json, false);
+}
+
+export function HashLockTransactionBodyDTOToJSONTyped(value?: HashLockTransactionBodyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'mosaicId': value.mosaicId,
-        'amount': value.amount,
-        'duration': value.duration,
-        'hash': value.hash,
+        'mosaicId': value['mosaicId'],
+        'amount': value['amount'],
+        'duration': value['duration'],
+        'hash': value['hash'],
     };
 }
 

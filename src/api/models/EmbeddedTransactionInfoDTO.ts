@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { EmbeddedTransactionInfoDTOTransaction } from './EmbeddedTransactionInfoDTOTransaction';
 import {
-    EmbeddedTransactionInfoDTOTransaction,
     EmbeddedTransactionInfoDTOTransactionFromJSON,
     EmbeddedTransactionInfoDTOTransactionFromJSONTyped,
     EmbeddedTransactionInfoDTOTransactionToJSON,
+    EmbeddedTransactionInfoDTOTransactionToJSONTyped,
 } from './EmbeddedTransactionInfoDTOTransaction';
+import type { EmbeddedTransactionMetaDTO } from './EmbeddedTransactionMetaDTO';
 import {
-    EmbeddedTransactionMetaDTO,
     EmbeddedTransactionMetaDTOFromJSON,
     EmbeddedTransactionMetaDTOFromJSONTyped,
     EmbeddedTransactionMetaDTOToJSON,
+    EmbeddedTransactionMetaDTOToJSONTyped,
 } from './EmbeddedTransactionMetaDTO';
 
 /**
@@ -52,12 +54,22 @@ export interface EmbeddedTransactionInfoDTO {
     transaction: EmbeddedTransactionInfoDTOTransaction;
 }
 
+/**
+ * Check if a given object implements the EmbeddedTransactionInfoDTO interface.
+ */
+export function instanceOfEmbeddedTransactionInfoDTO(value: Record<string, any>): value is EmbeddedTransactionInfoDTO {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('meta' in value) || value['meta'] === undefined) return false;
+    if (!('transaction' in value) || value['transaction'] === undefined) return false;
+    return true;
+}
+
 export function EmbeddedTransactionInfoDTOFromJSON(json: any): EmbeddedTransactionInfoDTO {
     return EmbeddedTransactionInfoDTOFromJSONTyped(json, false);
 }
 
 export function EmbeddedTransactionInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmbeddedTransactionInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -68,18 +80,20 @@ export function EmbeddedTransactionInfoDTOFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function EmbeddedTransactionInfoDTOToJSON(value?: EmbeddedTransactionInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EmbeddedTransactionInfoDTOToJSON(json: any): EmbeddedTransactionInfoDTO {
+    return EmbeddedTransactionInfoDTOToJSONTyped(json, false);
+}
+
+export function EmbeddedTransactionInfoDTOToJSONTyped(value?: EmbeddedTransactionInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'meta': EmbeddedTransactionMetaDTOToJSON(value.meta),
-        'transaction': EmbeddedTransactionInfoDTOTransactionToJSON(value.transaction),
+        'id': value['id'],
+        'meta': EmbeddedTransactionMetaDTOToJSON(value['meta']),
+        'transaction': EmbeddedTransactionInfoDTOTransactionToJSON(value['transaction']),
     };
 }
 

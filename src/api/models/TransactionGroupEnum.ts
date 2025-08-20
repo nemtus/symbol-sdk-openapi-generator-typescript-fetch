@@ -19,6 +19,7 @@
  * * Confirmed: The transaction is included in a block.
  * * Partial: The transaction requires to be cosigned by other transaction participants in order to be included in a block.
  * * Failed: The transaction did not pass the network validation, and it was rejected.
+ * 
  * @export
  */
 export const TransactionGroupEnum = {
@@ -30,6 +31,17 @@ export const TransactionGroupEnum = {
 export type TransactionGroupEnum = typeof TransactionGroupEnum[keyof typeof TransactionGroupEnum];
 
 
+export function instanceOfTransactionGroupEnum(value: any): boolean {
+    for (const key in TransactionGroupEnum) {
+        if (Object.prototype.hasOwnProperty.call(TransactionGroupEnum, key)) {
+            if (TransactionGroupEnum[key as keyof typeof TransactionGroupEnum] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function TransactionGroupEnumFromJSON(json: any): TransactionGroupEnum {
     return TransactionGroupEnumFromJSONTyped(json, false);
 }
@@ -40,5 +52,9 @@ export function TransactionGroupEnumFromJSONTyped(json: any, ignoreDiscriminator
 
 export function TransactionGroupEnumToJSON(value?: TransactionGroupEnum | null): any {
     return value as any;
+}
+
+export function TransactionGroupEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): TransactionGroupEnum {
+    return value as TransactionGroupEnum;
 }
 

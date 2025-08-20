@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { LockHashAlgorithmEnum } from './LockHashAlgorithmEnum';
 import {
-    LockHashAlgorithmEnum,
     LockHashAlgorithmEnumFromJSON,
     LockHashAlgorithmEnumFromJSONTyped,
     LockHashAlgorithmEnumToJSON,
+    LockHashAlgorithmEnumToJSONTyped,
 } from './LockHashAlgorithmEnum';
 
 /**
@@ -30,6 +31,7 @@ export interface SecretLockTransactionBodyDTO {
      * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
      * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
      * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * 
      * @type {string}
      * @memberof SecretLockTransactionBodyDTO
      */
@@ -43,6 +45,7 @@ export interface SecretLockTransactionBodyDTO {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof SecretLockTransactionBodyDTO
      */
@@ -67,12 +70,27 @@ export interface SecretLockTransactionBodyDTO {
     hashAlgorithm: LockHashAlgorithmEnum;
 }
 
+
+
+/**
+ * Check if a given object implements the SecretLockTransactionBodyDTO interface.
+ */
+export function instanceOfSecretLockTransactionBodyDTO(value: Record<string, any>): value is SecretLockTransactionBodyDTO {
+    if (!('recipientAddress' in value) || value['recipientAddress'] === undefined) return false;
+    if (!('secret' in value) || value['secret'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('duration' in value) || value['duration'] === undefined) return false;
+    if (!('hashAlgorithm' in value) || value['hashAlgorithm'] === undefined) return false;
+    return true;
+}
+
 export function SecretLockTransactionBodyDTOFromJSON(json: any): SecretLockTransactionBodyDTO {
     return SecretLockTransactionBodyDTOFromJSONTyped(json, false);
 }
 
 export function SecretLockTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): SecretLockTransactionBodyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -86,21 +104,23 @@ export function SecretLockTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscr
     };
 }
 
-export function SecretLockTransactionBodyDTOToJSON(value?: SecretLockTransactionBodyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SecretLockTransactionBodyDTOToJSON(json: any): SecretLockTransactionBodyDTO {
+    return SecretLockTransactionBodyDTOToJSONTyped(json, false);
+}
+
+export function SecretLockTransactionBodyDTOToJSONTyped(value?: SecretLockTransactionBodyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'recipientAddress': value.recipientAddress,
-        'secret': value.secret,
-        'mosaicId': value.mosaicId,
-        'amount': value.amount,
-        'duration': value.duration,
-        'hashAlgorithm': LockHashAlgorithmEnumToJSON(value.hashAlgorithm),
+        'recipientAddress': value['recipientAddress'],
+        'secret': value['secret'],
+        'mosaicId': value['mosaicId'],
+        'amount': value['amount'],
+        'duration': value['duration'],
+        'hashAlgorithm': LockHashAlgorithmEnumToJSON(value['hashAlgorithm']),
     };
 }
 

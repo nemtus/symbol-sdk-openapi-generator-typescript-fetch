@@ -12,25 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    MosaicDefinitionTransactionBodyDTO,
-    MosaicDefinitionTransactionBodyDTOFromJSON,
-    MosaicDefinitionTransactionBodyDTOFromJSONTyped,
-    MosaicDefinitionTransactionBodyDTOToJSON,
-} from './MosaicDefinitionTransactionBodyDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
-import {
-    TransactionDTO,
-    TransactionDTOFromJSON,
-    TransactionDTOFromJSONTyped,
-    TransactionDTOToJSON,
-} from './TransactionDTO';
 
 /**
  * Transaction to create a new mosaic.
@@ -110,6 +99,7 @@ export interface MosaicDefinitionTransactionDTO {
      * - 0x02 (transferable) - Mosaic supports transfers between arbitrary accounts. When not set, mosaic can only be transferred to and from mosaic owner.
      * - 0x04 (restrictable) - Mosaic supports custom restrictions configured by mosaic owner.
      * - 0x08 (revokable) - Mosaic allows creator to revoke balances from another user.
+     * 
      * @type {number}
      * @memberof MosaicDefinitionTransactionDTO
      */
@@ -118,10 +108,33 @@ export interface MosaicDefinitionTransactionDTO {
      * Determines up to what decimal place the mosaic can be divided.
      * Divisibility of 3 means that a mosaic can be divided into smallest parts of 0.001 mosaics.
      * The divisibility must be in the range of 0 and 6.
+     * 
      * @type {number}
      * @memberof MosaicDefinitionTransactionDTO
      */
     divisibility: number;
+}
+
+
+
+/**
+ * Check if a given object implements the MosaicDefinitionTransactionDTO interface.
+ */
+export function instanceOfMosaicDefinitionTransactionDTO(value: Record<string, any>): value is MosaicDefinitionTransactionDTO {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('maxFee' in value) || value['maxFee'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('duration' in value) || value['duration'] === undefined) return false;
+    if (!('nonce' in value) || value['nonce'] === undefined) return false;
+    if (!('flags' in value) || value['flags'] === undefined) return false;
+    if (!('divisibility' in value) || value['divisibility'] === undefined) return false;
+    return true;
 }
 
 export function MosaicDefinitionTransactionDTOFromJSON(json: any): MosaicDefinitionTransactionDTO {
@@ -129,7 +142,7 @@ export function MosaicDefinitionTransactionDTOFromJSON(json: any): MosaicDefinit
 }
 
 export function MosaicDefinitionTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicDefinitionTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -150,28 +163,30 @@ export function MosaicDefinitionTransactionDTOFromJSONTyped(json: any, ignoreDis
     };
 }
 
-export function MosaicDefinitionTransactionDTOToJSON(value?: MosaicDefinitionTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicDefinitionTransactionDTOToJSON(json: any): MosaicDefinitionTransactionDTO {
+    return MosaicDefinitionTransactionDTOToJSONTyped(json, false);
+}
+
+export function MosaicDefinitionTransactionDTOToJSONTyped(value?: MosaicDefinitionTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'maxFee': value.maxFee,
-        'deadline': value.deadline,
-        'id': value.id,
-        'duration': value.duration,
-        'nonce': value.nonce,
-        'flags': value.flags,
-        'divisibility': value.divisibility,
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'maxFee': value['maxFee'],
+        'deadline': value['deadline'],
+        'id': value['id'],
+        'duration': value['duration'],
+        'nonce': value['nonce'],
+        'flags': value['flags'],
+        'divisibility': value['divisibility'],
     };
 }
 

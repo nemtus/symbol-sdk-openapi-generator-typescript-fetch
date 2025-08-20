@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
 
 /**
@@ -52,12 +53,25 @@ export interface EntityDTO {
     type: number;
 }
 
+
+
+/**
+ * Check if a given object implements the EntityDTO interface.
+ */
+export function instanceOfEntityDTO(value: Record<string, any>): value is EntityDTO {
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
+}
+
 export function EntityDTOFromJSON(json: any): EntityDTO {
     return EntityDTOFromJSONTyped(json, false);
 }
 
 export function EntityDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): EntityDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,19 +83,21 @@ export function EntityDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function EntityDTOToJSON(value?: EntityDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EntityDTOToJSON(json: any): EntityDTO {
+    return EntityDTOToJSONTyped(json, false);
+}
+
+export function EntityDTOToJSONTyped(value?: EntityDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
     };
 }
 

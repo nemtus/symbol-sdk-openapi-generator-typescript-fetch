@@ -12,31 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    AggregateTransactionBodyDTO,
-    AggregateTransactionBodyDTOFromJSON,
-    AggregateTransactionBodyDTOFromJSONTyped,
-    AggregateTransactionBodyDTOToJSON,
-} from './AggregateTransactionBodyDTO';
-import {
-    CosignatureDTO,
-    CosignatureDTOFromJSON,
-    CosignatureDTOFromJSONTyped,
-    CosignatureDTOToJSON,
-} from './CosignatureDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { CosignatureDTO } from './CosignatureDTO';
 import {
-    TransactionDTO,
-    TransactionDTOFromJSON,
-    TransactionDTOFromJSONTyped,
-    TransactionDTOToJSON,
-} from './TransactionDTO';
+    CosignatureDTOFromJSON,
+    CosignatureDTOFromJSONTyped,
+    CosignatureDTOToJSON,
+    CosignatureDTOToJSONTyped,
+} from './CosignatureDTO';
 
 /**
  * Transaction to combine multiple transactions together.
@@ -106,12 +96,31 @@ export interface AggregateTransactionDTO {
     cosignatures: Array<CosignatureDTO>;
 }
 
+
+
+/**
+ * Check if a given object implements the AggregateTransactionDTO interface.
+ */
+export function instanceOfAggregateTransactionDTO(value: Record<string, any>): value is AggregateTransactionDTO {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('maxFee' in value) || value['maxFee'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    if (!('transactionsHash' in value) || value['transactionsHash'] === undefined) return false;
+    if (!('cosignatures' in value) || value['cosignatures'] === undefined) return false;
+    return true;
+}
+
 export function AggregateTransactionDTOFromJSON(json: any): AggregateTransactionDTO {
     return AggregateTransactionDTOFromJSONTyped(json, false);
 }
 
 export function AggregateTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AggregateTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -129,25 +138,27 @@ export function AggregateTransactionDTOFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function AggregateTransactionDTOToJSON(value?: AggregateTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AggregateTransactionDTOToJSON(json: any): AggregateTransactionDTO {
+    return AggregateTransactionDTOToJSONTyped(json, false);
+}
+
+export function AggregateTransactionDTOToJSONTyped(value?: AggregateTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'maxFee': value.maxFee,
-        'deadline': value.deadline,
-        'transactionsHash': value.transactionsHash,
-        'cosignatures': ((value.cosignatures as Array<any>).map(CosignatureDTOToJSON)),
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'maxFee': value['maxFee'],
+        'deadline': value['deadline'],
+        'transactionsHash': value['transactionsHash'],
+        'cosignatures': ((value['cosignatures'] as Array<any>).map(CosignatureDTOToJSON)),
     };
 }
 

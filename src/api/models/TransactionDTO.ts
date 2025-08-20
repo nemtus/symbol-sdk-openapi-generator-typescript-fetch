@@ -12,37 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    EntityDTO,
-    EntityDTOFromJSON,
-    EntityDTOFromJSONTyped,
-    EntityDTOToJSON,
-} from './EntityDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
-import {
-    SizePrefixedEntityDTO,
-    SizePrefixedEntityDTOFromJSON,
-    SizePrefixedEntityDTOFromJSONTyped,
-    SizePrefixedEntityDTOToJSON,
-} from './SizePrefixedEntityDTO';
-import {
-    TransactionBodyDTO,
-    TransactionBodyDTOFromJSON,
-    TransactionBodyDTOFromJSONTyped,
-    TransactionBodyDTOToJSON,
-} from './TransactionBodyDTO';
-import {
-    VerifiableEntityDTO,
-    VerifiableEntityDTOFromJSON,
-    VerifiableEntityDTOFromJSONTyped,
-    VerifiableEntityDTOToJSON,
-} from './VerifiableEntityDTO';
 
 /**
  * 
@@ -100,12 +77,29 @@ export interface TransactionDTO {
     deadline: string;
 }
 
+
+
+/**
+ * Check if a given object implements the TransactionDTO interface.
+ */
+export function instanceOfTransactionDTO(value: Record<string, any>): value is TransactionDTO {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('maxFee' in value) || value['maxFee'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    return true;
+}
+
 export function TransactionDTOFromJSON(json: any): TransactionDTO {
     return TransactionDTOFromJSONTyped(json, false);
 }
 
 export function TransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -121,23 +115,25 @@ export function TransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function TransactionDTOToJSON(value?: TransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionDTOToJSON(json: any): TransactionDTO {
+    return TransactionDTOToJSONTyped(json, false);
+}
+
+export function TransactionDTOToJSONTyped(value?: TransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'maxFee': value.maxFee,
-        'deadline': value.deadline,
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'maxFee': value['maxFee'],
+        'deadline': value['deadline'],
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { DeploymentDTO } from './DeploymentDTO';
 import {
-    DeploymentDTO,
     DeploymentDTOFromJSON,
     DeploymentDTOFromJSONTyped,
     DeploymentDTOToJSON,
+    DeploymentDTOToJSONTyped,
 } from './DeploymentDTO';
 
 /**
@@ -46,12 +47,22 @@ export interface ServerDTO {
     deployment: DeploymentDTO;
 }
 
+/**
+ * Check if a given object implements the ServerDTO interface.
+ */
+export function instanceOfServerDTO(value: Record<string, any>): value is ServerDTO {
+    if (!('restVersion' in value) || value['restVersion'] === undefined) return false;
+    if (!('sdkVersion' in value) || value['sdkVersion'] === undefined) return false;
+    if (!('deployment' in value) || value['deployment'] === undefined) return false;
+    return true;
+}
+
 export function ServerDTOFromJSON(json: any): ServerDTO {
     return ServerDTOFromJSONTyped(json, false);
 }
 
 export function ServerDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): ServerDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -62,18 +73,20 @@ export function ServerDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function ServerDTOToJSON(value?: ServerDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ServerDTOToJSON(json: any): ServerDTO {
+    return ServerDTOToJSONTyped(json, false);
+}
+
+export function ServerDTOToJSONTyped(value?: ServerDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'restVersion': value.restVersion,
-        'sdkVersion': value.sdkVersion,
-        'deployment': DeploymentDTOToJSON(value.deployment),
+        'restVersion': value['restVersion'],
+        'sdkVersion': value['sdkVersion'],
+        'deployment': DeploymentDTOToJSON(value['deployment']),
     };
 }
 

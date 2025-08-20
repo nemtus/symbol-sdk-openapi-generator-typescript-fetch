@@ -12,13 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
  * @interface ResolutionEntryDTOResolved
  */
 export interface ResolutionEntryDTOResolved {
+}
+
+/**
+ * Check if a given object implements the ResolutionEntryDTOResolved interface.
+ */
+export function instanceOfResolutionEntryDTOResolved(value: Record<string, any>): value is ResolutionEntryDTOResolved {
+    return true;
 }
 
 export function ResolutionEntryDTOResolvedFromJSON(json: any): ResolutionEntryDTOResolved {
@@ -29,7 +36,11 @@ export function ResolutionEntryDTOResolvedFromJSONTyped(json: any, ignoreDiscrim
     return json;
 }
 
-export function ResolutionEntryDTOResolvedToJSON(value?: ResolutionEntryDTOResolved | null): any {
+export function ResolutionEntryDTOResolvedToJSON(json: any): ResolutionEntryDTOResolved {
+    return ResolutionEntryDTOResolvedToJSONTyped(json, false);
+}
+
+export function ResolutionEntryDTOResolvedToJSONTyped(value?: ResolutionEntryDTOResolved | null, ignoreDiscriminator: boolean = false): any {
     return value;
 }
 

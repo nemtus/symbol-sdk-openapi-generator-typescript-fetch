@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { TransactionGroupEnum } from './TransactionGroupEnum';
 import {
-    TransactionGroupEnum,
     TransactionGroupEnumFromJSON,
     TransactionGroupEnumFromJSONTyped,
     TransactionGroupEnumToJSON,
+    TransactionGroupEnumToJSONTyped,
 } from './TransactionGroupEnum';
+import type { TransactionStatusEnum } from './TransactionStatusEnum';
 import {
-    TransactionStatusEnum,
     TransactionStatusEnumFromJSON,
     TransactionStatusEnumFromJSONTyped,
     TransactionStatusEnumToJSON,
+    TransactionStatusEnumToJSONTyped,
 } from './TransactionStatusEnum';
 
 /**
@@ -64,38 +66,52 @@ export interface TransactionStatusDTO {
     height?: string;
 }
 
+
+
+/**
+ * Check if a given object implements the TransactionStatusDTO interface.
+ */
+export function instanceOfTransactionStatusDTO(value: Record<string, any>): value is TransactionStatusDTO {
+    if (!('group' in value) || value['group'] === undefined) return false;
+    if (!('hash' in value) || value['hash'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    return true;
+}
+
 export function TransactionStatusDTOFromJSON(json: any): TransactionStatusDTO {
     return TransactionStatusDTOFromJSONTyped(json, false);
 }
 
 export function TransactionStatusDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionStatusDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'group': TransactionGroupEnumFromJSON(json['group']),
-        'code': !exists(json, 'code') ? undefined : TransactionStatusEnumFromJSON(json['code']),
+        'code': json['code'] == null ? undefined : TransactionStatusEnumFromJSON(json['code']),
         'hash': json['hash'],
         'deadline': json['deadline'],
-        'height': !exists(json, 'height') ? undefined : json['height'],
+        'height': json['height'] == null ? undefined : json['height'],
     };
 }
 
-export function TransactionStatusDTOToJSON(value?: TransactionStatusDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionStatusDTOToJSON(json: any): TransactionStatusDTO {
+    return TransactionStatusDTOToJSONTyped(json, false);
+}
+
+export function TransactionStatusDTOToJSONTyped(value?: TransactionStatusDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'group': TransactionGroupEnumToJSON(value.group),
-        'code': TransactionStatusEnumToJSON(value.code),
-        'hash': value.hash,
-        'deadline': value.deadline,
-        'height': value.height,
+        'group': TransactionGroupEnumToJSON(value['group']),
+        'code': TransactionStatusEnumToJSON(value['code']),
+        'hash': value['hash'],
+        'deadline': value['deadline'],
+        'height': value['height'],
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * Transaction that triggered the receipt.
  * @export
@@ -33,12 +33,21 @@ export interface SourceDTO {
     secondaryId: number;
 }
 
+/**
+ * Check if a given object implements the SourceDTO interface.
+ */
+export function instanceOfSourceDTO(value: Record<string, any>): value is SourceDTO {
+    if (!('primaryId' in value) || value['primaryId'] === undefined) return false;
+    if (!('secondaryId' in value) || value['secondaryId'] === undefined) return false;
+    return true;
+}
+
 export function SourceDTOFromJSON(json: any): SourceDTO {
     return SourceDTOFromJSONTyped(json, false);
 }
 
 export function SourceDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): SourceDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,17 +57,19 @@ export function SourceDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function SourceDTOToJSON(value?: SourceDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SourceDTOToJSON(json: any): SourceDTO {
+    return SourceDTOToJSONTyped(json, false);
+}
+
+export function SourceDTOToJSONTyped(value?: SourceDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'primaryId': value.primaryId,
-        'secondaryId': value.secondaryId,
+        'primaryId': value['primaryId'],
+        'secondaryId': value['secondaryId'],
     };
 }
 

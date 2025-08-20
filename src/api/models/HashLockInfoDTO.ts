@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { HashLockEntryDTO } from './HashLockEntryDTO';
 import {
-    HashLockEntryDTO,
     HashLockEntryDTOFromJSON,
     HashLockEntryDTOFromJSONTyped,
     HashLockEntryDTOToJSON,
+    HashLockEntryDTOToJSONTyped,
 } from './HashLockEntryDTO';
 
 /**
@@ -40,12 +41,21 @@ export interface HashLockInfoDTO {
     lock: HashLockEntryDTO;
 }
 
+/**
+ * Check if a given object implements the HashLockInfoDTO interface.
+ */
+export function instanceOfHashLockInfoDTO(value: Record<string, any>): value is HashLockInfoDTO {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('lock' in value) || value['lock'] === undefined) return false;
+    return true;
+}
+
 export function HashLockInfoDTOFromJSON(json: any): HashLockInfoDTO {
     return HashLockInfoDTOFromJSONTyped(json, false);
 }
 
 export function HashLockInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): HashLockInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,17 +65,19 @@ export function HashLockInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function HashLockInfoDTOToJSON(value?: HashLockInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function HashLockInfoDTOToJSON(json: any): HashLockInfoDTO {
+    return HashLockInfoDTOToJSONTyped(json, false);
+}
+
+export function HashLockInfoDTOToJSONTyped(value?: HashLockInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'lock': HashLockEntryDTOToJSON(value.lock),
+        'id': value['id'],
+        'lock': HashLockEntryDTOToJSON(value['lock']),
     };
 }
 

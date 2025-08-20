@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { AccountNamesDTO } from './AccountNamesDTO';
 import {
-    AccountNamesDTO,
     AccountNamesDTOFromJSON,
     AccountNamesDTOFromJSONTyped,
     AccountNamesDTOToJSON,
+    AccountNamesDTOToJSONTyped,
 } from './AccountNamesDTO';
 
 /**
@@ -34,12 +35,20 @@ export interface AccountsNamesDTO {
     accountNames: Array<AccountNamesDTO>;
 }
 
+/**
+ * Check if a given object implements the AccountsNamesDTO interface.
+ */
+export function instanceOfAccountsNamesDTO(value: Record<string, any>): value is AccountsNamesDTO {
+    if (!('accountNames' in value) || value['accountNames'] === undefined) return false;
+    return true;
+}
+
 export function AccountsNamesDTOFromJSON(json: any): AccountsNamesDTO {
     return AccountsNamesDTOFromJSONTyped(json, false);
 }
 
 export function AccountsNamesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountsNamesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,16 +57,18 @@ export function AccountsNamesDTOFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function AccountsNamesDTOToJSON(value?: AccountsNamesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountsNamesDTOToJSON(json: any): AccountsNamesDTO {
+    return AccountsNamesDTOToJSONTyped(json, false);
+}
+
+export function AccountsNamesDTOToJSONTyped(value?: AccountsNamesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'accountNames': ((value.accountNames as Array<any>).map(AccountNamesDTOToJSON)),
+        'accountNames': ((value['accountNames'] as Array<any>).map(AccountNamesDTOToJSON)),
     };
 }
 

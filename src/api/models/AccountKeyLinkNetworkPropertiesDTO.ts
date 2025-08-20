@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -27,30 +27,39 @@ export interface AccountKeyLinkNetworkPropertiesDTO {
     dummy?: string;
 }
 
+/**
+ * Check if a given object implements the AccountKeyLinkNetworkPropertiesDTO interface.
+ */
+export function instanceOfAccountKeyLinkNetworkPropertiesDTO(value: Record<string, any>): value is AccountKeyLinkNetworkPropertiesDTO {
+    return true;
+}
+
 export function AccountKeyLinkNetworkPropertiesDTOFromJSON(json: any): AccountKeyLinkNetworkPropertiesDTO {
     return AccountKeyLinkNetworkPropertiesDTOFromJSONTyped(json, false);
 }
 
 export function AccountKeyLinkNetworkPropertiesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountKeyLinkNetworkPropertiesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'dummy': !exists(json, 'dummy') ? undefined : json['dummy'],
+        'dummy': json['dummy'] == null ? undefined : json['dummy'],
     };
 }
 
-export function AccountKeyLinkNetworkPropertiesDTOToJSON(value?: AccountKeyLinkNetworkPropertiesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountKeyLinkNetworkPropertiesDTOToJSON(json: any): AccountKeyLinkNetworkPropertiesDTO {
+    return AccountKeyLinkNetworkPropertiesDTOToJSONTyped(json, false);
+}
+
+export function AccountKeyLinkNetworkPropertiesDTOToJSONTyped(value?: AccountKeyLinkNetworkPropertiesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'dummy': value.dummy,
+        'dummy': value['dummy'],
     };
 }
 

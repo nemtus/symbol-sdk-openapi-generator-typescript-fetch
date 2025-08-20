@@ -12,35 +12,26 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    LinkActionEnum,
-    LinkActionEnumFromJSON,
-    LinkActionEnumFromJSONTyped,
-    LinkActionEnumToJSON,
-} from './LinkActionEnum';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { LinkActionEnum } from './LinkActionEnum';
 import {
-    TransactionDTO,
-    TransactionDTOFromJSON,
-    TransactionDTOFromJSONTyped,
-    TransactionDTOToJSON,
-} from './TransactionDTO';
-import {
-    VotingKeyLinkTransactionBodyDTO,
-    VotingKeyLinkTransactionBodyDTOFromJSON,
-    VotingKeyLinkTransactionBodyDTOFromJSONTyped,
-    VotingKeyLinkTransactionBodyDTOToJSON,
-} from './VotingKeyLinkTransactionBodyDTO';
+    LinkActionEnumFromJSON,
+    LinkActionEnumFromJSONTyped,
+    LinkActionEnumToJSON,
+    LinkActionEnumToJSONTyped,
+} from './LinkActionEnum';
 
 /**
  * Transaction to associate a BLS public key with an account.
  * Required for node operators willing to vote finalized blocks.
+ * 
  * @export
  * @interface VotingKeyLinkTransactionDTO
  */
@@ -119,12 +110,33 @@ export interface VotingKeyLinkTransactionDTO {
     linkAction: LinkActionEnum;
 }
 
+
+
+/**
+ * Check if a given object implements the VotingKeyLinkTransactionDTO interface.
+ */
+export function instanceOfVotingKeyLinkTransactionDTO(value: Record<string, any>): value is VotingKeyLinkTransactionDTO {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('maxFee' in value) || value['maxFee'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    if (!('linkedPublicKey' in value) || value['linkedPublicKey'] === undefined) return false;
+    if (!('startEpoch' in value) || value['startEpoch'] === undefined) return false;
+    if (!('endEpoch' in value) || value['endEpoch'] === undefined) return false;
+    if (!('linkAction' in value) || value['linkAction'] === undefined) return false;
+    return true;
+}
+
 export function VotingKeyLinkTransactionDTOFromJSON(json: any): VotingKeyLinkTransactionDTO {
     return VotingKeyLinkTransactionDTOFromJSONTyped(json, false);
 }
 
 export function VotingKeyLinkTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): VotingKeyLinkTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -144,27 +156,29 @@ export function VotingKeyLinkTransactionDTOFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function VotingKeyLinkTransactionDTOToJSON(value?: VotingKeyLinkTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function VotingKeyLinkTransactionDTOToJSON(json: any): VotingKeyLinkTransactionDTO {
+    return VotingKeyLinkTransactionDTOToJSONTyped(json, false);
+}
+
+export function VotingKeyLinkTransactionDTOToJSONTyped(value?: VotingKeyLinkTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'maxFee': value.maxFee,
-        'deadline': value.deadline,
-        'linkedPublicKey': value.linkedPublicKey,
-        'startEpoch': value.startEpoch,
-        'endEpoch': value.endEpoch,
-        'linkAction': LinkActionEnumToJSON(value.linkAction),
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'maxFee': value['maxFee'],
+        'deadline': value['deadline'],
+        'linkedPublicKey': value['linkedPublicKey'],
+        'startEpoch': value['startEpoch'],
+        'endEpoch': value['endEpoch'],
+        'linkAction': LinkActionEnumToJSON(value['linkAction']),
     };
 }
 

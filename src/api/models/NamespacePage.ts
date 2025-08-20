@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { Pagination } from './Pagination';
 import {
-    NamespaceInfoDTO,
-    NamespaceInfoDTOFromJSON,
-    NamespaceInfoDTOFromJSONTyped,
-    NamespaceInfoDTOToJSON,
-} from './NamespaceInfoDTO';
-import {
-    Pagination,
     PaginationFromJSON,
     PaginationFromJSONTyped,
     PaginationToJSON,
+    PaginationToJSONTyped,
 } from './Pagination';
+import type { NamespaceInfoDTO } from './NamespaceInfoDTO';
+import {
+    NamespaceInfoDTOFromJSON,
+    NamespaceInfoDTOFromJSONTyped,
+    NamespaceInfoDTOToJSON,
+    NamespaceInfoDTOToJSONTyped,
+} from './NamespaceInfoDTO';
 
 /**
  * 
@@ -46,12 +48,21 @@ export interface NamespacePage {
     pagination: Pagination;
 }
 
+/**
+ * Check if a given object implements the NamespacePage interface.
+ */
+export function instanceOfNamespacePage(value: Record<string, any>): value is NamespacePage {
+    if (!('data' in value) || value['data'] === undefined) return false;
+    if (!('pagination' in value) || value['pagination'] === undefined) return false;
+    return true;
+}
+
 export function NamespacePageFromJSON(json: any): NamespacePage {
     return NamespacePageFromJSONTyped(json, false);
 }
 
 export function NamespacePageFromJSONTyped(json: any, ignoreDiscriminator: boolean): NamespacePage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,17 +72,19 @@ export function NamespacePageFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function NamespacePageToJSON(value?: NamespacePage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NamespacePageToJSON(json: any): NamespacePage {
+    return NamespacePageToJSONTyped(json, false);
+}
+
+export function NamespacePageToJSONTyped(value?: NamespacePage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'data': ((value.data as Array<any>).map(NamespaceInfoDTOToJSON)),
-        'pagination': PaginationToJSON(value.pagination),
+        'data': ((value['data'] as Array<any>).map(NamespaceInfoDTOToJSON)),
+        'pagination': PaginationToJSON(value['pagination']),
     };
 }
 

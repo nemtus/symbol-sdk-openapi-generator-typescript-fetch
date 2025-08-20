@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -51,38 +51,47 @@ export interface MosaicNetworkPropertiesDTO {
     mosaicRentalFee?: string;
 }
 
+/**
+ * Check if a given object implements the MosaicNetworkPropertiesDTO interface.
+ */
+export function instanceOfMosaicNetworkPropertiesDTO(value: Record<string, any>): value is MosaicNetworkPropertiesDTO {
+    return true;
+}
+
 export function MosaicNetworkPropertiesDTOFromJSON(json: any): MosaicNetworkPropertiesDTO {
     return MosaicNetworkPropertiesDTOFromJSONTyped(json, false);
 }
 
 export function MosaicNetworkPropertiesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicNetworkPropertiesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'maxMosaicsPerAccount': !exists(json, 'maxMosaicsPerAccount') ? undefined : json['maxMosaicsPerAccount'],
-        'maxMosaicDuration': !exists(json, 'maxMosaicDuration') ? undefined : json['maxMosaicDuration'],
-        'maxMosaicDivisibility': !exists(json, 'maxMosaicDivisibility') ? undefined : json['maxMosaicDivisibility'],
-        'mosaicRentalFeeSinkAddress': !exists(json, 'mosaicRentalFeeSinkAddress') ? undefined : json['mosaicRentalFeeSinkAddress'],
-        'mosaicRentalFee': !exists(json, 'mosaicRentalFee') ? undefined : json['mosaicRentalFee'],
+        'maxMosaicsPerAccount': json['maxMosaicsPerAccount'] == null ? undefined : json['maxMosaicsPerAccount'],
+        'maxMosaicDuration': json['maxMosaicDuration'] == null ? undefined : json['maxMosaicDuration'],
+        'maxMosaicDivisibility': json['maxMosaicDivisibility'] == null ? undefined : json['maxMosaicDivisibility'],
+        'mosaicRentalFeeSinkAddress': json['mosaicRentalFeeSinkAddress'] == null ? undefined : json['mosaicRentalFeeSinkAddress'],
+        'mosaicRentalFee': json['mosaicRentalFee'] == null ? undefined : json['mosaicRentalFee'],
     };
 }
 
-export function MosaicNetworkPropertiesDTOToJSON(value?: MosaicNetworkPropertiesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicNetworkPropertiesDTOToJSON(json: any): MosaicNetworkPropertiesDTO {
+    return MosaicNetworkPropertiesDTOToJSONTyped(json, false);
+}
+
+export function MosaicNetworkPropertiesDTOToJSONTyped(value?: MosaicNetworkPropertiesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'maxMosaicsPerAccount': value.maxMosaicsPerAccount,
-        'maxMosaicDuration': value.maxMosaicDuration,
-        'maxMosaicDivisibility': value.maxMosaicDivisibility,
-        'mosaicRentalFeeSinkAddress': value.mosaicRentalFeeSinkAddress,
-        'mosaicRentalFee': value.mosaicRentalFee,
+        'maxMosaicsPerAccount': value['maxMosaicsPerAccount'],
+        'maxMosaicDuration': value['maxMosaicDuration'],
+        'maxMosaicDivisibility': value['maxMosaicDivisibility'],
+        'mosaicRentalFeeSinkAddress': value['mosaicRentalFeeSinkAddress'],
+        'mosaicRentalFee': value['mosaicRentalFee'],
     };
 }
 

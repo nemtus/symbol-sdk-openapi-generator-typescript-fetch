@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { LinkActionEnum } from './LinkActionEnum';
 import {
-    LinkActionEnum,
     LinkActionEnumFromJSON,
     LinkActionEnumFromJSONTyped,
     LinkActionEnumToJSON,
+    LinkActionEnumToJSONTyped,
 } from './LinkActionEnum';
 
 /**
@@ -40,12 +41,23 @@ export interface NodeKeyLinkTransactionBodyDTO {
     linkAction: LinkActionEnum;
 }
 
+
+
+/**
+ * Check if a given object implements the NodeKeyLinkTransactionBodyDTO interface.
+ */
+export function instanceOfNodeKeyLinkTransactionBodyDTO(value: Record<string, any>): value is NodeKeyLinkTransactionBodyDTO {
+    if (!('linkedPublicKey' in value) || value['linkedPublicKey'] === undefined) return false;
+    if (!('linkAction' in value) || value['linkAction'] === undefined) return false;
+    return true;
+}
+
 export function NodeKeyLinkTransactionBodyDTOFromJSON(json: any): NodeKeyLinkTransactionBodyDTO {
     return NodeKeyLinkTransactionBodyDTOFromJSONTyped(json, false);
 }
 
 export function NodeKeyLinkTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): NodeKeyLinkTransactionBodyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -55,17 +67,19 @@ export function NodeKeyLinkTransactionBodyDTOFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function NodeKeyLinkTransactionBodyDTOToJSON(value?: NodeKeyLinkTransactionBodyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NodeKeyLinkTransactionBodyDTOToJSON(json: any): NodeKeyLinkTransactionBodyDTO {
+    return NodeKeyLinkTransactionBodyDTOToJSONTyped(json, false);
+}
+
+export function NodeKeyLinkTransactionBodyDTOToJSONTyped(value?: NodeKeyLinkTransactionBodyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'linkedPublicKey': value.linkedPublicKey,
-        'linkAction': LinkActionEnumToJSON(value.linkAction),
+        'linkedPublicKey': value['linkedPublicKey'],
+        'linkAction': LinkActionEnumToJSON(value['linkAction']),
     };
 }
 

@@ -23,6 +23,7 @@
  * * 0x8002 (32770 decimal) - Block incoming transactions containing a given mosaic identifier.
  * * 0xC001 (49153 decimal) - Block outgoing transactions to a given address.
  * * 0xC004 (49156 decimal) - Block outgoing transactions with a given transaction type.
+ * 
  * @export
  */
 export const AccountRestrictionFlagsEnum = {
@@ -38,6 +39,17 @@ export const AccountRestrictionFlagsEnum = {
 export type AccountRestrictionFlagsEnum = typeof AccountRestrictionFlagsEnum[keyof typeof AccountRestrictionFlagsEnum];
 
 
+export function instanceOfAccountRestrictionFlagsEnum(value: any): boolean {
+    for (const key in AccountRestrictionFlagsEnum) {
+        if (Object.prototype.hasOwnProperty.call(AccountRestrictionFlagsEnum, key)) {
+            if (AccountRestrictionFlagsEnum[key as keyof typeof AccountRestrictionFlagsEnum] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function AccountRestrictionFlagsEnumFromJSON(json: any): AccountRestrictionFlagsEnum {
     return AccountRestrictionFlagsEnumFromJSONTyped(json, false);
 }
@@ -48,5 +60,9 @@ export function AccountRestrictionFlagsEnumFromJSONTyped(json: any, ignoreDiscri
 
 export function AccountRestrictionFlagsEnumToJSON(value?: AccountRestrictionFlagsEnum | null): any {
     return value as any;
+}
+
+export function AccountRestrictionFlagsEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): AccountRestrictionFlagsEnum {
+    return value as AccountRestrictionFlagsEnum;
 }
 

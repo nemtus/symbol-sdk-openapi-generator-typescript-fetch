@@ -17,6 +17,7 @@
  * Type of Merkle tree node:
  * * 0 - Branch node.
  * * 255 - Leaf node.
+ * 
  * @export
  */
 export const MerkleTreeNodeTypeEnum = {
@@ -25,6 +26,17 @@ export const MerkleTreeNodeTypeEnum = {
 } as const;
 export type MerkleTreeNodeTypeEnum = typeof MerkleTreeNodeTypeEnum[keyof typeof MerkleTreeNodeTypeEnum];
 
+
+export function instanceOfMerkleTreeNodeTypeEnum(value: any): boolean {
+    for (const key in MerkleTreeNodeTypeEnum) {
+        if (Object.prototype.hasOwnProperty.call(MerkleTreeNodeTypeEnum, key)) {
+            if (MerkleTreeNodeTypeEnum[key as keyof typeof MerkleTreeNodeTypeEnum] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function MerkleTreeNodeTypeEnumFromJSON(json: any): MerkleTreeNodeTypeEnum {
     return MerkleTreeNodeTypeEnumFromJSONTyped(json, false);
@@ -36,5 +48,9 @@ export function MerkleTreeNodeTypeEnumFromJSONTyped(json: any, ignoreDiscriminat
 
 export function MerkleTreeNodeTypeEnumToJSON(value?: MerkleTreeNodeTypeEnum | null): any {
     return value as any;
+}
+
+export function MerkleTreeNodeTypeEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): MerkleTreeNodeTypeEnum {
+    return value as MerkleTreeNodeTypeEnum;
 }
 

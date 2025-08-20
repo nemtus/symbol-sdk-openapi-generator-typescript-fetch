@@ -12,25 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    MosaicAddressRestrictionTransactionBodyDTO,
-    MosaicAddressRestrictionTransactionBodyDTOFromJSON,
-    MosaicAddressRestrictionTransactionBodyDTOFromJSONTyped,
-    MosaicAddressRestrictionTransactionBodyDTOToJSON,
-} from './MosaicAddressRestrictionTransactionBodyDTO';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
-import {
-    TransactionDTO,
-    TransactionDTOFromJSON,
-    TransactionDTOFromJSONTyped,
-    TransactionDTOToJSON,
-} from './TransactionDTO';
 
 /**
  * Transaction to set a restriction rule to an address.
@@ -89,6 +78,7 @@ export interface MosaicAddressRestrictionTransactionDTO {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof MosaicAddressRestrictionTransactionDTO
      */
@@ -115,10 +105,33 @@ export interface MosaicAddressRestrictionTransactionDTO {
      * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
      * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
      * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * 
      * @type {string}
      * @memberof MosaicAddressRestrictionTransactionDTO
      */
     targetAddress: string;
+}
+
+
+
+/**
+ * Check if a given object implements the MosaicAddressRestrictionTransactionDTO interface.
+ */
+export function instanceOfMosaicAddressRestrictionTransactionDTO(value: Record<string, any>): value is MosaicAddressRestrictionTransactionDTO {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('maxFee' in value) || value['maxFee'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    if (!('mosaicId' in value) || value['mosaicId'] === undefined) return false;
+    if (!('restrictionKey' in value) || value['restrictionKey'] === undefined) return false;
+    if (!('previousRestrictionValue' in value) || value['previousRestrictionValue'] === undefined) return false;
+    if (!('newRestrictionValue' in value) || value['newRestrictionValue'] === undefined) return false;
+    if (!('targetAddress' in value) || value['targetAddress'] === undefined) return false;
+    return true;
 }
 
 export function MosaicAddressRestrictionTransactionDTOFromJSON(json: any): MosaicAddressRestrictionTransactionDTO {
@@ -126,7 +139,7 @@ export function MosaicAddressRestrictionTransactionDTOFromJSON(json: any): Mosai
 }
 
 export function MosaicAddressRestrictionTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicAddressRestrictionTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -147,28 +160,30 @@ export function MosaicAddressRestrictionTransactionDTOFromJSONTyped(json: any, i
     };
 }
 
-export function MosaicAddressRestrictionTransactionDTOToJSON(value?: MosaicAddressRestrictionTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicAddressRestrictionTransactionDTOToJSON(json: any): MosaicAddressRestrictionTransactionDTO {
+    return MosaicAddressRestrictionTransactionDTOToJSONTyped(json, false);
+}
+
+export function MosaicAddressRestrictionTransactionDTOToJSONTyped(value?: MosaicAddressRestrictionTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'maxFee': value.maxFee,
-        'deadline': value.deadline,
-        'mosaicId': value.mosaicId,
-        'restrictionKey': value.restrictionKey,
-        'previousRestrictionValue': value.previousRestrictionValue,
-        'newRestrictionValue': value.newRestrictionValue,
-        'targetAddress': value.targetAddress,
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'maxFee': value['maxFee'],
+        'deadline': value['deadline'],
+        'mosaicId': value['mosaicId'],
+        'restrictionKey': value['restrictionKey'],
+        'previousRestrictionValue': value['previousRestrictionValue'],
+        'newRestrictionValue': value['newRestrictionValue'],
+        'targetAddress': value['targetAddress'],
     };
 }
 

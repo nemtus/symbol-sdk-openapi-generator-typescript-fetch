@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -33,12 +33,21 @@ export interface NamespaceMetaDTO {
     index: number;
 }
 
+/**
+ * Check if a given object implements the NamespaceMetaDTO interface.
+ */
+export function instanceOfNamespaceMetaDTO(value: Record<string, any>): value is NamespaceMetaDTO {
+    if (!('active' in value) || value['active'] === undefined) return false;
+    if (!('index' in value) || value['index'] === undefined) return false;
+    return true;
+}
+
 export function NamespaceMetaDTOFromJSON(json: any): NamespaceMetaDTO {
     return NamespaceMetaDTOFromJSONTyped(json, false);
 }
 
 export function NamespaceMetaDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): NamespaceMetaDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,17 +57,19 @@ export function NamespaceMetaDTOFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function NamespaceMetaDTOToJSON(value?: NamespaceMetaDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NamespaceMetaDTOToJSON(json: any): NamespaceMetaDTO {
+    return NamespaceMetaDTOToJSONTyped(json, false);
+}
+
+export function NamespaceMetaDTOToJSONTyped(value?: NamespaceMetaDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'active': value.active,
-        'index': value.index,
+        'active': value['active'],
+        'index': value['index'],
     };
 }
 

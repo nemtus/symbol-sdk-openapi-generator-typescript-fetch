@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { AccountLinkPublicKeyDTO } from './AccountLinkPublicKeyDTO';
 import {
-    AccountLinkPublicKeyDTO,
     AccountLinkPublicKeyDTOFromJSON,
     AccountLinkPublicKeyDTOFromJSONTyped,
     AccountLinkPublicKeyDTOToJSON,
+    AccountLinkPublicKeyDTOToJSONTyped,
 } from './AccountLinkPublicKeyDTO';
+import type { AccountLinkVotingKeysDTO } from './AccountLinkVotingKeysDTO';
 import {
-    AccountLinkVotingKeysDTO,
     AccountLinkVotingKeysDTOFromJSON,
     AccountLinkVotingKeysDTOFromJSONTyped,
     AccountLinkVotingKeysDTOToJSON,
+    AccountLinkVotingKeysDTOToJSONTyped,
 } from './AccountLinkVotingKeysDTO';
 
 /**
@@ -58,36 +60,45 @@ export interface SupplementalPublicKeysDTO {
     voting?: AccountLinkVotingKeysDTO;
 }
 
+/**
+ * Check if a given object implements the SupplementalPublicKeysDTO interface.
+ */
+export function instanceOfSupplementalPublicKeysDTO(value: Record<string, any>): value is SupplementalPublicKeysDTO {
+    return true;
+}
+
 export function SupplementalPublicKeysDTOFromJSON(json: any): SupplementalPublicKeysDTO {
     return SupplementalPublicKeysDTOFromJSONTyped(json, false);
 }
 
 export function SupplementalPublicKeysDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): SupplementalPublicKeysDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'linked': !exists(json, 'linked') ? undefined : AccountLinkPublicKeyDTOFromJSON(json['linked']),
-        'node': !exists(json, 'node') ? undefined : AccountLinkPublicKeyDTOFromJSON(json['node']),
-        'vrf': !exists(json, 'vrf') ? undefined : AccountLinkPublicKeyDTOFromJSON(json['vrf']),
-        'voting': !exists(json, 'voting') ? undefined : AccountLinkVotingKeysDTOFromJSON(json['voting']),
+        'linked': json['linked'] == null ? undefined : AccountLinkPublicKeyDTOFromJSON(json['linked']),
+        'node': json['node'] == null ? undefined : AccountLinkPublicKeyDTOFromJSON(json['node']),
+        'vrf': json['vrf'] == null ? undefined : AccountLinkPublicKeyDTOFromJSON(json['vrf']),
+        'voting': json['voting'] == null ? undefined : AccountLinkVotingKeysDTOFromJSON(json['voting']),
     };
 }
 
-export function SupplementalPublicKeysDTOToJSON(value?: SupplementalPublicKeysDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SupplementalPublicKeysDTOToJSON(json: any): SupplementalPublicKeysDTO {
+    return SupplementalPublicKeysDTOToJSONTyped(json, false);
+}
+
+export function SupplementalPublicKeysDTOToJSONTyped(value?: SupplementalPublicKeysDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'linked': AccountLinkPublicKeyDTOToJSON(value.linked),
-        'node': AccountLinkPublicKeyDTOToJSON(value.node),
-        'vrf': AccountLinkPublicKeyDTOToJSON(value.vrf),
-        'voting': AccountLinkVotingKeysDTOToJSON(value.voting),
+        'linked': AccountLinkPublicKeyDTOToJSON(value['linked']),
+        'node': AccountLinkPublicKeyDTOToJSON(value['node']),
+        'vrf': AccountLinkPublicKeyDTOToJSON(value['vrf']),
+        'voting': AccountLinkVotingKeysDTOToJSON(value['voting']),
     };
 }
 

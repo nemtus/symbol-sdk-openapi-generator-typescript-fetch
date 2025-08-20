@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { AccountLinkVotingKeyDTO } from './AccountLinkVotingKeyDTO';
 import {
-    AccountLinkVotingKeyDTO,
     AccountLinkVotingKeyDTOFromJSON,
     AccountLinkVotingKeyDTOFromJSONTyped,
     AccountLinkVotingKeyDTOToJSON,
+    AccountLinkVotingKeyDTOToJSONTyped,
 } from './AccountLinkVotingKeyDTO';
 
 /**
@@ -34,12 +35,20 @@ export interface AccountLinkVotingKeysDTO {
     publicKeys: Array<AccountLinkVotingKeyDTO>;
 }
 
+/**
+ * Check if a given object implements the AccountLinkVotingKeysDTO interface.
+ */
+export function instanceOfAccountLinkVotingKeysDTO(value: Record<string, any>): value is AccountLinkVotingKeysDTO {
+    if (!('publicKeys' in value) || value['publicKeys'] === undefined) return false;
+    return true;
+}
+
 export function AccountLinkVotingKeysDTOFromJSON(json: any): AccountLinkVotingKeysDTO {
     return AccountLinkVotingKeysDTOFromJSONTyped(json, false);
 }
 
 export function AccountLinkVotingKeysDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountLinkVotingKeysDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,16 +57,18 @@ export function AccountLinkVotingKeysDTOFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-export function AccountLinkVotingKeysDTOToJSON(value?: AccountLinkVotingKeysDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountLinkVotingKeysDTOToJSON(json: any): AccountLinkVotingKeysDTO {
+    return AccountLinkVotingKeysDTOToJSONTyped(json, false);
+}
+
+export function AccountLinkVotingKeysDTOToJSONTyped(value?: AccountLinkVotingKeysDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'publicKeys': ((value.publicKeys as Array<any>).map(AccountLinkVotingKeyDTOToJSON)),
+        'publicKeys': ((value['publicKeys'] as Array<any>).map(AccountLinkVotingKeyDTOToJSON)),
     };
 }
 

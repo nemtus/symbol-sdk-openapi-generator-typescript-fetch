@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -39,34 +39,45 @@ export interface NamespaceNameDTO {
     name: string;
 }
 
+/**
+ * Check if a given object implements the NamespaceNameDTO interface.
+ */
+export function instanceOfNamespaceNameDTO(value: Record<string, any>): value is NamespaceNameDTO {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    return true;
+}
+
 export function NamespaceNameDTOFromJSON(json: any): NamespaceNameDTO {
     return NamespaceNameDTOFromJSONTyped(json, false);
 }
 
 export function NamespaceNameDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): NamespaceNameDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'parentId': !exists(json, 'parentId') ? undefined : json['parentId'],
+        'parentId': json['parentId'] == null ? undefined : json['parentId'],
         'id': json['id'],
         'name': json['name'],
     };
 }
 
-export function NamespaceNameDTOToJSON(value?: NamespaceNameDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NamespaceNameDTOToJSON(json: any): NamespaceNameDTO {
+    return NamespaceNameDTOToJSONTyped(json, false);
+}
+
+export function NamespaceNameDTOToJSONTyped(value?: NamespaceNameDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'parentId': value.parentId,
-        'id': value.id,
-        'name': value.name,
+        'parentId': value['parentId'],
+        'id': value['id'],
+        'name': value['name'],
     };
 }
 

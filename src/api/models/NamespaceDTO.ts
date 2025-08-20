@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { AliasDTO } from './AliasDTO';
 import {
-    AliasDTO,
     AliasDTOFromJSON,
     AliasDTOFromJSONTyped,
     AliasDTOToJSON,
+    AliasDTOToJSONTyped,
 } from './AliasDTO';
+import type { NamespaceRegistrationTypeEnum } from './NamespaceRegistrationTypeEnum';
 import {
-    NamespaceRegistrationTypeEnum,
     NamespaceRegistrationTypeEnumFromJSON,
     NamespaceRegistrationTypeEnumFromJSONTyped,
     NamespaceRegistrationTypeEnumToJSON,
+    NamespaceRegistrationTypeEnumToJSONTyped,
 } from './NamespaceRegistrationTypeEnum';
 
 /**
@@ -100,12 +102,30 @@ export interface NamespaceDTO {
     endHeight: string;
 }
 
+
+
+/**
+ * Check if a given object implements the NamespaceDTO interface.
+ */
+export function instanceOfNamespaceDTO(value: Record<string, any>): value is NamespaceDTO {
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('registrationType' in value) || value['registrationType'] === undefined) return false;
+    if (!('depth' in value) || value['depth'] === undefined) return false;
+    if (!('level0' in value) || value['level0'] === undefined) return false;
+    if (!('alias' in value) || value['alias'] === undefined) return false;
+    if (!('parentId' in value) || value['parentId'] === undefined) return false;
+    if (!('ownerAddress' in value) || value['ownerAddress'] === undefined) return false;
+    if (!('startHeight' in value) || value['startHeight'] === undefined) return false;
+    if (!('endHeight' in value) || value['endHeight'] === undefined) return false;
+    return true;
+}
+
 export function NamespaceDTOFromJSON(json: any): NamespaceDTO {
     return NamespaceDTOFromJSONTyped(json, false);
 }
 
 export function NamespaceDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): NamespaceDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -114,8 +134,8 @@ export function NamespaceDTOFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'registrationType': NamespaceRegistrationTypeEnumFromJSON(json['registrationType']),
         'depth': json['depth'],
         'level0': json['level0'],
-        'level1': !exists(json, 'level1') ? undefined : json['level1'],
-        'level2': !exists(json, 'level2') ? undefined : json['level2'],
+        'level1': json['level1'] == null ? undefined : json['level1'],
+        'level2': json['level2'] == null ? undefined : json['level2'],
         'alias': AliasDTOFromJSON(json['alias']),
         'parentId': json['parentId'],
         'ownerAddress': json['ownerAddress'],
@@ -124,26 +144,28 @@ export function NamespaceDTOFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function NamespaceDTOToJSON(value?: NamespaceDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NamespaceDTOToJSON(json: any): NamespaceDTO {
+    return NamespaceDTOToJSONTyped(json, false);
+}
+
+export function NamespaceDTOToJSONTyped(value?: NamespaceDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'version': value.version,
-        'registrationType': NamespaceRegistrationTypeEnumToJSON(value.registrationType),
-        'depth': value.depth,
-        'level0': value.level0,
-        'level1': value.level1,
-        'level2': value.level2,
-        'alias': AliasDTOToJSON(value.alias),
-        'parentId': value.parentId,
-        'ownerAddress': value.ownerAddress,
-        'startHeight': value.startHeight,
-        'endHeight': value.endHeight,
+        'version': value['version'],
+        'registrationType': NamespaceRegistrationTypeEnumToJSON(value['registrationType']),
+        'depth': value['depth'],
+        'level0': value['level0'],
+        'level1': value['level1'],
+        'level2': value['level2'],
+        'alias': AliasDTOToJSON(value['alias']),
+        'parentId': value['parentId'],
+        'ownerAddress': value['ownerAddress'],
+        'startHeight': value['startHeight'],
+        'endHeight': value['endHeight'],
     };
 }
 

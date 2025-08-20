@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -43,6 +43,7 @@ export interface MosaicDefinitionTransactionBodyDTO {
      * - 0x02 (transferable) - Mosaic supports transfers between arbitrary accounts. When not set, mosaic can only be transferred to and from mosaic owner.
      * - 0x04 (restrictable) - Mosaic supports custom restrictions configured by mosaic owner.
      * - 0x08 (revokable) - Mosaic allows creator to revoke balances from another user.
+     * 
      * @type {number}
      * @memberof MosaicDefinitionTransactionBodyDTO
      */
@@ -51,10 +52,23 @@ export interface MosaicDefinitionTransactionBodyDTO {
      * Determines up to what decimal place the mosaic can be divided.
      * Divisibility of 3 means that a mosaic can be divided into smallest parts of 0.001 mosaics.
      * The divisibility must be in the range of 0 and 6.
+     * 
      * @type {number}
      * @memberof MosaicDefinitionTransactionBodyDTO
      */
     divisibility: number;
+}
+
+/**
+ * Check if a given object implements the MosaicDefinitionTransactionBodyDTO interface.
+ */
+export function instanceOfMosaicDefinitionTransactionBodyDTO(value: Record<string, any>): value is MosaicDefinitionTransactionBodyDTO {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('duration' in value) || value['duration'] === undefined) return false;
+    if (!('nonce' in value) || value['nonce'] === undefined) return false;
+    if (!('flags' in value) || value['flags'] === undefined) return false;
+    if (!('divisibility' in value) || value['divisibility'] === undefined) return false;
+    return true;
 }
 
 export function MosaicDefinitionTransactionBodyDTOFromJSON(json: any): MosaicDefinitionTransactionBodyDTO {
@@ -62,7 +76,7 @@ export function MosaicDefinitionTransactionBodyDTOFromJSON(json: any): MosaicDef
 }
 
 export function MosaicDefinitionTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicDefinitionTransactionBodyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -75,20 +89,22 @@ export function MosaicDefinitionTransactionBodyDTOFromJSONTyped(json: any, ignor
     };
 }
 
-export function MosaicDefinitionTransactionBodyDTOToJSON(value?: MosaicDefinitionTransactionBodyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicDefinitionTransactionBodyDTOToJSON(json: any): MosaicDefinitionTransactionBodyDTO {
+    return MosaicDefinitionTransactionBodyDTOToJSONTyped(json, false);
+}
+
+export function MosaicDefinitionTransactionBodyDTOToJSONTyped(value?: MosaicDefinitionTransactionBodyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'duration': value.duration,
-        'nonce': value.nonce,
-        'flags': value.flags,
-        'divisibility': value.divisibility,
+        'id': value['id'],
+        'duration': value['duration'],
+        'nonce': value['nonce'],
+        'flags': value['flags'],
+        'divisibility': value['divisibility'],
     };
 }
 

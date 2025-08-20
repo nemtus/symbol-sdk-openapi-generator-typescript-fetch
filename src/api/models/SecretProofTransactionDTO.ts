@@ -12,31 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    LockHashAlgorithmEnum,
-    LockHashAlgorithmEnumFromJSON,
-    LockHashAlgorithmEnumFromJSONTyped,
-    LockHashAlgorithmEnumToJSON,
-} from './LockHashAlgorithmEnum';
-import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { LockHashAlgorithmEnum } from './LockHashAlgorithmEnum';
 import {
-    SecretProofTransactionBodyDTO,
-    SecretProofTransactionBodyDTOFromJSON,
-    SecretProofTransactionBodyDTOFromJSONTyped,
-    SecretProofTransactionBodyDTOToJSON,
-} from './SecretProofTransactionBodyDTO';
-import {
-    TransactionDTO,
-    TransactionDTOFromJSON,
-    TransactionDTOFromJSONTyped,
-    TransactionDTOToJSON,
-} from './TransactionDTO';
+    LockHashAlgorithmEnumFromJSON,
+    LockHashAlgorithmEnumFromJSONTyped,
+    LockHashAlgorithmEnumToJSON,
+    LockHashAlgorithmEnumToJSONTyped,
+} from './LockHashAlgorithmEnum';
 
 /**
  * Transaction to reveal a proof.
@@ -96,6 +86,7 @@ export interface SecretProofTransactionDTO {
      * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
      * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
      * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * 
      * @type {string}
      * @memberof SecretProofTransactionDTO
      */
@@ -120,12 +111,33 @@ export interface SecretProofTransactionDTO {
     proof: string;
 }
 
+
+
+/**
+ * Check if a given object implements the SecretProofTransactionDTO interface.
+ */
+export function instanceOfSecretProofTransactionDTO(value: Record<string, any>): value is SecretProofTransactionDTO {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('maxFee' in value) || value['maxFee'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    if (!('recipientAddress' in value) || value['recipientAddress'] === undefined) return false;
+    if (!('secret' in value) || value['secret'] === undefined) return false;
+    if (!('hashAlgorithm' in value) || value['hashAlgorithm'] === undefined) return false;
+    if (!('proof' in value) || value['proof'] === undefined) return false;
+    return true;
+}
+
 export function SecretProofTransactionDTOFromJSON(json: any): SecretProofTransactionDTO {
     return SecretProofTransactionDTOFromJSONTyped(json, false);
 }
 
 export function SecretProofTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): SecretProofTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -145,27 +157,29 @@ export function SecretProofTransactionDTOFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function SecretProofTransactionDTOToJSON(value?: SecretProofTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SecretProofTransactionDTOToJSON(json: any): SecretProofTransactionDTO {
+    return SecretProofTransactionDTOToJSONTyped(json, false);
+}
+
+export function SecretProofTransactionDTOToJSONTyped(value?: SecretProofTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'maxFee': value.maxFee,
-        'deadline': value.deadline,
-        'recipientAddress': value.recipientAddress,
-        'secret': value.secret,
-        'hashAlgorithm': LockHashAlgorithmEnumToJSON(value.hashAlgorithm),
-        'proof': value.proof,
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'maxFee': value['maxFee'],
+        'deadline': value['deadline'],
+        'recipientAddress': value['recipientAddress'],
+        'secret': value['secret'],
+        'hashAlgorithm': LockHashAlgorithmEnumToJSON(value['hashAlgorithm']),
+        'proof': value['proof'],
     };
 }
 

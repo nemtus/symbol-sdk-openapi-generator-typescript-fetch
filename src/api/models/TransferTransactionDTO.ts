@@ -12,30 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
 import {
-    NetworkTypeEnum,
     NetworkTypeEnumFromJSON,
     NetworkTypeEnumFromJSONTyped,
     NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
 } from './NetworkTypeEnum';
+import type { UnresolvedMosaic } from './UnresolvedMosaic';
 import {
-    TransactionDTO,
-    TransactionDTOFromJSON,
-    TransactionDTOFromJSONTyped,
-    TransactionDTOToJSON,
-} from './TransactionDTO';
-import {
-    TransferTransactionBodyDTO,
-    TransferTransactionBodyDTOFromJSON,
-    TransferTransactionBodyDTOFromJSONTyped,
-    TransferTransactionBodyDTOToJSON,
-} from './TransferTransactionBodyDTO';
-import {
-    UnresolvedMosaic,
     UnresolvedMosaicFromJSON,
     UnresolvedMosaicFromJSONTyped,
     UnresolvedMosaicToJSON,
+    UnresolvedMosaicToJSONTyped,
 } from './UnresolvedMosaic';
 
 /**
@@ -96,12 +86,14 @@ export interface TransferTransactionDTO {
      * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
      * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
      * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * 
      * @type {string}
      * @memberof TransferTransactionDTO
      */
     recipientAddress: string;
     /**
      * Array of mosaics sent to the recipient.
+     * 
      * @type {Array<UnresolvedMosaic>}
      * @memberof TransferTransactionDTO
      */
@@ -114,12 +106,31 @@ export interface TransferTransactionDTO {
     message?: string;
 }
 
+
+
+/**
+ * Check if a given object implements the TransferTransactionDTO interface.
+ */
+export function instanceOfTransferTransactionDTO(value: Record<string, any>): value is TransferTransactionDTO {
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('signerPublicKey' in value) || value['signerPublicKey'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('network' in value) || value['network'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('maxFee' in value) || value['maxFee'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    if (!('recipientAddress' in value) || value['recipientAddress'] === undefined) return false;
+    if (!('mosaics' in value) || value['mosaics'] === undefined) return false;
+    return true;
+}
+
 export function TransferTransactionDTOFromJSON(json: any): TransferTransactionDTO {
     return TransferTransactionDTOFromJSONTyped(json, false);
 }
 
 export function TransferTransactionDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransferTransactionDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -134,30 +145,32 @@ export function TransferTransactionDTOFromJSONTyped(json: any, ignoreDiscriminat
         'deadline': json['deadline'],
         'recipientAddress': json['recipientAddress'],
         'mosaics': ((json['mosaics'] as Array<any>).map(UnresolvedMosaicFromJSON)),
-        'message': !exists(json, 'message') ? undefined : json['message'],
+        'message': json['message'] == null ? undefined : json['message'],
     };
 }
 
-export function TransferTransactionDTOToJSON(value?: TransferTransactionDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransferTransactionDTOToJSON(json: any): TransferTransactionDTO {
+    return TransferTransactionDTOToJSONTyped(json, false);
+}
+
+export function TransferTransactionDTOToJSONTyped(value?: TransferTransactionDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'size': value.size,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
-        'network': NetworkTypeEnumToJSON(value.network),
-        'type': value.type,
-        'maxFee': value.maxFee,
-        'deadline': value.deadline,
-        'recipientAddress': value.recipientAddress,
-        'mosaics': ((value.mosaics as Array<any>).map(UnresolvedMosaicToJSON)),
-        'message': value.message,
+        'size': value['size'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
+        'network': NetworkTypeEnumToJSON(value['network']),
+        'type': value['type'],
+        'maxFee': value['maxFee'],
+        'deadline': value['deadline'],
+        'recipientAddress': value['recipientAddress'],
+        'mosaics': ((value['mosaics'] as Array<any>).map(UnresolvedMosaicToJSON)),
+        'message': value['message'],
     };
 }
 

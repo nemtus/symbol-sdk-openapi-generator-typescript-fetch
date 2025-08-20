@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -45,12 +45,23 @@ export interface FinalizedBlockDTO {
     hash: string;
 }
 
+/**
+ * Check if a given object implements the FinalizedBlockDTO interface.
+ */
+export function instanceOfFinalizedBlockDTO(value: Record<string, any>): value is FinalizedBlockDTO {
+    if (!('finalizationEpoch' in value) || value['finalizationEpoch'] === undefined) return false;
+    if (!('finalizationPoint' in value) || value['finalizationPoint'] === undefined) return false;
+    if (!('height' in value) || value['height'] === undefined) return false;
+    if (!('hash' in value) || value['hash'] === undefined) return false;
+    return true;
+}
+
 export function FinalizedBlockDTOFromJSON(json: any): FinalizedBlockDTO {
     return FinalizedBlockDTOFromJSONTyped(json, false);
 }
 
 export function FinalizedBlockDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): FinalizedBlockDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -62,19 +73,21 @@ export function FinalizedBlockDTOFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function FinalizedBlockDTOToJSON(value?: FinalizedBlockDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function FinalizedBlockDTOToJSON(json: any): FinalizedBlockDTO {
+    return FinalizedBlockDTOToJSONTyped(json, false);
+}
+
+export function FinalizedBlockDTOToJSONTyped(value?: FinalizedBlockDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'finalizationEpoch': value.finalizationEpoch,
-        'finalizationPoint': value.finalizationPoint,
-        'height': value.height,
-        'hash': value.hash,
+        'finalizationEpoch': value['finalizationEpoch'],
+        'finalizationPoint': value['finalizationPoint'],
+        'height': value['height'],
+        'hash': value['hash'],
     };
 }
 

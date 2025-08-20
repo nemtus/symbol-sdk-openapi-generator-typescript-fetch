@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { TransactionTypeEnum } from './TransactionTypeEnum';
 import {
-    TransactionTypeEnum,
     TransactionTypeEnumFromJSON,
     TransactionTypeEnumFromJSONTyped,
     TransactionTypeEnumToJSON,
+    TransactionTypeEnumToJSONTyped,
 } from './TransactionTypeEnum';
 
 /**
@@ -28,6 +29,13 @@ import {
 export interface AccountRestrictionDTOValuesInner {
 }
 
+/**
+ * Check if a given object implements the AccountRestrictionDTOValuesInner interface.
+ */
+export function instanceOfAccountRestrictionDTOValuesInner(value: Record<string, any>): value is AccountRestrictionDTOValuesInner {
+    return true;
+}
+
 export function AccountRestrictionDTOValuesInnerFromJSON(json: any): AccountRestrictionDTOValuesInner {
     return AccountRestrictionDTOValuesInnerFromJSONTyped(json, false);
 }
@@ -36,7 +44,11 @@ export function AccountRestrictionDTOValuesInnerFromJSONTyped(json: any, ignoreD
     return json;
 }
 
-export function AccountRestrictionDTOValuesInnerToJSON(value?: AccountRestrictionDTOValuesInner | null): any {
+export function AccountRestrictionDTOValuesInnerToJSON(json: any): AccountRestrictionDTOValuesInner {
+    return AccountRestrictionDTOValuesInnerToJSONTyped(json, false);
+}
+
+export function AccountRestrictionDTOValuesInnerToJSONTyped(value?: AccountRestrictionDTOValuesInner | null, ignoreDiscriminator: boolean = false): any {
     return value;
 }
 

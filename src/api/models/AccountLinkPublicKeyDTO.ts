@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -27,12 +27,20 @@ export interface AccountLinkPublicKeyDTO {
     publicKey: string;
 }
 
+/**
+ * Check if a given object implements the AccountLinkPublicKeyDTO interface.
+ */
+export function instanceOfAccountLinkPublicKeyDTO(value: Record<string, any>): value is AccountLinkPublicKeyDTO {
+    if (!('publicKey' in value) || value['publicKey'] === undefined) return false;
+    return true;
+}
+
 export function AccountLinkPublicKeyDTOFromJSON(json: any): AccountLinkPublicKeyDTO {
     return AccountLinkPublicKeyDTOFromJSONTyped(json, false);
 }
 
 export function AccountLinkPublicKeyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountLinkPublicKeyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -41,16 +49,18 @@ export function AccountLinkPublicKeyDTOFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function AccountLinkPublicKeyDTOToJSON(value?: AccountLinkPublicKeyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AccountLinkPublicKeyDTOToJSON(json: any): AccountLinkPublicKeyDTO {
+    return AccountLinkPublicKeyDTOToJSONTyped(json, false);
+}
+
+export function AccountLinkPublicKeyDTOToJSONTyped(value?: AccountLinkPublicKeyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'publicKey': value.publicKey,
+        'publicKey': value['publicKey'],
     };
 }
 

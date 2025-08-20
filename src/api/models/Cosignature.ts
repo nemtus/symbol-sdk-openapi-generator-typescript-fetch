@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -45,36 +45,45 @@ export interface Cosignature {
     version?: string;
 }
 
+/**
+ * Check if a given object implements the Cosignature interface.
+ */
+export function instanceOfCosignature(value: Record<string, any>): value is Cosignature {
+    return true;
+}
+
 export function CosignatureFromJSON(json: any): Cosignature {
     return CosignatureFromJSONTyped(json, false);
 }
 
 export function CosignatureFromJSONTyped(json: any, ignoreDiscriminator: boolean): Cosignature {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'parentHash': !exists(json, 'parentHash') ? undefined : json['parentHash'],
-        'signature': !exists(json, 'signature') ? undefined : json['signature'],
-        'signerPublicKey': !exists(json, 'signerPublicKey') ? undefined : json['signerPublicKey'],
-        'version': !exists(json, 'version') ? undefined : json['version'],
+        'parentHash': json['parentHash'] == null ? undefined : json['parentHash'],
+        'signature': json['signature'] == null ? undefined : json['signature'],
+        'signerPublicKey': json['signerPublicKey'] == null ? undefined : json['signerPublicKey'],
+        'version': json['version'] == null ? undefined : json['version'],
     };
 }
 
-export function CosignatureToJSON(value?: Cosignature | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosignatureToJSON(json: any): Cosignature {
+    return CosignatureToJSONTyped(json, false);
+}
+
+export function CosignatureToJSONTyped(value?: Cosignature | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'parentHash': value.parentHash,
-        'signature': value.signature,
-        'signerPublicKey': value.signerPublicKey,
-        'version': value.version,
+        'parentHash': value['parentHash'],
+        'signature': value['signature'],
+        'signerPublicKey': value['signerPublicKey'],
+        'version': value['version'],
     };
 }
 

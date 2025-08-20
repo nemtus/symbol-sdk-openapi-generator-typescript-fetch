@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -51,12 +51,24 @@ export interface TransactionFeesDTO {
     minFeeMultiplier: number;
 }
 
+/**
+ * Check if a given object implements the TransactionFeesDTO interface.
+ */
+export function instanceOfTransactionFeesDTO(value: Record<string, any>): value is TransactionFeesDTO {
+    if (!('averageFeeMultiplier' in value) || value['averageFeeMultiplier'] === undefined) return false;
+    if (!('medianFeeMultiplier' in value) || value['medianFeeMultiplier'] === undefined) return false;
+    if (!('highestFeeMultiplier' in value) || value['highestFeeMultiplier'] === undefined) return false;
+    if (!('lowestFeeMultiplier' in value) || value['lowestFeeMultiplier'] === undefined) return false;
+    if (!('minFeeMultiplier' in value) || value['minFeeMultiplier'] === undefined) return false;
+    return true;
+}
+
 export function TransactionFeesDTOFromJSON(json: any): TransactionFeesDTO {
     return TransactionFeesDTOFromJSONTyped(json, false);
 }
 
 export function TransactionFeesDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionFeesDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,20 +81,22 @@ export function TransactionFeesDTOFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function TransactionFeesDTOToJSON(value?: TransactionFeesDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionFeesDTOToJSON(json: any): TransactionFeesDTO {
+    return TransactionFeesDTOToJSONTyped(json, false);
+}
+
+export function TransactionFeesDTOToJSONTyped(value?: TransactionFeesDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'averageFeeMultiplier': value.averageFeeMultiplier,
-        'medianFeeMultiplier': value.medianFeeMultiplier,
-        'highestFeeMultiplier': value.highestFeeMultiplier,
-        'lowestFeeMultiplier': value.lowestFeeMultiplier,
-        'minFeeMultiplier': value.minFeeMultiplier,
+        'averageFeeMultiplier': value['averageFeeMultiplier'],
+        'medianFeeMultiplier': value['medianFeeMultiplier'],
+        'highestFeeMultiplier': value['highestFeeMultiplier'],
+        'lowestFeeMultiplier': value['lowestFeeMultiplier'],
+        'minFeeMultiplier': value['minFeeMultiplier'],
     };
 }
 

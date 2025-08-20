@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -61,6 +61,7 @@ export interface MosaicDTO {
      * - 0x02 (transferable) - Mosaic supports transfers between arbitrary accounts. When not set, mosaic can only be transferred to and from mosaic owner.
      * - 0x04 (restrictable) - Mosaic supports custom restrictions configured by mosaic owner.
      * - 0x08 (revokable) - Mosaic allows creator to revoke balances from another user.
+     * 
      * @type {number}
      * @memberof MosaicDTO
      */
@@ -69,6 +70,7 @@ export interface MosaicDTO {
      * Determines up to what decimal place the mosaic can be divided.
      * Divisibility of 3 means that a mosaic can be divided into smallest parts of 0.001 mosaics.
      * The divisibility must be in the range of 0 and 6.
+     * 
      * @type {number}
      * @memberof MosaicDTO
      */
@@ -81,12 +83,28 @@ export interface MosaicDTO {
     duration: string;
 }
 
+/**
+ * Check if a given object implements the MosaicDTO interface.
+ */
+export function instanceOfMosaicDTO(value: Record<string, any>): value is MosaicDTO {
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('supply' in value) || value['supply'] === undefined) return false;
+    if (!('startHeight' in value) || value['startHeight'] === undefined) return false;
+    if (!('ownerAddress' in value) || value['ownerAddress'] === undefined) return false;
+    if (!('revision' in value) || value['revision'] === undefined) return false;
+    if (!('flags' in value) || value['flags'] === undefined) return false;
+    if (!('divisibility' in value) || value['divisibility'] === undefined) return false;
+    if (!('duration' in value) || value['duration'] === undefined) return false;
+    return true;
+}
+
 export function MosaicDTOFromJSON(json: any): MosaicDTO {
     return MosaicDTOFromJSONTyped(json, false);
 }
 
 export function MosaicDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MosaicDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -103,24 +121,26 @@ export function MosaicDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function MosaicDTOToJSON(value?: MosaicDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicDTOToJSON(json: any): MosaicDTO {
+    return MosaicDTOToJSONTyped(json, false);
+}
+
+export function MosaicDTOToJSONTyped(value?: MosaicDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'version': value.version,
-        'id': value.id,
-        'supply': value.supply,
-        'startHeight': value.startHeight,
-        'ownerAddress': value.ownerAddress,
-        'revision': value.revision,
-        'flags': value.flags,
-        'divisibility': value.divisibility,
-        'duration': value.duration,
+        'version': value['version'],
+        'id': value['id'],
+        'supply': value['supply'],
+        'startHeight': value['startHeight'],
+        'ownerAddress': value['ownerAddress'],
+        'revision': value['revision'],
+        'flags': value['flags'],
+        'divisibility': value['divisibility'],
+        'duration': value['duration'],
     };
 }
 

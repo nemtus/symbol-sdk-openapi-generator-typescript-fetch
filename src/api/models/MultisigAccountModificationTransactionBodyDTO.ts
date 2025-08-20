@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -22,6 +22,7 @@ export interface MultisigAccountModificationTransactionBodyDTO {
     /**
      * Number of signatures needed to remove a cosignatory.
      * If we are modifying an existing multisig account, this indicates the relative change of the minimum cosignatories.
+     * 
      * @type {number}
      * @memberof MultisigAccountModificationTransactionBodyDTO
      */
@@ -29,6 +30,7 @@ export interface MultisigAccountModificationTransactionBodyDTO {
     /**
      * Number of signatures needed to approve a transaction.
      * If we are modifying an existing multisig account, this indicates the relative change of the minimum cosignatories.
+     * 
      * @type {number}
      * @memberof MultisigAccountModificationTransactionBodyDTO
      */
@@ -47,12 +49,23 @@ export interface MultisigAccountModificationTransactionBodyDTO {
     addressDeletions: Array<string>;
 }
 
+/**
+ * Check if a given object implements the MultisigAccountModificationTransactionBodyDTO interface.
+ */
+export function instanceOfMultisigAccountModificationTransactionBodyDTO(value: Record<string, any>): value is MultisigAccountModificationTransactionBodyDTO {
+    if (!('minRemovalDelta' in value) || value['minRemovalDelta'] === undefined) return false;
+    if (!('minApprovalDelta' in value) || value['minApprovalDelta'] === undefined) return false;
+    if (!('addressAdditions' in value) || value['addressAdditions'] === undefined) return false;
+    if (!('addressDeletions' in value) || value['addressDeletions'] === undefined) return false;
+    return true;
+}
+
 export function MultisigAccountModificationTransactionBodyDTOFromJSON(json: any): MultisigAccountModificationTransactionBodyDTO {
     return MultisigAccountModificationTransactionBodyDTOFromJSONTyped(json, false);
 }
 
 export function MultisigAccountModificationTransactionBodyDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): MultisigAccountModificationTransactionBodyDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -64,19 +77,21 @@ export function MultisigAccountModificationTransactionBodyDTOFromJSONTyped(json:
     };
 }
 
-export function MultisigAccountModificationTransactionBodyDTOToJSON(value?: MultisigAccountModificationTransactionBodyDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MultisigAccountModificationTransactionBodyDTOToJSON(json: any): MultisigAccountModificationTransactionBodyDTO {
+    return MultisigAccountModificationTransactionBodyDTOToJSONTyped(json, false);
+}
+
+export function MultisigAccountModificationTransactionBodyDTOToJSONTyped(value?: MultisigAccountModificationTransactionBodyDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'minRemovalDelta': value.minRemovalDelta,
-        'minApprovalDelta': value.minApprovalDelta,
-        'addressAdditions': value.addressAdditions,
-        'addressDeletions': value.addressDeletions,
+        'minRemovalDelta': value['minRemovalDelta'],
+        'minApprovalDelta': value['minApprovalDelta'],
+        'addressAdditions': value['addressAdditions'],
+        'addressDeletions': value['addressDeletions'],
     };
 }
 

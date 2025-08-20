@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { Pagination } from './Pagination';
 import {
-    Pagination,
     PaginationFromJSON,
     PaginationFromJSONTyped,
     PaginationToJSON,
+    PaginationToJSONTyped,
 } from './Pagination';
+import type { TransactionInfoDTO } from './TransactionInfoDTO';
 import {
-    TransactionInfoDTO,
     TransactionInfoDTOFromJSON,
     TransactionInfoDTOFromJSONTyped,
     TransactionInfoDTOToJSON,
+    TransactionInfoDTOToJSONTyped,
 } from './TransactionInfoDTO';
 
 /**
@@ -46,12 +48,21 @@ export interface TransactionPage {
     pagination: Pagination;
 }
 
+/**
+ * Check if a given object implements the TransactionPage interface.
+ */
+export function instanceOfTransactionPage(value: Record<string, any>): value is TransactionPage {
+    if (!('data' in value) || value['data'] === undefined) return false;
+    if (!('pagination' in value) || value['pagination'] === undefined) return false;
+    return true;
+}
+
 export function TransactionPageFromJSON(json: any): TransactionPage {
     return TransactionPageFromJSONTyped(json, false);
 }
 
 export function TransactionPageFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionPage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,17 +72,19 @@ export function TransactionPageFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function TransactionPageToJSON(value?: TransactionPage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionPageToJSON(json: any): TransactionPage {
+    return TransactionPageToJSONTyped(json, false);
+}
+
+export function TransactionPageToJSONTyped(value?: TransactionPage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'data': ((value.data as Array<any>).map(TransactionInfoDTOToJSON)),
-        'pagination': PaginationToJSON(value.pagination),
+        'data': ((value['data'] as Array<any>).map(TransactionInfoDTOToJSON)),
+        'pagination': PaginationToJSON(value['pagination']),
     };
 }
 

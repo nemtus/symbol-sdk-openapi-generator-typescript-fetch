@@ -61,11 +61,8 @@ models/AliasDTO.ts
 models/AliasTypeEnum.ts
 models/AnnounceTransactionInfoDTO.ts
 models/BalanceChangeReceiptDTO.ts
-models/BalanceChangeReceiptDTOAllOf.ts
 models/BalanceTransferReceiptDTO.ts
-models/BalanceTransferReceiptDTOAllOf.ts
 models/BlockDTO.ts
-models/BlockDTOAllOf.ts
 models/BlockInfoDTO.ts
 models/BlockInfoDTOBlock.ts
 models/BlockMetaDTO.ts
@@ -77,7 +74,6 @@ models/ChainPropertiesDTO.ts
 models/CommunicationTimestampsDTO.ts
 models/Cosignature.ts
 models/CosignatureDTO.ts
-models/CosignatureDTOAllOf.ts
 models/DeploymentDTO.ts
 models/EmbeddedAccountAddressRestrictionTransactionDTO.ts
 models/EmbeddedAccountKeyLinkTransactionDTO.ts
@@ -117,9 +113,7 @@ models/HashLockPage.ts
 models/HashLockTransactionBodyDTO.ts
 models/HashLockTransactionDTO.ts
 models/ImportanceBlockDTO.ts
-models/ImportanceBlockDTOAllOf.ts
 models/InflationReceiptDTO.ts
-models/InflationReceiptDTOAllOf.ts
 models/LinkActionEnum.ts
 models/LockHashAlgorithmEnum.ts
 models/LockStatus.ts
@@ -151,7 +145,6 @@ models/MosaicDTO.ts
 models/MosaicDefinitionTransactionBodyDTO.ts
 models/MosaicDefinitionTransactionDTO.ts
 models/MosaicExpiryReceiptDTO.ts
-models/MosaicExpiryReceiptDTOAllOf.ts
 models/MosaicGlobalRestrictionDTO.ts
 models/MosaicGlobalRestrictionEntryDTO.ts
 models/MosaicGlobalRestrictionEntryRestrictionDTO.ts
@@ -185,7 +178,6 @@ models/MultisigDTO.ts
 models/MultisigNetworkPropertiesDTO.ts
 models/NamespaceDTO.ts
 models/NamespaceExpiryReceiptDTO.ts
-models/NamespaceExpiryReceiptDTOAllOf.ts
 models/NamespaceIds.ts
 models/NamespaceInfoDTO.ts
 models/NamespaceMetaDTO.ts

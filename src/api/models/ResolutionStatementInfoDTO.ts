@@ -12,23 +12,26 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { StatementMetaDTO } from './StatementMetaDTO';
 import {
-    ResolutionStatementDTO,
-    ResolutionStatementDTOFromJSON,
-    ResolutionStatementDTOFromJSONTyped,
-    ResolutionStatementDTOToJSON,
-} from './ResolutionStatementDTO';
-import {
-    StatementMetaDTO,
     StatementMetaDTOFromJSON,
     StatementMetaDTOFromJSONTyped,
     StatementMetaDTOToJSON,
+    StatementMetaDTOToJSONTyped,
 } from './StatementMetaDTO';
+import type { ResolutionStatementDTO } from './ResolutionStatementDTO';
+import {
+    ResolutionStatementDTOFromJSON,
+    ResolutionStatementDTOFromJSONTyped,
+    ResolutionStatementDTOToJSON,
+    ResolutionStatementDTOToJSONTyped,
+} from './ResolutionStatementDTO';
 
 /**
  * A resolution statement keeps the relation between a namespace alias used in a transaction
  * and the real address or mosaicId.
+ * 
  * @export
  * @interface ResolutionStatementInfoDTO
  */
@@ -53,12 +56,22 @@ export interface ResolutionStatementInfoDTO {
     statement: ResolutionStatementDTO;
 }
 
+/**
+ * Check if a given object implements the ResolutionStatementInfoDTO interface.
+ */
+export function instanceOfResolutionStatementInfoDTO(value: Record<string, any>): value is ResolutionStatementInfoDTO {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('meta' in value) || value['meta'] === undefined) return false;
+    if (!('statement' in value) || value['statement'] === undefined) return false;
+    return true;
+}
+
 export function ResolutionStatementInfoDTOFromJSON(json: any): ResolutionStatementInfoDTO {
     return ResolutionStatementInfoDTOFromJSONTyped(json, false);
 }
 
 export function ResolutionStatementInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResolutionStatementInfoDTO {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,18 +82,20 @@ export function ResolutionStatementInfoDTOFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function ResolutionStatementInfoDTOToJSON(value?: ResolutionStatementInfoDTO | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ResolutionStatementInfoDTOToJSON(json: any): ResolutionStatementInfoDTO {
+    return ResolutionStatementInfoDTOToJSONTyped(json, false);
+}
+
+export function ResolutionStatementInfoDTOToJSONTyped(value?: ResolutionStatementInfoDTO | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'meta': StatementMetaDTOToJSON(value.meta),
-        'statement': ResolutionStatementDTOToJSON(value.statement),
+        'id': value['id'],
+        'meta': StatementMetaDTOToJSON(value['meta']),
+        'statement': ResolutionStatementDTOToJSON(value['statement']),
     };
 }
 

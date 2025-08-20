@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -27,30 +27,39 @@ export interface Addresses {
     addresses?: Array<string>;
 }
 
+/**
+ * Check if a given object implements the Addresses interface.
+ */
+export function instanceOfAddresses(value: Record<string, any>): value is Addresses {
+    return true;
+}
+
 export function AddressesFromJSON(json: any): Addresses {
     return AddressesFromJSONTyped(json, false);
 }
 
 export function AddressesFromJSONTyped(json: any, ignoreDiscriminator: boolean): Addresses {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'addresses': !exists(json, 'addresses') ? undefined : json['addresses'],
+        'addresses': json['addresses'] == null ? undefined : json['addresses'],
     };
 }
 
-export function AddressesToJSON(value?: Addresses | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AddressesToJSON(json: any): Addresses {
+    return AddressesToJSONTyped(json, false);
+}
+
+export function AddressesToJSONTyped(value?: Addresses | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'addresses': value.addresses,
+        'addresses': value['addresses'],
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -22,6 +22,7 @@ export interface UnresolvedMosaic {
     /**
      * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
      * is used instead of the real mosaic identifier.
+     * 
      * @type {string}
      * @memberof UnresolvedMosaic
      */
@@ -34,12 +35,21 @@ export interface UnresolvedMosaic {
     amount: string;
 }
 
+/**
+ * Check if a given object implements the UnresolvedMosaic interface.
+ */
+export function instanceOfUnresolvedMosaic(value: Record<string, any>): value is UnresolvedMosaic {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    return true;
+}
+
 export function UnresolvedMosaicFromJSON(json: any): UnresolvedMosaic {
     return UnresolvedMosaicFromJSONTyped(json, false);
 }
 
 export function UnresolvedMosaicFromJSONTyped(json: any, ignoreDiscriminator: boolean): UnresolvedMosaic {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -49,17 +59,19 @@ export function UnresolvedMosaicFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function UnresolvedMosaicToJSON(value?: UnresolvedMosaic | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UnresolvedMosaicToJSON(json: any): UnresolvedMosaic {
+    return UnresolvedMosaicToJSONTyped(json, false);
+}
+
+export function UnresolvedMosaicToJSONTyped(value?: UnresolvedMosaic | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'amount': value.amount,
+        'id': value['id'],
+        'amount': value['amount'],
     };
 }
 

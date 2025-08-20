@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -33,12 +33,21 @@ export interface Mosaic {
     amount: string;
 }
 
+/**
+ * Check if a given object implements the Mosaic interface.
+ */
+export function instanceOfMosaic(value: Record<string, any>): value is Mosaic {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    return true;
+}
+
 export function MosaicFromJSON(json: any): Mosaic {
     return MosaicFromJSONTyped(json, false);
 }
 
 export function MosaicFromJSONTyped(json: any, ignoreDiscriminator: boolean): Mosaic {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -48,17 +57,19 @@ export function MosaicFromJSONTyped(json: any, ignoreDiscriminator: boolean): Mo
     };
 }
 
-export function MosaicToJSON(value?: Mosaic | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MosaicToJSON(json: any): Mosaic {
+    return MosaicToJSONTyped(json, false);
+}
+
+export function MosaicToJSONTyped(value?: Mosaic | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'amount': value.amount,
+        'id': value['id'],
+        'amount': value['amount'],
     };
 }
 
