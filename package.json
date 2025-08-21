@@ -1,6 +1,6 @@
 {
   "name": "@nemtus/symbol-sdk-openapi-generator-typescript-fetch",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Symbol SDK for TypeScript with OpenAPI Generator typescript-fetch",
   "main": "./cjs/index.js",
   "module": "./esm/index.js",
