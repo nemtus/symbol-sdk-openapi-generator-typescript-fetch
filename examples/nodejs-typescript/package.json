@@ -14,7 +14,7 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "@nemtus/symbol-sdk-openapi-generator-typescript-fetch": "^0.1.0",
+    "@nemtus/symbol-sdk-openapi-generator-typescript-fetch": "../../dist",
     "node-fetch": "^2.6.7"
   }
 }

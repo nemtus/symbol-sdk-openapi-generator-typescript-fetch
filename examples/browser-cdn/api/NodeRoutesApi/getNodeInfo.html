@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/@nemtus/symbol-sdk-openapi-generator-typescript-fetch@0.1.0/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@nemtus/symbol-sdk-openapi-generator-typescript-fetch@0.2.0/index.min.js"></script>
   </head>
   <body>
     <script>
       (async () => {
         const symbolSdk = window.symbolSdkOpenAPIGeneratorTypeScriptFetch;
         const configurationParameters = {
-          basePath: 'http://symbol-sakura-16.next-web-technology.com:3000',
+          basePath: 'https://symbol-main-1.nemtus.com:3001',
         };
         const configuration = new symbolSdk.Configuration(configurationParameters);
         const nodeRoutesApi = new symbolSdk.NodeRoutesApi(configuration);

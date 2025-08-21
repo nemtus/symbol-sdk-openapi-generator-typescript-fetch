@@ -3,8 +3,7 @@ const fetch = require('node-fetch');
 
 (async () => {
   const configurationParameters = {
-    basePath: 'http://symbol-sakura-16.next-web-technology.com:3000',
-    fetchApi: fetch,
+    basePath: 'https://symbol-main-1.nemtus.com:3001',
   };
   const configuration = new symbolSdk.Configuration(configurationParameters);
   const nodeRoutesApi = new symbolSdk.NodeRoutesApi(configuration);

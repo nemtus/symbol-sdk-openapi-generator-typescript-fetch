@@ -10,7 +10,7 @@
   "author": "yasunori-matsuoka <yasunori.matsuoka@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "@nemtus/symbol-sdk-openapi-generator-typescript-fetch": "^0.1.0",
+    "@nemtus/symbol-sdk-openapi-generator-typescript-fetch": "../../dist",
     "node-fetch": "^2.6.7"
   }
 }
