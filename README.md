@@ -4,7 +4,7 @@ Symbol SDK for TypeScript with OpenAPI Generator typescript-fetch
 
 Note: Currently, This is a very experimental level.
 
-|  |  |
+| Type | Status/Link |
 | --------- | -------------------- |
 | CI status | [![CI Node.js](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch/actions/workflows/ci-nodejs.yml/badge.svg)](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch/actions/workflows/ci-nodejs.yml) |
 | Latest npm publish status | [![CD Publish to npm](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch/actions/workflows/cd-publish-to-npm.yml/badge.svg)](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch/actions/workflows/cd-publish-to-npm.yml) |
