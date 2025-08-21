@@ -18,6 +18,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          registry-url: 'https://registry.npmjs.org'
       - run: npm install
       - run: npm run build
       - run: npm run test
+      - name: Dry run publish check (main branch only)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: npm publish --dry-run
