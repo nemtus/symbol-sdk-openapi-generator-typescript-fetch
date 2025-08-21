@@ -10,8 +10,8 @@ import fetch from 'node-fetch'; // Note: Use version 2.x
 
 (async () => {
   const configurationParameters: ConfigurationParameters = {
-    basePath: 'http://symbol-sakura-16.next-web-technology.com:3000',
-    fetchApi: fetch as unknown as FetchAPI, // Note: Maybe there's a better way to do this.
+    basePath: 'https://symbol-main-1.nemtus.com:3001',
+    // fetchApi: fetch as unknown as FetchAPI, // Note: Maybe there's a better way to do this.
   };
   const configuration: Configuration = new Configuration(configurationParameters);
   const accountRoutesApi: AccountRoutesApi = new AccountRoutesApi(configuration);

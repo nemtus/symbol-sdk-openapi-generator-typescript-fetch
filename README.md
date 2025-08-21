@@ -25,7 +25,7 @@ import {
 } from '@nemtus/symbol-sdk-openapi-generator-typescript-fetch';
 
 const configurationParameters: ConfigurationParameters = {
-  basePath: 'https://symbol-sakura-16.next-web-technology.com:3001',
+  basePath: 'https://symbol-main-1.nemtus.com:3001',
 };
 const configuration: Configuration = new Configuration(configurationParameters);
 const nodeRoutesApi: NodeRoutesApi = new NodeRoutesApi(configuration);
@@ -58,7 +58,7 @@ import {
 } from '@nemtus/symbol-sdk-openapi-generator-typescript-fetch';
 
 const configurationParameters: ConfigurationParameters = {
-  basePath: 'https://symbol-sakura-16.next-web-technology.com:3001',
+  basePath: 'https://symbol-main-1.nemtus.com:3001',
 };
 const configuration: Configuration = new Configuration(configurationParameters);
 const accountRoutesApi: AccountRoutesApi = new AccountRoutesApi(configuration);
