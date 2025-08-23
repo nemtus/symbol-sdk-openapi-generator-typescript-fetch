@@ -17,6 +17,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - uses: actions/setup-java@v4
         with:
           distribution: 'microsoft'
@@ -25,7 +27,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
-      - run: git submodule update --remote
+      - run: git submodule update --init --recursive --remote
       - run: |
           git fetch origin
           git switch main
