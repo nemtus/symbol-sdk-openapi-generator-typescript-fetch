@@ -11,5 +11,6 @@ module.exports = {
   extends: ['plugin:jest/all'],
   rules: {
     'jest/require-hook': 'off',
+    'jest/no-standalone-expect': 'off',
   },
 };

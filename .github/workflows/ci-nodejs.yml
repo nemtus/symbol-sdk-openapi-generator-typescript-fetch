@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         java-version: [17, 21]
-        node-version: [16.x, 18.x, 20.x, 22.x, 24.x]
+        node-version: [18.x, 20.x, 22.x, 24.x]
 
     steps:
       - uses: actions/checkout@v4
@@ -43,6 +43,14 @@ jobs:
       - run: npm run openapi:generate
       - run: npm run build
       - run: npm run test
+      - run: npm install
+        working-directory: ./tests/nodejs-javascript
+      - run: npm test
+        working-directory: ./tests/nodejs-javascript
+      - run: npm install
+        working-directory: ./tests/nodejs-typescript
+      - run: npm test
+        working-directory: ./tests/nodejs-typescript
       - name: Dry run publish check (main branch only)
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: npm publish --dry-run

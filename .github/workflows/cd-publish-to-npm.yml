@@ -40,6 +40,14 @@ jobs:
       - run: npm run openapi:generate
       - run: npm run build
       - run: npm run test
+      - run: npm install
+        working-directory: ./tests/nodejs-javascript
+      - run: npm test
+        working-directory: ./tests/nodejs-javascript
+      - run: npm install
+        working-directory: ./tests/nodejs-typescript
+      - run: npm test
+        working-directory: ./tests/nodejs-typescript
       - run: npm publish --access=public
         working-directory: ./dist
         env:

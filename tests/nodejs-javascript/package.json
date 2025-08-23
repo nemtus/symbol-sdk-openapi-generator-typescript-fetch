@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest"
   },
   "keywords": [],
   "author": "yasunori-matsuoka <yasunori.matsuoka@gmail.com>",
@@ -12,5 +12,8 @@
   "dependencies": {
     "@nemtus/symbol-sdk-openapi-generator-typescript-fetch": "../../dist",
     "node-fetch": "^2.6.7"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
   }
 }
