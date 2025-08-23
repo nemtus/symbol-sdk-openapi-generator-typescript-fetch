@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         java-version: [17, 21]
-        node-version: [14.x, 16.x, 18.x, 20.x, 22.x, 24.x]
+        node-version: [16.x, 18.x, 20.x, 22.x, 24.x]
 
     steps:
       - uses: actions/checkout@v4
