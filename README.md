@@ -184,41 +184,27 @@ Example with CDN
 This project uses [https://github.com/symbol/symbol-openapi](https://github.com/symbol/symbol-openapi) OpenAPI Implementation as a git submodule. You need to clone this repository with submodules to develop this package as follows.
 
 ```bash
-git clone --recurse-submodules git@github.com:nemtus/symbol-sdk-openapi-generator-typescript-fetch.git
+git clone --recursive git@github.com:nemtus/symbol-sdk-openapi-generator-typescript-fetch.git
 ```
 
 or
 
 ```bash
-git clone --recurse-submodules https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch.git
+git clone --recursive https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch.git
 ```
 
 If you have already cloned this repository without submodules, you can get submodules as follows.
 
 ```bash
-git submodule init
-git submodule update
-```
-
-or achieve the same effect with only one command as follows.
-
-```bash
-git submodule update --init
+git submodule update --init --recursive
 ```
 
 - Update submodule status to latest
 
-To update the submodule to the latest on a specific branch (e.g., main), run the following and record the new pointer in the superproject:
+To update the submodule to the latest remote status
 
 ```bash
-cd symbol-openapi
-git fetch origin
-git switch main
-git pull --ff-only
-cd ..
-# record the updated submodule pointer in the superproject
-git add symbol-openapi
-git commit -m "chore(submodule): bump symbol-openapi to latest main"
+git submodule update --remote
 ```
 
 When you check the submodule status, you can execute following commands.

@@ -1,9 +1,10 @@
-permissions:
-  contents: read
 name: CD Publish to npm
 
 on:
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   publish-to-npm:
@@ -15,11 +16,27 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'microsoft'
+          java-version: ${{ matrix.java-version }}
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
+      - run: git submodule update --init --recursive --remote
       - run: npm install
+        working-directory: ./symbol-openapi
+      - run: npm run build
+        working-directory: ./symbol-openapi
+      - run: java -version
+      - run: npm install @openapitools/openapi-generator-cli -g
+      - run: openapi-generator-cli version
+      - run: npm install
+      - run: npm run openapi:set:version
+      - run: npm run openapi:generate
       - run: npm run build
       - run: npm run test
       - run: npm publish --access=public

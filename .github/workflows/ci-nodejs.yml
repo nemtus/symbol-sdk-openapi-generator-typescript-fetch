@@ -1,11 +1,12 @@
-permissions:
-  contents: read
 name: CI Node.js
 
 on:
   pull_request:
   push:
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -14,15 +15,32 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        java-version: [17, 21]
         node-version: [14.x, 16.x, 18.x, 20.x, 22.x, 24.x]
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'microsoft'
+          java-version: ${{ matrix.java-version }}
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
+      - run: git submodule update --init --recursive --remote
       - run: npm install
+        working-directory: ./symbol-openapi
+      - run: npm run build
+        working-directory: ./symbol-openapi
+      - run: java -version
+      - run: npm install @openapitools/openapi-generator-cli -g
+      - run: openapi-generator-cli version
+      - run: npm install
+      - run: npm run openapi:set:version
+      - run: npm run openapi:generate
       - run: npm run build
       - run: npm run test
       - name: Dry run publish check (main branch only)
