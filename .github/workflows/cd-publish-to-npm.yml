@@ -27,6 +27,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: java -version
       - run: npm install
+      - run: npx @openapitools/openapi-generator-cli version
       - run: npm run openapi:set:version
       - run: npm run openapi:generate
       - run: npm run build
