@@ -26,8 +26,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
       - run: java -version
+      - run: npm install @openapitools/openapi-generator-cli -g
+      - run: openapi-generator-cli version
       - run: npm install
-      - run: npx @openapitools/openapi-generator-cli version
       - run: npm run openapi:set:version
       - run: npm run openapi:generate
       - run: npm run build
