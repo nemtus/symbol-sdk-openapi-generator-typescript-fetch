@@ -1,0 +1,17 @@
+{
+  "name": "browser-cdn-tests",
+  "version": "1.0.0",
+  "description": "Browser tests for Symbol SDK CDN distribution",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.41.0",
+    "playwright": "^1.41.0"
+  }
+}

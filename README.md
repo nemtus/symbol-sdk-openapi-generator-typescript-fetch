@@ -239,8 +239,35 @@ npm run openapi:generate
 npm run build
 ```
 
-Then, REST API client code will be generated in `src/api`.
+Then, REST API client code will be generated in `src/api` and bundled into `dist`.
 Do not edit `src/api` manually.
+
+### 2. Tests
+
+#### Test for CDN with Playwright
+
+```bash
+cd tests/browser-cdn
+npm install
+npx playwright install chromium
+npm run test
+```
+
+#### Test for Node.js CommonJS JavaScript with vitest
+
+```bash
+cd tests/nodejs-javascript
+npm install
+npm run test
+```
+
+#### Test for Node.js ES Modules TypeScript with vitest
+
+```bash
+cd tests/nodejs-typescript
+npm install
+npm run test
+```
 
 ## We use
 

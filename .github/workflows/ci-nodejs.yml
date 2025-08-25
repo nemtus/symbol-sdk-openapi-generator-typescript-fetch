@@ -51,6 +51,12 @@ jobs:
         working-directory: ./tests/nodejs-typescript
       - run: npm test
         working-directory: ./tests/nodejs-typescript
+      - run: npm install
+        working-directory: ./tests/browser-cdn
+      - run: npx playwright install chromium
+        working-directory: ./tests/browser-cdn
+      - run: npm run test
+        working-directory: ./tests/browser-cdn
       - name: Dry run publish check (main branch only)
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: npm publish --dry-run
