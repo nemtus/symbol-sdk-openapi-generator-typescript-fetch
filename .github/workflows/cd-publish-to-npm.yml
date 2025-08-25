@@ -7,7 +7,7 @@ permissions:
   contents: read
 
 jobs:
-  publish-to-npm:
+  build:
     runs-on: ubuntu-latest
 
     strategy:
@@ -39,21 +39,124 @@ jobs:
       - run: npm run openapi:set:version
       - run: npm run openapi:generate
       - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.java-version }}-${{ matrix.node-version }}
+          path: dist/
+          retention-days: 1
+
+  test-unit:
+    needs: build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java-version: [21]
+        node-version: [22.x]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.java-version }}-${{ matrix.node-version }}
+          path: dist/
+      - run: npm install
       - run: npm run test
+
+  test-nodejs-javascript:
+    needs: build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java-version: [21]
+        node-version: [22.x]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.java-version }}-${{ matrix.node-version }}
+          path: dist/
       - run: npm install
         working-directory: ./tests/nodejs-javascript
       - run: npm test
         working-directory: ./tests/nodejs-javascript
+
+  test-nodejs-typescript:
+    needs: build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java-version: [21]
+        node-version: [22.x]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.java-version }}-${{ matrix.node-version }}
+          path: dist/
       - run: npm install
         working-directory: ./tests/nodejs-typescript
       - run: npm test
         working-directory: ./tests/nodejs-typescript
+
+  test-browser-cdn:
+    needs: build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java-version: [21]
+        node-version: [22.x]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.java-version }}-${{ matrix.node-version }}
+          path: dist/
       - run: npm install
         working-directory: ./tests/browser-cdn
       - run: npx playwright install chromium
         working-directory: ./tests/browser-cdn
       - run: npm run test
         working-directory: ./tests/browser-cdn
+
+  publish:
+    needs: [test-unit, test-nodejs-javascript, test-nodejs-typescript, test-browser-cdn]
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java-version: [21]
+        node-version: [22.x]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: 'https://registry.npmjs.org'
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.java-version }}-${{ matrix.node-version }}
+          path: dist/
+      - run: npm install
       - run: npm publish --access=public
         working-directory: ./dist
         env:
