@@ -115,6 +115,9 @@ jobs:
   test-browser-cdn:
     needs: build
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.49.1-noble
+      options: --user 1001
 
     strategy:
       matrix:
@@ -131,8 +134,6 @@ jobs:
           name: dist-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.java-version }}-${{ matrix.node-version }}
           path: dist/
       - run: npm install
-        working-directory: ./tests/browser-cdn
-      - run: npx playwright install chromium
         working-directory: ./tests/browser-cdn
       - run: npm run test
         working-directory: ./tests/browser-cdn
