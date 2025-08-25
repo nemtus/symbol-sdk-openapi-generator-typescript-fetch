@@ -39,15 +39,15 @@ const response: NodeInfoDTO = await nodeRoutesApi.getNodeInfo();
 console.dir(response, { depth: null });
 /* Example: 
 {
-  version: 16777987,
-  publicKey: 'B86304B01045894ED9250B3DCD6313DC2EC0DD529B4E864EA376A2F341D3CFD4',
+  version: 16777991,
+  publicKey: '2CEFBCE2E5EA5DD5BA61B302C33002CDA1EDB122EFD18713AF02ABFA9C73A28C',
   networkGenerationHashSeed: '57F7DA205008026C776CB6AED843393F04CD458E0AA2D9F1D5F31A402072B2D6',
   roles: 3,
   port: 7900,
   networkIdentifier: 104,
-  host: 'symbol-sakura-16.next-web-technology.com',
-  friendlyName: 'next-web-technology',
-  nodePublicKey: '9545F928A1B2FB4AC944BC1EC2F01FB84A503F6449B6BE3451B3F7A0F06B5BCF'
+  friendlyName: 'NEMTUS',
+  host: 'symbol-main-1.nemtus.com',
+  nodePublicKey: 'B56A3C73CA345A00CDDC84CFDF711CD67B2CCE10BEB82CB74835086774FE587F',
 }
 */
 ```
@@ -148,14 +148,14 @@ Example with CDN
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <!-- Load from CDN or a single file bundled with webpack -->
-    <script src="https://cdn.jsdelivr.net/npm/@nemtus/symbol-sdk-openapi-generator-typescript-fetch@0.1.0/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@nemtus/symbol-sdk-openapi-generator-typescript-fetch@0.2.1/index.min.js"></script>
   </head>
   <body>
     <script>
       (async () => {
         const symbolSdk = window.symbolSdkOpenAPIGeneratorTypeScriptFetch;
         const configurationParameters = {
-          basePath: 'http://symbol-sakura-16.next-web-technology.com:3000',
+          basePath: 'http://symbol-main-1.nemtus.com:3000',
         };
         const configuration = new symbolSdk.Configuration(configurationParameters);
 
