@@ -28,6 +28,13 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
       - run: git submodule update --init --recursive --remote
+      - uses: actions/cache@v4
+        id: cache-symbol-openapi
+        with:
+          path: ./symbol-openapi/node_modules
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-symbol-openapi-${{ hashFiles('symbol-openapi/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-symbol-openapi-
       - run: npm install
         working-directory: ./symbol-openapi
       - run: npm run build
@@ -35,6 +42,13 @@ jobs:
       - run: java -version
       - run: npm install @openapitools/openapi-generator-cli -g
       - run: openapi-generator-cli version
+      - uses: actions/cache@v4
+        id: cache-root
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-root-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-root-
       - run: npm install
       - run: npm run openapi:set:version
       - run: npm run openapi:generate
@@ -63,6 +77,13 @@ jobs:
         with:
           name: dist-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.java-version }}-${{ matrix.node-version }}
           path: dist/
+      - uses: actions/cache@v4
+        id: cache-root-test
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-root-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-root-
       - run: npm install
       - run: npm run test
 
@@ -84,6 +105,13 @@ jobs:
         with:
           name: dist-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.java-version }}-${{ matrix.node-version }}
           path: dist/
+      - uses: actions/cache@v4
+        id: cache-nodejs-javascript
+        with:
+          path: ./tests/nodejs-javascript/node_modules
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-nodejs-javascript-${{ hashFiles('tests/nodejs-javascript/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-nodejs-javascript-
       - run: npm install
         working-directory: ./tests/nodejs-javascript
       - run: npm test
@@ -107,6 +135,13 @@ jobs:
         with:
           name: dist-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.java-version }}-${{ matrix.node-version }}
           path: dist/
+      - uses: actions/cache@v4
+        id: cache-nodejs-typescript
+        with:
+          path: ./tests/nodejs-typescript/node_modules
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-nodejs-typescript-${{ hashFiles('tests/nodejs-typescript/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-nodejs-typescript-
       - run: npm install
         working-directory: ./tests/nodejs-typescript
       - run: npm test
@@ -133,6 +168,13 @@ jobs:
         with:
           name: dist-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.java-version }}-${{ matrix.node-version }}
           path: dist/
+      - uses: actions/cache@v4
+        id: cache-browser-cdn
+        with:
+          path: ./tests/browser-cdn/node_modules
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-browser-cdn-${{ hashFiles('tests/browser-cdn/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-browser-cdn-
       - run: npm install
         working-directory: ./tests/browser-cdn
       - run: npm run test
@@ -157,6 +199,13 @@ jobs:
         with:
           name: dist-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.java-version }}-${{ matrix.node-version }}
           path: dist/
+      - uses: actions/cache@v4
+        id: cache-root-publish
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-root-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-root-
       - run: npm install
       - run: npm publish --access=public
         working-directory: ./dist
