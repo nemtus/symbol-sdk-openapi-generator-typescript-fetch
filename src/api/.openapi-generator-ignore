@@ -22,5 +22,8 @@
 # Then explicitly reverse the ignore rule for a single file:
 #!docs/README.md
 
-# Keep the hand-written guidance file from being removed on regeneration.
+# Keep the hand-written guidance files (and their Codex/Gemini symlinks) from
+# being removed on regeneration.
 CLAUDE.md
+AGENTS.md
+GEMINI.md
