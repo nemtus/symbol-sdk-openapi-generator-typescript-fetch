@@ -6,6 +6,14 @@ on:
 permissions:
   contents: read
 
+# Supply-chain: disable the local .npmrc cooldown (min-release-age) in CI so security
+# fixes are picked up immediately, and gate every install with `npm audit` instead.
+env:
+  NPM_CONFIG_MIN_RELEASE_AGE: '0'
+  # `npm ci` wipes node_modules, so cache npm's download directory instead. Point it at a
+  # workspace-local path that is writable in every job (including the browser-cdn container).
+  NPM_CONFIG_CACHE: ${{ github.workspace }}/.npm
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,47 +21,35 @@ jobs:
     strategy:
       matrix:
         java-version: [21]
-        node-version: [22.x]
+        node-version: [24.x]
 
     steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: actions/setup-java@c1e323688fd81a25caa38c78aa6df2d33d3e20d9 # v4.8.0
         with:
           distribution: 'microsoft'
           java-version: ${{ matrix.java-version }}
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
-      - run: git submodule update --init --recursive --remote
-      - uses: actions/cache@v4
-        id: cache-symbol-openapi
-        with:
-          path: ./symbol-openapi/node_modules
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-symbol-openapi-${{ hashFiles('symbol-openapi/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-symbol-openapi-
-      - run: npm install
-        working-directory: ./symbol-openapi
-      - run: npm run build
-        working-directory: ./symbol-openapi
       - run: java -version
       - run: npm install @openapitools/openapi-generator-cli -g
       - run: openapi-generator-cli version
-      - uses: actions/cache@v4
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         id: cache-root
         with:
-          path: ./node_modules
+          path: ${{ github.workspace }}/.npm
           key: ${{ runner.os }}-node-${{ matrix.node-version }}-root-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.node-version }}-root-
-      - run: npm install
+      - run: npm audit --package-lock-only
+      - run: npm ci
+      - run: npm run openapi:fetch
       - run: npm run openapi:set:version
       - run: npm run openapi:generate
       - run: npm run build
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: dist-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.java-version }}-${{ matrix.node-version }}
           path: dist/
@@ -66,25 +62,26 @@ jobs:
     strategy:
       matrix:
         java-version: [21]
-        node-version: [22.x]
+        node-version: [24.x]
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: ${{ matrix.node-version }}
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: dist-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.java-version }}-${{ matrix.node-version }}
           path: dist/
-      - uses: actions/cache@v4
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         id: cache-root-test
         with:
-          path: ./node_modules
+          path: ${{ github.workspace }}/.npm
           key: ${{ runner.os }}-node-${{ matrix.node-version }}-root-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.node-version }}-root-
-      - run: npm install
+      - run: npm audit --package-lock-only
+      - run: npm ci
       - run: npm run test
 
   test-nodejs-javascript:
@@ -94,25 +91,27 @@ jobs:
     strategy:
       matrix:
         java-version: [21]
-        node-version: [22.x]
+        node-version: [24.x]
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: ${{ matrix.node-version }}
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: dist-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.java-version }}-${{ matrix.node-version }}
           path: dist/
-      - uses: actions/cache@v4
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         id: cache-nodejs-javascript
         with:
-          path: ./tests/nodejs-javascript/node_modules
+          path: ${{ github.workspace }}/.npm
           key: ${{ runner.os }}-node-${{ matrix.node-version }}-nodejs-javascript-${{ hashFiles('tests/nodejs-javascript/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.node-version }}-nodejs-javascript-
-      - run: npm install
+      - run: npm audit --package-lock-only
+        working-directory: ./tests/nodejs-javascript
+      - run: npm ci
         working-directory: ./tests/nodejs-javascript
       - run: npm test
         working-directory: ./tests/nodejs-javascript
@@ -124,25 +123,27 @@ jobs:
     strategy:
       matrix:
         java-version: [21]
-        node-version: [22.x]
+        node-version: [24.x]
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: ${{ matrix.node-version }}
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: dist-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.java-version }}-${{ matrix.node-version }}
           path: dist/
-      - uses: actions/cache@v4
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         id: cache-nodejs-typescript
         with:
-          path: ./tests/nodejs-typescript/node_modules
+          path: ${{ github.workspace }}/.npm
           key: ${{ runner.os }}-node-${{ matrix.node-version }}-nodejs-typescript-${{ hashFiles('tests/nodejs-typescript/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.node-version }}-nodejs-typescript-
-      - run: npm install
+      - run: npm audit --package-lock-only
+        working-directory: ./tests/nodejs-typescript
+      - run: npm ci
         working-directory: ./tests/nodejs-typescript
       - run: npm test
         working-directory: ./tests/nodejs-typescript
@@ -151,31 +152,33 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.49.1-noble
+      image: mcr.microsoft.com/playwright:v1.60.0-noble
       options: --user 1001
 
     strategy:
       matrix:
         java-version: [21]
-        node-version: [22.x]
+        node-version: [24.x]
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: ${{ matrix.node-version }}
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: dist-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.java-version }}-${{ matrix.node-version }}
           path: dist/
-      - uses: actions/cache@v4
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         id: cache-browser-cdn
         with:
-          path: ./tests/browser-cdn/node_modules
+          path: ${{ github.workspace }}/.npm
           key: ${{ runner.os }}-node-${{ matrix.node-version }}-browser-cdn-${{ hashFiles('tests/browser-cdn/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.node-version }}-browser-cdn-
-      - run: npm install
+      - run: npm audit --package-lock-only
+        working-directory: ./tests/browser-cdn
+      - run: npm ci
         working-directory: ./tests/browser-cdn
       - run: npm run test
         working-directory: ./tests/browser-cdn
@@ -183,31 +186,42 @@ jobs:
   publish:
     needs: [test-unit, test-nodejs-javascript, test-nodejs-typescript, test-browser-cdn]
     runs-on: ubuntu-latest
+    # Manual approval gate: configure the `release` environment with required reviewers
+    # in GitHub repo settings. Also set this same environment name in the npm Trusted
+    # Publisher config so only runs that passed this gate can publish.
+    environment: release
+    permissions:
+      contents: read
+      id-token: write # Required for npm Trusted Publishing (OIDC). No NPM_TOKEN needed.
 
     strategy:
       matrix:
         java-version: [21]
-        node-version: [22.x]
+        node-version: [24.x]
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: dist-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.java-version }}-${{ matrix.node-version }}
           path: dist/
-      - uses: actions/cache@v4
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         id: cache-root-publish
         with:
-          path: ./node_modules
+          path: ${{ github.workspace }}/.npm
           key: ${{ runner.os }}-node-${{ matrix.node-version }}-root-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.node-version }}-root-
-      - run: npm install
-      - run: npm publish --access=public
+      - run: npm audit --package-lock-only
+      - run: npm ci
+      # Trusted Publishing (OIDC) requires npm >= 11.5.1.
+      - run: npm install -g npm@latest
+      - run: npm --version
+      # No NODE_AUTH_TOKEN: npm exchanges the GitHub OIDC token for a short-lived
+      # publish credential. --provenance attaches a verifiable build provenance attestation.
+      - run: npm publish --access=public --provenance
         working-directory: ./dist
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
