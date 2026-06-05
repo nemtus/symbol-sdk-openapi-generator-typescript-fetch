@@ -98,3 +98,26 @@ Both workflows:
 - Java is required for OpenAPI Generator CLI
 - Custom templates in `custom-templates/` modify the default typescript-fetch generation
 - Artifacts in CI/CD use unique naming to prevent conflicts between concurrent builds
+
+## AI assistant configuration
+
+This repo is set up so multiple coding agents share the same project instructions.
+
+- **Instructions are single-sourced in `CLAUDE.md`.** `AGENTS.md` (OpenAI Codex CLI)
+  and `GEMINI.md` (Gemini CLI) are symlinks to `CLAUDE.md` at each level (root,
+  `src/api/`, `tests/`). Edit `CLAUDE.md`; the others follow automatically.
+- **Claude Code** (`.claude/settings.json`): `permissions` deny/ask rules plus hooks —
+  a PreToolUse guard that blocks catastrophic/RCE shell commands (`.claude/hooks/guard-bash.mjs`),
+  a PostToolUse Prettier/ESLint auto-format, and a Stop-time `type:check` + `lint`.
+- **Gemini CLI** (`.gemini/settings.json`): `tools.exclude` blocks dangerous shell
+  commands (`sudo`, `rm -rf /`, `rm -rf ~`, `mkfs`, `dd if=`, `chmod 777`). This is
+  coarse prefix matching, so it is weaker than the Claude guard (e.g. it won't catch
+  `curl … | sh`). You can additionally enable a container sandbox with
+  `"tools": { "sandbox": "docker" }` if Docker/Podman is available. Settings keys are
+  version-sensitive (current schema is nested under `tools`/`context`).
+- **Codex CLI**: command safety is enforced by Codex's built-in OS sandbox and
+  `approval_policy`, configured in the user-global `~/.codex/config.toml` (there is no
+  committed per-project deny-list, so none is added here).
+- **Claude Code-only**: the precise command guard, edit-time auto-format, and Stop-time
+  checks have no committed-in-repo equivalent for Codex or Gemini and are intentionally
+  not reimplemented for them.
