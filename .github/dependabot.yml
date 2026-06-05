@@ -5,7 +5,17 @@
 
 version: 2
 updates:
+  # Check daily so that security updates (which are NOT subject to cooldown) are
+  # surfaced immediately, while regular version bumps wait out a 7-day cooldown.
   - package-ecosystem: 'npm' # See documentation for possible values
     directory: '/' # Location of package manifests
     schedule:
-      interval: 'weekly'
+      interval: 'daily'
+    cooldown:
+      default-days: 7
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    cooldown:
+      default-days: 7
