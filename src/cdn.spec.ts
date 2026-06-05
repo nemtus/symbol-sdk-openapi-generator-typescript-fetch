@@ -30,60 +30,9 @@ describe('cdn exports', () => {
     expect((window as any).symbolSdkOpenAPIGeneratorTypeScriptFetch).toBeDefined();
   });
 
-  it('should export all API classes through window object', async () => {
-    // Import cdn module
-    await import('./cdn');
-
-    const sdk = (window as any).symbolSdkOpenAPIGeneratorTypeScriptFetch;
-
-    // Check that all API classes are available
-    expect(sdk.AccountRoutesApi).toBeDefined();
-    expect(sdk.BlockRoutesApi).toBeDefined();
-    expect(sdk.ChainRoutesApi).toBeDefined();
-    expect(sdk.FinalizationRoutesApi).toBeDefined();
-    expect(sdk.HashLockRoutesApi).toBeDefined();
-    expect(sdk.MetadataRoutesApi).toBeDefined();
-    expect(sdk.MosaicRoutesApi).toBeDefined();
-    expect(sdk.MultisigRoutesApi).toBeDefined();
-    expect(sdk.NamespaceRoutesApi).toBeDefined();
-    expect(sdk.NetworkRoutesApi).toBeDefined();
-    expect(sdk.NodeRoutesApi).toBeDefined();
-    expect(sdk.ReceiptRoutesApi).toBeDefined();
-    expect(sdk.RestrictionAccountRoutesApi).toBeDefined();
-    expect(sdk.RestrictionMosaicRoutesApi).toBeDefined();
-    expect(sdk.SecretLockRoutesApi).toBeDefined();
-    expect(sdk.TransactionRoutesApi).toBeDefined();
-    expect(sdk.TransactionStatusRoutesApi).toBeDefined();
-  });
-
-  it('should export all runtime utilities and classes through window object', async () => {
-    // Import cdn module
-    await import('./cdn');
-
-    const sdk = (window as any).symbolSdkOpenAPIGeneratorTypeScriptFetch;
-
-    // Classes
-    expect(sdk.Configuration).toBeDefined();
-    expect(sdk.BaseAPI).toBeDefined();
-    expect(sdk.RequiredError).toBeDefined();
-    expect(sdk.FetchError).toBeDefined();
-    expect(sdk.ResponseError).toBeDefined();
-    expect(sdk.JSONApiResponse).toBeDefined();
-    expect(sdk.VoidApiResponse).toBeDefined();
-    expect(sdk.BlobApiResponse).toBeDefined();
-    expect(sdk.TextApiResponse).toBeDefined();
-
-    // Constants and utilities
-    expect(sdk.BASE_PATH).toBeDefined();
-    expect(sdk.DefaultConfig).toBeDefined();
-    expect(sdk.COLLECTION_FORMATS).toBeDefined();
-
-    // Functions
-    expect(sdk.querystring).toBeDefined();
-    expect(sdk.exists).toBeDefined();
-    expect(sdk.mapValues).toBeDefined();
-    expect(sdk.canConsumeForm).toBeDefined();
-  });
+  // Existence is covered by the `typeof === 'function'` / type-shape checks below
+  // (and by the "same content as index module" key-set check), so the plain
+  // `toBeDefined()` enumerations are intentionally omitted to avoid duplication.
 
   it('should export all classes as constructors through window object', async () => {
     // Import cdn module

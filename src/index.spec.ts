@@ -35,50 +35,9 @@ describe('index exports', () => {
     expect(exports.NetworkConfigurationDTOForkHeightsToJSON(fork)).toBeDefined();
   });
 
-  it('should export all API classes from ./api', () => {
-    // Check that all API classes are exported
-    expect(exports.AccountRoutesApi).toBeDefined();
-    expect(exports.BlockRoutesApi).toBeDefined();
-    expect(exports.ChainRoutesApi).toBeDefined();
-    expect(exports.FinalizationRoutesApi).toBeDefined();
-    expect(exports.HashLockRoutesApi).toBeDefined();
-    expect(exports.MetadataRoutesApi).toBeDefined();
-    expect(exports.MosaicRoutesApi).toBeDefined();
-    expect(exports.MultisigRoutesApi).toBeDefined();
-    expect(exports.NamespaceRoutesApi).toBeDefined();
-    expect(exports.NetworkRoutesApi).toBeDefined();
-    expect(exports.NodeRoutesApi).toBeDefined();
-    expect(exports.ReceiptRoutesApi).toBeDefined();
-    expect(exports.RestrictionAccountRoutesApi).toBeDefined();
-    expect(exports.RestrictionMosaicRoutesApi).toBeDefined();
-    expect(exports.SecretLockRoutesApi).toBeDefined();
-    expect(exports.TransactionRoutesApi).toBeDefined();
-    expect(exports.TransactionStatusRoutesApi).toBeDefined();
-  });
-
-  it('should export all runtime utilities and classes', () => {
-    // Classes
-    expect(exports.Configuration).toBeDefined();
-    expect(exports.BaseAPI).toBeDefined();
-    expect(exports.RequiredError).toBeDefined();
-    expect(exports.FetchError).toBeDefined();
-    expect(exports.ResponseError).toBeDefined();
-    expect(exports.JSONApiResponse).toBeDefined();
-    expect(exports.VoidApiResponse).toBeDefined();
-    expect(exports.BlobApiResponse).toBeDefined();
-    expect(exports.TextApiResponse).toBeDefined();
-
-    // Constants and utilities
-    expect(exports.BASE_PATH).toBeDefined();
-    expect(exports.DefaultConfig).toBeDefined();
-    expect(exports.COLLECTION_FORMATS).toBeDefined();
-
-    // Functions
-    expect(exports.querystring).toBeDefined();
-    expect(exports.exists).toBeDefined();
-    expect(exports.mapValues).toBeDefined();
-    expect(exports.canConsumeForm).toBeDefined();
-  });
+  // Existence is covered by the `typeof === 'function'` / type-shape checks below
+  // (a constructor/function/constant that is missing would fail those too), so the
+  // plain `toBeDefined()` enumerations are intentionally omitted to avoid duplication.
 
   it('should export all classes as constructors', () => {
     // Verify that all API classes are actually constructors
