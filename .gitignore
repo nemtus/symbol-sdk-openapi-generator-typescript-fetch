@@ -112,3 +112,6 @@ cdn
 
 # OpenAPI spec fetched from the official release (see fetch-openapi.js)
 openapi-spec
+
+# Claude Code: personal/local settings override (shared settings.json is committed)
+.claude/settings.local.json
