@@ -26,16 +26,16 @@ describe('cdn exports', () => {
   it('should attach symbolSdkOpenAPIGeneratorTypeScriptFetch to window object', async () => {
     // Import cdn module which should attach to window
     await import('./cdn');
-    
+
     expect((window as any).symbolSdkOpenAPIGeneratorTypeScriptFetch).toBeDefined();
   });
 
   it('should export all API classes through window object', async () => {
     // Import cdn module
     await import('./cdn');
-    
+
     const sdk = (window as any).symbolSdkOpenAPIGeneratorTypeScriptFetch;
-    
+
     // Check that all API classes are available
     expect(sdk.AccountRoutesApi).toBeDefined();
     expect(sdk.BlockRoutesApi).toBeDefined();
@@ -59,9 +59,9 @@ describe('cdn exports', () => {
   it('should export all runtime utilities and classes through window object', async () => {
     // Import cdn module
     await import('./cdn');
-    
+
     const sdk = (window as any).symbolSdkOpenAPIGeneratorTypeScriptFetch;
-    
+
     // Classes
     expect(sdk.Configuration).toBeDefined();
     expect(sdk.BaseAPI).toBeDefined();
@@ -72,12 +72,12 @@ describe('cdn exports', () => {
     expect(sdk.VoidApiResponse).toBeDefined();
     expect(sdk.BlobApiResponse).toBeDefined();
     expect(sdk.TextApiResponse).toBeDefined();
-    
+
     // Constants and utilities
     expect(sdk.BASE_PATH).toBeDefined();
     expect(sdk.DefaultConfig).toBeDefined();
     expect(sdk.COLLECTION_FORMATS).toBeDefined();
-    
+
     // Functions
     expect(sdk.querystring).toBeDefined();
     expect(sdk.exists).toBeDefined();
@@ -88,9 +88,9 @@ describe('cdn exports', () => {
   it('should export all classes as constructors through window object', async () => {
     // Import cdn module
     await import('./cdn');
-    
+
     const sdk = (window as any).symbolSdkOpenAPIGeneratorTypeScriptFetch;
-    
+
     // Verify that all API classes are actually constructors
     expect(typeof sdk.AccountRoutesApi).toBe('function');
     expect(typeof sdk.BlockRoutesApi).toBe('function');
@@ -109,7 +109,7 @@ describe('cdn exports', () => {
     expect(typeof sdk.SecretLockRoutesApi).toBe('function');
     expect(typeof sdk.TransactionRoutesApi).toBe('function');
     expect(typeof sdk.TransactionStatusRoutesApi).toBe('function');
-    
+
     // Runtime classes
     expect(typeof sdk.Configuration).toBe('function');
     expect(typeof sdk.BaseAPI).toBe('function');
@@ -125,9 +125,9 @@ describe('cdn exports', () => {
   it('should export utility functions through window object', async () => {
     // Import cdn module
     await import('./cdn');
-    
+
     const sdk = (window as any).symbolSdkOpenAPIGeneratorTypeScriptFetch;
-    
+
     // Verify utility functions are exported and are functions
     expect(typeof sdk.querystring).toBe('function');
     expect(typeof sdk.exists).toBe('function');
@@ -138,9 +138,9 @@ describe('cdn exports', () => {
   it('should export constants with correct types through window object', async () => {
     // Import cdn module
     await import('./cdn');
-    
+
     const sdk = (window as any).symbolSdkOpenAPIGeneratorTypeScriptFetch;
-    
+
     // Verify constants are exported with correct types
     expect(typeof sdk.BASE_PATH).toBe('string');
     expect(sdk.DefaultConfig).toBeInstanceOf(sdk.Configuration);
@@ -151,7 +151,7 @@ describe('cdn exports', () => {
     // Import cdn module
     await import('./cdn');
     const cdnExports = (window as any).symbolSdkOpenAPIGeneratorTypeScriptFetch;
-    
+
     // Check that cdn exports match index exports
     expect(Object.keys(cdnExports).sort()).toEqual(Object.keys(indexExports).sort());
   });

@@ -13,8 +13,7 @@ const https = require('https');
 const crypto = require('crypto');
 
 const SPEC_VERSION = 'v1.0.4';
-const SPEC_SHA256 =
-  'a74a8747731362b7ee6246cdf80ecbdd4815e43ecf3063903a3953bae5075ed8';
+const SPEC_SHA256 = 'a74a8747731362b7ee6246cdf80ecbdd4815e43ecf3063903a3953bae5075ed8';
 const SPEC_URL = `https://github.com/symbol/symbol-openapi/releases/download/${SPEC_VERSION}/openapi3.yml`;
 
 const OUTPUT_DIR = path.join(__dirname, 'openapi-spec');
@@ -64,12 +63,7 @@ async function main() {
 
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   fs.writeFileSync(OUTPUT_FILE, data);
-  console.log(
-    `Verified (${data.length} bytes, sha256 ${actual}) and wrote ${path.relative(
-      __dirname,
-      OUTPUT_FILE,
-    )}`,
-  );
+  console.log(`Verified (${data.length} bytes, sha256 ${actual}) and wrote ${path.relative(__dirname, OUTPUT_FILE)}`);
 }
 
 main().catch((err) => {

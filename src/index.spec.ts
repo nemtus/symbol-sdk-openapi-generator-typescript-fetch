@@ -34,12 +34,12 @@ describe('index exports', () => {
     expect(exports.VoidApiResponse).toBeDefined();
     expect(exports.BlobApiResponse).toBeDefined();
     expect(exports.TextApiResponse).toBeDefined();
-    
+
     // Constants and utilities
     expect(exports.BASE_PATH).toBeDefined();
     expect(exports.DefaultConfig).toBeDefined();
     expect(exports.COLLECTION_FORMATS).toBeDefined();
-    
+
     // Functions
     expect(exports.querystring).toBeDefined();
     expect(exports.exists).toBeDefined();
@@ -66,7 +66,7 @@ describe('index exports', () => {
     expect(typeof exports.SecretLockRoutesApi).toBe('function');
     expect(typeof exports.TransactionRoutesApi).toBe('function');
     expect(typeof exports.TransactionStatusRoutesApi).toBe('function');
-    
+
     // Runtime classes
     expect(typeof exports.Configuration).toBe('function');
     expect(typeof exports.BaseAPI).toBe('function');
