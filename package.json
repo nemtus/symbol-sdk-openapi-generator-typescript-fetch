@@ -12,7 +12,12 @@
     "build:cjs": "node pre-build-cjs && tsc --build --clean && tsc --target es5 --module commonjs && node post-build-cjs",
     "build:esm": "node pre-build-esm && tsc --build --clean && tsc --target esnext --module esnext && node post-build-esm",
     "build:cdn": "node pre-build-cdn && tsc --build --clean && tsc --target esnext --module esnext && webpack && node post-build-cdn",
-    "test": "vitest run"
+    "test": "vitest run",
+    "lint": "eslint . --ext .js,.cjs,.mjs,.ts,.mts,.cts",
+    "lint:fix": "eslint . --ext .js,.cjs,.mjs,.ts,.mts,.cts --fix",
+    "format": "prettier --write \"**/*.{ts,mts,cts,js,cjs,mjs}\"",
+    "format:check": "prettier --check \"**/*.{ts,mts,cts,js,cjs,mjs}\"",
+    "type:check": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
