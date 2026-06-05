@@ -34,7 +34,7 @@
     "@types/node-fetch": "^2.6.2",
     "@typescript-eslint/eslint-plugin": "^5.31.0",
     "@typescript-eslint/parser": "^5.31.0",
-    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/coverage-v8": "^4.1.8",
     "eslint": "^8.21.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-config-standard": "^17.0.0",
@@ -46,7 +46,7 @@
     "prettier": "^2.7.1",
     "ts-loader": "^9.3.1",
     "typescript": "^5.9.2",
-    "vitest": "^3.2.4",
+    "vitest": "^4.1.8",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
   }
