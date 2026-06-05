@@ -65,6 +65,19 @@ npm install
 npm run test
 ```
 
+### Quality Checks (lint / format / type-check)
+```bash
+npm run format:check   # Prettier check (code only; src/api & build outputs ignored)
+npm run format         # Prettier write
+npm run lint           # ESLint
+npm run lint:fix       # ESLint --fix
+npm run type:check     # tsc --noEmit
+```
+The `lint` CI job runs `format:check`, `lint`, and `type:check`. Generated `src/api`
+and build outputs are excluded via `.eslintignore` / `.prettierignore`. When the
+Claude Code hooks (`.claude/`) are enabled, edited files are auto-formatted and these
+checks run on Stop.
+
 ### CI/CD Workflows
 
 The project uses GitHub Actions. Both workflows run on a single unified runtime: **Java 21** and **Node.js 24.x**.
