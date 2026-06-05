@@ -5,8 +5,9 @@
   "main": "./cjs/index.js",
   "module": "./esm/index.js",
   "scripts": {
+    "openapi:fetch": "node fetch-openapi.js",
     "openapi:set:version": "npx @openapitools/openapi-generator-cli version-manager set 7.14.0",
-    "openapi:generate": "npx @openapitools/openapi-generator-cli generate -i ./symbol-openapi/_build/openapi3.yml -g typescript-fetch -o ./src/api -c ./openapi-generator-config.yml",
+    "openapi:generate": "npx @openapitools/openapi-generator-cli generate -i ./openapi-spec/openapi3.yml -g typescript-fetch -o ./src/api -c ./openapi-generator-config.yml",
     "build": "npm run build:cjs && npm run build:esm && npm run build:cdn && node bundle",
     "build:cjs": "node pre-build-cjs && tsc --build --clean && tsc --target es5 --module commonjs && node post-build-cjs",
     "build:esm": "node pre-build-esm && tsc --build --clean && tsc --target esnext --module esnext && node post-build-esm",

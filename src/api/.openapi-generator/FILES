@@ -106,6 +106,7 @@ models/EmbeddedVrfKeyLinkTransactionDTO.ts
 models/EntityDTO.ts
 models/FinalizationProofDTO.ts
 models/FinalizedBlockDTO.ts
+models/GetNetworkInflationAtHeight200Response.ts
 models/HashLockEntryDTO.ts
 models/HashLockInfoDTO.ts
 models/HashLockNetworkPropertiesDTO.ts
@@ -190,6 +191,7 @@ models/NamespaceRegistrationTransactionBodyDTO.ts
 models/NamespaceRegistrationTransactionDTO.ts
 models/NamespaceRegistrationTypeEnum.ts
 models/NetworkConfigurationDTO.ts
+models/NetworkConfigurationDTOForkHeights.ts
 models/NetworkPropertiesDTO.ts
 models/NetworkTypeDTO.ts
 models/NetworkTypeEnum.ts

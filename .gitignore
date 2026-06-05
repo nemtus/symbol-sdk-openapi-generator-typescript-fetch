@@ -109,3 +109,6 @@ dist
 # build output directory
 lib
 cdn
+
+# OpenAPI spec fetched from the official release (see fetch-openapi.js)
+openapi-spec
