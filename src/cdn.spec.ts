@@ -147,12 +147,37 @@ describe('cdn exports', () => {
     expect(typeof sdk.COLLECTION_FORMATS).toBe('object');
   });
 
+  it('should expose the getNetworkInflationAtHeight endpoint and v1.0.4 model serializers through window object', async () => {
+    // Import cdn module
+    await import('./cdn');
+
+    const sdk = (window as any).symbolSdkOpenAPIGeneratorTypeScriptFetch;
+
+    // New endpoint added in spec v1.0.4
+    expect(typeof sdk.NetworkRoutesApi.prototype.getNetworkInflationAtHeight).toBe('function');
+    expect(typeof sdk.NetworkRoutesApi.prototype.getNetworkInflationAtHeightRaw).toBe('function');
+
+    // Serializers for the models added in spec v1.0.4 (the interfaces themselves
+    // are type-only and erased at runtime, so verify their runtime helpers)
+    for (const name of [
+      'GetNetworkInflationAtHeight200ResponseFromJSON',
+      'GetNetworkInflationAtHeight200ResponseToJSON',
+      'NetworkConfigurationDTOForkHeightsFromJSON',
+      'NetworkConfigurationDTOForkHeightsToJSON',
+    ]) {
+      expect(typeof sdk[name]).toBe('function');
+    }
+  });
+
   it('should export the same content as index module', async () => {
     // Import cdn module
     await import('./cdn');
     const cdnExports = (window as any).symbolSdkOpenAPIGeneratorTypeScriptFetch;
 
-    // Check that cdn exports match index exports
+    // Check that cdn exports match index exports. This auto-covers future
+    // additions: any new runtime export of ./index must also be exposed through
+    // the CDN bundle. (Values aren't compared by identity because beforeEach calls
+    // vi.resetModules(), so the dynamically imported module is a separate instance.)
     expect(Object.keys(cdnExports).sort()).toEqual(Object.keys(indexExports).sort());
   });
 });

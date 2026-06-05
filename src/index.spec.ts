@@ -1,7 +1,40 @@
 import { describe, it, expect } from 'vitest';
 import * as exports from './index';
+import * as api from './api';
 
 describe('index exports', () => {
+  it('re-exports every runtime member of ./api from the package root', () => {
+    // Guards against the barrel dropping a re-export and auto-covers future
+    // additions (new models/classes). Interfaces are type-only (erased at
+    // runtime) so they never appear here.
+    const keys = Object.keys(api);
+    expect(keys.length).toBeGreaterThan(0);
+    for (const key of keys) {
+      expect((exports as Record<string, unknown>)[key]).toBe((api as Record<string, unknown>)[key]);
+    }
+  });
+
+  it('exposes the getNetworkInflationAtHeight endpoint added in spec v1.0.4', () => {
+    expect(typeof exports.NetworkRoutesApi.prototype.getNetworkInflationAtHeight).toBe('function');
+    expect(typeof exports.NetworkRoutesApi.prototype.getNetworkInflationAtHeightRaw).toBe('function');
+  });
+
+  it('exports working serializers for the models added in spec v1.0.4', () => {
+    for (const name of [
+      'GetNetworkInflationAtHeight200ResponseFromJSON',
+      'GetNetworkInflationAtHeight200ResponseToJSON',
+      'NetworkConfigurationDTOForkHeightsFromJSON',
+      'NetworkConfigurationDTOForkHeightsToJSON',
+    ]) {
+      expect(typeof (exports as Record<string, unknown>)[name]).toBe('function');
+    }
+    // Round-trip with an empty object (no dependency on exact field names).
+    const parsed = exports.GetNetworkInflationAtHeight200ResponseFromJSON({});
+    expect(exports.GetNetworkInflationAtHeight200ResponseToJSON(parsed)).toBeDefined();
+    const fork = exports.NetworkConfigurationDTOForkHeightsFromJSON({});
+    expect(exports.NetworkConfigurationDTOForkHeightsToJSON(fork)).toBeDefined();
+  });
+
   it('should export all API classes from ./api', () => {
     // Check that all API classes are exported
     expect(exports.AccountRoutesApi).toBeDefined();
