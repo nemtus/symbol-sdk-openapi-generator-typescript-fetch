@@ -9,7 +9,9 @@ This is the Symbol SDK for TypeScript with OpenAPI Generator typescript-fetch. I
 ## Architecture
 
 ### Code Generation Pipeline
-1. **symbol-openapi submodule** (`symbol-openapi/`) - Contains the OpenAPI specification source
+1. **Published OpenAPI spec** - `fetch-openapi.js` downloads the official `openapi3.yml` from a pinned
+   `symbol/symbol-openapi` GitHub release and verifies its SHA-256, writing it to `openapi-spec/openapi3.yml`
+   (git-ignored). This replaces the former `symbol-openapi` submodule build, removing its vulnerable dev tooling.
 2. **OpenAPI Generator** - Uses typescript-fetch generator with custom templates (`custom-templates/`)
 3. **Generated API code** (`src/api/`) - Auto-generated, DO NOT edit manually
 4. **Build outputs** (`dist/`) - Contains CJS, ESM, and CDN bundles
@@ -24,27 +26,22 @@ This is the Symbol SDK for TypeScript with OpenAPI Generator typescript-fetch. I
 
 ### Initial Setup
 ```bash
-# Clone with submodules
-git clone --recursive git@github.com:nemtus/symbol-sdk-openapi-generator-typescript-fetch.git
-
-# Update submodules to latest
-git submodule update --init --recursive --remote
+git clone git@github.com:nemtus/symbol-sdk-openapi-generator-typescript-fetch.git
 ```
 
 ### Build Commands
 ```bash
-# Build OpenAPI specification (run in symbol-openapi directory)
-cd symbol-openapi
-npm install
-npm run build
-
 # Generate API client code (run in root directory)
-cd ..
 npm install
-npm run openapi:set:version  # Set OpenAPI generator version to 7.14.0
-npm run openapi:generate      # Generate TypeScript code from OpenAPI spec
+npm run openapi:fetch         # Download + SHA-256 verify the published openapi3.yml
+npm run openapi:set:version   # Set OpenAPI generator version to 7.14.0
+npm run openapi:generate      # Generate TypeScript code from the fetched OpenAPI spec
 npm run build                 # Build CJS, ESM, and CDN bundles
 ```
+
+To bump the OpenAPI spec version, edit `SPEC_VERSION` / `SPEC_SHA256` in `fetch-openapi.js`
+(see the comment in that file for how to obtain the new checksum). Java is still required for
+the OpenAPI Generator itself.
 
 ### Test Commands
 ```bash
@@ -70,19 +67,21 @@ npm run test
 
 ### CI/CD Workflows
 
-The project uses GitHub Actions with parallel test execution:
-- **CI** (`ci-nodejs.yml`) - Builds and tests across multiple Node.js and Java versions
-- **CD** (`cd-publish-to-npm.yml`) - Publishes to npm registry
+The project uses GitHub Actions. Both workflows run on a single unified runtime: **Java 21** and **Node.js 24.x**.
+
+- **CI** (`ci-nodejs.yml`) - On pull requests and pushes to `main`: builds the client, runs all test suites in parallel (unit, nodejs-javascript, nodejs-typescript, browser-cdn), plus a `dry-run-publish` and a `pinact` job that verifies every action is SHA-pinned.
+- **CD** (`cd-publish-to-npm.yml`) - Manual (`workflow_dispatch`): builds, tests, then publishes to npm via **OIDC Trusted Publishing** (no `NPM_TOKEN`; provenance attached). The `publish` job is gated by the `release` GitHub Environment (manual approval).
 
 Both workflows:
-1. Build the project and upload artifacts with unique names (`dist-{run_id}-{run_attempt}-{java_version}-{node_version}`)
-2. Run tests in parallel (unit, nodejs-javascript, nodejs-typescript, browser-cdn)
-3. Use artifact caching to avoid rebuilding for each test job
+1. Build once and share `dist/` via a uniquely-named artifact (`dist-{run_id}-{run_attempt}-{java_version}-{node_version}`); test jobs download it instead of rebuilding.
+2. Run tests in parallel (unit, nodejs-javascript, nodejs-typescript, browser-cdn).
+3. Use `npm ci` for reproducible installs, gated by `npm audit` (fails on any vulnerability). The `.npmrc` cooldown (`min-release-age`) is disabled in CI via `NPM_CONFIG_MIN_RELEASE_AGE=0`, and npm's download cache (`~/.npm`) is cached instead of `node_modules`.
+4. Pin all third-party actions to full commit SHAs (managed by `pinact` / `.pinact.yaml`); Dependabot updates npm + actions daily with a 7-day cooldown.
 
 ## Important Notes
 
 - **DO NOT manually edit** files in `src/api/` - they are auto-generated
-- The project uses the symbol-openapi repository as a git submodule
+- The OpenAPI spec is fetched from a pinned `symbol/symbol-openapi` GitHub release via `fetch-openapi.js` (no git submodule); SHA-256 is verified before use
 - Java is required for OpenAPI Generator CLI
 - Custom templates in `custom-templates/` modify the default typescript-fetch generation
 - Artifacts in CI/CD use unique naming to prevent conflicts between concurrent builds

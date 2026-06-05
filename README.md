@@ -179,61 +179,40 @@ Example with CDN
 
 ### 0. Prerequisite
 
-- Clone with submodules
-
-This project uses [https://github.com/symbol/symbol-openapi](https://github.com/symbol/symbol-openapi) OpenAPI Implementation as a git submodule. You need to clone this repository with submodules to develop this package as follows.
+- Clone the repository
 
 ```bash
-git clone --recursive git@github.com:nemtus/symbol-sdk-openapi-generator-typescript-fetch.git
+git clone git@github.com:nemtus/symbol-sdk-openapi-generator-typescript-fetch.git
 ```
 
 or
 
 ```bash
-git clone --recursive https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch.git
-```
-
-If you have already cloned this repository without submodules, you can get submodules as follows.
-
-```bash
-git submodule update --init --recursive
-```
-
-- Update submodule status to latest
-
-To update the submodule to the latest remote status
-
-```bash
-git submodule update --remote
-```
-
-When you check the submodule status, you can execute following commands.
-
-```bash
-git submodule status
+git clone https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch.git
 ```
 
 - Install Java
 
-If you don't have java installed, you need to install it.
+If you don't have java installed, you need to install it (required by the OpenAPI Generator).
 
-### 1. Build openapi3.yml
+### 1. Fetch openapi3.yml
 
-If necessary update git submodule of `symbol-openapi`.
+This project consumes the official [symbol/symbol-openapi](https://github.com/symbol/symbol-openapi) `openapi3.yml`
+that is published as a GitHub release asset. `fetch-openapi.js` downloads a version-pinned copy and verifies its
+SHA-256 before use (previously this spec was built locally from a git submodule, which pulled in vulnerable build
+tooling).
 
 ```bash
-cd symbol-openapi
 npm install
-npm run build
+npm run openapi:fetch
 ```
 
-Use symbol-openapi/_build/openapi3.yml to generate REST API client code.
+This writes the verified spec to `openapi-spec/openapi3.yml` (git-ignored). To bump the spec version, edit
+`SPEC_VERSION` / `SPEC_SHA256` in `fetch-openapi.js`.
 
 ### 2. Generate REST API Client Code
 
 ```bash
-cd ..
-npm install
 npm run openapi:set:version
 npm run openapi:generate
 npm run build
