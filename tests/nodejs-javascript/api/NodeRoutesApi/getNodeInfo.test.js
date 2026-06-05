@@ -17,8 +17,11 @@ describe('getNodeInfo', () => {
     const response = await nodeRoutesApi.getNodeInfo();
 
     // Assert
-    expect(response).toStrictEqual({
-      version: 16777991,
+    // `version` is the node software version and changes whenever the node is upgraded,
+    // so assert its type rather than an exact value. The remaining fields are stable.
+    const { version, ...rest } = response;
+    expect(typeof version).toBe('number');
+    expect(rest).toStrictEqual({
       publicKey: '2CEFBCE2E5EA5DD5BA61B302C33002CDA1EDB122EFD18713AF02ABFA9C73A28C',
       networkGenerationHashSeed: '57F7DA205008026C776CB6AED843393F04CD458E0AA2D9F1D5F31A402072B2D6',
       roles: 3,

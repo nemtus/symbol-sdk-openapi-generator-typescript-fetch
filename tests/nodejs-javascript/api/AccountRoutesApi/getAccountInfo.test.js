@@ -20,8 +20,11 @@ describe('getAccountInfo', () => {
     const response = await accountRoutesApi.getAccountInfo(requestParameters);
 
     // Assert
-    expect(response).toStrictEqual({
-      id: '6448A0F0BC43F1FE61E92ED7',
+    // `id` is the REST database document id (a MongoDB ObjectId) which changes whenever
+    // the node's database is resynced, so assert its type rather than an exact value.
+    const { id, ...rest } = response;
+    expect(typeof id).toBe('string');
+    expect(rest).toStrictEqual({
       account: {
         version: 1,
         address: '68A48712C4D6FDCBDDFEEF35EB6E3430638700D1DA98C120',
