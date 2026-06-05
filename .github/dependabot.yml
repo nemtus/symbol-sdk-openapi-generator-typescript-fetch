@@ -13,6 +13,14 @@ updates:
       interval: 'daily'
     cooldown:
       default-days: 7
+    # Bundle all non-major (minor + patch) npm updates into a single PR; major
+    # updates are excluded from the group and still get their own individual PRs.
+    groups:
+      npm-minor-and-patch:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
