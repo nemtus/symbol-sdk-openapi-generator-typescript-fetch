@@ -17,10 +17,4 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
-
-  webServer: {
-    command: 'npx serve -l 3333 .',
-    port: 3333,
-    reuseExistingServer: !process.env.CI,
-  },
 });

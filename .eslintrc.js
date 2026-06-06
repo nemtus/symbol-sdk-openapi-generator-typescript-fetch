@@ -4,7 +4,7 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: ['standard', '.eslintrc.jest.js', 'prettier'],
+  extends: ['standard', 'prettier'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
@@ -12,4 +12,14 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   rules: {},
+  overrides: [
+    {
+      // TypeScript already resolves identifiers/types; ESLint's no-undef does not
+      // understand type-only names (e.g. RequestInit, Response) and false-positives.
+      files: ['*.ts', '*.mts', '*.cts'],
+      rules: {
+        'no-undef': 'off',
+      },
+    },
+  ],
 };

@@ -1,0 +1,12 @@
+{
+  "tools": {
+    "exclude": [
+      "run_shell_command(sudo)",
+      "run_shell_command(rm -rf /)",
+      "run_shell_command(rm -rf ~)",
+      "run_shell_command(mkfs)",
+      "run_shell_command(dd if=)",
+      "run_shell_command(chmod 777)"
+    ]
+  }
+}

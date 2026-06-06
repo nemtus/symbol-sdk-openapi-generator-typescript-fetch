@@ -5,7 +5,25 @@
 
 version: 2
 updates:
+  # Check daily so that security updates (which are NOT subject to cooldown) are
+  # surfaced immediately, while regular version bumps wait out a 7-day cooldown.
   - package-ecosystem: 'npm' # See documentation for possible values
     directory: '/' # Location of package manifests
     schedule:
-      interval: 'weekly'
+      interval: 'daily'
+    cooldown:
+      default-days: 7
+    # Bundle all non-major (minor + patch) npm updates into a single PR; major
+    # updates are excluded from the group and still get their own individual PRs.
+    groups:
+      npm-minor-and-patch:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    cooldown:
+      default-days: 7

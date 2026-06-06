@@ -1,0 +1,9 @@
+# Code owners for this repository.
+# The `main` ruleset requires code-owner review on pull requests; this file
+# defines who those owners are. A PR needs an approval from at least one of the
+# listed owners (not all of them).
+#
+# Docs: https://docs.github.com/articles/about-code-owners
+
+# Default owners for everything in the repo.
+* @YasunoriMATSUOKA @h-gocchi @ymuichiro

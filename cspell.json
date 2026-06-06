@@ -1,0 +1,24 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "//": "Editor-only spell-check config for the Code Spell Checker extension (not run in CI). Keeps the curated allow-list small: project/tool proper nouns plus a couple of legitimate non-dictionary words. Symbol addresses/keys/hashes are excluded by regex below rather than word-by-word.",
+  "words": [
+    "axios",
+    "behaviour",
+    "codepaths",
+    "cooldown",
+    "GHSA",
+    "Hulud",
+    "matsuoka",
+    "nemtus",
+    "openapitools",
+    "pinact",
+    "postmanv",
+    "redocly",
+    "Shai",
+    "shunsuke",
+    "yasunori"
+  ],
+  "ignoreRegExpList": ["/\\b[A-Z2-7]{30,}\\b/g", "/\\b[0-9A-Fa-f]{32,}\\b/g", "/GHSA-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}/g"],
+  "ignorePaths": ["node_modules/**", "src/api/**", "dist/**", "lib/**", "cdn/**", "coverage/**", "openapi-spec/**", "**/package-lock.json"]
+}
