@@ -215,7 +215,11 @@ jobs:
         working-directory: ./tests/browser-cdn
 
   dry-run-publish:
-    needs: [test-unit, test-nodejs-javascript, test-nodejs-typescript, test-browser-cdn]
+    # Only needs the build artifact — `npm pack` validates packaging, independent of
+    # test outcomes — so run it in parallel with the test jobs instead of after them.
+    # (Gating it behind the live-node suites added latency but no safety: those are
+    # continue-on-error, and packaging validity doesn't depend on any test result.)
+    needs: build
     # Run on every event (PRs, main pushes, manual) so the publishable ./dist artifact
     # is validated before merge, not only after. It only downloads the artifact and runs
     # `npm publish --dry-run` (no auth/secrets), so it is cheap and fork-safe.
