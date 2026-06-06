@@ -50,7 +50,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.2.4",
     "eslint-plugin-promise": "^6.0.0",
-    "fs-extra": "^10.1.0",
+    "fs-extra": "^11.3.5",
     "node-fetch": "^2.6.7",
     "prettier": "^2.7.1",
     "ts-loader": "^9.3.1",
