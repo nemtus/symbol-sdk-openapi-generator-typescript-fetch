@@ -18,7 +18,7 @@ describe('cdn exports', () => {
     if (originalWindow !== undefined) {
       global.window = originalWindow;
     } else {
-      // @ts-ignore
+      // @ts-expect-error window is non-optional on the global type; deleting it is intentional in this test
       delete global.window;
     }
   });

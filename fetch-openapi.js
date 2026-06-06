@@ -10,7 +10,7 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
-const crypto = require('crypto');
+const nodeCrypto = require('crypto');
 
 const SPEC_VERSION = 'v1.0.4';
 const SPEC_SHA256 = 'a74a8747731362b7ee6246cdf80ecbdd4815e43ecf3063903a3953bae5075ed8';
@@ -58,7 +58,7 @@ async function main() {
   console.log(`Fetching OpenAPI spec ${SPEC_VERSION} from ${SPEC_URL}`);
   const data = await download(SPEC_URL, MAX_REDIRECTS);
 
-  const actual = crypto.createHash('sha256').update(data).digest('hex');
+  const actual = nodeCrypto.createHash('sha256').update(data).digest('hex');
   if (actual !== SPEC_SHA256) {
     console.error('SHA-256 verification FAILED for the downloaded OpenAPI spec.');
     console.error(`  expected: ${SPEC_SHA256}`);
