@@ -1,6 +1,13 @@
 name: CD Publish to npm
 
 on:
+  # Automated release: pushing a `vX.Y.Z` tag (created by `npm run release:*`)
+  # triggers the pipeline. The `publish` job still waits on the `release`
+  # Environment approval gate before anything is published.
+  push:
+    tags:
+      - 'v*'
+  # Manual fallback.
   workflow_dispatch:
 
 permissions:

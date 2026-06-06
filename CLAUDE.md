@@ -83,13 +83,29 @@ checks run on Stop.
 The project uses GitHub Actions. Both workflows run on a single unified runtime: **Java 21** and **Node.js 24.x**.
 
 - **CI** (`ci-nodejs.yml`) - On pull requests and pushes to `main`: builds the client, runs all test suites in parallel (unit, nodejs-javascript, nodejs-typescript, browser-cdn), plus a `dry-run-publish` and a `pinact` job that verifies every action is SHA-pinned.
-- **CD** (`cd-publish-to-npm.yml`) - Manual (`workflow_dispatch`): builds, tests, then publishes to npm via **OIDC Trusted Publishing** (no `NPM_TOKEN`; provenance attached). The `publish` job is gated by the `release` GitHub Environment (manual approval).
+- **CD** (`cd-publish-to-npm.yml`) - Triggered by pushing a `vX.Y.Z` tag (use `npm run release:patch|minor|major`, which runs `npm version` + `git push --follow-tags`); also runnable manually via `workflow_dispatch`. Builds, tests, then publishes to npm via **OIDC Trusted Publishing** (no `NPM_TOKEN`; provenance attached). The `publish` job is gated by the `release` GitHub Environment (manual approval), so a tag push starts the pipeline but still waits for approval before publishing.
 
 Both workflows:
 1. Build once and share `dist/` via a uniquely-named artifact (`dist-{run_id}-{run_attempt}-{java_version}-{node_version}`); test jobs download it instead of rebuilding.
 2. Run tests in parallel (unit, nodejs-javascript, nodejs-typescript, browser-cdn).
-3. Use `npm ci` for reproducible installs, gated by `npm audit` (fails on any vulnerability). The `.npmrc` cooldown (`min-release-age`) is disabled in CI via `NPM_CONFIG_MIN_RELEASE_AGE=0`, and npm's download cache (`~/.npm`) is cached instead of `node_modules`.
+3. Use `npm ci` for reproducible installs, gated by `npm audit` (fails on any vulnerability). `npm ci` installs lockfile-pinned versions regardless of age, so the `.npmrc` cooldown (`min-release-age`) does not gate it; npm's download cache (`~/.npm`) is cached instead of `node_modules`.
 4. Pin all third-party actions to full commit SHAs (managed by `pinact` / `.pinact.yaml`); Dependabot updates npm + actions daily with a 7-day cooldown.
+
+### Releasing
+
+One action publishes a new version. From a clean tree on the release branch (usually `main`):
+
+```bash
+npm run release:patch   # 0.2.1 -> 0.2.2   (bug fixes)
+npm run release:minor   # 0.2.1 -> 0.3.0   (backward-compatible features)
+npm run release:major   # 0.2.1 -> 1.0.0   (breaking changes)
+```
+
+Each script runs `npm version <type>` (bumps `package.json` + `package-lock.json`,
+commits, and creates a `vX.Y.Z` tag) then `git push --follow-tags`. The pushed tag
+triggers the CD workflow (`on: push: tags: ['v*']`), which builds, tests, and then
+waits on the `release` Environment approval before publishing. `npm version`
+requires a clean working tree, so commit or stash first.
 
 ## Important Notes
 

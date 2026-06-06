@@ -17,7 +17,10 @@
     "lint:fix": "eslint . --ext .js,.cjs,.mjs,.ts,.mts,.cts --fix",
     "format": "prettier --write \"**/*.{ts,mts,cts,js,cjs,mjs}\"",
     "format:check": "prettier --check \"**/*.{ts,mts,cts,js,cjs,mjs}\"",
-    "type:check": "tsc --noEmit"
+    "type:check": "tsc --noEmit",
+    "release:patch": "npm version patch && git push --follow-tags",
+    "release:minor": "npm version minor && git push --follow-tags",
+    "release:major": "npm version major && git push --follow-tags"
   },
   "repository": {
     "type": "git",
