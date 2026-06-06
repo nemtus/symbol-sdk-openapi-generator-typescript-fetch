@@ -10,10 +10,11 @@ on:
 permissions:
   contents: read
 
-# Supply-chain: disable the local .npmrc cooldown (min-release-age) in CI so security
-# fixes are picked up immediately, and gate every install with `npm audit` instead.
+# `npm ci` installs the lockfile-pinned versions regardless of age, so the local
+# .npmrc cooldown (min-release-age) does not gate it — every install is instead gated
+# by `npm audit`. The remaining cooldown only affects the global `npm install -g`
+# tooling here, which we deliberately leave subject to it.
 env:
-  NPM_CONFIG_MIN_RELEASE_AGE: '0'
   # `npm ci` wipes node_modules, so cache npm's download directory instead. Point it at a
   # workspace-local path that is writable in every job (including the browser-cdn container).
   NPM_CONFIG_CACHE: ${{ github.workspace }}/.npm
