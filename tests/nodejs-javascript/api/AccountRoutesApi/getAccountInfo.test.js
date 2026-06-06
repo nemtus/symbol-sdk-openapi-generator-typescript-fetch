@@ -1,7 +1,6 @@
 import { describe, test, expect } from 'vitest';
 
 const symbolSdk = require('@nemtus/symbol-sdk-openapi-generator-typescript-fetch');
-const fetch = require('node-fetch');
 const { assertAccountInfo } = require('../../../_shared/fixtures.cjs');
 
 describe('getAccountInfo', () => {
@@ -9,7 +8,6 @@ describe('getAccountInfo', () => {
     // Arrange
     const configurationParameters = {
       basePath: 'https://symbol-main-1.nemtus.com:3001',
-      fetchApi: fetch,
     };
     const configuration = new symbolSdk.Configuration(configurationParameters);
     const accountRoutesApi = new symbolSdk.AccountRoutesApi(configuration);
