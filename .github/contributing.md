@@ -26,7 +26,7 @@ However, any significant improvement should be associated to existing the follow
 ### Getting started
 
 1. [Fork](https://help.github.com/articles/fork-a-repo/) [this repository](https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch) to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device.
-2. Run `npm install` to install the dependencies.
+2. Run `npm ci` to install the dependencies from the committed lockfile (matches CI).
 
 ### Setup
 

@@ -203,7 +203,7 @@ SHA-256 before use (previously this spec was built locally from a git submodule,
 tooling).
 
 ```bash
-npm install
+npm ci
 npm run openapi:fetch
 ```
 
@@ -227,7 +227,7 @@ Do not edit `src/api` manually.
 
 ```bash
 cd tests/browser-cdn
-npm install
+npm ci
 npx playwright install chromium
 npm run test
 ```
@@ -236,7 +236,7 @@ npm run test
 
 ```bash
 cd tests/nodejs-javascript
-npm install
+npm ci
 npm run test
 ```
 
@@ -244,7 +244,7 @@ npm run test
 
 ```bash
 cd tests/nodejs-typescript
-npm install
+npm ci
 npm run test
 ```
 

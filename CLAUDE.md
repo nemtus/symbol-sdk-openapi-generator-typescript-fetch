@@ -32,7 +32,7 @@ git clone git@github.com:nemtus/symbol-sdk-openapi-generator-typescript-fetch.gi
 ### Build Commands
 ```bash
 # Generate API client code (run in root directory)
-npm install
+npm ci
 npm run openapi:fetch         # Download + SHA-256 verify the published openapi3.yml
 npm run openapi:set:version   # Set OpenAPI generator version to 7.14.0
 npm run openapi:generate      # Generate TypeScript code from the fetched OpenAPI spec
@@ -50,18 +50,18 @@ npm run test
 
 # Browser CDN tests
 cd tests/browser-cdn
-npm install
+npm ci
 npx playwright install chromium
 npm run test
 
 # Node.js JavaScript tests
 cd tests/nodejs-javascript
-npm install
+npm ci
 npm run test
 
 # Node.js TypeScript tests
 cd tests/nodejs-typescript
-npm install
+npm ci
 npm run test
 ```
 
