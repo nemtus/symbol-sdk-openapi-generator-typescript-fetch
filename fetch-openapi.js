@@ -20,32 +20,37 @@ const OUTPUT_DIR = path.join(__dirname, 'openapi-spec');
 const OUTPUT_FILE = path.join(OUTPUT_DIR, 'openapi3.yml');
 
 const MAX_REDIRECTS = 5;
+// Abort a stalled connection instead of hanging the build forever (no default
+// timeout on https.get). Applies per request, so each redirect hop gets its own.
+const REQUEST_TIMEOUT_MS = 30000;
 
 function download(url, redirectsLeft) {
   return new Promise((resolve, reject) => {
-    https
-      .get(url, { headers: { 'User-Agent': 'symbol-sdk-openapi-fetch' } }, (res) => {
-        const { statusCode, headers } = res;
-        // GitHub release assets redirect to a signed object storage URL.
-        if (statusCode >= 300 && statusCode < 400 && headers.location) {
-          res.resume();
-          if (redirectsLeft <= 0) {
-            reject(new Error('Too many redirects while fetching the spec'));
-            return;
-          }
-          resolve(download(headers.location, redirectsLeft - 1));
+    const req = https.get(url, { headers: { 'User-Agent': 'symbol-sdk-openapi-fetch' } }, (res) => {
+      const { statusCode, headers } = res;
+      // GitHub release assets redirect to a signed object storage URL.
+      if (statusCode >= 300 && statusCode < 400 && headers.location) {
+        res.resume();
+        if (redirectsLeft <= 0) {
+          reject(new Error('Too many redirects while fetching the spec'));
           return;
         }
-        if (statusCode !== 200) {
-          res.resume();
-          reject(new Error(`Unexpected status code ${statusCode} for ${url}`));
-          return;
-        }
-        const chunks = [];
-        res.on('data', (chunk) => chunks.push(chunk));
-        res.on('end', () => resolve(Buffer.concat(chunks)));
-      })
-      .on('error', reject);
+        resolve(download(headers.location, redirectsLeft - 1));
+        return;
+      }
+      if (statusCode !== 200) {
+        res.resume();
+        reject(new Error(`Unexpected status code ${statusCode} for ${url}`));
+        return;
+      }
+      const chunks = [];
+      res.on('data', (chunk) => chunks.push(chunk));
+      res.on('end', () => resolve(Buffer.concat(chunks)));
+    });
+    req.on('error', reject);
+    req.setTimeout(REQUEST_TIMEOUT_MS, () => {
+      req.destroy(new Error(`Timed out after ${REQUEST_TIMEOUT_MS} ms while fetching ${url}`));
+    });
   });
 }
 
