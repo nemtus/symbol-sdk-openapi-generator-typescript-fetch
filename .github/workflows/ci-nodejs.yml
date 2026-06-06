@@ -229,7 +229,10 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-root-
       - run: npm audit --package-lock-only
       - run: npm ci
+        # Dry-run the SAME tree that CD publishes (./dist), not the repo root, so the
+        # check actually exercises the publishable artifact.
       - run: npm publish --dry-run
+        working-directory: ./dist
 
   lint:
     runs-on: ubuntu-latest
