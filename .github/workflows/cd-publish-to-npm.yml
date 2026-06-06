@@ -13,6 +13,14 @@ on:
 permissions:
   contents: read
 
+# Serialize the whole publish pipeline: only one CD run at a time, across BOTH tag
+# pushes and manual dispatches. A ref-based group would NOT cover that race — a tag
+# push (refs/tags/v*) and a workflow_dispatch (refs/heads/*) have different refs —
+# so group on the workflow itself. Never cancel an in-flight publish.
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 # `npm ci` installs the lockfile-pinned versions regardless of age, so the local
 # .npmrc cooldown (min-release-age) does not gate it — every install is instead gated
 # by `npm audit`. The remaining cooldown only affects the global `npm install -g`
