@@ -2,25 +2,81 @@
 # package ecosystems to update and where the package manifests are located.
 # Please see the documentation for all configuration options:
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+#
+# This repo has FOUR separate npm projects (each with its own package.json /
+# package-lock.json): the root, plus the three consumer test suites under tests/.
+# They are NOT an npm workspace, so each needs its own Dependabot entry.
+# All entries: check daily (so security updates, which are NOT subject to cooldown,
+# surface immediately) with a 7-day cooldown on regular version bumps, and bundle
+# non-major (minor + patch) updates into a single grouped PR.
 
 version: 2
 updates:
-  # Check daily so that security updates (which are NOT subject to cooldown) are
-  # surfaced immediately, while regular version bumps wait out a 7-day cooldown.
-  - package-ecosystem: 'npm' # See documentation for possible values
-    directory: '/' # Location of package manifests
+  # ---- root npm ----
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
       interval: 'daily'
     cooldown:
       default-days: 7
-    # Bundle all non-major (minor + patch) npm updates into a single PR; major
-    # updates are excluded from the group and still get their own individual PRs.
     groups:
       npm-minor-and-patch:
         applies-to: version-updates
         update-types:
           - minor
           - patch
+
+  # ---- test suite: tests/nodejs-javascript ----
+  - package-ecosystem: 'npm'
+    directory: '/tests/nodejs-javascript'
+    schedule:
+      interval: 'daily'
+    cooldown:
+      default-days: 7
+    groups:
+      npm-minor-and-patch:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
+
+  # ---- test suite: tests/nodejs-typescript ----
+  - package-ecosystem: 'npm'
+    directory: '/tests/nodejs-typescript'
+    schedule:
+      interval: 'daily'
+    cooldown:
+      default-days: 7
+    groups:
+      npm-minor-and-patch:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
+
+  # ---- test suite: tests/browser-cdn ----
+  # `@playwright/test` / `playwright` are coupled to the Playwright CONTAINER tag
+  # (mcr.microsoft.com/playwright:vX.Y.Z-noble in .github/workflows/ci-nodejs.yml).
+  # Dependabot cannot edit that image tag, so bumping the npm package alone breaks the
+  # browser-cdn job. Keep Playwright bumps MANUAL — bump package.json AND the container
+  # tag together (see tests/CLAUDE.md) — and ignore them here.
+  - package-ecosystem: 'npm'
+    directory: '/tests/browser-cdn'
+    schedule:
+      interval: 'daily'
+    cooldown:
+      default-days: 7
+    groups:
+      npm-minor-and-patch:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
+    ignore:
+      - dependency-name: '@playwright/test'
+      - dependency-name: 'playwright'
+
+  # ---- github actions ----
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
