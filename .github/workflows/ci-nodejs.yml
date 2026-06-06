@@ -246,9 +246,12 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-root-
       - run: npm audit --package-lock-only
       - run: npm ci
-        # Dry-run the SAME tree that CD publishes (./dist), not the repo root, so the
-        # check actually exercises the publishable artifact.
-      - run: npm publish --dry-run
+      # Validate the SAME tree CD publishes (./dist) by packing it. We use `npm pack`,
+      # not `npm publish --dry-run`: the latter contacts the registry and fails with
+      # "cannot publish over previously published versions" because the version isn't
+      # bumped until release, which would make every PR red. `npm pack` validates the
+      # tarball contents and package.json offline, which is the actual pre-merge signal.
+      - run: npm pack --dry-run
         working-directory: ./dist
 
   lint:
