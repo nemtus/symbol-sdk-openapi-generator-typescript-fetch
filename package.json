@@ -48,7 +48,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-n": "^18.0.1",
     "eslint-plugin-promise": "^6.0.0",
     "fs-extra": "^10.1.0",
     "node-fetch": "^2.6.7",
