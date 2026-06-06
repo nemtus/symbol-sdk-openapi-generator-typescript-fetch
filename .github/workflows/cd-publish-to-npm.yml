@@ -52,8 +52,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
       - run: java -version
-      - run: npm install @openapitools/openapi-generator-cli -g
-      - run: openapi-generator-cli version
       - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         id: cache-root
         with:
@@ -63,6 +61,10 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-root-
       - run: npm audit --package-lock-only
       - run: npm ci
+      # Use the lockfile-pinned generator (a devDependency), not an unpinned global
+      # `npm install -g @latest`. npx resolves to the local node_modules copy, so the
+      # version is reproducible, audited (it's in the lockfile), and bumped via Dependabot.
+      - run: npx @openapitools/openapi-generator-cli version
       - run: npm run openapi:fetch
       - run: npm run openapi:set:version
       - run: npm run openapi:generate
