@@ -1,9 +1,4 @@
-import {
-  Configuration,
-  ConfigurationParameters,
-  NodeInfoDTO,
-  NodeRoutesApi,
-} from '@nemtus/symbol-sdk-openapi-generator-typescript-fetch';
+import { Configuration, ConfigurationParameters, NodeInfoDTO, NodeRoutesApi } from '@nemtus/symbol-sdk-openapi-generator-typescript-fetch';
 import { test, expect } from 'vitest';
 import * as fixtures from '../../../_shared/fixtures.cjs';
 
