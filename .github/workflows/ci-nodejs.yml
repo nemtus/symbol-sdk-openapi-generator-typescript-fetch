@@ -93,6 +93,9 @@ jobs:
   test-nodejs-javascript:
     needs: build
     runs-on: ubuntu-latest
+    # Hits a live mainnet node; deterministic coverage is in test-unit, so don't
+    # let external flakiness gate CI.
+    continue-on-error: true
 
     strategy:
       fail-fast: false
@@ -126,6 +129,9 @@ jobs:
   test-nodejs-typescript:
     needs: build
     runs-on: ubuntu-latest
+    # Hits a live mainnet node; deterministic coverage is in test-unit, so don't
+    # let external flakiness gate CI.
+    continue-on-error: true
 
     strategy:
       fail-fast: false
@@ -159,6 +165,9 @@ jobs:
   test-browser-cdn:
     needs: build
     runs-on: ubuntu-latest
+    # Hits a live mainnet node; deterministic coverage is in test-unit, so don't
+    # let external flakiness gate CI.
+    continue-on-error: true
     container:
       image: mcr.microsoft.com/playwright:v1.60.0-noble
       options: --user 1001
