@@ -235,9 +235,14 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-root-
       - run: npm audit --package-lock-only
       - run: npm ci
-      # Trusted Publishing (OIDC) requires npm >= 11.5.1.
-      - run: npm install -g npm@latest
-      - run: npm --version
+      # Trusted Publishing (OIDC) requires npm >= 11.5.1, which ships by default with
+      # Node.js 24.x — so we do NOT `npm install -g npm@latest` (that would add a
+      # fresh, unpinned global package to the privileged id-token step). Just assert
+      # the bundled npm meets the minimum and fail fast otherwise.
+      - run: |
+          npm --version
+          printf '11.5.1\n%s\n' "$(npm -v)" | sort -V -C \
+            || { echo "npm $(npm -v) < 11.5.1 (required for OIDC Trusted Publishing)"; exit 1; }
       # No NODE_AUTH_TOKEN: npm exchanges the GitHub OIDC token for a short-lived
       # publish credential. --provenance attaches a verifiable build provenance attestation.
       - run: npm publish --access=public --provenance
