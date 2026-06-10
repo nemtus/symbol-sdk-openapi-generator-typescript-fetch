@@ -34,6 +34,9 @@
   ],
   "author": "nemtus",
   "license": "MIT",
+  "overrides": {
+    "shell-quote": "^1.8.4"
+  },
   "bugs": {
     "url": "https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch/issues"
   },
