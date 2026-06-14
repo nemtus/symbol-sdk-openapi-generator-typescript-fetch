@@ -195,20 +195,22 @@ git clone https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetc
 
 If you don't have java installed, you need to install it (required by the OpenAPI Generator).
 
-### 1. Fetch openapi3.yml
+### 1. Install the OpenAPI spec package
 
-This project consumes the official [symbol/symbol-openapi](https://github.com/symbol/symbol-openapi) `openapi3.yml`
-that is published as a GitHub release asset. `fetch-openapi.js` downloads a version-pinned copy and verifies its
-SHA-256 before use (previously this spec was built locally from a git submodule, which pulled in vulnerable build
-tooling).
+This project consumes the OpenAPI spec from the
+[`@nemtus/symbol-openapi`](https://www.npmjs.com/package/@nemtus/symbol-openapi) npm package (a
+devDependency), which is built and published from the [`nemtus/symbol`](https://github.com/nemtus/symbol/tree/dev/openapi)
+mirror fork. `npm ci` installs the bundled `openapi3.yml` into
+`node_modules/@nemtus/symbol-openapi/` — no HTTP fetch is required. (Previously this spec was
+downloaded as a release asset, and before that built locally from a git submodule, which pulled in
+vulnerable build tooling.)
 
 ```bash
 npm ci
-npm run openapi:fetch
 ```
 
-This writes the verified spec to `openapi-spec/openapi3.yml` (git-ignored). To bump the spec version, edit
-`SPEC_VERSION` / `SPEC_SHA256` in `fetch-openapi.js`.
+To bump the spec, bump the `@nemtus/symbol-openapi` version in `package.json` (or merge the
+Dependabot PR) and regenerate.
 
 ### 2. Generate REST API Client Code
 
@@ -221,7 +223,7 @@ npm run build
 Then, REST API client code will be generated in `src/api` and bundled into `dist`.
 Do not edit `src/api` manually.
 
-### 2. Tests
+### 3. Tests
 
 #### Test for CDN with Playwright
 
@@ -250,7 +252,7 @@ npm run test
 
 ## We use
 
-- [symbol/symbol-openapi](https://github.com/symbol/symbol-openapi) to generate openapi3.yml
+- [@nemtus/symbol-openapi](https://www.npmjs.com/package/@nemtus/symbol-openapi) (built/published from the [nemtus/symbol](https://github.com/nemtus/symbol/tree/dev/openapi) mirror fork) for the `openapi3.yml` spec
 - [OpenAPI Generator](https://openapi-generator.tech/) to generate REST API client codes
   - Especially [typescript-fetch Generator](https://openapi-generator.tech/docs/generators/typescript-fetch)
 - [cosmos-client/cosmos-client-ts](https://github.com/cosmos-client/cosmos-client-ts) as a reference of package structure
