@@ -14,7 +14,7 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Unresolved alias value used in the transaction before resolution.
  * @export
  * @interface ResolutionStatementDTOUnresolved
  */

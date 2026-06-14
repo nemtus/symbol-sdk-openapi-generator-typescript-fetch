@@ -29,13 +29,15 @@ import {
 } from './BlockInfoDTOBlock';
 
 /**
- * 
+ * Block information including an internal resource identifier, block metadata, and the full block header.
  * @export
  * @interface BlockInfoDTO
  */
 export interface BlockInfoDTO {
     /**
-     * Internal resource identifier.
+     * Unique identifier of the object in the node's database (MongoDB ObjectId).
+     * Used as the `offset` parameter value for cursor-based pagination.
+     * 
      * @type {string}
      * @memberof BlockInfoDTO
      */

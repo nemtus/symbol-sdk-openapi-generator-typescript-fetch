@@ -14,19 +14,41 @@
 
 import { mapValues } from '../runtime';
 /**
+ * Timestamps from the node's perspective for round-trip time calculation. Used when computing node time offset and
+ * transaction deadlines. The difference between them reflects node processing time and can vary with node load.
  * 
  * @export
  * @interface CommunicationTimestampsDTO
  */
 export interface CommunicationTimestampsDTO {
     /**
-     * Number of milliseconds elapsed since the creation of the nemesis block. This value can be converted to epoch time by adding the network's 'epochAdjustment'.
+     * Network timestamp in **milliseconds** since the creation of the nemesis (first) block.
+     * Used for block timestamps, transaction deadlines, and time synchronization.
+     * 
+     * **Finding the nemesis block time:** The `epochAdjustment` field returned by the
+     * [`/network/properties`] endpoint gives the nemesis block creation time in seconds since the
+     * [UNIX epoch](https://en.wikipedia.org/wiki/Unix_time). For Symbol MAINNET this is
+     * always `1615853185` (15 March 2021, 00:06:25 UTC).
+     * 
+     * **Converting to real time:** Add this timestamp (ms) to `epochAdjustment × 1000` (ms), then use standard date functions.
+     * Note: `epochAdjustment` may be returned as a string like `"1615853185s"`; use the numeric part.
+     * 
      * @type {string}
      * @memberof CommunicationTimestampsDTO
      */
     sendTimestamp?: string;
     /**
-     * Number of milliseconds elapsed since the creation of the nemesis block. This value can be converted to epoch time by adding the network's 'epochAdjustment'.
+     * Network timestamp in **milliseconds** since the creation of the nemesis (first) block.
+     * Used for block timestamps, transaction deadlines, and time synchronization.
+     * 
+     * **Finding the nemesis block time:** The `epochAdjustment` field returned by the
+     * [`/network/properties`] endpoint gives the nemesis block creation time in seconds since the
+     * [UNIX epoch](https://en.wikipedia.org/wiki/Unix_time). For Symbol MAINNET this is
+     * always `1615853185` (15 March 2021, 00:06:25 UTC).
+     * 
+     * **Converting to real time:** Add this timestamp (ms) to `epochAdjustment × 1000` (ms), then use standard date functions.
+     * Note: `epochAdjustment` may be returned as a string like `"1615853185s"`; use the numeric part.
+     * 
      * @type {string}
      * @memberof CommunicationTimestampsDTO
      */

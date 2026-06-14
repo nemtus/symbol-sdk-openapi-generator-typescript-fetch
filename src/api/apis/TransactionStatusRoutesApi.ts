@@ -42,7 +42,7 @@ export interface GetTransactionStatusesRequest {
 export class TransactionStatusRoutesApi extends runtime.BaseAPI {
 
     /**
-     * Returns the transaction status for a given hash.
+     * Returns the current status of the transaction identified by the given transaction hash.  When checking status after announcing a transaction, it is best to query the same node that received the announce request. If that node rejects the transaction before propagation, only that node may know the detailed rejection reason. Other nodes may not know the transaction at all because it was never propagated. 
      * Get transaction status
      */
     async getTransactionStatusRaw(requestParameters: GetTransactionStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionStatusDTO>> {
@@ -72,7 +72,7 @@ export class TransactionStatusRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the transaction status for a given hash.
+     * Returns the current status of the transaction identified by the given transaction hash.  When checking status after announcing a transaction, it is best to query the same node that received the announce request. If that node rejects the transaction before propagation, only that node may know the detailed rejection reason. Other nodes may not know the transaction at all because it was never propagated. 
      * Get transaction status
      */
     async getTransactionStatus(requestParameters: GetTransactionStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionStatusDTO> {
@@ -81,7 +81,7 @@ export class TransactionStatusRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an array of transaction statuses for a given array of transaction hashes.
+     * Returns the current statuses of the transactions identified by the given array of transaction hashes.  When checking status after announcing transactions, it is best to query the same node that received the announce request. If that node rejects a transaction before propagation, only that node may know the detailed rejection reason. Other nodes may not know the transaction at all because it was never propagated. 
      * Get transaction statuses
      */
     async getTransactionStatusesRaw(requestParameters: GetTransactionStatusesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TransactionStatusDTO>>> {
@@ -113,7 +113,7 @@ export class TransactionStatusRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an array of transaction statuses for a given array of transaction hashes.
+     * Returns the current statuses of the transactions identified by the given array of transaction hashes.  When checking status after announcing transactions, it is best to query the same node that received the announce request. If that node rejects a transaction before propagation, only that node may know the detailed rejection reason. Other nodes may not know the transaction at all because it was never propagated. 
      * Get transaction statuses
      */
     async getTransactionStatuses(requestParameters: GetTransactionStatusesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TransactionStatusDTO>> {

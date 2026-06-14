@@ -29,13 +29,13 @@ import {
 } from './TransactionStatementInfoDTO';
 
 /**
- * 
+ * Paginated response containing transaction statements.
  * @export
  * @interface TransactionStatementPage
  */
 export interface TransactionStatementPage {
     /**
-     * Array of transaction statements.
+     * Transaction statements matching the requested filters.
      * @type {Array<TransactionStatementInfoDTO>}
      * @memberof TransactionStatementPage
      */

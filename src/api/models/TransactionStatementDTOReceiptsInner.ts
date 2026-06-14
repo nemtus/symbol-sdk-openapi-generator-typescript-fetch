@@ -63,7 +63,7 @@ import {
  */
 export interface TransactionStatementDTOReceiptsInner {
     /**
-     * Version of the receipt.
+     * Version of the receipt format.
      * @type {number}
      * @memberof TransactionStatementDTOReceiptsInner
      */
@@ -75,37 +75,53 @@ export interface TransactionStatementDTOReceiptsInner {
      */
     type: ReceiptTypeEnum;
     /**
-     * Mosaic identifier.
+     * Unique [mosaic](https://docs.symbol.dev/concepts/mosaic.html) identifier.
+     * A 64-bit unsigned integer derived from the creator's address and a registration nonce,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof TransactionStatementDTOReceiptsInner
      */
     mosaicId: string;
     /**
-     * Absolute amount. An amount of 123456789 (absolute) for a mosaic with divisibility 6 means 123.456789 (relative).
+     * Absolute amount expressed in the mosaic's smallest (atomic) unit, with no decimal point.
+     * For example, an amount of `123456789` for a mosaic with divisibility 6 represents
+     * `123.456789` whole units. Encoded as a string to preserve precision, since the value
+     * is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof TransactionStatementDTOReceiptsInner
      */
     amount: string;
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof TransactionStatementDTOReceiptsInner
      */
     senderAddress: string;
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof TransactionStatementDTOReceiptsInner
      */
     recipientAddress: string;
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof TransactionStatementDTOReceiptsInner
      */
     targetAddress: string;
     /**
-     * Mosaic identifier.
+     * Unique [mosaic](https://docs.symbol.dev/concepts/mosaic.html) identifier.
+     * A 64-bit unsigned integer derived from the creator's address and a registration nonce,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof TransactionStatementDTOReceiptsInner
      */

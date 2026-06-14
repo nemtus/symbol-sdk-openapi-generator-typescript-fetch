@@ -29,7 +29,7 @@ import {
 } from './AccountRestrictionFlagsEnum';
 
 /**
- * 
+ * One account restriction rule consisting of restriction flags and the restricted values.
  * @export
  * @interface AccountRestrictionDTO
  */
@@ -41,7 +41,9 @@ export interface AccountRestrictionDTO {
      */
     restrictionFlags: AccountRestrictionFlagsEnum;
     /**
-     * Address, mosaic id, or transaction type to restrict.
+     * Restricted values matched by this rule.
+     * The value type depends on `restrictionFlags` and can be an address, mosaic ID, or transaction type.
+     * 
      * @type {Array<AccountRestrictionDTOValuesInner>}
      * @memberof AccountRestrictionDTO
      */

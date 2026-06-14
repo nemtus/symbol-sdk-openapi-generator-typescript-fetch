@@ -22,64 +22,74 @@ import {
 } from './NetworkTypeEnum';
 
 /**
- * 
+ * Embedded transaction variant of `AccountMetadataTransactionDTO`.
  * @export
  * @interface EmbeddedAccountMetadataTransactionDTO
  */
 export interface EmbeddedAccountMetadataTransactionDTO {
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof EmbeddedAccountMetadataTransactionDTO
      */
     signerPublicKey: string;
     /**
-     * Entity version.
+     * Entity version. Indicates the schema variant for serialization and validation.
      * @type {number}
      * @memberof EmbeddedAccountMetadataTransactionDTO
      */
     version: number;
     /**
-     * 
+     * Network type (mainnet or testnet). Ensures the entity targets the correct network.
      * @type {NetworkTypeEnum}
      * @memberof EmbeddedAccountMetadataTransactionDTO
      */
     network: NetworkTypeEnum;
     /**
-     * 
+     * Entity type identifier (e.g. transaction type code, block type). Determines the entity schema.
      * @type {number}
      * @memberof EmbeddedAccountMetadataTransactionDTO
      */
     type: number;
     /**
-     * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
-     * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
-     * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * Unresolved address encoded as a 48-character hexadecimal string (24 bytes).
+     * If bit 0 of byte 0 is not set, the value represents a regular address.
+     * Otherwise, it represents a namespace ID alias encoded as an unresolved address.
      * 
      * @type {string}
      * @memberof EmbeddedAccountMetadataTransactionDTO
      */
     targetAddress: string;
     /**
-     * Metadata key scoped to source, target and type expressed.
+     * 64-bit key assigned by the metadata creator to identify the metadata entry within the source and target context.
      * @type {string}
      * @memberof EmbeddedAccountMetadataTransactionDTO
      */
     scopedMetadataKey: string;
     /**
-     * Change in value size in bytes.
+     * Change in metadata value size, in bytes.
+     * Positive values increase the stored value size, negative values decrease it.
+     * 
      * @type {number}
      * @memberof EmbeddedAccountMetadataTransactionDTO
      */
     valueSizeDelta: number;
     /**
-     * A number that allows uint 32 values.
+     * Size of a metadata value or metadata value update payload, in bytes.
+     * In metadata transactions, when no previous value exists, or when the value grows, this is the new
+     * value size after applying the update. When the value shrinks, this is the previous stored value size
+     * before truncation.
+     * 
      * @type {number}
      * @memberof EmbeddedAccountMetadataTransactionDTO
      */
     valueSize: number;
     /**
-     * Metadata value. If embedded in a transaction, this is calculated as xor(previous-value, value).
+     * Metadata value encoded as hex.
+     * In metadata transactions, this field carries the metadata value update payload.
+     * When no previous value exists, it contains the new value.
+     * When updating existing metadata, it contains the byte-wise XOR of the previous value and the new value.
+     * 
      * @type {string}
      * @memberof EmbeddedAccountMetadataTransactionDTO
      */

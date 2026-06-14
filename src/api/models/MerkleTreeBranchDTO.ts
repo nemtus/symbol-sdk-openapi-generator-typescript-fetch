@@ -29,49 +29,51 @@ import {
 } from './MerkleTreeNodeTypeEnum';
 
 /**
- * Merkle tree branch node.
+ * Internal node of a [Patricia Merkle tree](https://docs.symbol.dev/concepts/data-validation.html)
+ * used in state proofs. A branch has up to 16 child links (one per nibble 0 to F) and a path prefix.
+ * 
  * @export
  * @interface MerkleTreeBranchDTO
  */
 export interface MerkleTreeBranchDTO {
     /**
-     * 
+     * Node type (always branch).
      * @type {MerkleTreeNodeTypeEnum}
      * @memberof MerkleTreeBranchDTO
      */
     type: MerkleTreeNodeTypeEnum;
     /**
-     * Branch link path.
+     * Path prefix (hex) from root to this branch.
      * @type {string}
      * @memberof MerkleTreeBranchDTO
      */
     path: string;
     /**
-     * Encoded branch link path.
+     * Compact-encoded path.
      * @type {string}
      * @memberof MerkleTreeBranchDTO
      */
     encodedPath: string;
     /**
-     * Nibble count.
+     * Number of nibbles in the path.
      * @type {number}
      * @memberof MerkleTreeBranchDTO
      */
     nibbleCount: number;
     /**
-     * Branch link bitmask.
+     * Bitmask indicating which nibble slots (0 to 15) have child links.
      * @type {string}
      * @memberof MerkleTreeBranchDTO
      */
     linkMask: string;
     /**
-     * Branch links (max 16).
+     * Child links (max 16, one per nibble).
      * @type {Array<MerkleTreeBranchLinkDTO>}
      * @memberof MerkleTreeBranchDTO
      */
     links: Array<MerkleTreeBranchLinkDTO>;
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof MerkleTreeBranchDTO
      */

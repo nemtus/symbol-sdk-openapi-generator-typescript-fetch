@@ -22,6 +22,8 @@ import {
 } from './NodeHealthDTO';
 
 /**
+ * Health status of the node: reachability of the API node and database services
+ * from the REST server.
  * 
  * @export
  * @interface NodeHealthInfoDTO

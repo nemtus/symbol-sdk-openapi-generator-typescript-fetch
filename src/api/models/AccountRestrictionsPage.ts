@@ -29,13 +29,13 @@ import {
 } from './AccountRestrictionsInfoDTO';
 
 /**
- * 
+ * Paginated response containing account restriction entries.
  * @export
  * @interface AccountRestrictionsPage
  */
 export interface AccountRestrictionsPage {
     /**
-     * Array of account restrictions.
+     * Account restriction entries matching the requested filters.
      * @type {Array<AccountRestrictionsInfoDTO>}
      * @memberof AccountRestrictionsPage
      */

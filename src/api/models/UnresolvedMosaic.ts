@@ -20,15 +20,20 @@ import { mapValues } from '../runtime';
  */
 export interface UnresolvedMosaic {
     /**
-     * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
-     * is used instead of the real mosaic identifier.
+     * Unresolved mosaic identifier.
+     * If the most significant bit of byte 0 is set, the value contains a namespace ID alias
+     * instead of a concrete mosaic ID.
      * 
      * @type {string}
      * @memberof UnresolvedMosaic
      */
     id: string;
     /**
-     * Absolute amount. An amount of 123456789 (absolute) for a mosaic with divisibility 6 means 123.456789 (relative).
+     * Absolute amount expressed in the mosaic's smallest (atomic) unit, with no decimal point.
+     * For example, an amount of `123456789` for a mosaic with divisibility 6 represents
+     * `123.456789` whole units. Encoded as a string to preserve precision, since the value
+     * is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof UnresolvedMosaic
      */

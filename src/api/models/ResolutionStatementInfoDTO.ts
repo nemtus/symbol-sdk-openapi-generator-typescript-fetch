@@ -29,15 +29,16 @@ import {
 } from './ResolutionStatementDTO';
 
 /**
- * A resolution statement keeps the relation between a namespace alias used in a transaction
- * and the real address or mosaicId.
+ * Wrapper object containing one resolution statement and its metadata.
  * 
  * @export
  * @interface ResolutionStatementInfoDTO
  */
 export interface ResolutionStatementInfoDTO {
     /**
-     * Internal resource identifier.
+     * Unique identifier of the object in the node's database (MongoDB ObjectId).
+     * Used as the `offset` parameter value for cursor-based pagination.
+     * 
      * @type {string}
      * @memberof ResolutionStatementInfoDTO
      */

@@ -29,6 +29,8 @@ import {
 } from './AccountLinkVotingKeysDTO';
 
 /**
+ * Supplemental public keys linked to the account for delegated harvesting, node linking,
+ * VRF key derivation, and finalization voting.
  * 
  * @export
  * @interface SupplementalPublicKeysDTO

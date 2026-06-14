@@ -14,17 +14,17 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Network type and a short human-readable description.
  * @export
  * @interface NetworkTypeDTO
  */
 export interface NetworkTypeDTO {
     /**
-     * Network name.
+     * Network name (mainnet or testnet).
      * @type {string}
      * @memberof NetworkTypeDTO
      */
-    name: string;
+    name: NetworkTypeDTONameEnum;
     /**
      * A short text describing the network.
      * @type {string}
@@ -32,6 +32,17 @@ export interface NetworkTypeDTO {
      */
     description: string;
 }
+
+
+/**
+ * @export
+ */
+export const NetworkTypeDTONameEnum = {
+    Mainnet: 'mainnet',
+    Testnet: 'testnet'
+} as const;
+export type NetworkTypeDTONameEnum = typeof NetworkTypeDTONameEnum[keyof typeof NetworkTypeDTONameEnum];
+
 
 /**
  * Check if a given object implements the NetworkTypeDTO interface.

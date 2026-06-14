@@ -22,6 +22,8 @@ import {
 } from './AliasTypeEnum';
 
 /**
+ * Alias currently linked to the namespace.
+ * Depending on `type`, the namespace either has no alias, points to a mosaic ID, or points to an account address.
  * 
  * @export
  * @interface AliasDTO
@@ -34,13 +36,18 @@ export interface AliasDTO {
      */
     type: AliasTypeEnum;
     /**
-     * Mosaic identifier.
+     * Unique [mosaic](https://docs.symbol.dev/concepts/mosaic.html) identifier.
+     * A 64-bit unsigned integer derived from the creator's address and a registration nonce,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof AliasDTO
      */
     mosaicId?: string;
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof AliasDTO
      */

@@ -29,19 +29,22 @@ import {
 } from './MosaicRestrictionEntryTypeEnum';
 
 /**
- * 
+ * Wrapper object containing one mosaic address restriction entry.
  * @export
  * @interface MosaicAddressRestrictionEntryWrapperDTO
  */
 export interface MosaicAddressRestrictionEntryWrapperDTO {
     /**
-     * The version of the state
+     * Version of the on-chain state serialization format. Incremented when the storage
+     * schema of the entity changes (e.g. new fields are added), allowing the node to
+     * deserialize entries written under earlier formats.
+     * 
      * @type {number}
      * @memberof MosaicAddressRestrictionEntryWrapperDTO
      */
     version: number;
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof MosaicAddressRestrictionEntryWrapperDTO
      */
@@ -53,19 +56,24 @@ export interface MosaicAddressRestrictionEntryWrapperDTO {
      */
     entryType: MosaicRestrictionEntryTypeEnum;
     /**
-     * Mosaic identifier.
+     * Unique [mosaic](https://docs.symbol.dev/concepts/mosaic.html) identifier.
+     * A 64-bit unsigned integer derived from the creator's address and a registration nonce,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof MosaicAddressRestrictionEntryWrapperDTO
      */
     mosaicId: string;
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof MosaicAddressRestrictionEntryWrapperDTO
      */
     targetAddress: string;
     /**
-     * 
+     * Address-specific restriction values associated with the mosaic and target address.
      * @type {Array<MosaicAddressRestrictionEntryDTO>}
      * @memberof MosaicAddressRestrictionEntryWrapperDTO
      */

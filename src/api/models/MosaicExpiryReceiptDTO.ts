@@ -22,13 +22,13 @@ import {
 } from './ReceiptTypeEnum';
 
 /**
- * Receipt stored when a mosaic expires.
+ * Receipt emitted when a mosaic reaches the end of its lifetime and expires.
  * @export
  * @interface MosaicExpiryReceiptDTO
  */
 export interface MosaicExpiryReceiptDTO {
     /**
-     * Version of the receipt.
+     * Version of the receipt format.
      * @type {number}
      * @memberof MosaicExpiryReceiptDTO
      */
@@ -40,7 +40,10 @@ export interface MosaicExpiryReceiptDTO {
      */
     type: ReceiptTypeEnum;
     /**
-     * Mosaic identifier.
+     * Unique [mosaic](https://docs.symbol.dev/concepts/mosaic.html) identifier.
+     * A 64-bit unsigned integer derived from the creator's address and a registration nonce,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof MosaicExpiryReceiptDTO
      */

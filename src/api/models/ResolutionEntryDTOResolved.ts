@@ -14,7 +14,7 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Concrete address or mosaic ID resolved from the alias for this source.
  * @export
  * @interface ResolutionEntryDTOResolved
  */

@@ -14,9 +14,9 @@
 
 
 /**
- * Direction of the supply change:
- * * 0  - Decrease.
- * * 1  - Increase.
+ * Mosaic supply change action:
+ * - `0`: Decrease the mosaic supply.
+ * - `1`: Increase the mosaic supply.
  * 
  * @export
  */

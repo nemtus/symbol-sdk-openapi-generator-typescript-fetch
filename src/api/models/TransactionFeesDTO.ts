@@ -14,37 +14,100 @@
 
 import { mapValues } from '../runtime';
 /**
+ * Fee multiplier statistics over the last `numBlocksTransactionFeeStats` blocks:
+ * average, median, highest, lowest, and minimum on the connected node.
+ * All values are absolute (smallest units).
  * 
  * @export
  * @interface TransactionFeesDTO
  */
 export interface TransactionFeesDTO {
     /**
-     * Fee multiplier applied to transactions contained in block.
+     * Fee multiplier applied to the size of a transaction to obtain its fee, in
+     * [absolute units](https://docs.symbol.dev/concepts/mosaic.html#divisibility).
+     * Set by the harvester when creating a block; stored in the block header.
+     * 
+     * The effective fee for a transaction is:
+     * 
+     * `effectiveFee = transaction.size × block.feeMultiplier`
+     * 
+     * Node owners can configure the fee multiplier to any non-negative value (including zero).
+     * For transaction senders, the median fee multiplier over recent blocks is available
+     * via `/network/fees/transaction`; using `medianFeeMultiplier` or higher
+     * improves chances of inclusion. See the [fees documentation](https://docs.symbol.dev/concepts/fees.html).
+     * 
      * @type {number}
      * @memberof TransactionFeesDTO
      */
     averageFeeMultiplier: number;
     /**
-     * Fee multiplier applied to transactions contained in block.
+     * Fee multiplier applied to the size of a transaction to obtain its fee, in
+     * [absolute units](https://docs.symbol.dev/concepts/mosaic.html#divisibility).
+     * Set by the harvester when creating a block; stored in the block header.
+     * 
+     * The effective fee for a transaction is:
+     * 
+     * `effectiveFee = transaction.size × block.feeMultiplier`
+     * 
+     * Node owners can configure the fee multiplier to any non-negative value (including zero).
+     * For transaction senders, the median fee multiplier over recent blocks is available
+     * via `/network/fees/transaction`; using `medianFeeMultiplier` or higher
+     * improves chances of inclusion. See the [fees documentation](https://docs.symbol.dev/concepts/fees.html).
+     * 
      * @type {number}
      * @memberof TransactionFeesDTO
      */
     medianFeeMultiplier: number;
     /**
-     * Fee multiplier applied to transactions contained in block.
+     * Fee multiplier applied to the size of a transaction to obtain its fee, in
+     * [absolute units](https://docs.symbol.dev/concepts/mosaic.html#divisibility).
+     * Set by the harvester when creating a block; stored in the block header.
+     * 
+     * The effective fee for a transaction is:
+     * 
+     * `effectiveFee = transaction.size × block.feeMultiplier`
+     * 
+     * Node owners can configure the fee multiplier to any non-negative value (including zero).
+     * For transaction senders, the median fee multiplier over recent blocks is available
+     * via `/network/fees/transaction`; using `medianFeeMultiplier` or higher
+     * improves chances of inclusion. See the [fees documentation](https://docs.symbol.dev/concepts/fees.html).
+     * 
      * @type {number}
      * @memberof TransactionFeesDTO
      */
     highestFeeMultiplier: number;
     /**
-     * Fee multiplier applied to transactions contained in block.
+     * Fee multiplier applied to the size of a transaction to obtain its fee, in
+     * [absolute units](https://docs.symbol.dev/concepts/mosaic.html#divisibility).
+     * Set by the harvester when creating a block; stored in the block header.
+     * 
+     * The effective fee for a transaction is:
+     * 
+     * `effectiveFee = transaction.size × block.feeMultiplier`
+     * 
+     * Node owners can configure the fee multiplier to any non-negative value (including zero).
+     * For transaction senders, the median fee multiplier over recent blocks is available
+     * via `/network/fees/transaction`; using `medianFeeMultiplier` or higher
+     * improves chances of inclusion. See the [fees documentation](https://docs.symbol.dev/concepts/fees.html).
+     * 
      * @type {number}
      * @memberof TransactionFeesDTO
      */
     lowestFeeMultiplier: number;
     /**
-     * Fee multiplier applied to transactions contained in block.
+     * Fee multiplier applied to the size of a transaction to obtain its fee, in
+     * [absolute units](https://docs.symbol.dev/concepts/mosaic.html#divisibility).
+     * Set by the harvester when creating a block; stored in the block header.
+     * 
+     * The effective fee for a transaction is:
+     * 
+     * `effectiveFee = transaction.size × block.feeMultiplier`
+     * 
+     * Node owners can configure the fee multiplier to any non-negative value (including zero).
+     * For transaction senders, the median fee multiplier over recent blocks is available
+     * via `/network/fees/transaction`; using `medianFeeMultiplier` or higher
+     * improves chances of inclusion. See the [fees documentation](https://docs.symbol.dev/concepts/fees.html).
+     * 
      * @type {number}
      * @memberof TransactionFeesDTO
      */

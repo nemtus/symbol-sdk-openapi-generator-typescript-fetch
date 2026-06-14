@@ -22,7 +22,7 @@ import {
 } from './AccountRestrictionsDTO';
 
 /**
- * 
+ * Wrapper object containing one account restriction entry.
  * @export
  * @interface AccountRestrictionsInfoDTO
  */

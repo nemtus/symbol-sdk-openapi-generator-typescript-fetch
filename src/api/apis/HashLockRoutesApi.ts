@@ -20,6 +20,7 @@ import type {
   MerkleStateInfoDTO,
   ModelError,
   Order,
+  TransactionHashes,
 } from '../models/index';
 import {
     HashLockInfoDTOFromJSON,
@@ -32,6 +33,8 @@ import {
     ModelErrorToJSON,
     OrderFromJSON,
     OrderToJSON,
+    TransactionHashesFromJSON,
+    TransactionHashesToJSON,
 } from '../models/index';
 
 export interface GetHashLockRequest {
@@ -40,6 +43,18 @@ export interface GetHashLockRequest {
 
 export interface GetHashLockMerkleRequest {
     hash: string;
+}
+
+export interface GetHashLocksRequest {
+    transactionHashes: TransactionHashes;
+}
+
+export interface SearchAccountHashLocksRequest {
+    address: string;
+    pageSize?: number;
+    pageNumber?: number;
+    offset?: string;
+    order?: Order;
 }
 
 export interface SearchHashLockRequest {
@@ -56,7 +71,7 @@ export interface SearchHashLockRequest {
 export class HashLockRoutesApi extends runtime.BaseAPI {
 
     /**
-     * Gets the hash lock for a given hash.
+     * Returns the hash lock entry associated with the given aggregate bonded transaction hash.
      * Get hash lock information
      */
     async getHashLockRaw(requestParameters: GetHashLockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<HashLockInfoDTO>> {
@@ -86,7 +101,7 @@ export class HashLockRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the hash lock for a given hash.
+     * Returns the hash lock entry associated with the given aggregate bonded transaction hash.
      * Get hash lock information
      */
     async getHashLock(requestParameters: GetHashLockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<HashLockInfoDTO> {
@@ -95,8 +110,8 @@ export class HashLockRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the hash lock merkle for a given hash.
-     * Get hash lock merkle information
+     * Returns the state Merkle proof for the hash lock entry associated with the given aggregate bonded transaction hash.
+     * Get hash lock Merkle information
      */
     async getHashLockMerkleRaw(requestParameters: GetHashLockMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MerkleStateInfoDTO>> {
         if (requestParameters['hash'] == null) {
@@ -125,8 +140,8 @@ export class HashLockRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the hash lock merkle for a given hash.
-     * Get hash lock merkle information
+     * Returns the state Merkle proof for the hash lock entry associated with the given aggregate bonded transaction hash.
+     * Get hash lock Merkle information
      */
     async getHashLockMerkle(requestParameters: GetHashLockMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MerkleStateInfoDTO> {
         const response = await this.getHashLockMerkleRaw(requestParameters, initOverrides);
@@ -134,7 +149,103 @@ export class HashLockRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an array of hash locks.
+     * Returns hash lock entries for the given array of aggregate bonded transaction hashes.
+     * Get hash lock information for an array of hashes
+     */
+    async getHashLocksRaw(requestParameters: GetHashLocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<HashLockInfoDTO>>> {
+        if (requestParameters['transactionHashes'] == null) {
+            throw new runtime.RequiredError(
+                'transactionHashes',
+                'Required parameter "transactionHashes" was null or undefined when calling getHashLocks().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/lock/hash`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: TransactionHashesToJSON(requestParameters['transactionHashes']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(HashLockInfoDTOFromJSON));
+    }
+
+    /**
+     * Returns hash lock entries for the given array of aggregate bonded transaction hashes.
+     * Get hash lock information for an array of hashes
+     */
+    async getHashLocks(requestParameters: GetHashLocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<HashLockInfoDTO>> {
+        const response = await this.getHashLocksRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a paginated list of hash lock entries created by the given account address.
+     * Search hash lock entries by account
+     */
+    async searchAccountHashLocksRaw(requestParameters: SearchAccountHashLocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<HashLockPage>> {
+        if (requestParameters['address'] == null) {
+            throw new runtime.RequiredError(
+                'address',
+                'Required parameter "address" was null or undefined when calling searchAccountHashLocks().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['pageSize'] != null) {
+            queryParameters['pageSize'] = requestParameters['pageSize'];
+        }
+
+        if (requestParameters['pageNumber'] != null) {
+            queryParameters['pageNumber'] = requestParameters['pageNumber'];
+        }
+
+        if (requestParameters['offset'] != null) {
+            queryParameters['offset'] = requestParameters['offset'];
+        }
+
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/account/{address}/lock/hash`;
+        urlPath = urlPath.replace(`{${"address"}}`, encodeURIComponent(String(requestParameters['address'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => HashLockPageFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a paginated list of hash lock entries created by the given account address.
+     * Search hash lock entries by account
+     */
+    async searchAccountHashLocks(requestParameters: SearchAccountHashLocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<HashLockPage> {
+        const response = await this.searchAccountHashLocksRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a paginated list of hash lock entries, optionally filtered by owner address.
      * Search hash lock entries
      */
     async searchHashLockRaw(requestParameters: SearchHashLockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<HashLockPage>> {
@@ -176,7 +287,7 @@ export class HashLockRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an array of hash locks.
+     * Returns a paginated list of hash lock entries, optionally filtered by owner address.
      * Search hash lock entries
      */
     async searchHashLock(requestParameters: SearchHashLockRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<HashLockPage> {

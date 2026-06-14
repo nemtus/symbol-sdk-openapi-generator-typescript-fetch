@@ -14,6 +14,9 @@
 
 
 /**
+ * Block sort field:
+ * - `id`: sort by internal identifier.
+ * - `height`: sort by block height.
  * 
  * @export
  */

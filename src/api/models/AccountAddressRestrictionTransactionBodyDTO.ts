@@ -22,7 +22,7 @@ import {
 } from './AccountRestrictionFlagsEnum';
 
 /**
- * 
+ * Account address restriction transaction body that updates the allowed or blocked address list.
  * @export
  * @interface AccountAddressRestrictionTransactionBodyDTO
  */

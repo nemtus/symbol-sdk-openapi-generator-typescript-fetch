@@ -22,22 +22,25 @@ import {
 } from './MerkleStateInfoDTOTreeInner';
 
 /**
- * The merkle path information clients can use to proof the state of the given entity.
+ * The Merkle path information clients can use to prove the state of the given entity.
  * 
  * @export
  * @interface MerkleStateInfoDTO
  */
 export interface MerkleStateInfoDTO {
     /**
-     * The hex information of the complete merkle tree as returned by server api.
-     * More information can be found in chapter 4.3 of the catapult whitepaper.
+     * Serialized Patricia Merkle tree in compact hex format, as returned by the server.
+     * Used for [state proofs](https://docs.symbol.dev/concepts/data-validation.html) to verify
+     * entity state (account, mosaic, metadata, etc.) without downloading the full ledger.
+     * See [Symbol Technical Reference](https://symbol.github.io/symbol-technicalref/main.pdf)
+     * chapter 4.3 for the tree structure specification.
      * 
      * @type {string}
      * @memberof MerkleStateInfoDTO
      */
     raw: string;
     /**
-     * Merkle tree parsed from merkle tree raw.
+     * Merkle tree parsed from Merkle tree raw.
      * @type {Array<MerkleStateInfoDTOTreeInner>}
      * @memberof MerkleStateInfoDTO
      */

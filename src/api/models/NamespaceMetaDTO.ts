@@ -14,18 +14,24 @@
 
 import { mapValues } from '../runtime';
 /**
+ * Metadata about the namespace entry.
+ * Includes whether the namespace is currently active and its internal ordering index.
  * 
  * @export
  * @interface NamespaceMetaDTO
  */
 export interface NamespaceMetaDTO {
     /**
-     * If true, the namespace is active.
+     * Indicates whether the namespace is currently active at the chain height used to serve the request.
      * @type {boolean}
      * @memberof NamespaceMetaDTO
      */
     active: boolean;
     /**
+     * Internal namespace index used by the backend and Mongo storage to identify and order historical
+     * namespace entries. This value is returned for informational purposes only.
+     * API clients should not use it as a pagination cursor; use the standard pagination query parameters (`pageSize`,
+     * `pageNumber`, `offset`, `order`) instead.
      * 
      * @type {number}
      * @memberof NamespaceMetaDTO

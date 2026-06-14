@@ -29,43 +29,48 @@ import {
 } from './AliasActionEnum';
 
 /**
- * 
+ * Embedded transaction variant of `AddressAliasTransactionDTO`.
  * @export
  * @interface EmbeddedAddressAliasTransactionDTO
  */
 export interface EmbeddedAddressAliasTransactionDTO {
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof EmbeddedAddressAliasTransactionDTO
      */
     signerPublicKey: string;
     /**
-     * Entity version.
+     * Entity version. Indicates the schema variant for serialization and validation.
      * @type {number}
      * @memberof EmbeddedAddressAliasTransactionDTO
      */
     version: number;
     /**
-     * 
+     * Network type (mainnet or testnet). Ensures the entity targets the correct network.
      * @type {NetworkTypeEnum}
      * @memberof EmbeddedAddressAliasTransactionDTO
      */
     network: NetworkTypeEnum;
     /**
-     * 
+     * Entity type identifier (e.g. transaction type code, block type). Determines the entity schema.
      * @type {number}
      * @memberof EmbeddedAddressAliasTransactionDTO
      */
     type: number;
     /**
-     * Namespace identifier.
+     * Unique [namespace](https://docs.symbol.dev/concepts/namespaces.html) identifier.
+     * A 64-bit unsigned integer derived from the namespace name and its parent namespace ID,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof EmbeddedAddressAliasTransactionDTO
      */
     namespaceId: string;
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof EmbeddedAddressAliasTransactionDTO
      */

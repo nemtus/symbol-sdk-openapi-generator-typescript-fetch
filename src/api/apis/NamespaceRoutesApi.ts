@@ -95,8 +95,8 @@ export interface SearchNamespacesRequest {
 export class NamespaceRoutesApi extends runtime.BaseAPI {
 
     /**
-     * Returns friendly names for accounts.
-     * Get readable names for a set of accountIds
+     * Resolves namespace names linked to account addresses.  Submit an array of addresses in the request body. For each address, the response returns the namespace names currently linked to that account. 
+     * Get readable names for a set of accounts
      */
     async getAccountsNamesRaw(requestParameters: GetAccountsNamesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountsNamesDTO>> {
         if (requestParameters['addresses'] == null) {
@@ -127,8 +127,8 @@ export class NamespaceRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns friendly names for accounts.
-     * Get readable names for a set of accountIds
+     * Resolves namespace names linked to account addresses.  Submit an array of addresses in the request body. For each address, the response returns the namespace names currently linked to that account. 
+     * Get readable names for a set of accounts
      */
     async getAccountsNames(requestParameters: GetAccountsNamesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountsNamesDTO> {
         const response = await this.getAccountsNamesRaw(requestParameters, initOverrides);
@@ -136,7 +136,7 @@ export class NamespaceRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns friendly names for mosaics.
+     * Resolves namespace names linked to mosaic identifiers.  Submit an array of mosaic identifiers in the request body. For each requested mosaic identifier, the response returns one entry in the same order as the request. Each entry contains the namespace names currently linked to that identifier. An empty `names` array means no namespace aliases were resolved for that identifier. 
      * Get readable names for a set of mosaics
      */
     async getMosaicsNamesRaw(requestParameters: GetMosaicsNamesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MosaicsNamesDTO>> {
@@ -168,7 +168,7 @@ export class NamespaceRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns friendly names for mosaics.
+     * Resolves namespace names linked to mosaic identifiers.  Submit an array of mosaic identifiers in the request body. For each requested mosaic identifier, the response returns one entry in the same order as the request. Each entry contains the namespace names currently linked to that identifier. An empty `names` array means no namespace aliases were resolved for that identifier. 
      * Get readable names for a set of mosaics
      */
     async getMosaicsNames(requestParameters: GetMosaicsNamesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MosaicsNamesDTO> {
@@ -177,7 +177,7 @@ export class NamespaceRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the namespace for a given namespace identifier.
+     * Retrieves the current on-chain state for a namespace.
      * Get namespace information
      */
     async getNamespaceRaw(requestParameters: GetNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NamespaceInfoDTO>> {
@@ -207,7 +207,7 @@ export class NamespaceRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the namespace for a given namespace identifier.
+     * Retrieves the current on-chain state for a namespace.
      * Get namespace information
      */
     async getNamespace(requestParameters: GetNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NamespaceInfoDTO> {
@@ -216,8 +216,8 @@ export class NamespaceRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the namespace merkle for a given namespace identifier.
-     * Get namespace merkle information
+     * Returns the [Merkle proof](https://docs.symbol.dev/concepts/data-validation.html#merkle-proof) for a namespace.  Clients can use this information to verify that the namespace state is included in the node\'s state Merkle tree. If the supplied namespace ID does not exist, the endpoint still returns a Merkle proof response, but it is a negative proof showing that no namespace state entry exists for the requested namespace ID. See [Data Validation](https://docs.symbol.dev/concepts/data-validation.html) for an overview of Patricia Merkle trees and state proofs on Symbol. 
+     * Get namespace Merkle information
      */
     async getNamespaceMerkleRaw(requestParameters: GetNamespaceMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MerkleStateInfoDTO>> {
         if (requestParameters['namespaceId'] == null) {
@@ -246,8 +246,8 @@ export class NamespaceRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the namespace merkle for a given namespace identifier.
-     * Get namespace merkle information
+     * Returns the [Merkle proof](https://docs.symbol.dev/concepts/data-validation.html#merkle-proof) for a namespace.  Clients can use this information to verify that the namespace state is included in the node\'s state Merkle tree. If the supplied namespace ID does not exist, the endpoint still returns a Merkle proof response, but it is a negative proof showing that no namespace state entry exists for the requested namespace ID. See [Data Validation](https://docs.symbol.dev/concepts/data-validation.html) for an overview of Patricia Merkle trees and state proofs on Symbol. 
+     * Get namespace Merkle information
      */
     async getNamespaceMerkle(requestParameters: GetNamespaceMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MerkleStateInfoDTO> {
         const response = await this.getNamespaceMerkleRaw(requestParameters, initOverrides);
@@ -255,7 +255,7 @@ export class NamespaceRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns friendly names for namespaces.
+     * Resolves human-readable namespace names for namespace identifiers.  Submit an array of namespace identifiers in the request body. For each matching identifier, the response returns the namespace name. When a matching identifier is a subnamespace, the response will also include its parent namespace entry and parent namespace identifier. Identifiers that cannot be resolved are omitted from the response. 
      * Get readable names for a set of namespaces
      */
     async getNamespacesNamesRaw(requestParameters: GetNamespacesNamesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<NamespaceNameDTO>>> {
@@ -287,7 +287,7 @@ export class NamespaceRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns friendly names for namespaces.
+     * Resolves human-readable namespace names for namespace identifiers.  Submit an array of namespace identifiers in the request body. For each matching identifier, the response returns the namespace name. When a matching identifier is a subnamespace, the response will also include its parent namespace entry and parent namespace identifier. Identifiers that cannot be resolved are omitted from the response. 
      * Get readable names for a set of namespaces
      */
     async getNamespacesNames(requestParameters: GetNamespacesNamesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<NamespaceNameDTO>> {
@@ -296,7 +296,7 @@ export class NamespaceRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets an array of namespaces.
+     * Returns a paginated list of namespaces matching the given criteria.
      * Search namespaces
      */
     async searchNamespacesRaw(requestParameters: SearchNamespacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NamespacePage>> {
@@ -350,7 +350,7 @@ export class NamespaceRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets an array of namespaces.
+     * Returns a paginated list of namespaces matching the given criteria.
      * Search namespaces
      */
     async searchNamespaces(requestParameters: SearchNamespacesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NamespacePage> {

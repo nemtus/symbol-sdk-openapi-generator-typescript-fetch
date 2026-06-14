@@ -29,13 +29,13 @@ import {
 } from './HashLockInfoDTO';
 
 /**
- * 
+ * Paginated response containing hash lock entries.
  * @export
  * @interface HashLockPage
  */
 export interface HashLockPage {
     /**
-     * Array of hash locks.
+     * Hash lock entries matching the requested filters.
      * @type {Array<HashLockInfoDTO>}
      * @memberof HashLockPage
      */

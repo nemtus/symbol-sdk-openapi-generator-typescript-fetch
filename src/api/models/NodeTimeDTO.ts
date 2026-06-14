@@ -22,6 +22,8 @@ import {
 } from './CommunicationTimestampsDTO';
 
 /**
+ * Node time at request/response. Used to calculate transaction deadlines
+ * (deadline = node time + desired lifetime).
  * 
  * @export
  * @interface NodeTimeDTO

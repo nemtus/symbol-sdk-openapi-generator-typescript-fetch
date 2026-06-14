@@ -22,13 +22,15 @@ import {
 } from './AccountDTO';
 
 /**
- * 
+ * Account information including an internal resource identifier and the full account state.
  * @export
  * @interface AccountInfoDTO
  */
 export interface AccountInfoDTO {
     /**
-     * Internal resource identifier.
+     * Unique identifier of the object in the node's database (MongoDB ObjectId).
+     * Used as the `offset` parameter value for cursor-based pagination.
+     * 
      * @type {string}
      * @memberof AccountInfoDTO
      */

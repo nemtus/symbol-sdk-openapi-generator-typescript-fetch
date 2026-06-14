@@ -25,7 +25,6 @@ models/AccountInfoDTO.ts
 models/AccountKeyLinkNetworkPropertiesDTO.ts
 models/AccountKeyLinkTransactionBodyDTO.ts
 models/AccountKeyLinkTransactionDTO.ts
-models/AccountKeyTypeFlagsEnum.ts
 models/AccountLinkPublicKeyDTO.ts
 models/AccountLinkVotingKeyDTO.ts
 models/AccountLinkVotingKeysDTO.ts
@@ -69,9 +68,11 @@ models/BlockMetaDTO.ts
 models/BlockOrderByEnum.ts
 models/BlockPage.ts
 models/BmTreeSignature.ts
+models/BsonLongDTO.ts
 models/ChainInfoDTO.ts
 models/ChainPropertiesDTO.ts
 models/CommunicationTimestampsDTO.ts
+models/CompositeHashes.ts
 models/Cosignature.ts
 models/CosignatureDTO.ts
 models/DeploymentDTO.ts
@@ -106,7 +107,7 @@ models/EmbeddedVrfKeyLinkTransactionDTO.ts
 models/EntityDTO.ts
 models/FinalizationProofDTO.ts
 models/FinalizedBlockDTO.ts
-models/GetNetworkInflationAtHeight200Response.ts
+models/ForkHeightsDTO.ts
 models/HashLockEntryDTO.ts
 models/HashLockInfoDTO.ts
 models/HashLockNetworkPropertiesDTO.ts
@@ -191,7 +192,7 @@ models/NamespaceRegistrationTransactionBodyDTO.ts
 models/NamespaceRegistrationTransactionDTO.ts
 models/NamespaceRegistrationTypeEnum.ts
 models/NetworkConfigurationDTO.ts
-models/NetworkConfigurationDTOForkHeights.ts
+models/NetworkInflationDTO.ts
 models/NetworkPropertiesDTO.ts
 models/NetworkTypeDTO.ts
 models/NetworkTypeEnum.ts
@@ -199,7 +200,6 @@ models/NodeHealthDTO.ts
 models/NodeHealthInfoDTO.ts
 models/NodeIdentityEqualityStrategy.ts
 models/NodeInfoDTO.ts
-models/NodeKeyLinkNetworkPropertiesDTO.ts
 models/NodeKeyLinkTransactionBodyDTO.ts
 models/NodeKeyLinkTransactionDTO.ts
 models/NodeStatusEnum.ts
@@ -233,6 +233,7 @@ models/SourceDTO.ts
 models/StageEnum.ts
 models/StatementMetaDTO.ts
 models/StorageInfoDTO.ts
+models/StorageInfoDatabaseDTO.ts
 models/SupplementalPublicKeysDTO.ts
 models/TransactionBodyDTO.ts
 models/TransactionDTO.ts
@@ -259,10 +260,8 @@ models/TransferTransactionDTO.ts
 models/UnlockedAccountDTO.ts
 models/UnresolvedMosaic.ts
 models/VerifiableEntityDTO.ts
-models/VotingKeyLinkNetworkPropertiesDTO.ts
 models/VotingKeyLinkTransactionBodyDTO.ts
 models/VotingKeyLinkTransactionDTO.ts
-models/VrfKeyLinkNetworkPropertiesDTO.ts
 models/VrfKeyLinkTransactionBodyDTO.ts
 models/VrfKeyLinkTransactionDTO.ts
 models/index.ts

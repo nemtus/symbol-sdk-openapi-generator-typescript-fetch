@@ -14,9 +14,9 @@
 
 
 /**
- * Type of action:
- * * 0 - Unlink.
- * * 1 - Link.
+ * Link action:
+ * - `0`: Unlink key.
+ * - `1`: Link key.
  * 
  * @export
  */

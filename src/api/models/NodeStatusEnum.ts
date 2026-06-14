@@ -14,7 +14,7 @@
 
 
 /**
- * 
+ * Operational status of a service (e.g. API node or database).
  * @export
  */
 export const NodeStatusEnum = {

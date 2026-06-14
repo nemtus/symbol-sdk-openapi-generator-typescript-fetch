@@ -22,12 +22,14 @@ import {
 } from './MetadataEntryDTO';
 
 /**
- * 
+ * Metadata information including an internal resource identifier and the full metadata entry state.
  * @export
  * @interface MetadataInfoDTO
  */
 export interface MetadataInfoDTO {
     /**
+     * Unique identifier of the object in the node's database (MongoDB ObjectId).
+     * Used as the `offset` parameter value for cursor-based pagination.
      * 
      * @type {string}
      * @memberof MetadataInfoDTO

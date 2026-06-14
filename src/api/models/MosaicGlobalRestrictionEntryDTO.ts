@@ -22,13 +22,15 @@ import {
 } from './MosaicGlobalRestrictionEntryRestrictionDTO';
 
 /**
- * 
+ * Global mosaic restriction rule associated with a restriction key.
  * @export
  * @interface MosaicGlobalRestrictionEntryDTO
  */
 export interface MosaicGlobalRestrictionEntryDTO {
     /**
-     * Restriction key.
+     * Creator-defined 64-bit numeric identifier of a mosaic restriction, scoped to a mosaic.
+     * It can be derived from a human-readable name by hashing it, and is represented as a decimal string in stored restriction entries.
+     * 
      * @type {string}
      * @memberof MosaicGlobalRestrictionEntryDTO
      */

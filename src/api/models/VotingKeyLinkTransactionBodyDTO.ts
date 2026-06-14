@@ -22,25 +22,31 @@ import {
 } from './LinkActionEnum';
 
 /**
- * 
+ * Voting key link transaction body that links or unlinks a voting key for a finalization epoch range.
  * @export
  * @interface VotingKeyLinkTransactionBodyDTO
  */
 export interface VotingKeyLinkTransactionBodyDTO {
     /**
-     * 32 bytes voting public key.
+     * 32-byte voting public key used for finalization voting.
      * @type {string}
      * @memberof VotingKeyLinkTransactionBodyDTO
      */
     linkedPublicKey: string;
     /**
-     * Finalization Epoch
+     * [Finalization epoch](https://docs.symbol.dev/concepts/block.html#finalization) is a sequential
+     * integer. Each epoch groups a set of blocks for finalization voting; the interval is defined
+     * by the `votingSetGrouping` network property (e.g. 1440 blocks, ~12h on mainnet).
+     * 
      * @type {number}
      * @memberof VotingKeyLinkTransactionBodyDTO
      */
     startEpoch: number;
     /**
-     * Finalization Epoch
+     * [Finalization epoch](https://docs.symbol.dev/concepts/block.html#finalization) is a sequential
+     * integer. Each epoch groups a set of blocks for finalization voting; the interval is defined
+     * by the `votingSetGrouping` network property (e.g. 1440 blocks, ~12h on mainnet).
+     * 
      * @type {number}
      * @memberof VotingKeyLinkTransactionBodyDTO
      */

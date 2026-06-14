@@ -14,7 +14,7 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Array payload used to submit namespace identifiers.
  * @export
  * @interface NamespaceIds
  */

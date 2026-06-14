@@ -13,7 +13,17 @@
  */
 
 import { mapValues } from '../runtime';
+import type { NetworkTypeEnum } from './NetworkTypeEnum';
+import {
+    NetworkTypeEnumFromJSON,
+    NetworkTypeEnumFromJSONTyped,
+    NetworkTypeEnumToJSON,
+    NetworkTypeEnumToJSONTyped,
+} from './NetworkTypeEnum';
+
 /**
+ * Identity and configuration of the connected node: version, public key, network
+ * generation hash, roles (peer/api/voting), host, port, and friendly name.
  * 
  * @export
  * @interface NodeInfoDTO
@@ -26,31 +36,33 @@ export interface NodeInfoDTO {
      */
     version: number;
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof NodeInfoDTO
      */
     publicKey: string;
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof NodeInfoDTO
      */
     networkGenerationHashSeed: string;
     /**
-     * A number that defines the different roles the node provides. Possible roles are:
-     * * 1 - Peer node.
-     * * 2 - Api node.
-     * * 4 - Voting node.
-     * * 64 - IPv4 compatible node
-     * * 128 - IPv6 compatible node.
+     * Bitmask of roles the node provides.
+     * Individual flags:
+     * - `0`: No roles.
+     * - `1`: Peer node.
+     * - `2`: API node.
+     * - `4`: Voting node.
+     * - `64`: IPv4 compatible node.
+     * - `128`: IPv6 compatible node.
      * 
-     * The values are bitwise added together, Examples:
-     * 1 = Just Peer.
-     * 2 = Just Api.
-     * 3 = Peer and Api node.
-     * 7 = Peer, Api and Voting node.
-     * 65 = IPv4 and Peer node.
+     * Flags are combined with bitwise OR. Examples:
+     * - `1` = Peer only.
+     * - `2` = API only.
+     * - `3` = Peer and API.
+     * - `7` = Peer, API and Voting.
+     * - `65` = IPv4 and Peer.
      * 
      * @type {number}
      * @memberof NodeInfoDTO
@@ -64,10 +76,10 @@ export interface NodeInfoDTO {
     port: number;
     /**
      * 
-     * @type {number}
+     * @type {NetworkTypeEnum}
      * @memberof NodeInfoDTO
      */
-    networkIdentifier: number;
+    networkIdentifier: NetworkTypeEnum;
     /**
      * Node friendly name.
      * @type {string}
@@ -81,12 +93,14 @@ export interface NodeInfoDTO {
      */
     host: string;
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof NodeInfoDTO
      */
     nodePublicKey?: string;
 }
+
+
 
 /**
  * Check if a given object implements the NodeInfoDTO interface.
@@ -118,7 +132,7 @@ export function NodeInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'networkGenerationHashSeed': json['networkGenerationHashSeed'],
         'roles': json['roles'],
         'port': json['port'],
-        'networkIdentifier': json['networkIdentifier'],
+        'networkIdentifier': NetworkTypeEnumFromJSON(json['networkIdentifier']),
         'friendlyName': json['friendlyName'],
         'host': json['host'],
         'nodePublicKey': json['nodePublicKey'] == null ? undefined : json['nodePublicKey'],
@@ -141,7 +155,7 @@ export function NodeInfoDTOToJSONTyped(value?: NodeInfoDTO | null, ignoreDiscrim
         'networkGenerationHashSeed': value['networkGenerationHashSeed'],
         'roles': value['roles'],
         'port': value['port'],
-        'networkIdentifier': value['networkIdentifier'],
+        'networkIdentifier': NetworkTypeEnumToJSON(value['networkIdentifier']),
         'friendlyName': value['friendlyName'],
         'host': value['host'],
         'nodePublicKey': value['nodePublicKey'],

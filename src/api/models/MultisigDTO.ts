@@ -14,43 +14,52 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Current multisig state of an account.
  * @export
  * @interface MultisigDTO
  */
 export interface MultisigDTO {
     /**
-     * The version of the state
+     * Version of the on-chain state serialization format. Incremented when the storage
+     * schema of the entity changes (e.g. new fields are added), allowing the node to
+     * deserialize entries written under earlier formats.
+     * 
      * @type {number}
      * @memberof MultisigDTO
      */
     version: number;
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof MultisigDTO
      */
     accountAddress: string;
     /**
-     * A number that allows uint 32 values.
+     * Unsigned 32-bit integer.
+     * Represented as integer since it fits in JSON number precision.
+     * 
      * @type {number}
      * @memberof MultisigDTO
      */
     minApproval: number;
     /**
-     * A number that allows uint 32 values.
+     * Unsigned 32-bit integer.
+     * Represented as integer since it fits in JSON number precision.
+     * 
      * @type {number}
      * @memberof MultisigDTO
      */
     minRemoval: number;
     /**
-     * Addresses of the cosignatory accounts.
+     * Direct cosignatory addresses that manage this multisig account.
      * @type {Array<string>}
      * @memberof MultisigDTO
      */
     cosignatoryAddresses: Array<string>;
     /**
-     * Multisig accounts where the account is cosignatory.
+     * Multisig account addresses where this account acts as a cosignatory.
      * @type {Array<string>}
      * @memberof MultisigDTO
      */

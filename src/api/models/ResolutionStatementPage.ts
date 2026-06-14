@@ -29,13 +29,13 @@ import {
 } from './ResolutionStatementInfoDTO';
 
 /**
- * 
+ * Paginated response containing resolution statements.
  * @export
  * @interface ResolutionStatementPage
  */
 export interface ResolutionStatementPage {
     /**
-     * Array of transaction address resolution statements.
+     * Resolution statements matching the requested filters.
      * @type {Array<ResolutionStatementInfoDTO>}
      * @memberof ResolutionStatementPage
      */

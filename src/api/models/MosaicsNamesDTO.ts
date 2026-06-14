@@ -22,13 +22,16 @@ import {
 } from './MosaicNamesDTO';
 
 /**
+ * Collection of namespace name resolution results for mosaic identifiers.
+ * The response contains one entry per requested mosaic identifier and preserves the
+ * request order.
  * 
  * @export
  * @interface MosaicsNamesDTO
  */
 export interface MosaicsNamesDTO {
     /**
-     * Array of mosaic names.
+     * Array of namespace name entries resolved for the requested mosaic identifiers in request order.
      * @type {Array<MosaicNamesDTO>}
      * @memberof MosaicsNamesDTO
      */

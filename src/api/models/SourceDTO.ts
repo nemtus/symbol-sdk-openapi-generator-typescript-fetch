@@ -14,19 +14,23 @@
 
 import { mapValues } from '../runtime';
 /**
- * Transaction that triggered the receipt.
+ * Identifies the transaction source that produced the receipt or resolution entry.
  * @export
  * @interface SourceDTO
  */
 export interface SourceDTO {
     /**
-     * A number that allows uint 32 values.
+     * Unsigned 32-bit integer.
+     * Represented as integer since it fits in JSON number precision.
+     * 
      * @type {number}
      * @memberof SourceDTO
      */
     primaryId: number;
     /**
-     * A number that allows uint 32 values.
+     * Unsigned 32-bit integer.
+     * Represented as integer since it fits in JSON number precision.
+     * 
      * @type {number}
      * @memberof SourceDTO
      */

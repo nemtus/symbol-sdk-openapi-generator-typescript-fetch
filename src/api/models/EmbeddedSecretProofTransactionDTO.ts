@@ -29,46 +29,46 @@ import {
 } from './LockHashAlgorithmEnum';
 
 /**
- * 
+ * Embedded transaction variant of `SecretProofTransactionDTO`.
  * @export
  * @interface EmbeddedSecretProofTransactionDTO
  */
 export interface EmbeddedSecretProofTransactionDTO {
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof EmbeddedSecretProofTransactionDTO
      */
     signerPublicKey: string;
     /**
-     * Entity version.
+     * Entity version. Indicates the schema variant for serialization and validation.
      * @type {number}
      * @memberof EmbeddedSecretProofTransactionDTO
      */
     version: number;
     /**
-     * 
+     * Network type (mainnet or testnet). Ensures the entity targets the correct network.
      * @type {NetworkTypeEnum}
      * @memberof EmbeddedSecretProofTransactionDTO
      */
     network: NetworkTypeEnum;
     /**
-     * 
+     * Entity type identifier (e.g. transaction type code, block type). Determines the entity schema.
      * @type {number}
      * @memberof EmbeddedSecretProofTransactionDTO
      */
     type: number;
     /**
-     * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
-     * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
-     * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * Unresolved address encoded as a 48-character hexadecimal string (24 bytes).
+     * If bit 0 of byte 0 is not set, the value represents a regular address.
+     * Otherwise, it represents a namespace ID alias encoded as an unresolved address.
      * 
      * @type {string}
      * @memberof EmbeddedSecretProofTransactionDTO
      */
     recipientAddress: string;
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof EmbeddedSecretProofTransactionDTO
      */
@@ -80,7 +80,7 @@ export interface EmbeddedSecretProofTransactionDTO {
      */
     hashAlgorithm: LockHashAlgorithmEnum;
     /**
-     * Original random set of bytes.
+     * Proof data whose hash, using `hashAlgorithm`, must match `secret`.
      * @type {string}
      * @memberof EmbeddedSecretProofTransactionDTO
      */

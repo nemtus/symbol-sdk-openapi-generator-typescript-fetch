@@ -17,6 +17,7 @@ import * as runtime from '../runtime';
 import type {
   AccountRestrictionsInfoDTO,
   AccountRestrictionsPage,
+  Addresses,
   MerkleStateInfoDTO,
   ModelError,
   Order,
@@ -26,6 +27,8 @@ import {
     AccountRestrictionsInfoDTOToJSON,
     AccountRestrictionsPageFromJSON,
     AccountRestrictionsPageToJSON,
+    AddressesFromJSON,
+    AddressesToJSON,
     MerkleStateInfoDTOFromJSON,
     MerkleStateInfoDTOToJSON,
     ModelErrorFromJSON,
@@ -36,6 +39,10 @@ import {
 
 export interface GetAccountRestrictionsRequest {
     address: string;
+}
+
+export interface GetAccountRestrictionsBatchRequest {
+    addresses: Addresses;
 }
 
 export interface GetAccountRestrictionsMerkleRequest {
@@ -56,8 +63,8 @@ export interface SearchAccountRestrictionsRequest {
 export class RestrictionAccountRoutesApi extends runtime.BaseAPI {
 
     /**
-     * Returns the account restrictions for a given address.
-     * Get the account restrictions
+     * Returns the account restriction entry associated with the given account address.
+     * Get account restrictions
      */
     async getAccountRestrictionsRaw(requestParameters: GetAccountRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountRestrictionsInfoDTO>> {
         if (requestParameters['address'] == null) {
@@ -86,8 +93,8 @@ export class RestrictionAccountRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the account restrictions for a given address.
-     * Get the account restrictions
+     * Returns the account restriction entry associated with the given account address.
+     * Get account restrictions
      */
     async getAccountRestrictions(requestParameters: GetAccountRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountRestrictionsInfoDTO> {
         const response = await this.getAccountRestrictionsRaw(requestParameters, initOverrides);
@@ -95,8 +102,49 @@ export class RestrictionAccountRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the account restrictions merkle for a given address.
-     * Get the account restrictions merkle
+     * Returns account restriction entries for the given account addresses.
+     * Get account restrictions for an array of addresses
+     */
+    async getAccountRestrictionsBatchRaw(requestParameters: GetAccountRestrictionsBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AccountRestrictionsInfoDTO>>> {
+        if (requestParameters['addresses'] == null) {
+            throw new runtime.RequiredError(
+                'addresses',
+                'Required parameter "addresses" was null or undefined when calling getAccountRestrictionsBatch().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/restrictions/account`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: AddressesToJSON(requestParameters['addresses']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(AccountRestrictionsInfoDTOFromJSON));
+    }
+
+    /**
+     * Returns account restriction entries for the given account addresses.
+     * Get account restrictions for an array of addresses
+     */
+    async getAccountRestrictionsBatch(requestParameters: GetAccountRestrictionsBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<AccountRestrictionsInfoDTO>> {
+        const response = await this.getAccountRestrictionsBatchRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns the Merkle state proof for the account restriction entry associated with the given account address. If no account restriction entry exists for the supplied address, the endpoint still returns a Merkle proof response, but it is a negative proof showing that no account restriction state entry exists for the requested address. 
+     * Get account restrictions Merkle information
      */
     async getAccountRestrictionsMerkleRaw(requestParameters: GetAccountRestrictionsMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MerkleStateInfoDTO>> {
         if (requestParameters['address'] == null) {
@@ -125,8 +173,8 @@ export class RestrictionAccountRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the account restrictions merkle for a given address.
-     * Get the account restrictions merkle
+     * Returns the Merkle state proof for the account restriction entry associated with the given account address. If no account restriction entry exists for the supplied address, the endpoint still returns a Merkle proof response, but it is a negative proof showing that no account restriction state entry exists for the requested address. 
+     * Get account restrictions Merkle information
      */
     async getAccountRestrictionsMerkle(requestParameters: GetAccountRestrictionsMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MerkleStateInfoDTO> {
         const response = await this.getAccountRestrictionsMerkleRaw(requestParameters, initOverrides);
@@ -134,7 +182,7 @@ export class RestrictionAccountRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an array of account restrictions.
+     * Returns a paginated list of account restriction entries, optionally filtered by account address.
      * Search account restrictions
      */
     async searchAccountRestrictionsRaw(requestParameters: SearchAccountRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountRestrictionsPage>> {
@@ -176,7 +224,7 @@ export class RestrictionAccountRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an array of account restrictions.
+     * Returns a paginated list of account restriction entries, optionally filtered by account address.
      * Search account restrictions
      */
     async searchAccountRestrictions(requestParameters: SearchAccountRestrictionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountRestrictionsPage> {

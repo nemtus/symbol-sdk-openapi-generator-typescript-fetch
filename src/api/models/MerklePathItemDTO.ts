@@ -22,7 +22,9 @@ import {
 } from './PositionEnum';
 
 /**
- * Each merkle path item is composed of a hash, and a position relative to the proofHash being evaluated.
+ * A single node in the Merkle proof path. Each item contains a hash and its position
+ * (left or right) relative to the proofHash being evaluated.
+ * 
  * @export
  * @interface MerklePathItemDTO
  */
@@ -34,7 +36,7 @@ export interface MerklePathItemDTO {
      */
     position?: PositionEnum;
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof MerklePathItemDTO
      */

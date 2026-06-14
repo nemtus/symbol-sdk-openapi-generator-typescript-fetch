@@ -22,13 +22,13 @@ import {
 } from './MultisigDTO';
 
 /**
- * 
+ * Multisig account information with the full multisig state.
  * @export
  * @interface MultisigAccountInfoDTO
  */
 export interface MultisigAccountInfoDTO {
     /**
-     * 
+     * Full multisig state for the requested account.
      * @type {MultisigDTO}
      * @memberof MultisigAccountInfoDTO
      */

@@ -28,13 +28,18 @@ import {
  */
 export interface AccountRestrictionsDTO {
     /**
-     * The version of the state
+     * Version of the on-chain state serialization format. Incremented when the storage
+     * schema of the entity changes (e.g. new fields are added), allowing the node to
+     * deserialize entries written under earlier formats.
+     * 
      * @type {number}
      * @memberof AccountRestrictionsDTO
      */
     version: number;
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof AccountRestrictionsDTO
      */

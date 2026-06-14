@@ -14,19 +14,21 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Resolved namespace names linked to a specific account address.
  * @export
  * @interface AccountNamesDTO
  */
 export interface AccountNamesDTO {
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof AccountNamesDTO
      */
     address: string;
     /**
-     * Account linked namespace names.
+     * Namespace names currently linked to the account.
      * @type {Array<string>}
      * @memberof AccountNamesDTO
      */

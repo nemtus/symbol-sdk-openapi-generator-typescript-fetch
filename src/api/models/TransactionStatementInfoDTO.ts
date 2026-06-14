@@ -29,13 +29,15 @@ import {
 } from './TransactionStatementDTO';
 
 /**
- * Collection of receipts related to a transaction.
+ * Wrapper object containing one transaction statement and its metadata.
  * @export
  * @interface TransactionStatementInfoDTO
  */
 export interface TransactionStatementInfoDTO {
     /**
-     * Internal resource identifier.
+     * Unique identifier of the object in the node's database (MongoDB ObjectId).
+     * Used as the `offset` parameter value for cursor-based pagination.
+     * 
      * @type {string}
      * @memberof TransactionStatementInfoDTO
      */

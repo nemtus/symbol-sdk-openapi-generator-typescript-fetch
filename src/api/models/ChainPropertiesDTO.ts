@@ -32,13 +32,13 @@ export interface ChainPropertiesDTO {
      */
     enableVerifiableReceipts?: boolean;
     /**
-     * Mosaic id used as primary chain currency.
+     * Mosaic ID used as primary chain currency.
      * @type {string}
      * @memberof ChainPropertiesDTO
      */
     currencyMosaicId?: string;
     /**
-     * Mosaic id used to provide harvesting ability.
+     * Mosaic ID used to provide harvesting ability.
      * @type {string}
      * @memberof ChainPropertiesDTO
      */
@@ -140,6 +140,12 @@ export interface ChainPropertiesDTO {
      */
     minVoterBalance?: string;
     /**
+     * Number of blocks per finalization epoch (defines epoch duration for voting).
+     * @type {string}
+     * @memberof ChainPropertiesDTO
+     */
+    votingSetGrouping?: string;
+    /**
      * Maximum number of voting keys that can be registered at once per account.
      * @type {string}
      * @memberof ChainPropertiesDTO
@@ -170,7 +176,21 @@ export interface ChainPropertiesDTO {
      */
     harvestNetworkPercentage?: string;
     /**
-     * Address encoded using a 32-character set.
+     * Represents a unique account address in Base32 format. The first character indicates the network
+     * (`T` for testnet, `N` for mainnet). Addresses are 39 characters long, Base32-encoded,
+     * and include an embedded 3-byte checksum. The node validates this checksum, so an address
+     * with even a single altered character will be rejected.
+     * 
+     * @type {string}
+     * @memberof ChainPropertiesDTO
+     */
+    harvestNetworkFeeSinkAddressV1?: string;
+    /**
+     * Represents a unique account address in Base32 format. The first character indicates the network
+     * (`T` for testnet, `N` for mainnet). Addresses are 39 characters long, Base32-encoded,
+     * and include an embedded 3-byte checksum. The node validates this checksum, so an address
+     * with even a single altered character will be rejected.
+     * 
      * @type {string}
      * @memberof ChainPropertiesDTO
      */
@@ -226,11 +246,13 @@ export function ChainPropertiesDTOFromJSONTyped(json: any, ignoreDiscriminator: 
         'minHarvesterBalance': json['minHarvesterBalance'] == null ? undefined : json['minHarvesterBalance'],
         'maxHarvesterBalance': json['maxHarvesterBalance'] == null ? undefined : json['maxHarvesterBalance'],
         'minVoterBalance': json['minVoterBalance'] == null ? undefined : json['minVoterBalance'],
+        'votingSetGrouping': json['votingSetGrouping'] == null ? undefined : json['votingSetGrouping'],
         'maxVotingKeysPerAccount': json['maxVotingKeysPerAccount'] == null ? undefined : json['maxVotingKeysPerAccount'],
         'minVotingKeyLifetime': json['minVotingKeyLifetime'] == null ? undefined : json['minVotingKeyLifetime'],
         'maxVotingKeyLifetime': json['maxVotingKeyLifetime'] == null ? undefined : json['maxVotingKeyLifetime'],
         'harvestBeneficiaryPercentage': json['harvestBeneficiaryPercentage'] == null ? undefined : json['harvestBeneficiaryPercentage'],
         'harvestNetworkPercentage': json['harvestNetworkPercentage'] == null ? undefined : json['harvestNetworkPercentage'],
+        'harvestNetworkFeeSinkAddressV1': json['harvestNetworkFeeSinkAddressV1'] == null ? undefined : json['harvestNetworkFeeSinkAddressV1'],
         'harvestNetworkFeeSinkAddress': json['harvestNetworkFeeSinkAddress'] == null ? undefined : json['harvestNetworkFeeSinkAddress'],
         'blockPruneInterval': json['blockPruneInterval'] == null ? undefined : json['blockPruneInterval'],
         'maxTransactionsPerBlock': json['maxTransactionsPerBlock'] == null ? undefined : json['maxTransactionsPerBlock'],
@@ -268,11 +290,13 @@ export function ChainPropertiesDTOToJSONTyped(value?: ChainPropertiesDTO | null,
         'minHarvesterBalance': value['minHarvesterBalance'],
         'maxHarvesterBalance': value['maxHarvesterBalance'],
         'minVoterBalance': value['minVoterBalance'],
+        'votingSetGrouping': value['votingSetGrouping'],
         'maxVotingKeysPerAccount': value['maxVotingKeysPerAccount'],
         'minVotingKeyLifetime': value['minVotingKeyLifetime'],
         'maxVotingKeyLifetime': value['maxVotingKeyLifetime'],
         'harvestBeneficiaryPercentage': value['harvestBeneficiaryPercentage'],
         'harvestNetworkPercentage': value['harvestNetworkPercentage'],
+        'harvestNetworkFeeSinkAddressV1': value['harvestNetworkFeeSinkAddressV1'],
         'harvestNetworkFeeSinkAddress': value['harvestNetworkFeeSinkAddress'],
         'blockPruneInterval': value['blockPruneInterval'],
         'maxTransactionsPerBlock': value['maxTransactionsPerBlock'],

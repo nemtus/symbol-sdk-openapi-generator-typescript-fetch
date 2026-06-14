@@ -14,13 +14,15 @@
 
 import { mapValues } from '../runtime';
 /**
+ * Public keys of accounts with [harvesting](https://docs.symbol.dev/concepts/harvesting.html) unlocked.
+ * **Only accounts harvesting on the node you are querying** are returned. The scope is limited to this node, not the entire network.
  * 
  * @export
  * @interface UnlockedAccountDTO
  */
 export interface UnlockedAccountDTO {
     /**
-     * 
+     * Public keys of accounts harvesting on this node.
      * @type {Array<string>}
      * @memberof UnlockedAccountDTO
      */

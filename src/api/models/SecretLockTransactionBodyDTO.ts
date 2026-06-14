@@ -22,36 +22,41 @@ import {
 } from './LockHashAlgorithmEnum';
 
 /**
- * 
+ * Secret lock transaction body that locks a mosaic for a recipient until the secret proof is revealed.
  * @export
  * @interface SecretLockTransactionBodyDTO
  */
 export interface SecretLockTransactionBodyDTO {
     /**
-     * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
-     * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
-     * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * Unresolved address encoded as a 48-character hexadecimal string (24 bytes).
+     * If bit 0 of byte 0 is not set, the value represents a regular address.
+     * Otherwise, it represents a namespace ID alias encoded as an unresolved address.
      * 
      * @type {string}
      * @memberof SecretLockTransactionBodyDTO
      */
     recipientAddress: string;
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof SecretLockTransactionBodyDTO
      */
     secret: string;
     /**
-     * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
-     * is used instead of the real mosaic identifier.
+     * Unresolved mosaic identifier.
+     * If the most significant bit of byte 0 is set, the value contains a namespace ID alias
+     * instead of a concrete mosaic ID.
      * 
      * @type {string}
      * @memberof SecretLockTransactionBodyDTO
      */
     mosaicId: string;
     /**
-     * Absolute amount. An amount of 123456789 (absolute) for a mosaic with divisibility 6 means 123.456789 (relative).
+     * Absolute amount expressed in the mosaic's smallest (atomic) unit, with no decimal point.
+     * For example, an amount of `123456789` for a mosaic with divisibility 6 represents
+     * `123.456789` whole units. Encoded as a string to preserve precision, since the value
+     * is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof SecretLockTransactionBodyDTO
      */

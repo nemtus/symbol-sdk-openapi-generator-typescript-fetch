@@ -40,13 +40,13 @@ export interface NetworkPropertiesDTO {
      */
     nodeEqualityStrategy?: NodeIdentityEqualityStrategy;
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof NetworkPropertiesDTO
      */
     nemesisSignerPublicKey?: string;
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof NetworkPropertiesDTO
      */

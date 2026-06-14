@@ -35,24 +35,30 @@ import {
  */
 export interface MessageGroup {
     /**
-     * 
+     * Finalization stage (prevote, precommit, or count).
      * @type {StageEnum}
      * @memberof MessageGroup
      */
     stage: StageEnum;
     /**
-     * Height of the blockchain.
+     * Height of a block in the blockchain. Starts at 1 and increments by one per block.
+     * Represented as a string to preserve precision, since the value is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof MessageGroup
      */
     height: string;
     /**
+     * Block hashes voted for at this stage. Ordered by height; the first hash corresponds to `height`,
+     * subsequent hashes to consecutive block heights.
      * 
      * @type {Array<string>}
      * @memberof MessageGroup
      */
     hashes: Array<string>;
     /**
+     * BLS aggregate signatures from the finalizer set attesting to the votes.
+     * Each entry contains `root` and `bottom` of the Bm tree.
      * 
      * @type {Array<BmTreeSignature>}
      * @memberof MessageGroup

@@ -14,19 +14,25 @@
 
 import { mapValues } from '../runtime';
 /**
+ * Resolved namespace names linked to a specific mosaic identifier.
+ * An empty `names` array means no namespace aliases were resolved for that
+ * identifier.
  * 
  * @export
  * @interface MosaicNamesDTO
  */
 export interface MosaicNamesDTO {
     /**
-     * Mosaic identifier.
+     * Unique [mosaic](https://docs.symbol.dev/concepts/mosaic.html) identifier.
+     * A 64-bit unsigned integer derived from the creator's address and a registration nonce,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof MosaicNamesDTO
      */
     mosaicId: string;
     /**
-     * Mosaic linked namespace names.
+     * Namespace names currently linked to the mosaic identifier.
      * @type {Array<string>}
      * @memberof MosaicNamesDTO
      */

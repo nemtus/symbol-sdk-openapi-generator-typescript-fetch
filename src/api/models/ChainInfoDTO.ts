@@ -22,34 +22,45 @@ import {
 } from './FinalizedBlockDTO';
 
 /**
+ * Chain state: block height, chain score, and the latest finalized block (most recent
+ * block made permanent; it will never be rolled back).
+ * The chain score is the sum of all block scores in the chain; each block contributes
+ * `difficulty − time elapsed since previous block`. Higher score = better chain.
+ * Used during synchronization to select the canonical chain when forks exist.
  * 
  * @export
  * @interface ChainInfoDTO
  */
 export interface ChainInfoDTO {
     /**
-     * Height of the blockchain.
+     * Height of a block in the blockchain. Starts at 1 and increments by one per block.
+     * Represented as a string to preserve precision, since the value is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof ChainInfoDTO
      */
     height: string;
     /**
-     * Score of the blockchain. During synchronization, nodes try to get the
-     * blockchain with highest score in the network.
+     * 64-bit part of the full 128-bit chain score. The full score is
+     * `(scoreHigh << 64) + scoreLow`. Each block adds `difficulty − time elapsed since previous block`;
+     * the chain score is the sum. During synchronization, nodes select the chain with the highest score.
      * 
      * @type {string}
      * @memberof ChainInfoDTO
      */
     scoreHigh: string;
     /**
-     * Score of the blockchain. During synchronization, nodes try to get the
-     * blockchain with highest score in the network.
+     * 64-bit part of the full 128-bit chain score. The full score is
+     * `(scoreHigh << 64) + scoreLow`. Each block adds `difficulty − time elapsed since previous block`;
+     * the chain score is the sum. During synchronization, nodes select the chain with the highest score.
      * 
      * @type {string}
      * @memberof ChainInfoDTO
      */
     scoreLow: string;
     /**
+     * The most recent block that has been made permanent and will never be rolled back.
+     * See [finalization](https://docs.symbol.dev/concepts/block.html#finalization).
      * 
      * @type {FinalizedBlockDTO}
      * @memberof ChainInfoDTO

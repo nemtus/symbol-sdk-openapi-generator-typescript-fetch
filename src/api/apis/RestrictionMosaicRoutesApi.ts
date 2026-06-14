@@ -15,6 +15,7 @@
 
 import * as runtime from '../runtime';
 import type {
+  CompositeHashes,
   MerkleStateInfoDTO,
   ModelError,
   MosaicRestrictionDTO,
@@ -23,6 +24,8 @@ import type {
   Order,
 } from '../models/index';
 import {
+    CompositeHashesFromJSON,
+    CompositeHashesToJSON,
     MerkleStateInfoDTOFromJSON,
     MerkleStateInfoDTOToJSON,
     ModelErrorFromJSON,
@@ -39,6 +42,10 @@ import {
 
 export interface GetMosaicRestrictionsRequest {
     compositeHash: string;
+}
+
+export interface GetMosaicRestrictionsBatchRequest {
+    compositeHashes: CompositeHashes;
 }
 
 export interface GetMosaicRestrictionsMerkleRequest {
@@ -61,8 +68,8 @@ export interface SearchMosaicRestrictionsRequest {
 export class RestrictionMosaicRoutesApi extends runtime.BaseAPI {
 
     /**
-     * Returns the mosaic restrictions for a composite hash.
-     * Get the mosaic restrictions
+     * Returns the mosaic restriction entry associated with the given composite hash.
+     * Get mosaic restrictions
      */
     async getMosaicRestrictionsRaw(requestParameters: GetMosaicRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MosaicRestrictionDTO>> {
         if (requestParameters['compositeHash'] == null) {
@@ -91,8 +98,8 @@ export class RestrictionMosaicRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the mosaic restrictions for a composite hash.
-     * Get the mosaic restrictions
+     * Returns the mosaic restriction entry associated with the given composite hash.
+     * Get mosaic restrictions
      */
     async getMosaicRestrictions(requestParameters: GetMosaicRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MosaicRestrictionDTO> {
         const response = await this.getMosaicRestrictionsRaw(requestParameters, initOverrides);
@@ -100,8 +107,49 @@ export class RestrictionMosaicRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the mosaic restrictions merkle for a given composite hash.
-     * Get the mosaic restrictions merkle
+     * Returns mosaic restriction entries for the given composite hashes.
+     * Get mosaic restrictions for an array of composite hashes
+     */
+    async getMosaicRestrictionsBatchRaw(requestParameters: GetMosaicRestrictionsBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<MosaicRestrictionDTO>>> {
+        if (requestParameters['compositeHashes'] == null) {
+            throw new runtime.RequiredError(
+                'compositeHashes',
+                'Required parameter "compositeHashes" was null or undefined when calling getMosaicRestrictionsBatch().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/restrictions/mosaic`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CompositeHashesToJSON(requestParameters['compositeHashes']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(MosaicRestrictionDTOFromJSON));
+    }
+
+    /**
+     * Returns mosaic restriction entries for the given composite hashes.
+     * Get mosaic restrictions for an array of composite hashes
+     */
+    async getMosaicRestrictionsBatch(requestParameters: GetMosaicRestrictionsBatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MosaicRestrictionDTO>> {
+        const response = await this.getMosaicRestrictionsBatchRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns the Merkle state proof for the mosaic restriction entry associated with the given composite hash. If no mosaic restriction entry exists for the supplied composite hash, the endpoint still returns a Merkle proof response, but it is a negative proof showing that no mosaic restriction state entry exists for the requested composite hash. 
+     * Get mosaic restrictions Merkle information
      */
     async getMosaicRestrictionsMerkleRaw(requestParameters: GetMosaicRestrictionsMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MerkleStateInfoDTO>> {
         if (requestParameters['compositeHash'] == null) {
@@ -130,8 +178,8 @@ export class RestrictionMosaicRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the mosaic restrictions merkle for a given composite hash.
-     * Get the mosaic restrictions merkle
+     * Returns the Merkle state proof for the mosaic restriction entry associated with the given composite hash. If no mosaic restriction entry exists for the supplied composite hash, the endpoint still returns a Merkle proof response, but it is a negative proof showing that no mosaic restriction state entry exists for the requested composite hash. 
+     * Get mosaic restrictions Merkle information
      */
     async getMosaicRestrictionsMerkle(requestParameters: GetMosaicRestrictionsMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MerkleStateInfoDTO> {
         const response = await this.getMosaicRestrictionsMerkleRaw(requestParameters, initOverrides);
@@ -139,7 +187,7 @@ export class RestrictionMosaicRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an array of mosaic restrictions.
+     * Returns a paginated list of mosaic restriction entries, optionally filtered by mosaic ID, entry type, and target address.
      * Search mosaic restrictions
      */
     async searchMosaicRestrictionsRaw(requestParameters: SearchMosaicRestrictionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MosaicRestrictionsPage>> {
@@ -189,7 +237,7 @@ export class RestrictionMosaicRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an array of mosaic restrictions.
+     * Returns a paginated list of mosaic restriction entries, optionally filtered by mosaic ID, entry type, and target address.
      * Search mosaic restrictions
      */
     async searchMosaicRestrictions(requestParameters: SearchMosaicRestrictionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MosaicRestrictionsPage> {

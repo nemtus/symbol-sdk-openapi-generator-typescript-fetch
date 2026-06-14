@@ -29,13 +29,13 @@ import {
 } from './NamespaceInfoDTO';
 
 /**
- * 
+ * Paginated list of namespace information entries.
  * @export
  * @interface NamespacePage
  */
 export interface NamespacePage {
     /**
-     * Array of namespaces.
+     * Array of namespace information entries.
      * @type {Array<NamespaceInfoDTO>}
      * @memberof NamespacePage
      */

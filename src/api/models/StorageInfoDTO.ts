@@ -13,30 +13,55 @@
  */
 
 import { mapValues } from '../runtime';
+import type { StorageInfoDatabaseDTO } from './StorageInfoDatabaseDTO';
+import {
+    StorageInfoDatabaseDTOFromJSON,
+    StorageInfoDatabaseDTOFromJSONTyped,
+    StorageInfoDatabaseDTOToJSON,
+    StorageInfoDatabaseDTOToJSONTyped,
+} from './StorageInfoDatabaseDTO';
+
 /**
+ * Storage statistics for the node: estimated document counts in the REST server's
+ * MongoDB collections (blocks, transactions, accounts) plus database allocation
+ * stats from `db.stats()`. Counts use estimated collection sizes and may differ
+ * slightly from exact figures under load.
  * 
  * @export
  * @interface StorageInfoDTO
  */
 export interface StorageInfoDTO {
     /**
-     * Number of blocks stored.
+     * Estimated number of block documents in the `blocks` collection. Under normal
+     * operation this tracks chain height; when synchronizing, it lags the network.
+     * 
      * @type {number}
      * @memberof StorageInfoDTO
      */
     numBlocks: number;
     /**
-     * Number of transactions stored.
+     * Estimated number of confirmed transaction documents in the `transactions`
+     * collection. Excludes unconfirmed transactions. For aggregate transactions,
+     * each inner transaction is stored as a separate document.
+     * 
      * @type {number}
      * @memberof StorageInfoDTO
      */
     numTransactions: number;
     /**
-     * Number of accounts created.
+     * Estimated number of account documents in the `accounts` collection (addresses
+     * with persisted on-chain state).
+     * 
      * @type {number}
      * @memberof StorageInfoDTO
      */
     numAccounts: number;
+    /**
+     * 
+     * @type {StorageInfoDatabaseDTO}
+     * @memberof StorageInfoDTO
+     */
+    database: StorageInfoDatabaseDTO;
 }
 
 /**
@@ -46,6 +71,7 @@ export function instanceOfStorageInfoDTO(value: Record<string, any>): value is S
     if (!('numBlocks' in value) || value['numBlocks'] === undefined) return false;
     if (!('numTransactions' in value) || value['numTransactions'] === undefined) return false;
     if (!('numAccounts' in value) || value['numAccounts'] === undefined) return false;
+    if (!('database' in value) || value['database'] === undefined) return false;
     return true;
 }
 
@@ -62,6 +88,7 @@ export function StorageInfoDTOFromJSONTyped(json: any, ignoreDiscriminator: bool
         'numBlocks': json['numBlocks'],
         'numTransactions': json['numTransactions'],
         'numAccounts': json['numAccounts'],
+        'database': StorageInfoDatabaseDTOFromJSON(json['database']),
     };
 }
 
@@ -79,6 +106,7 @@ export function StorageInfoDTOToJSONTyped(value?: StorageInfoDTO | null, ignoreD
         'numBlocks': value['numBlocks'],
         'numTransactions': value['numTransactions'],
         'numAccounts': value['numAccounts'],
+        'database': StorageInfoDatabaseDTOToJSON(value['database']),
     };
 }
 

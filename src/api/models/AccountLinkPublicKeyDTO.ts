@@ -14,13 +14,13 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Public key linked to the account for a supplemental role (linked, node, or VRF).
  * @export
  * @interface AccountLinkPublicKeyDTO
  */
 export interface AccountLinkPublicKeyDTO {
     /**
-     * 
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof AccountLinkPublicKeyDTO
      */

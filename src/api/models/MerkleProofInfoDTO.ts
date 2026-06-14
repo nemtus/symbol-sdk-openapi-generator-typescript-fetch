@@ -22,13 +22,13 @@ import {
 } from './MerklePathItemDTO';
 
 /**
- * 
+ * Merkle proof information containing the path items needed to recalculate the Merkle root.
  * @export
  * @interface MerkleProofInfoDTO
  */
 export interface MerkleProofInfoDTO {
     /**
-     * List of complementary merkle path items needed to recalculate the merkle root.
+     * List of complementary Merkle path items needed to recalculate the Merkle root.
      * @type {Array<MerklePathItemDTO>}
      * @memberof MerkleProofInfoDTO
      */

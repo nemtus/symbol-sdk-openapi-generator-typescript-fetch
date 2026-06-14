@@ -14,41 +14,48 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Mosaic address restriction transaction body that sets a restriction value for a target address and key.
  * @export
  * @interface MosaicAddressRestrictionTransactionBodyDTO
  */
 export interface MosaicAddressRestrictionTransactionBodyDTO {
     /**
-     * Mosaic identifier. If the most significant bit of byte 0 is set, a namespaceId (alias)
-     * is used instead of the real mosaic identifier.
+     * Unresolved mosaic identifier.
+     * If the most significant bit of byte 0 is set, the value contains a namespace ID alias
+     * instead of a concrete mosaic ID.
      * 
      * @type {string}
      * @memberof MosaicAddressRestrictionTransactionBodyDTO
      */
     mosaicId: string;
     /**
-     * Restriction key.
+     * Restriction key represented as a 64-bit hexadecimal value.
      * @type {string}
      * @memberof MosaicAddressRestrictionTransactionBodyDTO
      */
     restrictionKey: string;
     /**
-     * Restriction value.
+     * Unsigned 64-bit value associated with a mosaic restriction key, represented as a decimal string.
+     * For address restrictions, it is the value assigned to the target address;
+     * for global restrictions, it is the threshold evaluated with the restriction type.
+     * 
      * @type {string}
      * @memberof MosaicAddressRestrictionTransactionBodyDTO
      */
     previousRestrictionValue: string;
     /**
-     * Restriction value.
+     * Unsigned 64-bit value associated with a mosaic restriction key, represented as a decimal string.
+     * For address restrictions, it is the value assigned to the target address;
+     * for global restrictions, it is the threshold evaluated with the restriction type.
+     * 
      * @type {string}
      * @memberof MosaicAddressRestrictionTransactionBodyDTO
      */
     newRestrictionValue: string;
     /**
-     * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
-     * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
-     * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * Unresolved address encoded as a 48-character hexadecimal string (24 bytes).
+     * If bit 0 of byte 0 is not set, the value represents a regular address.
+     * Otherwise, it represents a namespace ID alias encoded as an unresolved address.
      * 
      * @type {string}
      * @memberof MosaicAddressRestrictionTransactionBodyDTO

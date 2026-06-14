@@ -22,22 +22,22 @@ import {
 } from './LockHashAlgorithmEnum';
 
 /**
- * 
+ * Secret proof transaction body that reveals the proof needed to complete a secret lock.
  * @export
  * @interface SecretProofTransactionBodyDTO
  */
 export interface SecretProofTransactionBodyDTO {
     /**
-     * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
-     * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
-     * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * Unresolved address encoded as a 48-character hexadecimal string (24 bytes).
+     * If bit 0 of byte 0 is not set, the value represents a regular address.
+     * Otherwise, it represents a namespace ID alias encoded as an unresolved address.
      * 
      * @type {string}
      * @memberof SecretProofTransactionBodyDTO
      */
     recipientAddress: string;
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof SecretProofTransactionBodyDTO
      */
@@ -49,7 +49,7 @@ export interface SecretProofTransactionBodyDTO {
      */
     hashAlgorithm: LockHashAlgorithmEnum;
     /**
-     * Original random set of bytes.
+     * Proof data whose hash, using `hashAlgorithm`, must match `secret`.
      * @type {string}
      * @memberof SecretProofTransactionBodyDTO
      */

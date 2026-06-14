@@ -27,13 +27,13 @@ import {
     ChainPropertiesDTOToJSON,
     ChainPropertiesDTOToJSONTyped,
 } from './ChainPropertiesDTO';
-import type { NetworkConfigurationDTOForkHeights } from './NetworkConfigurationDTOForkHeights';
+import type { ForkHeightsDTO } from './ForkHeightsDTO';
 import {
-    NetworkConfigurationDTOForkHeightsFromJSON,
-    NetworkConfigurationDTOForkHeightsFromJSONTyped,
-    NetworkConfigurationDTOForkHeightsToJSON,
-    NetworkConfigurationDTOForkHeightsToJSONTyped,
-} from './NetworkConfigurationDTOForkHeights';
+    ForkHeightsDTOFromJSON,
+    ForkHeightsDTOFromJSONTyped,
+    ForkHeightsDTOToJSON,
+    ForkHeightsDTOToJSONTyped,
+} from './ForkHeightsDTO';
 import type { NetworkPropertiesDTO } from './NetworkPropertiesDTO';
 import {
     NetworkPropertiesDTOFromJSON,
@@ -43,6 +43,8 @@ import {
 } from './NetworkPropertiesDTO';
 
 /**
+ * Full network configuration: network identity, chain parameters, plugin settings,
+ * and fork heights. Combines data from catapult-server config files (network, chain, plugins).
  * 
  * @export
  * @interface NetworkConfigurationDTO
@@ -68,12 +70,12 @@ export interface NetworkConfigurationDTO {
     plugins: PluginsPropertiesDTO;
     /**
      * 
-     * @type {NetworkConfigurationDTOForkHeights}
+     * @type {ForkHeightsDTO}
      * @memberof NetworkConfigurationDTO
      */
-    forkHeights: NetworkConfigurationDTOForkHeights;
+    forkHeights: ForkHeightsDTO;
     /**
-     * Multisignature approvals authorizing the network treasury reissuance event for the specified fork height. 
+     * Multisignature approvals authorizing the network treasury reissuance event for the specified fork height.
      * More: https://hackmd.io/@syndicate/governance.
      * 
      * @type {Array<string>}
@@ -114,7 +116,7 @@ export function NetworkConfigurationDTOFromJSONTyped(json: any, ignoreDiscrimina
         'network': NetworkPropertiesDTOFromJSON(json['network']),
         'chain': ChainPropertiesDTOFromJSON(json['chain']),
         'plugins': PluginsPropertiesDTOFromJSON(json['plugins']),
-        'forkHeights': NetworkConfigurationDTOForkHeightsFromJSON(json['forkHeights']),
+        'forkHeights': ForkHeightsDTOFromJSON(json['forkHeights']),
         'treasuryReissuanceTransactionSignatures': json['treasuryReissuanceTransactionSignatures'] == null ? undefined : json['treasuryReissuanceTransactionSignatures'],
         'corruptAggregateTransactionHashes': json['corruptAggregateTransactionHashes'] == null ? undefined : json['corruptAggregateTransactionHashes'],
     };
@@ -134,7 +136,7 @@ export function NetworkConfigurationDTOToJSONTyped(value?: NetworkConfigurationD
         'network': NetworkPropertiesDTOToJSON(value['network']),
         'chain': ChainPropertiesDTOToJSON(value['chain']),
         'plugins': PluginsPropertiesDTOToJSON(value['plugins']),
-        'forkHeights': NetworkConfigurationDTOForkHeightsToJSON(value['forkHeights']),
+        'forkHeights': ForkHeightsDTOToJSON(value['forkHeights']),
         'treasuryReissuanceTransactionSignatures': value['treasuryReissuanceTransactionSignatures'],
         'corruptAggregateTransactionHashes': value['corruptAggregateTransactionHashes'],
     };

@@ -22,13 +22,13 @@ import {
 } from './LinkActionEnum';
 
 /**
- * 
+ * Account key link transaction body that links or unlinks a remote account public key.
  * @export
  * @interface AccountKeyLinkTransactionBodyDTO
  */
 export interface AccountKeyLinkTransactionBodyDTO {
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof AccountKeyLinkTransactionBodyDTO
      */

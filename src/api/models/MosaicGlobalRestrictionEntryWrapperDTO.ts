@@ -29,19 +29,22 @@ import {
 } from './MosaicRestrictionEntryTypeEnum';
 
 /**
- * 
+ * Wrapper object containing one mosaic global restriction entry.
  * @export
  * @interface MosaicGlobalRestrictionEntryWrapperDTO
  */
 export interface MosaicGlobalRestrictionEntryWrapperDTO {
     /**
-     * The version of the state
+     * Version of the on-chain state serialization format. Incremented when the storage
+     * schema of the entity changes (e.g. new fields are added), allowing the node to
+     * deserialize entries written under earlier formats.
+     * 
      * @type {number}
      * @memberof MosaicGlobalRestrictionEntryWrapperDTO
      */
     version: number;
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof MosaicGlobalRestrictionEntryWrapperDTO
      */
@@ -53,13 +56,16 @@ export interface MosaicGlobalRestrictionEntryWrapperDTO {
      */
     entryType: MosaicRestrictionEntryTypeEnum;
     /**
-     * Mosaic identifier.
+     * Unique [mosaic](https://docs.symbol.dev/concepts/mosaic.html) identifier.
+     * A 64-bit unsigned integer derived from the creator's address and a registration nonce,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof MosaicGlobalRestrictionEntryWrapperDTO
      */
     mosaicId: string;
     /**
-     * 
+     * Global restriction rules associated with the mosaic.
      * @type {Array<MosaicGlobalRestrictionEntryDTO>}
      * @memberof MosaicGlobalRestrictionEntryWrapperDTO
      */

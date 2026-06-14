@@ -29,13 +29,21 @@ import {
 } from './TransactionInfoDTOMeta';
 
 /**
+ * Transaction record returned by transaction lookup and search endpoints.
+ * 
+ * The same wrapper is used for confirmed, unconfirmed, and partial transaction groups. The exact
+ * `meta` shape depends on whether the returned entry is a top-level transaction or an embedded
+ * transaction inside an aggregate. When an aggregate transaction is retrieved by ID or hash, REST can
+ * also expand its embedded transactions under `transaction.transactions`.
  * 
  * @export
  * @interface TransactionInfoDTO
  */
 export interface TransactionInfoDTO {
     /**
-     * Internal resource identifier.
+     * Unique identifier of the object in the node's database (MongoDB ObjectId).
+     * Used as the `offset` parameter value for cursor-based pagination.
+     * 
      * @type {string}
      * @memberof TransactionInfoDTO
      */

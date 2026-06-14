@@ -14,23 +14,24 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Wrapper object containing transaction identifiers for batch transaction lookup.
  * @export
  * @interface TransactionIds
  */
 export interface TransactionIds {
     /**
-     * Array of transaction identifiers.
+     * Array of transaction IDs or transaction hashes.
      * @type {Array<string>}
      * @memberof TransactionIds
      */
-    transactionIds?: Array<string>;
+    transactionIds: Array<string>;
 }
 
 /**
  * Check if a given object implements the TransactionIds interface.
  */
 export function instanceOfTransactionIds(value: Record<string, any>): value is TransactionIds {
+    if (!('transactionIds' in value) || value['transactionIds'] === undefined) return false;
     return true;
 }
 
@@ -44,7 +45,7 @@ export function TransactionIdsFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'transactionIds': json['transactionIds'] == null ? undefined : json['transactionIds'],
+        'transactionIds': json['transactionIds'],
     };
 }
 

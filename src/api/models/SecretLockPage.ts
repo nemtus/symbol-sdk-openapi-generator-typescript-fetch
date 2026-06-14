@@ -29,13 +29,13 @@ import {
 } from './SecretLockInfoDTO';
 
 /**
- * 
+ * Paginated response containing secret lock entries.
  * @export
  * @interface SecretLockPage
  */
 export interface SecretLockPage {
     /**
-     * Array of secret locks.
+     * Secret lock entries matching the requested filters.
      * @type {Array<SecretLockInfoDTO>}
      * @memberof SecretLockPage
      */

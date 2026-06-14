@@ -22,6 +22,7 @@ import {
 } from './DeploymentDTO';
 
 /**
+ * REST component version and deployment metadata.
  * 
  * @export
  * @interface ServerDTO

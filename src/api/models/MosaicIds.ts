@@ -14,7 +14,7 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Array payload used to submit mosaic identifiers.
  * @export
  * @interface MosaicIds
  */

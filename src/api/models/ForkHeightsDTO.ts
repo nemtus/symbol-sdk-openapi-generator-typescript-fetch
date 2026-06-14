@@ -14,83 +14,91 @@
 
 import { mapValues } from '../runtime';
 /**
+ * Block heights at which protocol changes (hard forks) took effect. Used during
+ * synchronization to apply correct validation rules for each block range.
  * 
  * @export
- * @interface NetworkConfigurationDTOForkHeights
+ * @interface ForkHeightsDTO
  */
-export interface NetworkConfigurationDTOForkHeights {
+export interface ForkHeightsDTO {
     /**
-     * The block height from which Symbol correctly calculates the total voting balance for finalization by including only the stake of accounts with 
-     * active voting keys registered for the current finalization epoch. 
+     * The block height from which Symbol correctly calculates the total voting
+     * balance for finalization by including only the stake of accounts with
+     * active voting keys registered for the current finalization epoch.
      * More: https://hackmd.io/@syndicate/postmortem-140921.
      * 
      * @type {string}
-     * @memberof NetworkConfigurationDTOForkHeights
+     * @memberof ForkHeightsDTO
      */
     totalVotingBalanceCalculationFix?: string;
     /**
-     * The block height of the Cyprus hard fork that implemented treasury reissuance according to the governance decision. 
+     * The block height of the Cyprus hard fork that implemented treasury reissuance according to the governance decision.
      * More: https://hackmd.io/@syndicate/governance.
      * 
      * @type {string}
-     * @memberof NetworkConfigurationDTOForkHeights
+     * @memberof ForkHeightsDTO
      */
     treasuryReissuance?: string;
     /**
-     * The block height from which nodes enforce strict validation of aggregate transaction hashes. 
-     * Hashes must be computed from unpadded embedded transactions using the correct Merkle tree algorithm; legacy/buggy hash formats are rejected.
+     * The block height from which nodes enforce strict validation of aggregate transaction hashes.
+     * Hashes must be computed from unpadded embedded transactions using the correct
+     * Merkle tree algorithm; legacy/buggy hash formats are rejected.
      * More: https://hackmd.io/@syndicate/postmortem-251022.
      * 
      * @type {string}
-     * @memberof NetworkConfigurationDTOForkHeights
+     * @memberof ForkHeightsDTO
      */
     strictAggregateTransactionHash?: string;
     /**
-     * Comma-separated list of block heights at which secret-lock uniqueness checks must be skipped during synchronization to reproduce historical (incorrect) chain behavior.
+     * Comma-separated list of block heights at which secret-lock uniqueness checks must be skipped
+     * during synchronization to reproduce historical (incorrect) chain behavior.
      * More: https://thesymbolsyndicate.notion.site/april-2024-secret-locks-e3afb825d2ac4a029f88f74dfe6f02d8?pvs=74.
      * 
      * @type {string}
-     * @memberof NetworkConfigurationDTOForkHeights
+     * @memberof ForkHeightsDTO
      */
     skipSecretLockUniquenessChecks?: string;
     /**
-     * Comma-separated list of block heights at which secret-lock expiration processing must be skipped during synchronization to reproduce historical (incorrect) chain behavior.
+     * Comma-separated list of block heights at which secret-lock expiration processing must
+     * be skipped during synchronization to reproduce historical (incorrect) chain behavior.
      * More: https://thesymbolsyndicate.notion.site/april-2024-secret-locks-e3afb825d2ac4a029f88f74dfe6f02d8?pvs=74.
      * 
      * @type {string}
-     * @memberof NetworkConfigurationDTOForkHeights
+     * @memberof ForkHeightsDTO
      */
     skipSecretLockExpirations?: string;
     /**
-     * Comma-separated list of block heights at which secret-lock expiration processing must be forcibly executed during synchronization to reproduce historical (incorrect) chain behavior.
+     * Comma-separated list of block heights at which secret-lock expiration processing must
+     * be forcibly executed during synchronization to reproduce historical (incorrect) chain behavior.
      * More: https://thesymbolsyndicate.notion.site/april-2024-secret-locks-e3afb825d2ac4a029f88f74dfe6f02d8?pvs=74.
      * 
      * @type {string}
-     * @memberof NetworkConfigurationDTOForkHeights
+     * @memberof ForkHeightsDTO
      */
     forceSecretLockExpirations?: string;
     /**
-     * The block height from which Aggregate V3 transactions become mandatory and payloadSize is included in the aggregate transaction hash calculation, ensuring unique transaction hashes.
+     * The block height from which Aggregate V3 transactions become mandatory and payloadSize is included
+     * in the aggregate transaction hash calculation, ensuring unique transaction hashes.
      * More: https://thesymbolsyndicate.notion.site/post-mortem-october-25.
      * 
      * @type {string}
-     * @memberof NetworkConfigurationDTOForkHeights
+     * @memberof ForkHeightsDTO
      */
     uniqueAggregateTransactionHash?: string;
 }
 
 /**
- * Check if a given object implements the NetworkConfigurationDTOForkHeights interface.
+ * Check if a given object implements the ForkHeightsDTO interface.
  */
-export function instanceOfNetworkConfigurationDTOForkHeights(value: Record<string, any>): value is NetworkConfigurationDTOForkHeights {
+export function instanceOfForkHeightsDTO(value: Record<string, any>): value is ForkHeightsDTO {
     return true;
 }
 
-export function NetworkConfigurationDTOForkHeightsFromJSON(json: any): NetworkConfigurationDTOForkHeights {
-    return NetworkConfigurationDTOForkHeightsFromJSONTyped(json, false);
+export function ForkHeightsDTOFromJSON(json: any): ForkHeightsDTO {
+    return ForkHeightsDTOFromJSONTyped(json, false);
 }
 
-export function NetworkConfigurationDTOForkHeightsFromJSONTyped(json: any, ignoreDiscriminator: boolean): NetworkConfigurationDTOForkHeights {
+export function ForkHeightsDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): ForkHeightsDTO {
     if (json == null) {
         return json;
     }
@@ -106,11 +114,11 @@ export function NetworkConfigurationDTOForkHeightsFromJSONTyped(json: any, ignor
     };
 }
 
-export function NetworkConfigurationDTOForkHeightsToJSON(json: any): NetworkConfigurationDTOForkHeights {
-    return NetworkConfigurationDTOForkHeightsToJSONTyped(json, false);
+export function ForkHeightsDTOToJSON(json: any): ForkHeightsDTO {
+    return ForkHeightsDTOToJSONTyped(json, false);
 }
 
-export function NetworkConfigurationDTOForkHeightsToJSONTyped(value?: NetworkConfigurationDTOForkHeights | null, ignoreDiscriminator: boolean = false): any {
+export function ForkHeightsDTOToJSONTyped(value?: ForkHeightsDTO | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

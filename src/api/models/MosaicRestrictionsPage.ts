@@ -29,7 +29,7 @@ import {
 } from './Pagination';
 
 /**
- * 
+ * Paginated list of mosaic restriction entries.
  * @export
  * @interface MosaicRestrictionsPage
  */

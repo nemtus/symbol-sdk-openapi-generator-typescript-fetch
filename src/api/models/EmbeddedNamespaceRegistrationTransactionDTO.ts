@@ -29,31 +29,31 @@ import {
 } from './NamespaceRegistrationTypeEnum';
 
 /**
- * 
+ * Embedded transaction variant of `NamespaceRegistrationTransactionDTO`.
  * @export
  * @interface EmbeddedNamespaceRegistrationTransactionDTO
  */
 export interface EmbeddedNamespaceRegistrationTransactionDTO {
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof EmbeddedNamespaceRegistrationTransactionDTO
      */
     signerPublicKey: string;
     /**
-     * Entity version.
+     * Entity version. Indicates the schema variant for serialization and validation.
      * @type {number}
      * @memberof EmbeddedNamespaceRegistrationTransactionDTO
      */
     version: number;
     /**
-     * 
+     * Network type (mainnet or testnet). Ensures the entity targets the correct network.
      * @type {NetworkTypeEnum}
      * @memberof EmbeddedNamespaceRegistrationTransactionDTO
      */
     network: NetworkTypeEnum;
     /**
-     * 
+     * Entity type identifier (e.g. transaction type code, block type). Determines the entity schema.
      * @type {number}
      * @memberof EmbeddedNamespaceRegistrationTransactionDTO
      */
@@ -65,13 +65,19 @@ export interface EmbeddedNamespaceRegistrationTransactionDTO {
      */
     duration?: string;
     /**
-     * Namespace identifier.
+     * Unique [namespace](https://docs.symbol.dev/concepts/namespaces.html) identifier.
+     * A 64-bit unsigned integer derived from the namespace name and its parent namespace ID,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof EmbeddedNamespaceRegistrationTransactionDTO
      */
     parentId?: string;
     /**
-     * Namespace identifier.
+     * Unique [namespace](https://docs.symbol.dev/concepts/namespaces.html) identifier.
+     * A 64-bit unsigned integer derived from the namespace name and its parent namespace ID,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof EmbeddedNamespaceRegistrationTransactionDTO
      */

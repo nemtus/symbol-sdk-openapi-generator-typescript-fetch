@@ -29,13 +29,15 @@ import {
 } from './ResolutionEntryDTO';
 
 /**
- * 
+ * Resolution statement describing how one unresolved alias was resolved at a given block height.
  * @export
  * @interface ResolutionStatementDTO
  */
 export interface ResolutionStatementDTO {
     /**
-     * Height of the blockchain.
+     * Height of a block in the blockchain. Starts at 1 and increments by one per block.
+     * Represented as a string to preserve precision, since the value is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof ResolutionStatementDTO
      */
@@ -47,9 +49,10 @@ export interface ResolutionStatementDTO {
      */
     unresolved: ResolutionStatementDTOUnresolved;
     /**
-     * Array of resolution entries linked to the unresolved namespaceId.
-     * It is an array instead of a single resolution entry since
-     * within one block the resolution might change for different sources due to alias related transactions.
+     * Resolution entries linked to the unresolved alias.
+     * Multiple entries can be present because the resolved value can change within the same block.
+     * This can happen when alias-related transactions in the same block change which address or mosaic id
+     * the alias points to, so different transaction sources observe different resolved values.
      * 
      * @type {Array<ResolutionEntryDTO>}
      * @memberof ResolutionStatementDTO

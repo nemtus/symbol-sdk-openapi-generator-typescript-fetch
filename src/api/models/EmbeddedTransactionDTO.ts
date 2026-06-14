@@ -22,31 +22,31 @@ import {
 } from './NetworkTypeEnum';
 
 /**
- * 
+ * Transaction payload embedded inside an aggregate transaction.
  * @export
  * @interface EmbeddedTransactionDTO
  */
 export interface EmbeddedTransactionDTO {
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof EmbeddedTransactionDTO
      */
     signerPublicKey: string;
     /**
-     * Entity version.
+     * Entity version. Indicates the schema variant for serialization and validation.
      * @type {number}
      * @memberof EmbeddedTransactionDTO
      */
     version: number;
     /**
-     * 
+     * Network type (mainnet or testnet). Ensures the entity targets the correct network.
      * @type {NetworkTypeEnum}
      * @memberof EmbeddedTransactionDTO
      */
     network: NetworkTypeEnum;
     /**
-     * 
+     * Entity type identifier (e.g. transaction type code, block type). Determines the entity schema.
      * @type {number}
      * @memberof EmbeddedTransactionDTO
      */

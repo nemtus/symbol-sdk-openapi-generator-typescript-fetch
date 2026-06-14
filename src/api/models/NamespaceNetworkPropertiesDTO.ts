@@ -14,7 +14,7 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Namespace plugin configuration.
  * @export
  * @interface NamespaceNetworkPropertiesDTO
  */
@@ -56,25 +56,47 @@ export interface NamespaceNetworkPropertiesDTO {
      */
     namespaceGracePeriodDuration?: string;
     /**
-     * Reserved root namespaces that cannot be claimed.
+     * Comma-separated list of reserved root namespace names that cannot be claimed.
      * @type {string}
      * @memberof NamespaceNetworkPropertiesDTO
      */
     reservedRootNamespaceNames?: string;
     /**
-     * Address encoded using a 32-character set.
+     * Represents a unique account address in Base32 format. The first character indicates the network
+     * (`T` for testnet, `N` for mainnet). Addresses are 39 characters long, Base32-encoded,
+     * and include an embedded 3-byte checksum. The node validates this checksum, so an address
+     * with even a single altered character will be rejected.
+     * 
+     * @type {string}
+     * @memberof NamespaceNetworkPropertiesDTO
+     */
+    namespaceRentalFeeSinkAddressV1?: string;
+    /**
+     * Represents a unique account address in Base32 format. The first character indicates the network
+     * (`T` for testnet, `N` for mainnet). Addresses are 39 characters long, Base32-encoded,
+     * and include an embedded 3-byte checksum. The node validates this checksum, so an address
+     * with even a single altered character will be rejected.
+     * 
      * @type {string}
      * @memberof NamespaceNetworkPropertiesDTO
      */
     namespaceRentalFeeSinkAddress?: string;
     /**
-     * Root namespace rental fee per block.
+     * Absolute amount expressed in the mosaic's smallest (atomic) unit, with no decimal point.
+     * For example, an amount of `123456789` for a mosaic with divisibility 6 represents
+     * `123.456789` whole units. Encoded as a string to preserve precision, since the value
+     * is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof NamespaceNetworkPropertiesDTO
      */
     rootNamespaceRentalFeePerBlock?: string;
     /**
-     * Child namespace rental fee.
+     * Absolute amount expressed in the mosaic's smallest (atomic) unit, with no decimal point.
+     * For example, an amount of `123456789` for a mosaic with divisibility 6 represents
+     * `123.456789` whole units. Encoded as a string to preserve precision, since the value
+     * is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof NamespaceNetworkPropertiesDTO
      */
@@ -105,6 +127,7 @@ export function NamespaceNetworkPropertiesDTOFromJSONTyped(json: any, ignoreDisc
         'maxNamespaceDuration': json['maxNamespaceDuration'] == null ? undefined : json['maxNamespaceDuration'],
         'namespaceGracePeriodDuration': json['namespaceGracePeriodDuration'] == null ? undefined : json['namespaceGracePeriodDuration'],
         'reservedRootNamespaceNames': json['reservedRootNamespaceNames'] == null ? undefined : json['reservedRootNamespaceNames'],
+        'namespaceRentalFeeSinkAddressV1': json['namespaceRentalFeeSinkAddressV1'] == null ? undefined : json['namespaceRentalFeeSinkAddressV1'],
         'namespaceRentalFeeSinkAddress': json['namespaceRentalFeeSinkAddress'] == null ? undefined : json['namespaceRentalFeeSinkAddress'],
         'rootNamespaceRentalFeePerBlock': json['rootNamespaceRentalFeePerBlock'] == null ? undefined : json['rootNamespaceRentalFeePerBlock'],
         'childNamespaceRentalFee': json['childNamespaceRentalFee'] == null ? undefined : json['childNamespaceRentalFee'],
@@ -129,6 +152,7 @@ export function NamespaceNetworkPropertiesDTOToJSONTyped(value?: NamespaceNetwor
         'maxNamespaceDuration': value['maxNamespaceDuration'],
         'namespaceGracePeriodDuration': value['namespaceGracePeriodDuration'],
         'reservedRootNamespaceNames': value['reservedRootNamespaceNames'],
+        'namespaceRentalFeeSinkAddressV1': value['namespaceRentalFeeSinkAddressV1'],
         'namespaceRentalFeeSinkAddress': value['namespaceRentalFeeSinkAddress'],
         'rootNamespaceRentalFeePerBlock': value['rootNamespaceRentalFeePerBlock'],
         'childNamespaceRentalFee': value['childNamespaceRentalFee'],

@@ -43,37 +43,48 @@ import {
 } from './ActivityBucketDTO';
 
 /**
+ * Account state on the blockchain. Contains the public key, address, balances,
+ * importance score, and supplemental keys used for delegated harvesting and finalization.
  * 
  * @export
  * @interface AccountDTO
  */
 export interface AccountDTO {
     /**
-     * The version of the state
+     * Version of the on-chain state serialization format. Incremented when the storage
+     * schema of the entity changes (e.g. new fields are added), allowing the node to
+     * deserialize entries written under earlier formats.
+     * 
      * @type {number}
      * @memberof AccountDTO
      */
     version: number;
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof AccountDTO
      */
     address: string;
     /**
-     * Height of the blockchain.
+     * Height of a block in the blockchain. Starts at 1 and increments by one per block.
+     * Represented as a string to preserve precision, since the value is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof AccountDTO
      */
     addressHeight: string;
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof AccountDTO
      */
     publicKey: string;
     /**
-     * Height of the blockchain.
+     * Height of a block in the blockchain. Starts at 1 and increments by one per block.
+     * Represented as a string to preserve precision, since the value is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof AccountDTO
      */
@@ -91,25 +102,34 @@ export interface AccountDTO {
      */
     supplementalPublicKeys: SupplementalPublicKeysDTO;
     /**
-     * 
+     * Activity buckets used for importance score calculation.
      * @type {Array<ActivityBucketDTO>}
      * @memberof AccountDTO
      */
     activityBuckets: Array<ActivityBucketDTO>;
     /**
-     * Mosaic units owned.
+     * Mosaic units owned by the account.
      * @type {Array<Mosaic>}
      * @memberof AccountDTO
      */
     mosaics: Array<Mosaic>;
     /**
-     * Probability of an account to harvest the next block.
+     * [Importance score](https://docs.symbol.dev/concepts/consensus-algorithm.html#importance-score)
+     * of an account, representing the probability of being selected to harvest the next block under
+     * the [PoS+](https://docs.symbol.dev/concepts/consensus-algorithm.html) consensus algorithm.
+     * The score is derived from three factors: stake, transaction activity, and node operation.
+     * Only accounts holding at least the minimum harvesting balance (`minHarvesterBalance` network
+     * property) receive a non-zero score. Decimal value between 0 and 1 (inclusive).
+     * Minimum: 0. Maximum: 1.
+     * 
      * @type {string}
      * @memberof AccountDTO
      */
     importance: string;
     /**
-     * Height of the blockchain.
+     * Height of a block in the blockchain. Starts at 1 and increments by one per block.
+     * Represented as a string to preserve precision, since the value is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof AccountDTO
      */

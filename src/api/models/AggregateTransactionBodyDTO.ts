@@ -22,13 +22,15 @@ import {
 } from './CosignatureDTO';
 
 /**
+ * Aggregate transaction body with the hash of embedded transactions and the cosignatures attached to
+ * the aggregate transaction.
  * 
  * @export
  * @interface AggregateTransactionBodyDTO
  */
 export interface AggregateTransactionBodyDTO {
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof AggregateTransactionBodyDTO
      */
