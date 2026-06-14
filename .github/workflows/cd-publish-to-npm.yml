@@ -65,7 +65,6 @@ jobs:
       # `npm install -g @latest`. npx resolves to the local node_modules copy, so the
       # version is reproducible, audited (it's in the lockfile), and bumped via Dependabot.
       - run: npx @openapitools/openapi-generator-cli version
-      - run: npm run openapi:fetch
       - run: npm run openapi:set:version
       - run: npm run openapi:generate
       - run: npm run build

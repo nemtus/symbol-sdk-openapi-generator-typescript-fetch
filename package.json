@@ -5,9 +5,9 @@
   "main": "./cjs/index.js",
   "module": "./esm/index.js",
   "scripts": {
-    "openapi:fetch": "node fetch-openapi.js",
     "openapi:set:version": "npx @openapitools/openapi-generator-cli version-manager set 7.14.0",
-    "openapi:generate": "npx @openapitools/openapi-generator-cli generate -i ./openapi-spec/openapi3.yml -g typescript-fetch -o ./src/api -c ./openapi-generator-config.yml",
+    "openapi:clean": "node clean-generated-api.js",
+    "openapi:generate": "npm run openapi:clean && npx @openapitools/openapi-generator-cli generate -i ./node_modules/@nemtus/symbol-openapi/openapi3.yml -g typescript-fetch -o ./src/api -c ./openapi-generator-config.yml",
     "build": "npm run build:cjs && npm run build:esm && npm run build:cdn && node bundle",
     "build:cjs": "node pre-build-cjs && tsc --build --clean && tsc --target es2015 --module commonjs && node post-build-cjs",
     "build:esm": "node pre-build-esm && tsc --build --clean && tsc --target esnext --module esnext && node post-build-esm",
@@ -43,6 +43,7 @@
   "homepage": "https://github.com/nemtus/symbol-sdk-openapi-generator-typescript-fetch#readme",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@nemtus/symbol-openapi": "1.0.5",
     "@openapitools/openapi-generator-cli": "^2.22.0",
     "@vitest/coverage-v8": "^4.1.8",
     "eslint": "^10.4.1",
