@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+#
+# Keep auto-generated and build output out of CodeRabbit reviews. `src/api/**` is
+# produced by OpenAPI Generator (see clean-generated-api.js / openapi:generate) and
+# is already excluded from ESLint, Prettier, test coverage and cspell — reviewing it
+# adds noise and, because each spec bump regenerates hundreds of files, trips
+# CodeRabbit's per-PR file limit and skips the review entirely.
+reviews:
+  path_filters:
+    - '!src/api/**'
