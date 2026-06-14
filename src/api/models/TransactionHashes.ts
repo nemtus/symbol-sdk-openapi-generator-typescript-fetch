@@ -14,7 +14,7 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Array wrapper used to request transaction statuses by transaction hash.
  * @export
  * @interface TransactionHashes
  */
@@ -24,13 +24,14 @@ export interface TransactionHashes {
      * @type {Array<string>}
      * @memberof TransactionHashes
      */
-    hashes?: Array<string>;
+    hashes: Array<string>;
 }
 
 /**
  * Check if a given object implements the TransactionHashes interface.
  */
 export function instanceOfTransactionHashes(value: Record<string, any>): value is TransactionHashes {
+    if (!('hashes' in value) || value['hashes'] === undefined) return false;
     return true;
 }
 
@@ -44,7 +45,7 @@ export function TransactionHashesFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
-        'hashes': json['hashes'] == null ? undefined : json['hashes'],
+        'hashes': json['hashes'],
     };
 }
 

@@ -29,13 +29,16 @@ import {
 } from './NamespaceRegistrationTypeEnum';
 
 /**
- * 
+ * State information describing a namespace and its alias configuration.
  * @export
  * @interface NamespaceDTO
  */
 export interface NamespaceDTO {
     /**
-     * The version of the state
+     * Version of the on-chain state serialization format. Incremented when the storage
+     * schema of the entity changes (e.g. new fields are added), allowing the node to
+     * deserialize entries written under earlier formats.
+     * 
      * @type {number}
      * @memberof NamespaceDTO
      */
@@ -47,25 +50,36 @@ export interface NamespaceDTO {
      */
     registrationType: NamespaceRegistrationTypeEnum;
     /**
-     * Level of the namespace.
+     * Number of levels present in the namespace path.
+     * This matches how many namespace IDs are defined across `level0`, `level1`, and `level2`.
+     * 
      * @type {number}
      * @memberof NamespaceDTO
      */
     depth: number;
     /**
-     * Namespace identifier.
+     * Unique [namespace](https://docs.symbol.dev/concepts/namespaces.html) identifier.
+     * A 64-bit unsigned integer derived from the namespace name and its parent namespace ID,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof NamespaceDTO
      */
     level0: string;
     /**
-     * Namespace identifier.
+     * Unique [namespace](https://docs.symbol.dev/concepts/namespaces.html) identifier.
+     * A 64-bit unsigned integer derived from the namespace name and its parent namespace ID,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof NamespaceDTO
      */
     level1?: string;
     /**
-     * Namespace identifier.
+     * Unique [namespace](https://docs.symbol.dev/concepts/namespaces.html) identifier.
+     * A 64-bit unsigned integer derived from the namespace name and its parent namespace ID,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof NamespaceDTO
      */
@@ -77,25 +91,34 @@ export interface NamespaceDTO {
      */
     alias: AliasDTO;
     /**
-     * Namespace identifier.
+     * Unique [namespace](https://docs.symbol.dev/concepts/namespaces.html) identifier.
+     * A 64-bit unsigned integer derived from the namespace name and its parent namespace ID,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof NamespaceDTO
      */
     parentId: string;
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof NamespaceDTO
      */
     ownerAddress: string;
     /**
-     * Height of the blockchain.
+     * Height of a block in the blockchain. Starts at 1 and increments by one per block.
+     * Represented as a string to preserve precision, since the value is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof NamespaceDTO
      */
     startHeight: string;
     /**
-     * Height of the blockchain.
+     * Height of a block in the blockchain. Starts at 1 and increments by one per block.
+     * Represented as a string to preserve precision, since the value is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof NamespaceDTO
      */

@@ -29,13 +29,15 @@ import {
 } from './TransactionStatementDTOReceiptsInner';
 
 /**
- * 
+ * Transaction statement containing receipts emitted by a transaction source at a given block height.
  * @export
  * @interface TransactionStatementDTO
  */
 export interface TransactionStatementDTO {
     /**
-     * Height of the blockchain.
+     * Height of a block in the blockchain. Starts at 1 and increments by one per block.
+     * Represented as a string to preserve precision, since the value is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof TransactionStatementDTO
      */
@@ -47,7 +49,7 @@ export interface TransactionStatementDTO {
      */
     source: SourceDTO;
     /**
-     * Array of receipts.
+     * Receipts emitted by the transaction source.
      * @type {Array<TransactionStatementDTOReceiptsInner>}
      * @memberof TransactionStatementDTO
      */

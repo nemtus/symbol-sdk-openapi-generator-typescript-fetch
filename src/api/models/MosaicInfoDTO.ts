@@ -22,13 +22,15 @@ import {
 } from './MosaicDTO';
 
 /**
- * 
+ * Mosaic information including an internal resource identifier and the full mosaic state.
  * @export
  * @interface MosaicInfoDTO
  */
 export interface MosaicInfoDTO {
     /**
-     * Internal resource identifier.
+     * Unique identifier of the object in the node's database (MongoDB ObjectId).
+     * Used as the `offset` parameter value for cursor-based pagination.
+     * 
      * @type {string}
      * @memberof MosaicInfoDTO
      */

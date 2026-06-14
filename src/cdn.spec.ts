@@ -96,24 +96,19 @@ describe('cdn exports', () => {
     expect(typeof sdk.COLLECTION_FORMATS).toBe('object');
   });
 
-  it('should expose the getNetworkInflationAtHeight endpoint and v1.0.4 model serializers through window object', async () => {
+  it('should expose the getNetworkInflationAtHeight endpoint and model serializers through window object', async () => {
     // Import cdn module
     await import('./cdn');
 
     const sdk = (window as any).symbolSdkOpenAPIGeneratorTypeScriptFetch;
 
-    // New endpoint added in spec v1.0.4
+    // Network inflation endpoint
     expect(typeof sdk.NetworkRoutesApi.prototype.getNetworkInflationAtHeight).toBe('function');
     expect(typeof sdk.NetworkRoutesApi.prototype.getNetworkInflationAtHeightRaw).toBe('function');
 
-    // Serializers for the models added in spec v1.0.4 (the interfaces themselves
-    // are type-only and erased at runtime, so verify their runtime helpers)
-    for (const name of [
-      'GetNetworkInflationAtHeight200ResponseFromJSON',
-      'GetNetworkInflationAtHeight200ResponseToJSON',
-      'NetworkConfigurationDTOForkHeightsFromJSON',
-      'NetworkConfigurationDTOForkHeightsToJSON',
-    ]) {
+    // Serializers for the network inflation / fork heights models (the interfaces
+    // themselves are type-only and erased at runtime, so verify their runtime helpers)
+    for (const name of ['NetworkInflationDTOFromJSON', 'NetworkInflationDTOToJSON', 'ForkHeightsDTOFromJSON', 'ForkHeightsDTOToJSON']) {
       expect(typeof sdk[name]).toBe('function');
     }
   });

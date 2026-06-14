@@ -29,13 +29,15 @@ import {
 } from './NamespaceMetaDTO';
 
 /**
- * 
+ * Namespace information including an internal resource identifier, metadata, and the full namespace state.
  * @export
  * @interface NamespaceInfoDTO
  */
 export interface NamespaceInfoDTO {
     /**
-     * Internal resource identifier.
+     * Unique identifier of the object in the node's database (MongoDB ObjectId).
+     * Used as the `offset` parameter value for cursor-based pagination.
+     * 
      * @type {string}
      * @memberof NamespaceInfoDTO
      */

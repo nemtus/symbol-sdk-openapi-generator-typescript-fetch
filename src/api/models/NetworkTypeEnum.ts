@@ -15,8 +15,8 @@
 
 /**
  * Network type:
- * * 0x68 (104 decimal) - Main network.
- * * 0x98 (152 decimal) - Test network.
+ * - `0x68` (104 decimal): Main network.
+ * - `0x98` (152 decimal): Test network.
  * 
  * @export
  */

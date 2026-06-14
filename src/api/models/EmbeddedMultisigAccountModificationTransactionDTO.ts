@@ -22,59 +22,63 @@ import {
 } from './NetworkTypeEnum';
 
 /**
- * 
+ * Embedded transaction variant of `MultisigAccountModificationTransactionDTO`.
  * @export
  * @interface EmbeddedMultisigAccountModificationTransactionDTO
  */
 export interface EmbeddedMultisigAccountModificationTransactionDTO {
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof EmbeddedMultisigAccountModificationTransactionDTO
      */
     signerPublicKey: string;
     /**
-     * Entity version.
+     * Entity version. Indicates the schema variant for serialization and validation.
      * @type {number}
      * @memberof EmbeddedMultisigAccountModificationTransactionDTO
      */
     version: number;
     /**
-     * 
+     * Network type (mainnet or testnet). Ensures the entity targets the correct network.
      * @type {NetworkTypeEnum}
      * @memberof EmbeddedMultisigAccountModificationTransactionDTO
      */
     network: NetworkTypeEnum;
     /**
-     * 
+     * Entity type identifier (e.g. transaction type code, block type). Determines the entity schema.
      * @type {number}
      * @memberof EmbeddedMultisigAccountModificationTransactionDTO
      */
     type: number;
     /**
-     * Number of signatures needed to remove a cosignatory.
-     * If we are modifying an existing multisig account, this indicates the relative change of the minimum cosignatories.
+     * Relative change applied to the minimum number of cosignatory approvals required to remove a
+     * cosignatory. When converting a regular account into a multisig account, the initial value is
+     * derived from this delta because the previous threshold is zero.
      * 
      * @type {number}
      * @memberof EmbeddedMultisigAccountModificationTransactionDTO
      */
     minRemovalDelta: number;
     /**
-     * Number of signatures needed to approve a transaction.
-     * If we are modifying an existing multisig account, this indicates the relative change of the minimum cosignatories.
+     * Relative change applied to the minimum number of cosignatory approvals required to approve a
+     * transaction. When converting a regular account into a multisig account, the initial value is
+     * derived from this delta because the previous threshold is zero.
      * 
      * @type {number}
      * @memberof EmbeddedMultisigAccountModificationTransactionDTO
      */
     minApprovalDelta: number;
     /**
-     * Array of cosignatory accounts to add.
+     * Cosignatory addresses to add to the multisig account.
+     * Newly added cosignatories must opt in by cosigning the aggregate transaction.
+     * 
      * @type {Array<string>}
      * @memberof EmbeddedMultisigAccountModificationTransactionDTO
      */
     addressAdditions: Array<string>;
     /**
-     * Array of cosignatory accounts to delete.
+     * Cosignatory addresses to remove from the multisig account.
      * @type {Array<string>}
      * @memberof EmbeddedMultisigAccountModificationTransactionDTO
      */

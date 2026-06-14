@@ -22,19 +22,19 @@ import {
 } from './NodeStatusEnum';
 
 /**
- * 
+ * Status of API node and database services (up/down).
  * @export
  * @interface NodeHealthDTO
  */
 export interface NodeHealthDTO {
     /**
-     * 
+     * API node service status.
      * @type {NodeStatusEnum}
      * @memberof NodeHealthDTO
      */
     apiNode: NodeStatusEnum;
     /**
-     * 
+     * MongoDB service status.
      * @type {NodeStatusEnum}
      * @memberof NodeHealthDTO
      */

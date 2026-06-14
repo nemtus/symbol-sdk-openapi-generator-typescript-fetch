@@ -22,70 +22,83 @@ import {
 } from './NetworkTypeEnum';
 
 /**
- * 
+ * Embedded transaction variant of `NamespaceMetadataTransactionDTO`.
  * @export
  * @interface EmbeddedNamespaceMetadataTransactionDTO
  */
 export interface EmbeddedNamespaceMetadataTransactionDTO {
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof EmbeddedNamespaceMetadataTransactionDTO
      */
     signerPublicKey: string;
     /**
-     * Entity version.
+     * Entity version. Indicates the schema variant for serialization and validation.
      * @type {number}
      * @memberof EmbeddedNamespaceMetadataTransactionDTO
      */
     version: number;
     /**
-     * 
+     * Network type (mainnet or testnet). Ensures the entity targets the correct network.
      * @type {NetworkTypeEnum}
      * @memberof EmbeddedNamespaceMetadataTransactionDTO
      */
     network: NetworkTypeEnum;
     /**
-     * 
+     * Entity type identifier (e.g. transaction type code, block type). Determines the entity schema.
      * @type {number}
      * @memberof EmbeddedNamespaceMetadataTransactionDTO
      */
     type: number;
     /**
-     * Address expressed in Base32 format. If the bit 0 of byte 0 is not set (like in 0x90), then it is a
-     * regular address. Example: TAOXUJOTTW3W5XTBQMQEX3SQNA6MCUVGXLXR3TA. 
-     * Otherwise (e.g. 0x91) it represents a namespace id which starts at byte 1. Example: THBIMC3THGH5RUYAAAAAAAAAAAAAAAAAAAAAAAA
+     * Unresolved address encoded as a 48-character hexadecimal string (24 bytes).
+     * If bit 0 of byte 0 is not set, the value represents a regular address.
+     * Otherwise, it represents a namespace ID alias encoded as an unresolved address.
      * 
      * @type {string}
      * @memberof EmbeddedNamespaceMetadataTransactionDTO
      */
     targetAddress: string;
     /**
-     * Metadata key scoped to source, target and type expressed.
+     * 64-bit key assigned by the metadata creator to identify the metadata entry within the source and target context.
      * @type {string}
      * @memberof EmbeddedNamespaceMetadataTransactionDTO
      */
     scopedMetadataKey: string;
     /**
-     * Namespace identifier.
+     * Unique [namespace](https://docs.symbol.dev/concepts/namespaces.html) identifier.
+     * A 64-bit unsigned integer derived from the namespace name and its parent namespace ID,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof EmbeddedNamespaceMetadataTransactionDTO
      */
-    targetNamespaceId?: string;
+    targetNamespaceId: string;
     /**
-     * Change in value size in bytes.
+     * Change in metadata value size, in bytes.
+     * Positive values increase the stored value size, negative values decrease it.
+     * 
      * @type {number}
      * @memberof EmbeddedNamespaceMetadataTransactionDTO
      */
     valueSizeDelta: number;
     /**
-     * A number that allows uint 32 values.
+     * Size of a metadata value or metadata value update payload, in bytes.
+     * In metadata transactions, when no previous value exists, or when the value grows, this is the new
+     * value size after applying the update. When the value shrinks, this is the previous stored value size
+     * before truncation.
+     * 
      * @type {number}
      * @memberof EmbeddedNamespaceMetadataTransactionDTO
      */
     valueSize: number;
     /**
-     * Metadata value. If embedded in a transaction, this is calculated as xor(previous-value, value).
+     * Metadata value encoded as hex.
+     * In metadata transactions, this field carries the metadata value update payload.
+     * When no previous value exists, it contains the new value.
+     * When updating existing metadata, it contains the byte-wise XOR of the previous value and the new value.
+     * 
      * @type {string}
      * @memberof EmbeddedNamespaceMetadataTransactionDTO
      */
@@ -104,6 +117,7 @@ export function instanceOfEmbeddedNamespaceMetadataTransactionDTO(value: Record<
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('targetAddress' in value) || value['targetAddress'] === undefined) return false;
     if (!('scopedMetadataKey' in value) || value['scopedMetadataKey'] === undefined) return false;
+    if (!('targetNamespaceId' in value) || value['targetNamespaceId'] === undefined) return false;
     if (!('valueSizeDelta' in value) || value['valueSizeDelta'] === undefined) return false;
     if (!('valueSize' in value) || value['valueSize'] === undefined) return false;
     if (!('value' in value) || value['value'] === undefined) return false;
@@ -126,7 +140,7 @@ export function EmbeddedNamespaceMetadataTransactionDTOFromJSONTyped(json: any, 
         'type': json['type'],
         'targetAddress': json['targetAddress'],
         'scopedMetadataKey': json['scopedMetadataKey'],
-        'targetNamespaceId': json['targetNamespaceId'] == null ? undefined : json['targetNamespaceId'],
+        'targetNamespaceId': json['targetNamespaceId'],
         'valueSizeDelta': json['valueSizeDelta'],
         'valueSize': json['valueSize'],
         'value': json['value'],

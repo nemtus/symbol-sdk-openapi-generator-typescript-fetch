@@ -14,9 +14,9 @@
 
 
 /**
- * Indicates how to sort the results: 
- * * ``asc`` - ascending
- * * ``desc`` - descending
+ * Indicates how to sort the results:
+ * - `asc`: ascending
+ * - `desc`: descending
  * 
  * @export
  */

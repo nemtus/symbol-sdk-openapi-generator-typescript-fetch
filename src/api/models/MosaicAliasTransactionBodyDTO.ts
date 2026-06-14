@@ -22,19 +22,25 @@ import {
 } from './AliasActionEnum';
 
 /**
- * 
+ * Mosaic alias transaction body that links or unlinks a namespace to a mosaic.
  * @export
  * @interface MosaicAliasTransactionBodyDTO
  */
 export interface MosaicAliasTransactionBodyDTO {
     /**
-     * Namespace identifier.
+     * Unique [namespace](https://docs.symbol.dev/concepts/namespaces.html) identifier.
+     * A 64-bit unsigned integer derived from the namespace name and its parent namespace ID,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof MosaicAliasTransactionBodyDTO
      */
     namespaceId: string;
     /**
-     * Mosaic identifier.
+     * Unique [mosaic](https://docs.symbol.dev/concepts/mosaic.html) identifier.
+     * A 64-bit unsigned integer derived from the creator's address and a registration nonce,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof MosaicAliasTransactionBodyDTO
      */

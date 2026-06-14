@@ -142,7 +142,7 @@ export interface SearchUnconfirmedTransactionsRequest {
 export class TransactionRoutesApi extends runtime.BaseAPI {
 
     /**
-     * Announces a cosignature transaction to the network.
+     * Broadcasts a detached cosignature for an aggregate bonded transaction to the network through this node.  The request must contain the detached cosignature fields: cosignature version, signer public key, cosignature signature, and the parent aggregate transaction hash. Detached cosignatures are normally created client-side with a [Symbol SDK](https://docs.symbol.dev/sdk.html) and then announced with this endpoint.  Acceptance by this node does not mean the parent aggregate bonded transaction is already confirmed on-chain. The cosignature still needs to be propagated and processed by the network.  To verify the effect of the cosignature, query the **parent aggregate bonded transaction**, for example with [`GET /transactionStatus/{hash}`](/transactionStatus/{hash}) using the parent aggregate transaction hash. Transaction status availability is not guaranteed indefinitely: failed statuses are stored in a capped collection and may be evicted as new entries arrive. 
      * Announce a cosignature transaction
      */
     async announceCosignatureTransactionRaw(requestParameters: AnnounceCosignatureTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AnnounceTransactionInfoDTO>> {
@@ -174,7 +174,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Announces a cosignature transaction to the network.
+     * Broadcasts a detached cosignature for an aggregate bonded transaction to the network through this node.  The request must contain the detached cosignature fields: cosignature version, signer public key, cosignature signature, and the parent aggregate transaction hash. Detached cosignatures are normally created client-side with a [Symbol SDK](https://docs.symbol.dev/sdk.html) and then announced with this endpoint.  Acceptance by this node does not mean the parent aggregate bonded transaction is already confirmed on-chain. The cosignature still needs to be propagated and processed by the network.  To verify the effect of the cosignature, query the **parent aggregate bonded transaction**, for example with [`GET /transactionStatus/{hash}`](/transactionStatus/{hash}) using the parent aggregate transaction hash. Transaction status availability is not guaranteed indefinitely: failed statuses are stored in a capped collection and may be evicted as new entries arrive. 
      * Announce a cosignature transaction
      */
     async announceCosignatureTransaction(requestParameters: AnnounceCosignatureTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AnnounceTransactionInfoDTO> {
@@ -183,7 +183,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Announces an aggregate bonded transaction to the network.
+     * Broadcasts a signed aggregate bonded transaction to the network through this node.  The request must contain the serialized aggregate bonded transaction payload in hexadecimal form. Transactions are normally created and signed client-side with a [Symbol SDK](https://docs.symbol.dev/sdk.html) and then announced with this endpoint.  Acceptance by this node does not mean the transaction is already part of the blockchain. The transaction still needs to be validated and confirmed by the network.  To verify the final result, query `GET /transactionStatus/{hash}` on the same node that received the announce request. If that node drops the transaction before propagation, other nodes may not know the transaction at all and can return `404` for the same hash. Transaction status availability is not guaranteed indefinitely: failed statuses are stored in a capped collection and may be evicted as new entries arrive. 
      * Announce an aggregate bonded transaction
      */
     async announcePartialTransactionRaw(requestParameters: AnnouncePartialTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AnnounceTransactionInfoDTO>> {
@@ -215,7 +215,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Announces an aggregate bonded transaction to the network.
+     * Broadcasts a signed aggregate bonded transaction to the network through this node.  The request must contain the serialized aggregate bonded transaction payload in hexadecimal form. Transactions are normally created and signed client-side with a [Symbol SDK](https://docs.symbol.dev/sdk.html) and then announced with this endpoint.  Acceptance by this node does not mean the transaction is already part of the blockchain. The transaction still needs to be validated and confirmed by the network.  To verify the final result, query `GET /transactionStatus/{hash}` on the same node that received the announce request. If that node drops the transaction before propagation, other nodes may not know the transaction at all and can return `404` for the same hash. Transaction status availability is not guaranteed indefinitely: failed statuses are stored in a capped collection and may be evicted as new entries arrive. 
      * Announce an aggregate bonded transaction
      */
     async announcePartialTransaction(requestParameters: AnnouncePartialTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AnnounceTransactionInfoDTO> {
@@ -224,7 +224,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Announces a transaction to the network. The [catbuffer library](https://github.com/nemtech/catbuffer) defines the protocol to serialize and deserialize Symbol entities. Catbuffers are integrated into [Symbol SDKs](https://nemtech.github.io/sdk.html).  It\'s recommended to use SDKs instead of calling the API endpoint directly to announce transactions. 
+     * Broadcasts a signed transaction to the network through this node.  The request must contain the serialized transaction payload in hexadecimal form. Transactions are normally created and signed client-side with a [Symbol SDK](https://docs.symbol.dev/sdk.html) and then announced with this endpoint.  The [catbuffer library](https://github.com/symbol/symbol/tree/main/catbuffer) defines the binary serialization format used by Symbol entities.  Acceptance by this node does not mean the transaction is already part of the blockchain. The transaction still needs to be validated and confirmed by the network.  To verify the final result, query `GET /transactionStatus/{hash}` on the same node that received the announce request. If that node drops the transaction before propagation, other nodes may not know the transaction at all and can return `404` for the same hash. Transaction status availability is not guaranteed indefinitely: failed statuses are stored in a capped collection and may be evicted as new entries arrive. 
      * Announce a new transaction
      */
     async announceTransactionRaw(requestParameters: AnnounceTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AnnounceTransactionInfoDTO>> {
@@ -256,7 +256,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Announces a transaction to the network. The [catbuffer library](https://github.com/nemtech/catbuffer) defines the protocol to serialize and deserialize Symbol entities. Catbuffers are integrated into [Symbol SDKs](https://nemtech.github.io/sdk.html).  It\'s recommended to use SDKs instead of calling the API endpoint directly to announce transactions. 
+     * Broadcasts a signed transaction to the network through this node.  The request must contain the serialized transaction payload in hexadecimal form. Transactions are normally created and signed client-side with a [Symbol SDK](https://docs.symbol.dev/sdk.html) and then announced with this endpoint.  The [catbuffer library](https://github.com/symbol/symbol/tree/main/catbuffer) defines the binary serialization format used by Symbol entities.  Acceptance by this node does not mean the transaction is already part of the blockchain. The transaction still needs to be validated and confirmed by the network.  To verify the final result, query `GET /transactionStatus/{hash}` on the same node that received the announce request. If that node drops the transaction before propagation, other nodes may not know the transaction at all and can return `404` for the same hash. Transaction status availability is not guaranteed indefinitely: failed statuses are stored in a capped collection and may be evicted as new entries arrive. 
      * Announce a new transaction
      */
     async announceTransaction(requestParameters: AnnounceTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AnnounceTransactionInfoDTO> {
@@ -265,7 +265,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns confirmed transaction information given a transactionId or hash.
+     * Returns confirmed transaction information given a transaction ID assigned by the node or transaction hash.  Use this endpoint when you need on-chain transaction data (the transaction is already included in a block). Use `getUnconfirmedTransaction` while the transaction is still in a node\'s unconfirmed pool, and use `getPartialTransaction` for aggregate bonded transactions waiting for cosignatures. 
      * Get confirmed transaction information
      */
     async getConfirmedTransactionRaw(requestParameters: GetConfirmedTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionInfoDTO>> {
@@ -295,7 +295,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns confirmed transaction information given a transactionId or hash.
+     * Returns confirmed transaction information given a transaction ID assigned by the node or transaction hash.  Use this endpoint when you need on-chain transaction data (the transaction is already included in a block). Use `getUnconfirmedTransaction` while the transaction is still in a node\'s unconfirmed pool, and use `getPartialTransaction` for aggregate bonded transactions waiting for cosignatures. 
      * Get confirmed transaction information
      */
     async getConfirmedTransaction(requestParameters: GetConfirmedTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionInfoDTO> {
@@ -304,8 +304,8 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns confirmed transactions information for a given array of transactionIds.
-     * Get confirmed trasactions information
+     * Returns confirmed transactions for the list of identifiers in the request body. Each request item can be either a transaction ID assigned by the node or a transaction hash. Both values are returned by transaction retrieval and search endpoints, for example `GET /transactions/confirmed` and `GET /transactions/confirmed/{transactionId}`.  Use this endpoint when you need on-chain data for multiple transactions in one call. Use `getUnconfirmedTransactions` for transactions still pending in a node pool, and use `getPartialTransactions` for aggregate bonded transactions waiting for cosignatures. 
+     * Get confirmed transactions information
      */
     async getConfirmedTransactionsRaw(requestParameters: GetConfirmedTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TransactionInfoDTO>>> {
         if (requestParameters['transactionIds'] == null) {
@@ -336,8 +336,8 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns confirmed transactions information for a given array of transactionIds.
-     * Get confirmed trasactions information
+     * Returns confirmed transactions for the list of identifiers in the request body. Each request item can be either a transaction ID assigned by the node or a transaction hash. Both values are returned by transaction retrieval and search endpoints, for example `GET /transactions/confirmed` and `GET /transactions/confirmed/{transactionId}`.  Use this endpoint when you need on-chain data for multiple transactions in one call. Use `getUnconfirmedTransactions` for transactions still pending in a node pool, and use `getPartialTransactions` for aggregate bonded transactions waiting for cosignatures. 
+     * Get confirmed transactions information
      */
     async getConfirmedTransactions(requestParameters: GetConfirmedTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TransactionInfoDTO>> {
         const response = await this.getConfirmedTransactionsRaw(requestParameters, initOverrides);
@@ -345,7 +345,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns partial transaction information given a transactionId or hash.
+     * Returns one partial transaction identified by the path value. Partial transactions are aggregate bonded transactions waiting for the remaining cosignatures.  The path accepts either the transaction ID assigned by the node or the transaction hash. Both values are returned by transaction retrieval and search endpoints, for example `GET /transactions/partial` and `GET /transactions/partial/{transactionId}`.  Use this endpoint for aggregate bonded transactions before they are fully cosigned. Use `getUnconfirmedTransaction` for non-partial transactions that are in a node\'s unconfirmed pool, and use `getConfirmedTransaction` once the transaction is confirmed on-chain. 
      * Get partial transaction information
      */
     async getPartialTransactionRaw(requestParameters: GetPartialTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionInfoDTO>> {
@@ -375,7 +375,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns partial transaction information given a transactionId or hash.
+     * Returns one partial transaction identified by the path value. Partial transactions are aggregate bonded transactions waiting for the remaining cosignatures.  The path accepts either the transaction ID assigned by the node or the transaction hash. Both values are returned by transaction retrieval and search endpoints, for example `GET /transactions/partial` and `GET /transactions/partial/{transactionId}`.  Use this endpoint for aggregate bonded transactions before they are fully cosigned. Use `getUnconfirmedTransaction` for non-partial transactions that are in a node\'s unconfirmed pool, and use `getConfirmedTransaction` once the transaction is confirmed on-chain. 
      * Get partial transaction information
      */
     async getPartialTransaction(requestParameters: GetPartialTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionInfoDTO> {
@@ -384,8 +384,8 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns partial transactions information for a given array of transactionIds.
-     * Get partial trasactions information
+     * Returns partial transactions for the list of identifiers in the request body. Partial transactions are aggregate bonded transactions waiting for the remaining cosignatures.  Each request item can be either a transaction ID assigned by the node or a transaction hash. Both values are returned by transaction retrieval and search endpoints, for example `GET /transactions/partial` and `GET /transactions/partial/{transactionId}`.  Use this endpoint for aggregate bonded transactions that still wait for required cosignatures. Use `getUnconfirmedTransactions` for non-partial pending transactions accepted by a node but not yet included in a block, and use `getConfirmedTransactions` once transactions are confirmed on-chain. 
+     * Get information about partial transactions
      */
     async getPartialTransactionsRaw(requestParameters: GetPartialTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TransactionInfoDTO>>> {
         if (requestParameters['transactionIds'] == null) {
@@ -416,8 +416,8 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns partial transactions information for a given array of transactionIds.
-     * Get partial trasactions information
+     * Returns partial transactions for the list of identifiers in the request body. Partial transactions are aggregate bonded transactions waiting for the remaining cosignatures.  Each request item can be either a transaction ID assigned by the node or a transaction hash. Both values are returned by transaction retrieval and search endpoints, for example `GET /transactions/partial` and `GET /transactions/partial/{transactionId}`.  Use this endpoint for aggregate bonded transactions that still wait for required cosignatures. Use `getUnconfirmedTransactions` for non-partial pending transactions accepted by a node but not yet included in a block, and use `getConfirmedTransactions` once transactions are confirmed on-chain. 
+     * Get information about partial transactions
      */
     async getPartialTransactions(requestParameters: GetPartialTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TransactionInfoDTO>> {
         const response = await this.getPartialTransactionsRaw(requestParameters, initOverrides);
@@ -425,7 +425,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns unconfirmed transaction information given a transactionId or hash.
+     * Returns one unconfirmed transaction identified by the path value. An unconfirmed transaction is accepted by a node and pending inclusion in a block.  The path accepts either the transaction ID assigned by the node or the transaction hash. Both values are returned by transaction retrieval and search endpoints, for example `GET /transactions/unconfirmed` and `GET /transactions/unconfirmed/{transactionId}`.  Use this endpoint while a transaction is accepted by a node but not yet included in a block. Use `getConfirmedTransaction` once it is confirmed on-chain, and use `getPartialTransaction` for aggregate bonded transactions waiting for cosignatures. 
      * Get unconfirmed transaction information
      */
     async getUnconfirmedTransactionRaw(requestParameters: GetUnconfirmedTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionInfoDTO>> {
@@ -455,7 +455,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns unconfirmed transaction information given a transactionId or hash.
+     * Returns one unconfirmed transaction identified by the path value. An unconfirmed transaction is accepted by a node and pending inclusion in a block.  The path accepts either the transaction ID assigned by the node or the transaction hash. Both values are returned by transaction retrieval and search endpoints, for example `GET /transactions/unconfirmed` and `GET /transactions/unconfirmed/{transactionId}`.  Use this endpoint while a transaction is accepted by a node but not yet included in a block. Use `getConfirmedTransaction` once it is confirmed on-chain, and use `getPartialTransaction` for aggregate bonded transactions waiting for cosignatures. 
      * Get unconfirmed transaction information
      */
     async getUnconfirmedTransaction(requestParameters: GetUnconfirmedTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionInfoDTO> {
@@ -464,8 +464,8 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns unconfirmed transactions information for a given array of transactionIds.
-     * Get unconfirmed trasactions information
+     * Returns unconfirmed transactions for the list of identifiers in the request body. Unconfirmed transactions are accepted by a node and pending inclusion in a block.  Each request item can be either a transaction ID assigned by the node or a transaction hash. Both values are returned by transaction retrieval and search endpoints, for example `GET /transactions/unconfirmed` and `GET /transactions/unconfirmed/{transactionId}`.  Use this endpoint when checking multiple transactions that are accepted by a node but not yet included in a block. Use `getConfirmedTransactions` for on-chain transactions, and use `getPartialTransactions` for aggregate bonded transactions waiting for cosignatures. 
+     * Get information about unconfirmed transactions
      */
     async getUnconfirmedTransactionsRaw(requestParameters: GetUnconfirmedTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TransactionInfoDTO>>> {
         if (requestParameters['transactionIds'] == null) {
@@ -496,8 +496,8 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns unconfirmed transactions information for a given array of transactionIds.
-     * Get unconfirmed trasactions information
+     * Returns unconfirmed transactions for the list of identifiers in the request body. Unconfirmed transactions are accepted by a node and pending inclusion in a block.  Each request item can be either a transaction ID assigned by the node or a transaction hash. Both values are returned by transaction retrieval and search endpoints, for example `GET /transactions/unconfirmed` and `GET /transactions/unconfirmed/{transactionId}`.  Use this endpoint when checking multiple transactions that are accepted by a node but not yet included in a block. Use `getConfirmedTransactions` for on-chain transactions, and use `getPartialTransactions` for aggregate bonded transactions waiting for cosignatures. 
+     * Get information about unconfirmed transactions
      */
     async getUnconfirmedTransactions(requestParameters: GetUnconfirmedTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TransactionInfoDTO>> {
         const response = await this.getUnconfirmedTransactionsRaw(requestParameters, initOverrides);
@@ -505,7 +505,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an array of confirmed transactions. If a transaction was announced with an alias rather than an address, the address that will be considered when querying is the one that was resolved from the alias at confirmation time. 
+     * Returns a paginated list of confirmed transactions matching the supplied filters.  Use this endpoint when you need on-chain transactions only (already included in blocks). Use `searchUnconfirmedTransactions` for transactions that are still pending in a node pool, and use `searchPartialTransactions` for aggregate bonded transactions waiting for cosignatures.  If a transaction was announced with an alias rather than an address, the address considered during filtering is the one resolved from that alias at confirmation time.  For cursor-style pagination on this endpoint, set `offset` to the `id` of the last transaction from the previous page. For general pagination strategy guidance, see the `offset` and `pageNumber` query parameter descriptions. 
      * Search confirmed transactions
      */
     async searchConfirmedTransactionsRaw(requestParameters: SearchConfirmedTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionPage>> {
@@ -587,7 +587,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an array of confirmed transactions. If a transaction was announced with an alias rather than an address, the address that will be considered when querying is the one that was resolved from the alias at confirmation time. 
+     * Returns a paginated list of confirmed transactions matching the supplied filters.  Use this endpoint when you need on-chain transactions only (already included in blocks). Use `searchUnconfirmedTransactions` for transactions that are still pending in a node pool, and use `searchPartialTransactions` for aggregate bonded transactions waiting for cosignatures.  If a transaction was announced with an alias rather than an address, the address considered during filtering is the one resolved from that alias at confirmation time.  For cursor-style pagination on this endpoint, set `offset` to the `id` of the last transaction from the previous page. For general pagination strategy guidance, see the `offset` and `pageNumber` query parameter descriptions. 
      * Search confirmed transactions
      */
     async searchConfirmedTransactions(requestParameters: SearchConfirmedTransactionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionPage> {
@@ -596,7 +596,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an array of partial transactions.
+     * Returns a paginated list of partial transactions matching the supplied filters.  Use this endpoint for aggregate bonded transactions that still wait for required cosignatures. Use `searchUnconfirmedTransactions` for non-partial pending transactions, and use `searchConfirmedTransactions` once transactions are confirmed on-chain.  For cursor-style pagination on this endpoint, set `offset` to the `id` of the last transaction from the previous page. For general pagination strategy guidance, see the `offset` and `pageNumber` query parameter descriptions. 
      * Search partial transactions
      */
     async searchPartialTransactionsRaw(requestParameters: SearchPartialTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionPage>> {
@@ -678,7 +678,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an array of partial transactions.
+     * Returns a paginated list of partial transactions matching the supplied filters.  Use this endpoint for aggregate bonded transactions that still wait for required cosignatures. Use `searchUnconfirmedTransactions` for non-partial pending transactions, and use `searchConfirmedTransactions` once transactions are confirmed on-chain.  For cursor-style pagination on this endpoint, set `offset` to the `id` of the last transaction from the previous page. For general pagination strategy guidance, see the `offset` and `pageNumber` query parameter descriptions. 
      * Search partial transactions
      */
     async searchPartialTransactions(requestParameters: SearchPartialTransactionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionPage> {
@@ -687,7 +687,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an array of unconfirmed transactions.
+     * Returns a paginated list of unconfirmed transactions matching the supplied filters.  Use this endpoint for transactions accepted by a node but not yet included in a block. Use `searchConfirmedTransactions` for on-chain transactions, and use `searchPartialTransactions` for aggregate bonded transactions waiting for cosignatures.  For cursor-style pagination on this endpoint, set `offset` to the `id` of the last transaction from the previous page. For general pagination strategy guidance, see the `offset` and `pageNumber` query parameter descriptions. 
      * Search unconfirmed transactions
      */
     async searchUnconfirmedTransactionsRaw(requestParameters: SearchUnconfirmedTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionPage>> {
@@ -769,7 +769,7 @@ export class TransactionRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an array of unconfirmed transactions.
+     * Returns a paginated list of unconfirmed transactions matching the supplied filters.  Use this endpoint for transactions accepted by a node but not yet included in a block. Use `searchConfirmedTransactions` for on-chain transactions, and use `searchPartialTransactions` for aggregate bonded transactions waiting for cosignatures.  For cursor-style pagination on this endpoint, set `offset` to the `id` of the last transaction from the previous page. For general pagination strategy guidance, see the `offset` and `pageNumber` query parameter descriptions. 
      * Search unconfirmed transactions
      */
     async searchUnconfirmedTransactions(requestParameters: SearchUnconfirmedTransactionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionPage> {

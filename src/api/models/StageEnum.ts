@@ -14,10 +14,11 @@
 
 
 /**
- * Type of stage:
- * * 0 - Prevote.
- * * 1 - Precommit.
- * * 2 - Count.
+ * Finalization message stage
+ * ([docs](https://docs.symbol.dev/concepts/block.html#finalization)):
+ * - `0`: Prevote: voters indicate which block hash they support.
+ * - `1`: Precommit: voters commit to the block after supermajority prevote.
+ * - `2`: Count: tally of votes (internal use).
  * 
  * @export
  */

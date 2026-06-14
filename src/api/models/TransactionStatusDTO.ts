@@ -29,7 +29,7 @@ import {
 } from './TransactionStatusEnum';
 
 /**
- * 
+ * Current processing status of a transaction identified by its hash.
  * @export
  * @interface TransactionStatusDTO
  */
@@ -47,19 +47,31 @@ export interface TransactionStatusDTO {
      */
     code?: TransactionStatusEnum;
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof TransactionStatusDTO
      */
     hash: string;
     /**
-     * Duration expressed in number of blocks.
+     * Network timestamp in **milliseconds** since the creation of the nemesis (first) block.
+     * Used for block timestamps, transaction deadlines, and time synchronization.
+     * 
+     * **Finding the nemesis block time:** The `epochAdjustment` field returned by the
+     * [`/network/properties`] endpoint gives the nemesis block creation time in seconds since the
+     * [UNIX epoch](https://en.wikipedia.org/wiki/Unix_time). For Symbol MAINNET this is
+     * always `1615853185` (15 March 2021, 00:06:25 UTC).
+     * 
+     * **Converting to real time:** Add this timestamp (ms) to `epochAdjustment × 1000` (ms), then use standard date functions.
+     * Note: `epochAdjustment` may be returned as a string like `"1615853185s"`; use the numeric part.
+     * 
      * @type {string}
      * @memberof TransactionStatusDTO
      */
     deadline: string;
     /**
-     * Height of the blockchain.
+     * Height of a block in the blockchain. Starts at 1 and increments by one per block.
+     * Represented as a string to preserve precision, since the value is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof TransactionStatusDTO
      */

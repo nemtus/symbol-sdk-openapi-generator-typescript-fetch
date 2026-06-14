@@ -9,9 +9,14 @@ This is the Symbol SDK for TypeScript with OpenAPI Generator typescript-fetch. I
 ## Architecture
 
 ### Code Generation Pipeline
-1. **Published OpenAPI spec** - `fetch-openapi.js` downloads the official `openapi3.yml` from a pinned
-   `symbol/symbol-openapi` GitHub release and verifies its SHA-256, writing it to `openapi-spec/openapi3.yml`
-   (git-ignored). This replaces the former `symbol-openapi` submodule build, removing its vulnerable dev tooling.
+1. **Published OpenAPI spec** - The spec ships as the npm package
+   [`@nemtus/symbol-openapi`](https://www.npmjs.com/package/@nemtus/symbol-openapi), a devDependency.
+   `npm ci` installs the bundled `openapi3.yml` to `node_modules/@nemtus/symbol-openapi/openapi3.yml`,
+   which `openapi:generate` consumes. The package is built and published from the
+   `nemtus/symbol` mirror fork (`dev` branch, `openapi/`); building it locally is not needed here, so
+   the vulnerable redocly/postman build tooling never enters this repo. Pinning + integrity are handled
+   by `package-lock.json` and the `npm audit` gate (replacing the former `fetch-openapi.js` download +
+   SHA-256 verification and the older `symbol-openapi` submodule build).
 2. **OpenAPI Generator** - Uses typescript-fetch generator with custom templates (`custom-templates/`)
 3. **Generated API code** (`src/api/`) - Auto-generated, DO NOT edit manually
 4. **Build outputs** (`dist/`) - Contains CJS, ESM, and CDN bundles
@@ -32,16 +37,14 @@ git clone git@github.com:nemtus/symbol-sdk-openapi-generator-typescript-fetch.gi
 ### Build Commands
 ```bash
 # Generate API client code (run in root directory)
-npm ci
-npm run openapi:fetch         # Download + SHA-256 verify the published openapi3.yml
+npm ci                        # Installs @nemtus/symbol-openapi (the spec) into node_modules
 npm run openapi:set:version   # Set OpenAPI generator version to 7.14.0
-npm run openapi:generate      # Generate TypeScript code from the fetched OpenAPI spec
+npm run openapi:generate      # Generate TypeScript code from node_modules/@nemtus/symbol-openapi/openapi3.yml
 npm run build                 # Build CJS, ESM, and CDN bundles
 ```
 
-To bump the OpenAPI spec version, edit `SPEC_VERSION` / `SPEC_SHA256` in `fetch-openapi.js`
-(see the comment in that file for how to obtain the new checksum). Java is still required for
-the OpenAPI Generator itself.
+To bump the OpenAPI spec, bump the `@nemtus/symbol-openapi` version in `package.json` (or merge the
+Dependabot PR) and regenerate. Java is still required for the OpenAPI Generator itself.
 
 ### Test Commands
 ```bash
@@ -110,7 +113,7 @@ requires a clean working tree, so commit or stash first.
 ## Important Notes
 
 - **DO NOT manually edit** files in `src/api/` - they are auto-generated
-- The OpenAPI spec is fetched from a pinned `symbol/symbol-openapi` GitHub release via `fetch-openapi.js` (no git submodule); SHA-256 is verified before use
+- The OpenAPI spec comes from the `@nemtus/symbol-openapi` npm package (a devDependency), built and published from the `nemtus/symbol` mirror fork (`dev` branch, `openapi/`); it is pinned via `package-lock.json` and gated by `npm audit` (no HTTP fetch, no git submodule)
 - Java is required for OpenAPI Generator CLI
 - Custom templates in `custom-templates/` modify the default typescript-fetch generation
 - Artifacts in CI/CD use unique naming to prevent conflicts between concurrent builds

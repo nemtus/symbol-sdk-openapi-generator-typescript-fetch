@@ -53,7 +53,7 @@ Or you can run the whole unit test suite:
 npm run test
 ```
 
-Please be aware that you might have to rebuild openapi3.yml and generate REST API client code and rebuild your codes before!
+Please be aware that you might have to regenerate the REST API client code from `@nemtus/symbol-openapi` (`npm run openapi:set:version && npm run openapi:generate`) and rebuild your codes before!
 
 ### Testing your changes
 

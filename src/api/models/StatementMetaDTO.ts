@@ -14,13 +14,23 @@
 
 import { mapValues } from '../runtime';
 /**
- * Metadata related to the statment, including block information.
+ * Metadata for a statement containing the block timestamp when it was recorded.
  * @export
  * @interface StatementMetaDTO
  */
 export interface StatementMetaDTO {
     /**
-     * Number of milliseconds elapsed since the creation of the nemesis block. This value can be converted to epoch time by adding the network's 'epochAdjustment'.
+     * Network timestamp in **milliseconds** since the creation of the nemesis (first) block.
+     * Used for block timestamps, transaction deadlines, and time synchronization.
+     * 
+     * **Finding the nemesis block time:** The `epochAdjustment` field returned by the
+     * [`/network/properties`] endpoint gives the nemesis block creation time in seconds since the
+     * [UNIX epoch](https://en.wikipedia.org/wiki/Unix_time). For Symbol MAINNET this is
+     * always `1615853185` (15 March 2021, 00:06:25 UTC).
+     * 
+     * **Converting to real time:** Add this timestamp (ms) to `epochAdjustment × 1000` (ms), then use standard date functions.
+     * Note: `epochAdjustment` may be returned as a string like `"1615853185s"`; use the numeric part.
+     * 
      * @type {string}
      * @memberof StatementMetaDTO
      */

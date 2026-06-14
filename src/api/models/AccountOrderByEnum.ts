@@ -14,6 +14,9 @@
 
 
 /**
+ * Account sort field:
+ * - `id`: sort by internal identifier.
+ * - `balance`: sort by mosaic balance.
  * 
  * @export
  */

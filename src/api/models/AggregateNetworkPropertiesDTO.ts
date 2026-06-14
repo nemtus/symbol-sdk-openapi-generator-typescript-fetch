@@ -32,7 +32,9 @@ export interface AggregateNetworkPropertiesDTO {
      */
     maxCosignaturesPerAggregate?: string;
     /**
-     * Set to true if cosignatures must exactly match component signers. Set to false if cosignatures should be validated externally.
+     * Set to true if cosignatures must exactly match component signers. Set to
+     * false if cosignatures should be validated externally.
+     * 
      * @type {boolean}
      * @memberof AggregateNetworkPropertiesDTO
      */

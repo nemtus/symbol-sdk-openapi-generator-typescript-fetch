@@ -29,31 +29,31 @@ import {
 } from './AccountRestrictionFlagsEnum';
 
 /**
- * 
+ * Embedded transaction variant of `AccountMosaicRestrictionTransactionDTO`.
  * @export
  * @interface EmbeddedAccountMosaicRestrictionTransactionDTO
  */
 export interface EmbeddedAccountMosaicRestrictionTransactionDTO {
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof EmbeddedAccountMosaicRestrictionTransactionDTO
      */
     signerPublicKey: string;
     /**
-     * Entity version.
+     * Entity version. Indicates the schema variant for serialization and validation.
      * @type {number}
      * @memberof EmbeddedAccountMosaicRestrictionTransactionDTO
      */
     version: number;
     /**
-     * 
+     * Network type (mainnet or testnet). Ensures the entity targets the correct network.
      * @type {NetworkTypeEnum}
      * @memberof EmbeddedAccountMosaicRestrictionTransactionDTO
      */
     network: NetworkTypeEnum;
     /**
-     * 
+     * Entity type identifier (e.g. transaction type code, block type). Determines the entity schema.
      * @type {number}
      * @memberof EmbeddedAccountMosaicRestrictionTransactionDTO
      */

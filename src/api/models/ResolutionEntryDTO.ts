@@ -29,13 +29,13 @@ import {
 } from './ResolutionEntryDTOResolved';
 
 /**
- * 
+ * One resolved value for an unresolved alias and transaction source.
  * @export
  * @interface ResolutionEntryDTO
  */
 export interface ResolutionEntryDTO {
     /**
-     * 
+     * Transaction source for which the unresolved alias resolved to this value.
      * @type {SourceDTO}
      * @memberof ResolutionEntryDTO
      */

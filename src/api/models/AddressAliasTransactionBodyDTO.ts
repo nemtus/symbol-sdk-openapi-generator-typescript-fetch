@@ -22,19 +22,24 @@ import {
 } from './AliasActionEnum';
 
 /**
- * 
+ * Address alias transaction body that links or unlinks a namespace to an address.
  * @export
  * @interface AddressAliasTransactionBodyDTO
  */
 export interface AddressAliasTransactionBodyDTO {
     /**
-     * Namespace identifier.
+     * Unique [namespace](https://docs.symbol.dev/concepts/namespaces.html) identifier.
+     * A 64-bit unsigned integer derived from the namespace name and its parent namespace ID,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof AddressAliasTransactionBodyDTO
      */
     namespaceId: string;
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof AddressAliasTransactionBodyDTO
      */

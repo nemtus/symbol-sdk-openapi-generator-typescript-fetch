@@ -14,19 +14,25 @@
 
 import { mapValues } from '../runtime';
 /**
+ * Error response body returned for 4xx responses.
+ * Contains an error code identifier and a human-readable message.
  * 
  * @export
  * @interface ModelError
  */
 export interface ModelError {
     /**
+     * Error type identifier. Common values:
+     * - `InvalidContent`: malformed request body or unparsable content (HTTP 400).
+     * - `ResourceNotFound`: requested resource does not exist (HTTP 404).
+     * - `InvalidArgument`: required arguments missing or unacceptable (HTTP 409).
      * 
      * @type {string}
      * @memberof ModelError
      */
     code: string;
     /**
-     * 
+     * Human-readable error description. May include the invalid value or resource identifier.
      * @type {string}
      * @memberof ModelError
      */

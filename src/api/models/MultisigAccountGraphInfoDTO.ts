@@ -22,19 +22,23 @@ import {
 } from './MultisigAccountInfoDTO';
 
 /**
- * 
+ * Multisig graph entries grouped by distance from the requested account.
  * @export
  * @interface MultisigAccountGraphInfoDTO
  */
 export interface MultisigAccountGraphInfoDTO {
     /**
-     * Level of the multisig account.
+     * Relative graph level.
+     * `0` is the requested account, negative levels are multisig accounts for which the requested
+     * account acts as a cosignatory, and positive levels are multisig relationships reached through
+     * cosignatories.
+     * 
      * @type {number}
      * @memberof MultisigAccountGraphInfoDTO
      */
     level: number;
     /**
-     * Array of multisig accounts for this level.
+     * Multisig state entries discovered at this graph level.
      * @type {Array<MultisigAccountInfoDTO>}
      * @memberof MultisigAccountGraphInfoDTO
      */

@@ -22,13 +22,13 @@ import {
 } from './LinkActionEnum';
 
 /**
- * 
+ * VRF key link transaction body that links or unlinks a VRF public key.
  * @export
  * @interface VrfKeyLinkTransactionBodyDTO
  */
 export interface VrfKeyLinkTransactionBodyDTO {
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof VrfKeyLinkTransactionBodyDTO
      */

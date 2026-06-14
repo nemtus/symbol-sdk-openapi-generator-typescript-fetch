@@ -14,25 +14,31 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Voting key linked to the account, valid for a range of finalization epochs.
  * @export
  * @interface AccountLinkVotingKeyDTO
  */
 export interface AccountLinkVotingKeyDTO {
     /**
-     * 
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof AccountLinkVotingKeyDTO
      */
     publicKey: string;
     /**
-     * Finalization Epoch
+     * [Finalization epoch](https://docs.symbol.dev/concepts/block.html#finalization) is a sequential
+     * integer. Each epoch groups a set of blocks for finalization voting; the interval is defined
+     * by the `votingSetGrouping` network property (e.g. 1440 blocks, ~12h on mainnet).
+     * 
      * @type {number}
      * @memberof AccountLinkVotingKeyDTO
      */
     startEpoch: number;
     /**
-     * Finalization Epoch
+     * [Finalization epoch](https://docs.symbol.dev/concepts/block.html#finalization) is a sequential
+     * integer. Each epoch groups a set of blocks for finalization voting; the interval is defined
+     * by the `votingSetGrouping` network property (e.g. 1440 blocks, ~12h on mainnet).
+     * 
      * @type {number}
      * @memberof AccountLinkVotingKeyDTO
      */

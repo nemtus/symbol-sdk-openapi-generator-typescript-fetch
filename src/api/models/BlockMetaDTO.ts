@@ -14,51 +14,64 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Block metadata including hash, total fee, generation hash, and transaction/statement counts.
  * @export
  * @interface BlockMetaDTO
  */
 export interface BlockMetaDTO {
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof BlockMetaDTO
      */
     hash: string;
     /**
-     * Absolute amount. An amount of 123456789 (absolute) for a mosaic with divisibility 6 means 123.456789 (relative).
+     * Absolute amount expressed in the mosaic's smallest (atomic) unit, with no decimal point.
+     * For example, an amount of `123456789` for a mosaic with divisibility 6 represents
+     * `123.456789` whole units. Encoded as a string to preserve precision, since the value
+     * is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof BlockMetaDTO
      */
     totalFee: string;
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof BlockMetaDTO
      */
     generationHash: string;
     /**
-     * 
+     * Merkle roots of each sub-cache at this block height.
      * @type {Array<string>}
      * @memberof BlockMetaDTO
      */
     stateHashSubCacheMerkleRoots: Array<string>;
     /**
-     * Total number of [transactions](https://docs.symbol.dev/concepts/transaction.html) confirmed in this block, including *embedded* transactions (i.e. transactions contained within aggregate transactions).
+     * Total number of [transactions](https://docs.symbol.dev/concepts/transaction.html)
+     * confirmed in this block, including *embedded* transactions
+     * (i.e. transactions contained within aggregate transactions).
      * 
      * @type {number}
      * @memberof BlockMetaDTO
      */
     totalTransactionsCount: number;
     /**
-     * Number of [transactions](https://docs.symbol.dev/concepts/transaction.html) confirmed in this block. This does not count *embedded* transactions (i.e. transactions contained within aggregate transactions).
+     * Number of [transactions](https://docs.symbol.dev/concepts/transaction.html)
+     * confirmed in this block. This does not count *embedded* transactions
+     * (i.e. transactions contained within aggregate transactions).
      * 
      * @type {number}
      * @memberof BlockMetaDTO
      */
     transactionsCount: number;
     /**
-     * Number of statements (of any kind) present in this block. Bear in mind that some of them (like [resolution statements](https://docs.symbol.dev/concepts/receipt.html#resolution-statement)) are triggered by transactions present in the block, but in general, [transaction statements](https://docs.symbol.dev/concepts/receipt.html#transaction-statement) are not.
+     * Number of statements (of any kind) present in this block.
+     * Bear in mind that some of them (like
+     * [resolution statements](https://docs.symbol.dev/concepts/receipt.html#resolution-statement))
+     * are triggered by transactions present in the block, but in general,
+     * [transaction statements](https://docs.symbol.dev/concepts/receipt.html#transaction-statement)
+     * are not.
      * 
      * @type {number}
      * @memberof BlockMetaDTO

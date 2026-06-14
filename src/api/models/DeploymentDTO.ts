@@ -14,13 +14,14 @@
 
 import { mapValues } from '../runtime';
 /**
+ * Deployment tool and version used to create/maintain the node; date of last upgrade.
  * 
  * @export
  * @interface DeploymentDTO
  */
 export interface DeploymentDTO {
     /**
-     * The tool used to create, maintain and deploy the node. Examples: symbol-bootstrap, manual.
+     * The tool used to create, maintain and deploy the node.
      * @type {string}
      * @memberof DeploymentDTO
      */

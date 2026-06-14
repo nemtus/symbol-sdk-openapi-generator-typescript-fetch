@@ -22,13 +22,13 @@ import {
 } from './ReceiptTypeEnum';
 
 /**
- * 
+ * Base fields shared by all receipt types.
  * @export
  * @interface ReceiptDTO
  */
 export interface ReceiptDTO {
     /**
-     * Version of the receipt.
+     * Version of the receipt format.
      * @type {number}
      * @memberof ReceiptDTO
      */

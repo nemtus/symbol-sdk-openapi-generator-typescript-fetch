@@ -105,7 +105,7 @@ export class NodeRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the node metadata information that has been set by node operator.
+     * Gets the node metadata information that has been set by the node operator.  **How to set:** Add a top-level `nodeMetadata` object in the REST server JSON configuration file. Example:  ```json {   \"nodeMetadata\": {     \"deploymentTool\": \"symbol-shoestring\",     \"version\": \"1.0.0\",     \"customLabel\": \"my-node\"   } } ```  The entire `nodeMetadata` object is served as-is; add any key-value pairs to personalize your node. 
      * Retrieve node metadata
      */
     async getNodeMetadataRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: string; }>> {
@@ -127,7 +127,7 @@ export class NodeRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the node metadata information that has been set by node operator.
+     * Gets the node metadata information that has been set by the node operator.  **How to set:** Add a top-level `nodeMetadata` object in the REST server JSON configuration file. Example:  ```json {   \"nodeMetadata\": {     \"deploymentTool\": \"symbol-shoestring\",     \"version\": \"1.0.0\",     \"customLabel\": \"my-node\"   } } ```  The entire `nodeMetadata` object is served as-is; add any key-value pairs to personalize your node. 
      * Retrieve node metadata
      */
     async getNodeMetadata(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: string; }> {
@@ -167,7 +167,7 @@ export class NodeRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns storage information about the node.
+     * Returns estimated counts of blocks, transactions, and accounts in the REST server\'s MongoDB database, along with database size statistics (`db.stats()`). 
      * Get the storage information of the node
      */
     async getNodeStorageRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StorageInfoDTO>> {
@@ -189,7 +189,7 @@ export class NodeRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns storage information about the node.
+     * Returns estimated counts of blocks, transactions, and accounts in the REST server\'s MongoDB database, along with database size statistics (`db.stats()`). 
      * Get the storage information of the node
      */
     async getNodeStorage(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StorageInfoDTO> {
@@ -261,7 +261,7 @@ export class NodeRoutesApi extends runtime.BaseAPI {
 
     /**
      * Returns array of unlocked account public keys.
-     * Get the unlocked harvesting account public keys.
+     * Get the unlocked harvesting account public keys
      */
     async getUnlockedAccountRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UnlockedAccountDTO>> {
         const queryParameters: any = {};
@@ -283,7 +283,7 @@ export class NodeRoutesApi extends runtime.BaseAPI {
 
     /**
      * Returns array of unlocked account public keys.
-     * Get the unlocked harvesting account public keys.
+     * Get the unlocked harvesting account public keys
      */
     async getUnlockedAccount(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UnlockedAccountDTO> {
         const response = await this.getUnlockedAccountRaw(initOverrides);

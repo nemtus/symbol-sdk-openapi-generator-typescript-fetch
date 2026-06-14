@@ -14,19 +14,24 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Address-specific mosaic restriction value associated with a restriction key.
  * @export
  * @interface MosaicAddressRestrictionEntryDTO
  */
 export interface MosaicAddressRestrictionEntryDTO {
     /**
-     * Restriction key.
+     * Creator-defined 64-bit numeric identifier of a mosaic restriction, scoped to a mosaic.
+     * It can be derived from a human-readable name by hashing it, and is represented as a decimal string in stored restriction entries.
+     * 
      * @type {string}
      * @memberof MosaicAddressRestrictionEntryDTO
      */
     key: string;
     /**
-     * Restriction value.
+     * Unsigned 64-bit value associated with a mosaic restriction key, represented as a decimal string.
+     * For address restrictions, it is the value assigned to the target address;
+     * for global restrictions, it is the threshold evaluated with the restriction type.
+     * 
      * @type {string}
      * @memberof MosaicAddressRestrictionEntryDTO
      */

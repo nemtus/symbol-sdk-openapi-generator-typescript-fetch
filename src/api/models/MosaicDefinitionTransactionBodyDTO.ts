@@ -14,13 +14,16 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Mosaic definition transaction body with the mosaic ID inputs and immutable configuration values.
  * @export
  * @interface MosaicDefinitionTransactionBodyDTO
  */
 export interface MosaicDefinitionTransactionBodyDTO {
     /**
-     * Mosaic identifier.
+     * Unique [mosaic](https://docs.symbol.dev/concepts/mosaic.html) identifier.
+     * A 64-bit unsigned integer derived from the creator's address and a registration nonce,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof MosaicDefinitionTransactionBodyDTO
      */
@@ -32,24 +35,30 @@ export interface MosaicDefinitionTransactionBodyDTO {
      */
     duration: string;
     /**
-     * A number that allows uint 32 values.
+     * Unsigned 32-bit integer.
+     * Represented as integer since it fits in JSON number precision.
+     * 
      * @type {number}
      * @memberof MosaicDefinitionTransactionBodyDTO
      */
     nonce: number;
     /**
-     * - 0x00 (none) - No flags present.
-     * - 0x01 (supplyMutable) - Mosaic supports supply changes even when mosaic owner owns partial supply.
-     * - 0x02 (transferable) - Mosaic supports transfers between arbitrary accounts. When not set, mosaic can only be transferred to and from mosaic owner.
-     * - 0x04 (restrictable) - Mosaic supports custom restrictions configured by mosaic owner.
-     * - 0x08 (revokable) - Mosaic allows creator to revoke balances from another user.
+     * Mosaic flags bitmask. Individual values can be combined.
+     * - 0x00 (0 decimal): No flags present.
+     * - 0x01 (1 decimal, `supplyMutable`): Mosaic supply can be increased or decreased later.
+     * - 0x02 (2 decimal, `transferable`): Mosaic can be transferred between arbitrary accounts.
+     *   When not set, it can only be transferred to and from the mosaic owner.
+     * - 0x04 (4 decimal, `restrictable`): Mosaic supports custom restrictions configured by the mosaic owner.
+     * - 0x08 (8 decimal, `revokable`): Mosaic creator can revoke balances from another account.
+     * 
+     * Example: `3` means `0x01 + 0x02`, so the mosaic is both `supplyMutable` and `transferable`.
      * 
      * @type {number}
      * @memberof MosaicDefinitionTransactionBodyDTO
      */
     flags: number;
     /**
-     * Determines up to what decimal place the mosaic can be divided.
+     * Determines up to what decimal place a mosaic can be divided.
      * Divisibility of 3 means that a mosaic can be divided into smallest parts of 0.001 mosaics.
      * The divisibility must be in the range of 0 and 6.
      * 

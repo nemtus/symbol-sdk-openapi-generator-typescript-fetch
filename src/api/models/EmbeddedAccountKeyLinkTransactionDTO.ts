@@ -29,37 +29,37 @@ import {
 } from './LinkActionEnum';
 
 /**
- * 
+ * Embedded transaction variant of `AccountKeyLinkTransactionDTO`.
  * @export
  * @interface EmbeddedAccountKeyLinkTransactionDTO
  */
 export interface EmbeddedAccountKeyLinkTransactionDTO {
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof EmbeddedAccountKeyLinkTransactionDTO
      */
     signerPublicKey: string;
     /**
-     * Entity version.
+     * Entity version. Indicates the schema variant for serialization and validation.
      * @type {number}
      * @memberof EmbeddedAccountKeyLinkTransactionDTO
      */
     version: number;
     /**
-     * 
+     * Network type (mainnet or testnet). Ensures the entity targets the correct network.
      * @type {NetworkTypeEnum}
      * @memberof EmbeddedAccountKeyLinkTransactionDTO
      */
     network: NetworkTypeEnum;
     /**
-     * 
+     * Entity type identifier (e.g. transaction type code, block type). Determines the entity schema.
      * @type {number}
      * @memberof EmbeddedAccountKeyLinkTransactionDTO
      */
     type: number;
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof EmbeddedAccountKeyLinkTransactionDTO
      */

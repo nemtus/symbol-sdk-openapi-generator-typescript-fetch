@@ -22,13 +22,13 @@ import {
 } from './LinkActionEnum';
 
 /**
- * 
+ * Node key link transaction body that links or unlinks a remote node public key.
  * @export
  * @interface NodeKeyLinkTransactionBodyDTO
  */
 export interface NodeKeyLinkTransactionBodyDTO {
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof NodeKeyLinkTransactionBodyDTO
      */

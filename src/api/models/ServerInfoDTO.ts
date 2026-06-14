@@ -22,6 +22,8 @@ import {
 } from './ServerDTO';
 
 /**
+ * Version and deployment information for the catapult-rest component running
+ * on this node.
  * 
  * @export
  * @interface ServerInfoDTO

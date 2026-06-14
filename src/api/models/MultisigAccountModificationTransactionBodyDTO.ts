@@ -14,35 +14,39 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Multisig account modification transaction body with threshold deltas and cosignatory changes.
  * @export
  * @interface MultisigAccountModificationTransactionBodyDTO
  */
 export interface MultisigAccountModificationTransactionBodyDTO {
     /**
-     * Number of signatures needed to remove a cosignatory.
-     * If we are modifying an existing multisig account, this indicates the relative change of the minimum cosignatories.
+     * Relative change applied to the minimum number of cosignatory approvals required to remove a
+     * cosignatory. When converting a regular account into a multisig account, the initial value is
+     * derived from this delta because the previous threshold is zero.
      * 
      * @type {number}
      * @memberof MultisigAccountModificationTransactionBodyDTO
      */
     minRemovalDelta: number;
     /**
-     * Number of signatures needed to approve a transaction.
-     * If we are modifying an existing multisig account, this indicates the relative change of the minimum cosignatories.
+     * Relative change applied to the minimum number of cosignatory approvals required to approve a
+     * transaction. When converting a regular account into a multisig account, the initial value is
+     * derived from this delta because the previous threshold is zero.
      * 
      * @type {number}
      * @memberof MultisigAccountModificationTransactionBodyDTO
      */
     minApprovalDelta: number;
     /**
-     * Array of cosignatory accounts to add.
+     * Cosignatory addresses to add to the multisig account.
+     * Newly added cosignatories must opt in by cosigning the aggregate transaction.
+     * 
      * @type {Array<string>}
      * @memberof MultisigAccountModificationTransactionBodyDTO
      */
     addressAdditions: Array<string>;
     /**
-     * Array of cosignatory accounts to delete.
+     * Cosignatory addresses to remove from the multisig account.
      * @type {Array<string>}
      * @memberof MultisigAccountModificationTransactionBodyDTO
      */

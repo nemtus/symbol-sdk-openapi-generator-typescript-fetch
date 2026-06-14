@@ -22,7 +22,7 @@ import {
 } from './AccountRestrictionFlagsEnum';
 
 /**
- * 
+ * Account mosaic restriction transaction body that updates the allowed or blocked mosaic ID list.
  * @export
  * @interface AccountMosaicRestrictionTransactionBodyDTO
  */

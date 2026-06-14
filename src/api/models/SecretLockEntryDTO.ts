@@ -29,37 +29,53 @@ import {
 } from './LockHashAlgorithmEnum';
 
 /**
+ * Locked mosaic funds that can be claimed by the recipient only after revealing a valid proof.
+ * If the proof is not revealed before the lock expires, the locked funds are returned to the sender.
  * 
  * @export
  * @interface SecretLockEntryDTO
  */
 export interface SecretLockEntryDTO {
     /**
-     * The version of the state
+     * Version of the on-chain state serialization format. Incremented when the storage
+     * schema of the entity changes (e.g. new fields are added), allowing the node to
+     * deserialize entries written under earlier formats.
+     * 
      * @type {number}
      * @memberof SecretLockEntryDTO
      */
     version: number;
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof SecretLockEntryDTO
      */
     ownerAddress: string;
     /**
-     * Mosaic identifier.
+     * Unique [mosaic](https://docs.symbol.dev/concepts/mosaic.html) identifier.
+     * A 64-bit unsigned integer derived from the creator's address and a registration nonce,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof SecretLockEntryDTO
      */
     mosaicId: string;
     /**
-     * Absolute amount. An amount of 123456789 (absolute) for a mosaic with divisibility 6 means 123.456789 (relative).
+     * Absolute amount expressed in the mosaic's smallest (atomic) unit, with no decimal point.
+     * For example, an amount of `123456789` for a mosaic with divisibility 6 represents
+     * `123.456789` whole units. Encoded as a string to preserve precision, since the value
+     * is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof SecretLockEntryDTO
      */
     amount: string;
     /**
-     * Height of the blockchain.
+     * Height of a block in the blockchain. Starts at 1 and increments by one per block.
+     * Represented as a string to preserve precision, since the value is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof SecretLockEntryDTO
      */
@@ -77,19 +93,23 @@ export interface SecretLockEntryDTO {
      */
     hashAlgorithm: LockHashAlgorithmEnum;
     /**
-     * Secret.
+     * 256-bit hashed secret derived from the proof using the selected `LockHashAlgorithm`.
+     * In secret lock and secret proof transactions, the revealed proof must hash to this value.
+     * 
      * @type {string}
      * @memberof SecretLockEntryDTO
      */
     secret: string;
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof SecretLockEntryDTO
      */
     recipientAddress: string;
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof SecretLockEntryDTO
      */

@@ -14,10 +14,13 @@
 
 
 /**
- * Type of alias:
- * * 0 - No alias.
- * * 1 - Mosaic id alias.
- * * 2 - Addres alias.
+ * Type of alias currently linked to the namespace.
+ * A namespace can either have no alias assigned, point to a mosaic ID, or point to
+ * an account address.
+ * 
+ * - 0: No alias is linked to the namespace.
+ * - 1: The namespace is linked to a mosaic ID and can be used as a mosaic alias.
+ * - 2: The namespace is linked to an account address and can be used as an address alias.
  * 
  * @export
  */

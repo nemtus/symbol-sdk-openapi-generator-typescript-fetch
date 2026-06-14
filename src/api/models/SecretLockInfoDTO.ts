@@ -22,12 +22,14 @@ import {
 } from './SecretLockEntryDTO';
 
 /**
- * 
+ * Wrapper object containing one secret lock entry and its identifier.
  * @export
  * @interface SecretLockInfoDTO
  */
 export interface SecretLockInfoDTO {
     /**
+     * Unique identifier of the object in the node's database (MongoDB ObjectId).
+     * Used as the `offset` parameter value for cursor-based pagination.
      * 
      * @type {string}
      * @memberof SecretLockInfoDTO

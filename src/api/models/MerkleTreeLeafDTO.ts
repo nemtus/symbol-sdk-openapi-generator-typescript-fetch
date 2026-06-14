@@ -22,43 +22,45 @@ import {
 } from './MerkleTreeNodeTypeEnum';
 
 /**
- * Merkle tree leaf node.
+ * Terminal node of a [Patricia Merkle tree](https://docs.symbol.dev/concepts/data-validation.html)
+ * used in state proofs. A leaf stores the final path and the associated value (entity state hash).
+ * 
  * @export
  * @interface MerkleTreeLeafDTO
  */
 export interface MerkleTreeLeafDTO {
     /**
-     * 
+     * Node type (always leaf).
      * @type {MerkleTreeNodeTypeEnum}
      * @memberof MerkleTreeLeafDTO
      */
     type: MerkleTreeNodeTypeEnum;
     /**
-     * Leaf path.
+     * Full path (hex) from root to this leaf.
      * @type {string}
      * @memberof MerkleTreeLeafDTO
      */
     path: string;
     /**
-     * Encoded leaf path.
+     * Compact-encoded path.
      * @type {string}
      * @memberof MerkleTreeLeafDTO
      */
     encodedPath: string;
     /**
-     * Nibble count.
+     * Number of nibbles in the path.
      * @type {number}
      * @memberof MerkleTreeLeafDTO
      */
     nibbleCount: number;
     /**
-     * Leaf value (sha256 hash).
+     * Leaf value (SHA3-256 hash of the entity state).
      * @type {string}
      * @memberof MerkleTreeLeafDTO
      */
     value: string;
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof MerkleTreeLeafDTO
      */

@@ -53,6 +53,7 @@ export interface GetAccountsInfoRequest {
 }
 
 export interface SearchAccountsRequest {
+    address?: string;
     pageSize?: number;
     pageNumber?: number;
     offset?: string;
@@ -67,7 +68,7 @@ export interface SearchAccountsRequest {
 export class AccountRoutesApi extends runtime.BaseAPI {
 
     /**
-     * Returns the account information.
+     * Retrieves account data for a given account identifier. The response contains the account state including balance, importance, public key, linked keys, and activity buckets.  The `accountId` path parameter accepts either a public key or a Base32-encoded address. 
      * Get account information
      */
     async getAccountInfoRaw(requestParameters: GetAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountInfoDTO>> {
@@ -97,7 +98,7 @@ export class AccountRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the account information.
+     * Retrieves account data for a given account identifier. The response contains the account state including balance, importance, public key, linked keys, and activity buckets.  The `accountId` path parameter accepts either a public key or a Base32-encoded address. 
      * Get account information
      */
     async getAccountInfo(requestParameters: GetAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountInfoDTO> {
@@ -106,8 +107,8 @@ export class AccountRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the account merkle information.
-     * Get account merkle information
+     * Retrieves the Merkle proof data for a given account. The Merkle path can be used to independently verify that the account state is included in the block state hash.  If no account state entry exists for the supplied account ID, the endpoint still returns a Merkle proof response, but it is a negative proof showing that no account state entry exists for the requested account.  The `accountId` path parameter accepts either a public key or a Base32-encoded address. 
+     * Get account Merkle information
      */
     async getAccountInfoMerkleRaw(requestParameters: GetAccountInfoMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MerkleStateInfoDTO>> {
         if (requestParameters['accountId'] == null) {
@@ -136,8 +137,8 @@ export class AccountRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the account merkle information.
-     * Get account merkle information
+     * Retrieves the Merkle proof data for a given account. The Merkle path can be used to independently verify that the account state is included in the block state hash.  If no account state entry exists for the supplied account ID, the endpoint still returns a Merkle proof response, but it is a negative proof showing that no account state entry exists for the requested account.  The `accountId` path parameter accepts either a public key or a Base32-encoded address. 
+     * Get account Merkle information
      */
     async getAccountInfoMerkle(requestParameters: GetAccountInfoMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MerkleStateInfoDTO> {
         const response = await this.getAccountInfoMerkleRaw(requestParameters, initOverrides);
@@ -145,7 +146,7 @@ export class AccountRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the account information for an array of accounts.
+     * Retrieves account data for multiple accounts in a single request. This is the batch equivalent of the single-account endpoint.  The request body accepts either an array of public keys or an array of addresses (not both). If both `publicKeys` and `addresses` are provided, the request is invalid and the server returns `409` error. 
      * Get accounts information
      */
     async getAccountsInfoRaw(requestParameters: GetAccountsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AccountInfoDTO>>> {
@@ -170,7 +171,7 @@ export class AccountRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the account information for an array of accounts.
+     * Retrieves account data for multiple accounts in a single request. This is the batch equivalent of the single-account endpoint.  The request body accepts either an array of public keys or an array of addresses (not both). If both `publicKeys` and `addresses` are provided, the request is invalid and the server returns `409` error. 
      * Get accounts information
      */
     async getAccountsInfo(requestParameters: GetAccountsInfoRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<AccountInfoDTO>> {
@@ -179,11 +180,15 @@ export class AccountRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets an array of accounts.
+     * Returns a paginated list of accounts matching the given criteria.  Results can be filtered by `address` and `mosaicId` (mosaic ownership), and ordered by `id` or `balance`. Standard pagination parameters (`pageSize`, `pageNumber`, `offset`, `order`) apply. The `orderBy` parameter supports `id` and `balance`; when using `orderBy=balance`, the `mosaicId` filter is required. The `offset` value must match the `orderBy` field. 
      * Search accounts
      */
     async searchAccountsRaw(requestParameters: SearchAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountPage>> {
         const queryParameters: any = {};
+
+        if (requestParameters['address'] != null) {
+            queryParameters['address'] = requestParameters['address'];
+        }
 
         if (requestParameters['pageSize'] != null) {
             queryParameters['pageSize'] = requestParameters['pageSize'];
@@ -225,7 +230,7 @@ export class AccountRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets an array of accounts.
+     * Returns a paginated list of accounts matching the given criteria.  Results can be filtered by `address` and `mosaicId` (mosaic ownership), and ordered by `id` or `balance`. Standard pagination parameters (`pageSize`, `pageNumber`, `offset`, `order`) apply. The `orderBy` parameter supports `id` and `balance`; when using `orderBy=balance`, the `mosaicId` filter is required. The `offset` value must match the `orderBy` field. 
      * Search accounts
      */
     async searchAccounts(requestParameters: SearchAccountsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountPage> {

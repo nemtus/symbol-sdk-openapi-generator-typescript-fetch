@@ -69,7 +69,7 @@ export interface SearchBlocksRequest {
 export class BlockRoutesApi extends runtime.BaseAPI {
 
     /**
-     * Gets a block from the chain that has the given height.
+     * Returns the block at the given height. The response includes the block header, harvester signature, and block metadata (hash, total fee, generation hash, transaction and statement counts).  If the block is an importance block, the response additionally contains voting-eligible and harvesting-eligible account counts, total voting balance, and the previous importance block hash. 
      * Get block information
      */
     async getBlockByHeightRaw(requestParameters: GetBlockByHeightRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlockInfoDTO>> {
@@ -99,7 +99,7 @@ export class BlockRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets a block from the chain that has the given height.
+     * Returns the block at the given height. The response includes the block header, harvester signature, and block metadata (hash, total fee, generation hash, transaction and statement counts).  If the block is an importance block, the response additionally contains voting-eligible and harvesting-eligible account counts, total voting balance, and the previous importance block hash. 
      * Get block information
      */
     async getBlockByHeight(requestParameters: GetBlockByHeightRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlockInfoDTO> {
@@ -108,8 +108,8 @@ export class BlockRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the merkle path for a receipt statement or resolution linked to a block. The merkle path is the minimum number of nodes needed to calculate the merkle root.  Steps to calculate the merkle root: 1. proofHash = hash (leaf). 2. Concatenate proofHash with the first unprocessed item from the merklePath list as follows: * a) If item.position == left -> proofHash = sha_256(item.hash + proofHash). * b) If item.position == right -> proofHash = sha_256(proofHash+ item.hash). 3. Repeat 2. for every item in the merklePath list. 4. Compare if the calculated proofHash equals the one recorded in the block header (block.receiptsHash) to verify if the statement was linked with the block. 
-     * Get the merkle path for a given a receipt statement hash and block
+     * Returns the [Merkle path](https://docs.symbol.dev/concepts/data-validation.html#merkle-proof) for a [receipt statement or resolution](https://docs.symbol.dev/concepts/receipt.html) linked to a block. The `hash` parameter is the receipt statement hash, not the transaction hash. The Merkle path is the minimum number of nodes needed to calculate the Merkle root.  Steps to calculate the Merkle root: 1. proofHash = hash (leaf). 2. Concatenate proofHash with the first unprocessed item from the merklePath list as follows: - `left`: the item hash is concatenated before the proofHash (proofHash = sha_256(item.hash + proofHash)). - `right`: the item hash is concatenated after the proofHash (proofHash = sha_256(proofHash + item.hash)). 3. Repeat 2. for every item in the merklePath list. 4. Compare if the calculated proofHash equals the one recorded in the [block header](https://docs.symbol.dev/concepts/block.html) (`block.receiptsHash`) to verify if the statement was linked with the block. 
+     * Get the Merkle path for a given receipt statement hash and block
      */
     async getMerkleReceiptsRaw(requestParameters: GetMerkleReceiptsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MerkleProofInfoDTO>> {
         if (requestParameters['height'] == null) {
@@ -146,8 +146,8 @@ export class BlockRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the merkle path for a receipt statement or resolution linked to a block. The merkle path is the minimum number of nodes needed to calculate the merkle root.  Steps to calculate the merkle root: 1. proofHash = hash (leaf). 2. Concatenate proofHash with the first unprocessed item from the merklePath list as follows: * a) If item.position == left -> proofHash = sha_256(item.hash + proofHash). * b) If item.position == right -> proofHash = sha_256(proofHash+ item.hash). 3. Repeat 2. for every item in the merklePath list. 4. Compare if the calculated proofHash equals the one recorded in the block header (block.receiptsHash) to verify if the statement was linked with the block. 
-     * Get the merkle path for a given a receipt statement hash and block
+     * Returns the [Merkle path](https://docs.symbol.dev/concepts/data-validation.html#merkle-proof) for a [receipt statement or resolution](https://docs.symbol.dev/concepts/receipt.html) linked to a block. The `hash` parameter is the receipt statement hash, not the transaction hash. The Merkle path is the minimum number of nodes needed to calculate the Merkle root.  Steps to calculate the Merkle root: 1. proofHash = hash (leaf). 2. Concatenate proofHash with the first unprocessed item from the merklePath list as follows: - `left`: the item hash is concatenated before the proofHash (proofHash = sha_256(item.hash + proofHash)). - `right`: the item hash is concatenated after the proofHash (proofHash = sha_256(proofHash + item.hash)). 3. Repeat 2. for every item in the merklePath list. 4. Compare if the calculated proofHash equals the one recorded in the [block header](https://docs.symbol.dev/concepts/block.html) (`block.receiptsHash`) to verify if the statement was linked with the block. 
+     * Get the Merkle path for a given receipt statement hash and block
      */
     async getMerkleReceipts(requestParameters: GetMerkleReceiptsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MerkleProofInfoDTO> {
         const response = await this.getMerkleReceiptsRaw(requestParameters, initOverrides);
@@ -155,8 +155,8 @@ export class BlockRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the merkle path for a transaction included in a block. The merkle path is the minimum number of nodes needed to calculate the merkle root.  Steps to calculate the merkle root: 1. proofHash = hash (leaf). 2. Concatenate proofHash with the first unprocessed item from the merklePath list as follows: * a) If item.position == left -> proofHash = sha_256(item.hash + proofHash). * b) If item.position == right -> proofHash = sha_256(proofHash+ item.hash). 3. Repeat 2. for every item in the merklePath list. 4. Compare if the calculated proofHash equals the one recorded in the block header (block.transactionsHash) to verify if the transaction was included in the block. 
-     * Get the merkle path for a given a transaction and block
+     * Returns the [Merkle path](https://docs.symbol.dev/concepts/data-validation.html#merkle-proof) for a [transaction](https://docs.symbol.dev/concepts/transaction.html) included in a block. The Merkle path is the minimum number of nodes needed to calculate the Merkle root.  Steps to calculate the Merkle root: 1. proofHash = hash (leaf). 2. Concatenate proofHash with the first unprocessed item from the merklePath list as follows: - `left`: the item hash is concatenated before the proofHash (proofHash = sha_256(item.hash + proofHash)). - `right`: the item hash is concatenated after the proofHash (proofHash = sha_256(proofHash + item.hash)). 3. Repeat 2. for every item in the merklePath list. 4. Compare if the calculated proofHash equals the one recorded in the [block header](https://docs.symbol.dev/concepts/block.html) (`block.transactionsHash`) to verify if the transaction was included in the block. 
+     * Get the Merkle path for a given transaction and block
      */
     async getMerkleTransactionRaw(requestParameters: GetMerkleTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MerkleProofInfoDTO>> {
         if (requestParameters['height'] == null) {
@@ -193,8 +193,8 @@ export class BlockRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the merkle path for a transaction included in a block. The merkle path is the minimum number of nodes needed to calculate the merkle root.  Steps to calculate the merkle root: 1. proofHash = hash (leaf). 2. Concatenate proofHash with the first unprocessed item from the merklePath list as follows: * a) If item.position == left -> proofHash = sha_256(item.hash + proofHash). * b) If item.position == right -> proofHash = sha_256(proofHash+ item.hash). 3. Repeat 2. for every item in the merklePath list. 4. Compare if the calculated proofHash equals the one recorded in the block header (block.transactionsHash) to verify if the transaction was included in the block. 
-     * Get the merkle path for a given a transaction and block
+     * Returns the [Merkle path](https://docs.symbol.dev/concepts/data-validation.html#merkle-proof) for a [transaction](https://docs.symbol.dev/concepts/transaction.html) included in a block. The Merkle path is the minimum number of nodes needed to calculate the Merkle root.  Steps to calculate the Merkle root: 1. proofHash = hash (leaf). 2. Concatenate proofHash with the first unprocessed item from the merklePath list as follows: - `left`: the item hash is concatenated before the proofHash (proofHash = sha_256(item.hash + proofHash)). - `right`: the item hash is concatenated after the proofHash (proofHash = sha_256(proofHash + item.hash)). 3. Repeat 2. for every item in the merklePath list. 4. Compare if the calculated proofHash equals the one recorded in the [block header](https://docs.symbol.dev/concepts/block.html) (`block.transactionsHash`) to verify if the transaction was included in the block. 
+     * Get the Merkle path for a given transaction and block
      */
     async getMerkleTransaction(requestParameters: GetMerkleTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MerkleProofInfoDTO> {
         const response = await this.getMerkleTransactionRaw(requestParameters, initOverrides);
@@ -202,7 +202,7 @@ export class BlockRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets an array of bocks.
+     * Returns a paginated list of blocks matching the given criteria.  Results can be filtered by harvester (`signerPublicKey`), `beneficiaryAddress`, and timestamp range. Standard pagination parameters (`pageSize`, `pageNumber`, `offset`, `order`) apply. The `orderBy` parameter supports `id` and `height`. The `offset` value must match the `orderBy` field. 
      * Search blocks
      */
     async searchBlocksRaw(requestParameters: SearchBlocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlockPage>> {
@@ -260,7 +260,7 @@ export class BlockRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets an array of bocks.
+     * Returns a paginated list of blocks matching the given criteria.  Results can be filtered by harvester (`signerPublicKey`), `beneficiaryAddress`, and timestamp range. Standard pagination parameters (`pageSize`, `pageNumber`, `offset`, `order`) apply. The `orderBy` parameter supports `id` and `height`. The `offset` value must match the `orderBy` field. 
      * Search blocks
      */
     async searchBlocks(requestParameters: SearchBlocksRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlockPage> {

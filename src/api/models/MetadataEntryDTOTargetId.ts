@@ -14,7 +14,7 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Mosaic or namespace identifier for mosaic metadata or namespace metadata. For account metadata, this value is 0.
  * @export
  * @interface MetadataEntryDTOTargetId
  */

@@ -22,12 +22,14 @@ import {
 } from './HashLockEntryDTO';
 
 /**
- * 
+ * Wrapper object containing one hash lock entry and its identifier.
  * @export
  * @interface HashLockInfoDTO
  */
 export interface HashLockInfoDTO {
     /**
+     * Unique identifier of the object in the node's database (MongoDB ObjectId).
+     * Used as the `offset` parameter value for cursor-based pagination.
      * 
      * @type {string}
      * @memberof HashLockInfoDTO

@@ -22,19 +22,25 @@ import {
 } from './MosaicRestrictionTypeEnum';
 
 /**
- * 
+ * Rule definition for a global mosaic restriction key.
  * @export
  * @interface MosaicGlobalRestrictionEntryRestrictionDTO
  */
 export interface MosaicGlobalRestrictionEntryRestrictionDTO {
     /**
-     * Mosaic identifier.
+     * Unique [mosaic](https://docs.symbol.dev/concepts/mosaic.html) identifier.
+     * A 64-bit unsigned integer derived from the creator's address and a registration nonce,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof MosaicGlobalRestrictionEntryRestrictionDTO
      */
     referenceMosaicId: string;
     /**
-     * Restriction value.
+     * Unsigned 64-bit value associated with a mosaic restriction key, represented as a decimal string.
+     * For address restrictions, it is the value assigned to the target address;
+     * for global restrictions, it is the threshold evaluated with the restriction type.
+     * 
      * @type {string}
      * @memberof MosaicGlobalRestrictionEntryRestrictionDTO
      */

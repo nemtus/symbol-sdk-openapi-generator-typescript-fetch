@@ -14,7 +14,10 @@
 
 
 /**
- * Position relative to the proofHash being evaluated.
+ * Position relative to the proofHash being evaluated:
+ * - `left`: the item hash is concatenated before the proofHash.
+ * - `right`: the item hash is concatenated after the proofHash.
+ * 
  * @export
  */
 export const PositionEnum = {

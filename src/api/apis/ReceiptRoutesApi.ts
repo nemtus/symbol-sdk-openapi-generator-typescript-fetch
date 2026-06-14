@@ -50,7 +50,7 @@ export interface SearchMosaicResolutionStatementsRequest {
     order?: Order;
 }
 
-export interface SearchReceiptsRequest {
+export interface SearchTransactionStatementsRequest {
     height?: string;
     fromHeight?: string;
     toHeight?: string;
@@ -71,8 +71,8 @@ export interface SearchReceiptsRequest {
 export class ReceiptRoutesApi extends runtime.BaseAPI {
 
     /**
-     * Gets an array of address resolution statements.
-     * Get receipts address resolution statements
+     * Returns a paginated list of address resolution statements. These statements record how an unresolved address alias used in a transaction was resolved to a concrete address at a given block height. A statement can contain multiple resolution entries because alias resolution may differ by transaction source within the same block. 
+     * Search address resolution statements
      */
     async searchAddressResolutionStatementsRaw(requestParameters: SearchAddressResolutionStatementsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResolutionStatementPage>> {
         const queryParameters: any = {};
@@ -113,8 +113,8 @@ export class ReceiptRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets an array of address resolution statements.
-     * Get receipts address resolution statements
+     * Returns a paginated list of address resolution statements. These statements record how an unresolved address alias used in a transaction was resolved to a concrete address at a given block height. A statement can contain multiple resolution entries because alias resolution may differ by transaction source within the same block. 
+     * Search address resolution statements
      */
     async searchAddressResolutionStatements(requestParameters: SearchAddressResolutionStatementsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResolutionStatementPage> {
         const response = await this.searchAddressResolutionStatementsRaw(requestParameters, initOverrides);
@@ -122,8 +122,8 @@ export class ReceiptRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets an array of mosaic resolution statements.
-     * Get receipts mosaic resolution statements
+     * Returns a paginated list of mosaic resolution statements. These statements record how an unresolved mosaic alias used in a transaction was resolved to a concrete mosaic ID at a given block height. A statement can contain multiple resolution entries because alias resolution may differ by transaction source within the same block. 
+     * Search mosaic resolution statements
      */
     async searchMosaicResolutionStatementsRaw(requestParameters: SearchMosaicResolutionStatementsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResolutionStatementPage>> {
         const queryParameters: any = {};
@@ -164,8 +164,8 @@ export class ReceiptRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets an array of mosaic resolution statements.
-     * Get receipts mosaic resolution statements
+     * Returns a paginated list of mosaic resolution statements. These statements record how an unresolved mosaic alias used in a transaction was resolved to a concrete mosaic ID at a given block height. A statement can contain multiple resolution entries because alias resolution may differ by transaction source within the same block. 
+     * Search mosaic resolution statements
      */
     async searchMosaicResolutionStatements(requestParameters: SearchMosaicResolutionStatementsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResolutionStatementPage> {
         const response = await this.searchMosaicResolutionStatementsRaw(requestParameters, initOverrides);
@@ -173,10 +173,10 @@ export class ReceiptRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets an array of transaction statements.
+     * Returns a paginated list of transaction statements generated while confirmed transactions change on-chain state. Each statement is grouped by block height and source and contains the receipts produced by transaction execution, including balance transfers, balance changes, expirations, and inflation. Results can be filtered by block height, receipt type, related addresses, and artifact IDs. 
      * Search transaction statements
      */
-    async searchReceiptsRaw(requestParameters: SearchReceiptsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionStatementPage>> {
+    async searchTransactionStatementsRaw(requestParameters: SearchTransactionStatementsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionStatementPage>> {
         const queryParameters: any = {};
 
         if (requestParameters['height'] != null) {
@@ -243,11 +243,11 @@ export class ReceiptRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets an array of transaction statements.
+     * Returns a paginated list of transaction statements generated while confirmed transactions change on-chain state. Each statement is grouped by block height and source and contains the receipts produced by transaction execution, including balance transfers, balance changes, expirations, and inflation. Results can be filtered by block height, receipt type, related addresses, and artifact IDs. 
      * Search transaction statements
      */
-    async searchReceipts(requestParameters: SearchReceiptsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionStatementPage> {
-        const response = await this.searchReceiptsRaw(requestParameters, initOverrides);
+    async searchTransactionStatements(requestParameters: SearchTransactionStatementsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionStatementPage> {
+        const response = await this.searchTransactionStatementsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

@@ -14,10 +14,10 @@
 
 
 /**
- * Metadata type:
- * * 0 - Account.
- * * 1 - Mosaic.
- * * 2 - Namespace.
+ * Type of resource targeted by the metadata entry:
+ * - `0`: Account metadata
+ * - `1`: Mosaic metadata
+ * - `2`: Namespace metadata
  * 
  * @export
  */

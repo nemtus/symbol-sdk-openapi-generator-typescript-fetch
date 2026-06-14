@@ -14,6 +14,8 @@
 
 import { mapValues } from '../runtime';
 /**
+ * Mosaic plugin settings from network configuration (`/network/properties`).
+ * Values from Symbol mainnet.
  * 
  * @export
  * @interface MosaicNetworkPropertiesDTO
@@ -26,7 +28,7 @@ export interface MosaicNetworkPropertiesDTO {
      */
     maxMosaicsPerAccount?: string;
     /**
-     * Maximum mosaic duration.
+     * Maximum mosaic duration (BlockSpan format, e.g. `3650d` for 3650 days).
      * @type {string}
      * @memberof MosaicNetworkPropertiesDTO
      */
@@ -38,13 +40,31 @@ export interface MosaicNetworkPropertiesDTO {
      */
     maxMosaicDivisibility?: string;
     /**
-     * Address encoded using a 32-character set.
+     * Represents a unique account address in Base32 format. The first character indicates the network
+     * (`T` for testnet, `N` for mainnet). Addresses are 39 characters long, Base32-encoded,
+     * and include an embedded 3-byte checksum. The node validates this checksum, so an address
+     * with even a single altered character will be rejected.
+     * 
+     * @type {string}
+     * @memberof MosaicNetworkPropertiesDTO
+     */
+    mosaicRentalFeeSinkAddressV1?: string;
+    /**
+     * Represents a unique account address in Base32 format. The first character indicates the network
+     * (`T` for testnet, `N` for mainnet). Addresses are 39 characters long, Base32-encoded,
+     * and include an embedded 3-byte checksum. The node validates this checksum, so an address
+     * with even a single altered character will be rejected.
+     * 
      * @type {string}
      * @memberof MosaicNetworkPropertiesDTO
      */
     mosaicRentalFeeSinkAddress?: string;
     /**
-     * Mosaic rental fee.
+     * Absolute amount expressed in the mosaic's smallest (atomic) unit, with no decimal point.
+     * For example, an amount of `123456789` for a mosaic with divisibility 6 represents
+     * `123.456789` whole units. Encoded as a string to preserve precision, since the value
+     * is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof MosaicNetworkPropertiesDTO
      */
@@ -71,6 +91,7 @@ export function MosaicNetworkPropertiesDTOFromJSONTyped(json: any, ignoreDiscrim
         'maxMosaicsPerAccount': json['maxMosaicsPerAccount'] == null ? undefined : json['maxMosaicsPerAccount'],
         'maxMosaicDuration': json['maxMosaicDuration'] == null ? undefined : json['maxMosaicDuration'],
         'maxMosaicDivisibility': json['maxMosaicDivisibility'] == null ? undefined : json['maxMosaicDivisibility'],
+        'mosaicRentalFeeSinkAddressV1': json['mosaicRentalFeeSinkAddressV1'] == null ? undefined : json['mosaicRentalFeeSinkAddressV1'],
         'mosaicRentalFeeSinkAddress': json['mosaicRentalFeeSinkAddress'] == null ? undefined : json['mosaicRentalFeeSinkAddress'],
         'mosaicRentalFee': json['mosaicRentalFee'] == null ? undefined : json['mosaicRentalFee'],
     };
@@ -90,6 +111,7 @@ export function MosaicNetworkPropertiesDTOToJSONTyped(value?: MosaicNetworkPrope
         'maxMosaicsPerAccount': value['maxMosaicsPerAccount'],
         'maxMosaicDuration': value['maxMosaicDuration'],
         'maxMosaicDivisibility': value['maxMosaicDivisibility'],
+        'mosaicRentalFeeSinkAddressV1': value['mosaicRentalFeeSinkAddressV1'],
         'mosaicRentalFeeSinkAddress': value['mosaicRentalFeeSinkAddress'],
         'mosaicRentalFee': value['mosaicRentalFee'],
     };

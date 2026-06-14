@@ -14,34 +14,50 @@
 
 import { mapValues } from '../runtime';
 /**
- * Supplementary data stored for importance recalculation.
- * At each importance recalculation, existing buckets are shifted, the working bucket is finalized and a new working bucket is created.
- * Each bucket influences at most five importance recalculations.
+ * Supplementary data stored for [importance](https://docs.symbol.dev/concepts/consensus-algorithm.html#importance-calculation)
+ * recalculation under the PoS+ consensus algorithm. At the end of each importance period
+ * (defined by the `importanceGrouping` network property) the working bucket is finalized, existing buckets are shifted,
+ * and a new working bucket is created. Each bucket influences at most five importance recalculations.
  * 
  * @export
  * @interface ActivityBucketDTO
  */
 export interface ActivityBucketDTO {
     /**
-     * Height of the blockchain.
+     * Height of a block in the blockchain. Starts at 1 and increments by one per block.
+     * Represented as a string to preserve precision, since the value is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof ActivityBucketDTO
      */
     startHeight: string;
     /**
-     * Absolute amount. An amount of 123456789 (absolute) for a mosaic with divisibility 6 means 123.456789 (relative).
+     * Absolute amount expressed in the mosaic's smallest (atomic) unit, with no decimal point.
+     * For example, an amount of `123456789` for a mosaic with divisibility 6 represents
+     * `123.456789` whole units. Encoded as a string to preserve precision, since the value
+     * is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof ActivityBucketDTO
      */
     totalFeesPaid: string;
     /**
-     * A number that allows uint 32 values.
+     * Unsigned 32-bit integer.
+     * Represented as integer since it fits in JSON number precision.
+     * 
      * @type {number}
      * @memberof ActivityBucketDTO
      */
     beneficiaryCount: number;
     /**
-     * Probability of an account to harvest the next block.
+     * [Importance score](https://docs.symbol.dev/concepts/consensus-algorithm.html#importance-score)
+     * of an account, representing the probability of being selected to harvest the next block under
+     * the [PoS+](https://docs.symbol.dev/concepts/consensus-algorithm.html) consensus algorithm.
+     * The score is derived from three factors: stake, transaction activity, and node operation.
+     * Only accounts holding at least the minimum harvesting balance (`minHarvesterBalance` network
+     * property) receive a non-zero score. Decimal value between 0 and 1 (inclusive).
+     * Minimum: 0. Maximum: 1.
+     * 
      * @type {string}
      * @memberof ActivityBucketDTO
      */

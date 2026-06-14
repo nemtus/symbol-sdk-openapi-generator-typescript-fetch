@@ -29,37 +29,44 @@ import {
 } from './MetadataEntryDTOTargetId';
 
 /**
- * 
+ * Full on-chain metadata entry identified by a composite hash.
  * @export
  * @interface MetadataEntryDTO
  */
 export interface MetadataEntryDTO {
     /**
-     * The version of the state
+     * Version of the on-chain state serialization format. Incremented when the storage
+     * schema of the entity changes (e.g. new fields are added), allowing the node to
+     * deserialize entries written under earlier formats.
+     * 
      * @type {number}
      * @memberof MetadataEntryDTO
      */
     version: number;
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof MetadataEntryDTO
      */
     compositeHash: string;
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof MetadataEntryDTO
      */
     sourceAddress: string;
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof MetadataEntryDTO
      */
     targetAddress: string;
     /**
-     * Metadata key scoped to source, target and type expressed.
+     * 64-bit key assigned by the metadata creator to identify the metadata entry within the source and target context.
      * @type {string}
      * @memberof MetadataEntryDTO
      */
@@ -77,7 +84,21 @@ export interface MetadataEntryDTO {
      */
     metadataType: MetadataTypeEnum;
     /**
-     * Metadata value.
+     * Size of a metadata value or metadata value update payload, in bytes.
+     * In metadata transactions, when no previous value exists, or when the value grows, this is the new
+     * value size after applying the update. When the value shrinks, this is the previous stored value size
+     * before truncation.
+     * 
+     * @type {number}
+     * @memberof MetadataEntryDTO
+     */
+    valueSize: number;
+    /**
+     * Metadata value encoded as hex.
+     * In metadata transactions, this field carries the metadata value update payload.
+     * When no previous value exists, it contains the new value.
+     * When updating existing metadata, it contains the byte-wise XOR of the previous value and the new value.
+     * 
      * @type {string}
      * @memberof MetadataEntryDTO
      */
@@ -96,6 +117,7 @@ export function instanceOfMetadataEntryDTO(value: Record<string, any>): value is
     if (!('targetAddress' in value) || value['targetAddress'] === undefined) return false;
     if (!('scopedMetadataKey' in value) || value['scopedMetadataKey'] === undefined) return false;
     if (!('metadataType' in value) || value['metadataType'] === undefined) return false;
+    if (!('valueSize' in value) || value['valueSize'] === undefined) return false;
     if (!('value' in value) || value['value'] === undefined) return false;
     return true;
 }
@@ -117,6 +139,7 @@ export function MetadataEntryDTOFromJSONTyped(json: any, ignoreDiscriminator: bo
         'scopedMetadataKey': json['scopedMetadataKey'],
         'targetId': json['targetId'] == null ? undefined : MetadataEntryDTOTargetIdFromJSON(json['targetId']),
         'metadataType': MetadataTypeEnumFromJSON(json['metadataType']),
+        'valueSize': json['valueSize'],
         'value': json['value'],
     };
 }
@@ -139,6 +162,7 @@ export function MetadataEntryDTOToJSONTyped(value?: MetadataEntryDTO | null, ign
         'scopedMetadataKey': value['scopedMetadataKey'],
         'targetId': MetadataEntryDTOTargetIdToJSON(value['targetId']),
         'metadataType': MetadataTypeEnumToJSON(value['metadataType']),
+        'valueSize': value['valueSize'],
         'value': value['value'],
     };
 }

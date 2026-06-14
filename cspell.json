@@ -20,5 +20,5 @@
     "yasunori"
   ],
   "ignoreRegExpList": ["/\\b[A-Z2-7]{30,}\\b/g", "/\\b[0-9A-Fa-f]{32,}\\b/g", "/GHSA-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}/g"],
-  "ignorePaths": ["node_modules/**", "src/api/**", "dist/**", "lib/**", "cdn/**", "coverage/**", "openapi-spec/**", "**/package-lock.json"]
+  "ignorePaths": ["node_modules/**", "src/api/**", "dist/**", "lib/**", "cdn/**", "coverage/**", "**/package-lock.json"]
 }

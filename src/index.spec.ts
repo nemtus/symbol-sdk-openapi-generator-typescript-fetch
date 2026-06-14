@@ -14,25 +14,20 @@ describe('index exports', () => {
     }
   });
 
-  it('exposes the getNetworkInflationAtHeight endpoint added in spec v1.0.4', () => {
+  it('exposes the getNetworkInflationAtHeight endpoint', () => {
     expect(typeof exports.NetworkRoutesApi.prototype.getNetworkInflationAtHeight).toBe('function');
     expect(typeof exports.NetworkRoutesApi.prototype.getNetworkInflationAtHeightRaw).toBe('function');
   });
 
-  it('exports working serializers for the models added in spec v1.0.4', () => {
-    for (const name of [
-      'GetNetworkInflationAtHeight200ResponseFromJSON',
-      'GetNetworkInflationAtHeight200ResponseToJSON',
-      'NetworkConfigurationDTOForkHeightsFromJSON',
-      'NetworkConfigurationDTOForkHeightsToJSON',
-    ]) {
+  it('exports working serializers for the network inflation / fork heights models', () => {
+    for (const name of ['NetworkInflationDTOFromJSON', 'NetworkInflationDTOToJSON', 'ForkHeightsDTOFromJSON', 'ForkHeightsDTOToJSON']) {
       expect(typeof (exports as Record<string, unknown>)[name]).toBe('function');
     }
     // Round-trip with an empty object (no dependency on exact field names).
-    const parsed = exports.GetNetworkInflationAtHeight200ResponseFromJSON({});
-    expect(exports.GetNetworkInflationAtHeight200ResponseToJSON(parsed)).toBeDefined();
-    const fork = exports.NetworkConfigurationDTOForkHeightsFromJSON({});
-    expect(exports.NetworkConfigurationDTOForkHeightsToJSON(fork)).toBeDefined();
+    const inflation = exports.NetworkInflationDTOFromJSON({});
+    expect(exports.NetworkInflationDTOToJSON(inflation)).toBeDefined();
+    const fork = exports.ForkHeightsDTOFromJSON({});
+    expect(exports.ForkHeightsDTOToJSON(fork)).toBeDefined();
   });
 
   // Existence is covered by the `typeof === 'function'` / type-shape checks below

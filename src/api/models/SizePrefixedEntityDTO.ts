@@ -14,13 +14,18 @@
 
 import { mapValues } from '../runtime';
 /**
+ * Size-prefixed entity base. Adds the `size` field indicating the total byte length
+ * of the serialized entity. Used by BlockDTO and TransactionDTO.
+ * In Symbol's binary format, entities are prefixed with their size for efficient parsing.
  * 
  * @export
  * @interface SizePrefixedEntityDTO
  */
 export interface SizePrefixedEntityDTO {
     /**
-     * A number that allows uint 32 values.
+     * Unsigned 32-bit integer.
+     * Represented as integer since it fits in JSON number precision.
+     * 
      * @type {number}
      * @memberof SizePrefixedEntityDTO
      */

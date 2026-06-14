@@ -14,19 +14,21 @@
 
 import { mapValues } from '../runtime';
 /**
- * Merkle tree branch link.
+ * Child link in a [Merkle tree branch](https://docs.symbol.dev/concepts/data-validation.html)
+ * node. Each link points to a child node (branch or leaf) via its hash.
+ * 
  * @export
  * @interface MerkleTreeBranchLinkDTO
  */
 export interface MerkleTreeBranchLinkDTO {
     /**
-     * Branch link nibble bit index (hexadecimal).
+     * Nibble index (0 to 15) identifying this child slot (hex).
      * @type {string}
      * @memberof MerkleTreeBranchLinkDTO
      */
     bit: string;
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof MerkleTreeBranchLinkDTO
      */

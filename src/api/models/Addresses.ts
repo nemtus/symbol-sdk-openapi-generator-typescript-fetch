@@ -14,7 +14,7 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Array payload used to submit account addresses in Base32 format.
  * @export
  * @interface Addresses
  */

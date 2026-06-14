@@ -36,13 +36,15 @@ import {
 } from './MosaicGlobalRestrictionEntryWrapperDTO';
 
 /**
- * Generic Mosaic Restriction
+ * Wrapper object containing one mosaic restriction entry, either a global restriction or an address restriction.
  * @export
  * @interface MosaicRestrictionDTO
  */
 export interface MosaicRestrictionDTO {
     /**
-     * Internal resource identifier.
+     * Unique identifier of the object in the node's database (MongoDB ObjectId).
+     * Used as the `offset` parameter value for cursor-based pagination.
+     * 
      * @type {string}
      * @memberof MosaicRestrictionDTO
      */

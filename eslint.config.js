@@ -17,7 +17,6 @@ module.exports = tseslint.config(
       'lib/**',
       'cdn/**',
       'coverage/**',
-      'openapi-spec/**',
       'src/api/**',
       'custom-templates/**',
       'tests/*/node_modules/**',

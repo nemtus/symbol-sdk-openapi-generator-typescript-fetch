@@ -14,23 +14,27 @@
 
 import { mapValues } from '../runtime';
 /**
+ * Wrapper object used to announce one signed transaction payload.
  * 
  * @export
  * @interface TransactionPayload
  */
 export interface TransactionPayload {
     /**
-     * Transaction payload in hexadecimal format.
+     * Signed transaction payload encoded as a hexadecimal string.
+     * To obtain this value, use your SDK's transaction serialization. See the announce endpoint description for more SDK links.
+     * 
      * @type {string}
      * @memberof TransactionPayload
      */
-    payload?: string;
+    payload: string;
 }
 
 /**
  * Check if a given object implements the TransactionPayload interface.
  */
 export function instanceOfTransactionPayload(value: Record<string, any>): value is TransactionPayload {
+    if (!('payload' in value) || value['payload'] === undefined) return false;
     return true;
 }
 
@@ -44,7 +48,7 @@ export function TransactionPayloadFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
-        'payload': json['payload'] == null ? undefined : json['payload'],
+        'payload': json['payload'],
     };
 }
 

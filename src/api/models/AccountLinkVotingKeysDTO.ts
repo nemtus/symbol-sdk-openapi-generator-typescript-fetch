@@ -22,13 +22,13 @@ import {
 } from './AccountLinkVotingKeyDTO';
 
 /**
- * 
+ * Set of voting keys linked to the account for finalization.
  * @export
  * @interface AccountLinkVotingKeysDTO
  */
 export interface AccountLinkVotingKeysDTO {
     /**
-     * 
+     * Array of voting key link entries.
      * @type {Array<AccountLinkVotingKeyDTO>}
      * @memberof AccountLinkVotingKeysDTO
      */

@@ -14,25 +14,31 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Resolved human-readable name for a namespace identifier.
  * @export
  * @interface NamespaceNameDTO
  */
 export interface NamespaceNameDTO {
     /**
-     * Namespace identifier.
+     * Unique [namespace](https://docs.symbol.dev/concepts/namespaces.html) identifier.
+     * A 64-bit unsigned integer derived from the namespace name and its parent namespace ID,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof NamespaceNameDTO
      */
     parentId?: string;
     /**
-     * Namespace identifier.
+     * Unique [namespace](https://docs.symbol.dev/concepts/namespaces.html) identifier.
+     * A 64-bit unsigned integer derived from the namespace name and its parent namespace ID,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof NamespaceNameDTO
      */
     id: string;
     /**
-     * Namespace name.
+     * Human-readable namespace name.
      * @type {string}
      * @memberof NamespaceNameDTO
      */

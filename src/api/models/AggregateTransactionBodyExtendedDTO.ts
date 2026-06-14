@@ -29,13 +29,15 @@ import {
 } from './EmbeddedTransactionInfoDTO';
 
 /**
+ * Extended aggregate transaction body that, in addition to aggregate-level fields, also includes the
+ * embedded transactions contained in the aggregate.
  * 
  * @export
  * @interface AggregateTransactionBodyExtendedDTO
  */
 export interface AggregateTransactionBodyExtendedDTO {
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof AggregateTransactionBodyExtendedDTO
      */

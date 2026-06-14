@@ -14,19 +14,21 @@
 
 import { mapValues } from '../runtime';
 /**
+ * Request body for batch account lookup. Provide either `publicKeys` or `addresses`, not both.
+ * At least one must be non-empty.
  * 
  * @export
  * @interface AccountIds
  */
 export interface AccountIds {
     /**
-     * Array of public keys.
+     * Array of account public keys.
      * @type {Array<string>}
      * @memberof AccountIds
      */
     publicKeys?: Array<string>;
     /**
-     * Array of addresses.
+     * Array of account addresses.
      * @type {Array<string>}
      * @memberof AccountIds
      */

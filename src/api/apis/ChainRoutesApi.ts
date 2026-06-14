@@ -28,8 +28,8 @@ import {
 export class ChainRoutesApi extends runtime.BaseAPI {
 
     /**
-     * Returns the current information of the blockchain.  The higher the score, the better the chain. During synchronization, nodes try to get the best blockchain in the network.  The score for a block is derived from its difficulty and the time (in seconds) that has elapsed since the last block:      block score = difficulty − time elapsed since last block 
-     * Get the current information of the chain
+     * Returns the current state of the blockchain: chain height, chain score, and the latest finalized block. 
+     * Get chain information
      */
     async getChainInfoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ChainInfoDTO>> {
         const queryParameters: any = {};
@@ -50,8 +50,8 @@ export class ChainRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the current information of the blockchain.  The higher the score, the better the chain. During synchronization, nodes try to get the best blockchain in the network.  The score for a block is derived from its difficulty and the time (in seconds) that has elapsed since the last block:      block score = difficulty − time elapsed since last block 
-     * Get the current information of the chain
+     * Returns the current state of the blockchain: chain height, chain score, and the latest finalized block. 
+     * Get chain information
      */
     async getChainInfo(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ChainInfoDTO> {
         const response = await this.getChainInfoRaw(initOverrides);

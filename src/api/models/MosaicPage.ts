@@ -29,13 +29,13 @@ import {
 } from './MosaicInfoDTO';
 
 /**
- * 
+ * Paginated list of mosaic information objects.
  * @export
  * @interface MosaicPage
  */
 export interface MosaicPage {
     /**
-     * Array of mosaics.
+     * Array of mosaic information objects.
      * @type {Array<MosaicInfoDTO>}
      * @memberof MosaicPage
      */

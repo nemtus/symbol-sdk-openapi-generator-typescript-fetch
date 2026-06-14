@@ -29,7 +29,7 @@ import {
 } from './AccountRestrictionFlagsEnum';
 
 /**
- * 
+ * Account operation restriction transaction body that updates the allowed or blocked transaction type list.
  * @export
  * @interface AccountOperationRestrictionTransactionBodyDTO
  */

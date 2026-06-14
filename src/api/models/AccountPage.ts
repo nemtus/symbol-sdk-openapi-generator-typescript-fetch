@@ -29,13 +29,13 @@ import {
 } from './Pagination';
 
 /**
- * 
+ * Paginated list of account information objects.
  * @export
  * @interface AccountPage
  */
 export interface AccountPage {
     /**
-     * Array of accounts.
+     * Array of account information objects.
      * @type {Array<AccountInfoDTO>}
      * @memberof AccountPage
      */

@@ -22,6 +22,9 @@ import {
 } from './ParentPublicKeySignaturePair';
 
 /**
+ * Two-level Bellare-Miner (Bm) tree signature structure: root and bottom pairs, each containing
+ * a BLS (Boneh, Lynn and Shacham) public key and signature. Used in finalization voting to verify
+ * that signers are authentic.
  * 
  * @export
  * @interface BmTreeSignature

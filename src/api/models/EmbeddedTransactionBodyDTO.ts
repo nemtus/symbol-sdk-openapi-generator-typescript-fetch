@@ -22,7 +22,7 @@ import {
 } from './EmbeddedTransactionInfoDTO';
 
 /**
- * 
+ * Wrapper for embedded transactions carried inside an aggregate transaction.
  * @export
  * @interface EmbeddedTransactionBodyDTO
  */

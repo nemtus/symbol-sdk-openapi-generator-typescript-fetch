@@ -29,7 +29,7 @@ import {
 } from './TransactionInfoDTO';
 
 /**
- * 
+ * Paginated transaction search result.
  * @export
  * @interface TransactionPage
  */

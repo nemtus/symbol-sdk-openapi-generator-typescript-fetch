@@ -14,9 +14,9 @@
 
 
 /**
- * Possible status of lock states:
- * * 0 - UNUSED.
- * * 1 - USED.
+ * Status of a hash lock or secret lock.
+ * - `0` (`UNUSED`): the lock is active and has not been consumed yet.
+ * - `1` (`USED`): the lock has already been consumed and is no longer active.
  * 
  * @export
  */

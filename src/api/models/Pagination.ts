@@ -14,19 +14,21 @@
 
 import { mapValues } from '../runtime';
 /**
+ * Pagination metadata returned with paginated list responses. Indicates the current page
+ * and the number of entries per page.
  * 
  * @export
  * @interface Pagination
  */
 export interface Pagination {
     /**
-     * 
+     * Current page number.
      * @type {number}
      * @memberof Pagination
      */
     pageNumber: number;
     /**
-     * 
+     * Number of entries per page.
      * @type {number}
      * @memberof Pagination
      */

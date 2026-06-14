@@ -14,25 +14,29 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Network-level limits that constrain multisig account structure.
  * @export
  * @interface MultisigNetworkPropertiesDTO
  */
 export interface MultisigNetworkPropertiesDTO {
     /**
-     * Maximum number of multisig levels.
+     * Maximum multisig depth allowed by the network, measured as the longest cosignatory chain.
+     * A regular multisig account with only non-multisig cosignatories has depth `1`.
+     * If one of its cosignatories is itself a multisig account, the depth becomes `2`; one more
+     * nested multisig level makes it `3`.
+     * 
      * @type {string}
      * @memberof MultisigNetworkPropertiesDTO
      */
     maxMultisigDepth?: string;
     /**
-     * Maximum number of cosignatories per account.
+     * Maximum number of cosignatories that can directly manage a single multisig account.
      * @type {string}
      * @memberof MultisigNetworkPropertiesDTO
      */
     maxCosignatoriesPerAccount?: string;
     /**
-     * Maximum number of accounts a single account can cosign.
+     * Maximum number of multisig accounts that a single account can cosign.
      * @type {string}
      * @memberof MultisigNetworkPropertiesDTO
      */

@@ -29,37 +29,37 @@ import {
 } from './LinkActionEnum';
 
 /**
- * 
+ * Embedded transaction variant of `VrfKeyLinkTransactionDTO`.
  * @export
  * @interface EmbeddedVrfKeyLinkTransactionDTO
  */
 export interface EmbeddedVrfKeyLinkTransactionDTO {
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof EmbeddedVrfKeyLinkTransactionDTO
      */
     signerPublicKey: string;
     /**
-     * Entity version.
+     * Entity version. Indicates the schema variant for serialization and validation.
      * @type {number}
      * @memberof EmbeddedVrfKeyLinkTransactionDTO
      */
     version: number;
     /**
-     * 
+     * Network type (mainnet or testnet). Ensures the entity targets the correct network.
      * @type {NetworkTypeEnum}
      * @memberof EmbeddedVrfKeyLinkTransactionDTO
      */
     network: NetworkTypeEnum;
     /**
-     * 
+     * Entity type identifier (e.g. transaction type code, block type). Determines the entity schema.
      * @type {number}
      * @memberof EmbeddedVrfKeyLinkTransactionDTO
      */
     type: number;
     /**
-     * Public key.
+     * 256-bit public key encoded as a hexadecimal string (64 hex characters).
      * @type {string}
      * @memberof EmbeddedVrfKeyLinkTransactionDTO
      */

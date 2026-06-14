@@ -14,9 +14,9 @@
 
 
 /**
- * Alias action:
- * * 0 - Unlink alias.
- * * 1 - Link alias.
+ * Alias link action:
+ * - `0`: Unlink the namespace from the current address or mosaic.
+ * - `1`: Link the namespace to the specified address or mosaic.
  * 
  * @export
  */

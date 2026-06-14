@@ -63,7 +63,7 @@ export interface SearchMosaicsRequest {
 export class MosaicRoutesApi extends runtime.BaseAPI {
 
     /**
-     * Gets the mosaic definition for a given mosaic identifier.
+     * Retrieves the current on-chain state for a mosaic. The response includes the mosaic definition, such as supply, divisibility, owner address, duration, and behavior flags. 
      * Get mosaic information
      */
     async getMosaicRaw(requestParameters: GetMosaicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MosaicInfoDTO>> {
@@ -93,7 +93,7 @@ export class MosaicRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the mosaic definition for a given mosaic identifier.
+     * Retrieves the current on-chain state for a mosaic. The response includes the mosaic definition, such as supply, divisibility, owner address, duration, and behavior flags. 
      * Get mosaic information
      */
     async getMosaic(requestParameters: GetMosaicRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MosaicInfoDTO> {
@@ -102,8 +102,8 @@ export class MosaicRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the mosaic definition merkle for a given mosaic identifier.
-     * Get mosaic merkle information
+     * Returns the [Merkle proof](https://docs.symbol.dev/concepts/data-validation.html#merkle-proof) for a mosaic.  Clients can use this information to verify that the mosaic state is included in the node\'s state Merkle tree. If the supplied mosaic ID does not exist, the endpoint still returns a Merkle proof response, but it is a negative proof showing that no mosaic state entry exists for the requested mosaic ID. See [Data Validation](https://docs.symbol.dev/concepts/data-validation.html) for an overview of Patricia Merkle trees and state proofs on Symbol. 
+     * Get mosaic Merkle information
      */
     async getMosaicMerkleRaw(requestParameters: GetMosaicMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MerkleStateInfoDTO>> {
         if (requestParameters['mosaicId'] == null) {
@@ -132,8 +132,8 @@ export class MosaicRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the mosaic definition merkle for a given mosaic identifier.
-     * Get mosaic merkle information
+     * Returns the [Merkle proof](https://docs.symbol.dev/concepts/data-validation.html#merkle-proof) for a mosaic.  Clients can use this information to verify that the mosaic state is included in the node\'s state Merkle tree. If the supplied mosaic ID does not exist, the endpoint still returns a Merkle proof response, but it is a negative proof showing that no mosaic state entry exists for the requested mosaic ID. See [Data Validation](https://docs.symbol.dev/concepts/data-validation.html) for an overview of Patricia Merkle trees and state proofs on Symbol. 
+     * Get mosaic Merkle information
      */
     async getMosaicMerkle(requestParameters: GetMosaicMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MerkleStateInfoDTO> {
         const response = await this.getMosaicMerkleRaw(requestParameters, initOverrides);
@@ -141,7 +141,7 @@ export class MosaicRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets an array of mosaic definition.
+     * Retrieves the current on-chain state for multiple mosaics. The response includes only mosaics that were found, so its length can be smaller than the number of requested identifiers. Response entries are not guaranteed to preserve the order of the requested identifiers. 
      * Get mosaics information for an array of mosaics
      */
     async getMosaicsRaw(requestParameters: GetMosaicsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<MosaicInfoDTO>>> {
@@ -173,7 +173,7 @@ export class MosaicRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets an array of mosaic definition.
+     * Retrieves the current on-chain state for multiple mosaics. The response includes only mosaics that were found, so its length can be smaller than the number of requested identifiers. Response entries are not guaranteed to preserve the order of the requested identifiers. 
      * Get mosaics information for an array of mosaics
      */
     async getMosaics(requestParameters: GetMosaicsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MosaicInfoDTO>> {
@@ -182,7 +182,7 @@ export class MosaicRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets an array of mosaics.
+     * Returns a paginated list of mosaics matching the given criteria. Results can be filtered by mosaic owner address. Standard pagination parameters apply. 
      * Search mosaics
      */
     async searchMosaicsRaw(requestParameters: SearchMosaicsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MosaicPage>> {
@@ -224,7 +224,7 @@ export class MosaicRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets an array of mosaics.
+     * Returns a paginated list of mosaics matching the given criteria. Results can be filtered by mosaic owner address. Standard pagination parameters apply. 
      * Search mosaics
      */
     async searchMosaics(requestParameters: SearchMosaicsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MosaicPage> {

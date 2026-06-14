@@ -22,7 +22,7 @@ import {
 } from './NamespaceRegistrationTypeEnum';
 
 /**
- * 
+ * Namespace registration transaction body for creating a root namespace or a child namespace.
  * @export
  * @interface NamespaceRegistrationTransactionBodyDTO
  */
@@ -34,13 +34,19 @@ export interface NamespaceRegistrationTransactionBodyDTO {
      */
     duration?: string;
     /**
-     * Namespace identifier.
+     * Unique [namespace](https://docs.symbol.dev/concepts/namespaces.html) identifier.
+     * A 64-bit unsigned integer derived from the namespace name and its parent namespace ID,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof NamespaceRegistrationTransactionBodyDTO
      */
     parentId?: string;
     /**
-     * Namespace identifier.
+     * Unique [namespace](https://docs.symbol.dev/concepts/namespaces.html) identifier.
+     * A 64-bit unsigned integer derived from the namespace name and its parent namespace ID,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof NamespaceRegistrationTransactionBodyDTO
      */

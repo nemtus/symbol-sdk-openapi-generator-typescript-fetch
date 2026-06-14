@@ -22,13 +22,13 @@ import {
 } from './ReceiptTypeEnum';
 
 /**
- * Receipt stored when a namespace expires.
+ * Receipt emitted when a namespace reaches the end of its lifetime and expires.
  * @export
  * @interface NamespaceExpiryReceiptDTO
  */
 export interface NamespaceExpiryReceiptDTO {
     /**
-     * Version of the receipt.
+     * Version of the receipt format.
      * @type {number}
      * @memberof NamespaceExpiryReceiptDTO
      */
@@ -40,7 +40,10 @@ export interface NamespaceExpiryReceiptDTO {
      */
     type: ReceiptTypeEnum;
     /**
-     * Namespace identifier.
+     * Unique [namespace](https://docs.symbol.dev/concepts/namespaces.html) identifier.
+     * A 64-bit unsigned integer derived from the namespace name and its parent namespace ID,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof NamespaceExpiryReceiptDTO
      */

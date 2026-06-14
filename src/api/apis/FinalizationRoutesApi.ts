@@ -39,8 +39,8 @@ export interface GetFinalizationProofAtHeightRequest {
 export class FinalizationRoutesApi extends runtime.BaseAPI {
 
     /**
-     * Gets finalization proof for the greatest height associated with the given epoch.
-     * Get finalization proof
+     * Returns the finalization proof for the greatest block height associated with the given finalization epoch.
+     * Get finalization proof at epoch
      */
     async getFinalizationProofAtEpochRaw(requestParameters: GetFinalizationProofAtEpochRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FinalizationProofDTO>> {
         if (requestParameters['epoch'] == null) {
@@ -69,8 +69,8 @@ export class FinalizationRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets finalization proof for the greatest height associated with the given epoch.
-     * Get finalization proof
+     * Returns the finalization proof for the greatest block height associated with the given finalization epoch.
+     * Get finalization proof at epoch
      */
     async getFinalizationProofAtEpoch(requestParameters: GetFinalizationProofAtEpochRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FinalizationProofDTO> {
         const response = await this.getFinalizationProofAtEpochRaw(requestParameters, initOverrides);
@@ -78,8 +78,8 @@ export class FinalizationRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets finalization proof at the given height.
-     * Get finalization proof
+     * Returns the finalization proof for the block at the given height.
+     * Get finalization proof at height
      */
     async getFinalizationProofAtHeightRaw(requestParameters: GetFinalizationProofAtHeightRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FinalizationProofDTO>> {
         if (requestParameters['height'] == null) {
@@ -108,8 +108,8 @@ export class FinalizationRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets finalization proof at the given height.
-     * Get finalization proof
+     * Returns the finalization proof for the block at the given height.
+     * Get finalization proof at height
      */
     async getFinalizationProofAtHeight(requestParameters: GetFinalizationProofAtHeightRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FinalizationProofDTO> {
         const response = await this.getFinalizationProofAtHeightRaw(requestParameters, initOverrides);

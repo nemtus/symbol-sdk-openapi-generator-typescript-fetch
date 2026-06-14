@@ -22,13 +22,13 @@ import {
 } from './ReceiptTypeEnum';
 
 /**
- * Receipt stored when network currency mosaics were created due to inflation.
+ * Receipt emitted when new network currency mosaic units are created by inflation.
  * @export
  * @interface InflationReceiptDTO
  */
 export interface InflationReceiptDTO {
     /**
-     * Version of the receipt.
+     * Version of the receipt format.
      * @type {number}
      * @memberof InflationReceiptDTO
      */
@@ -40,13 +40,20 @@ export interface InflationReceiptDTO {
      */
     type: ReceiptTypeEnum;
     /**
-     * Mosaic identifier.
+     * Unique [mosaic](https://docs.symbol.dev/concepts/mosaic.html) identifier.
+     * A 64-bit unsigned integer derived from the creator's address and a registration nonce,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof InflationReceiptDTO
      */
     mosaicId: string;
     /**
-     * Absolute amount. An amount of 123456789 (absolute) for a mosaic with divisibility 6 means 123.456789 (relative).
+     * Absolute amount expressed in the mosaic's smallest (atomic) unit, with no decimal point.
+     * For example, an amount of `123456789` for a mosaic with divisibility 6 represents
+     * `123.456789` whole units. Encoded as a string to preserve precision, since the value
+     * is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof InflationReceiptDTO
      */

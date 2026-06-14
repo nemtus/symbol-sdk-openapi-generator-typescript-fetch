@@ -49,55 +49,55 @@ import {
  */
 export interface MerkleStateInfoDTOTreeInner {
     /**
-     * 
+     * Node type (always leaf).
      * @type {MerkleTreeNodeTypeEnum}
      * @memberof MerkleStateInfoDTOTreeInner
      */
     type: MerkleTreeNodeTypeEnum;
     /**
-     * Leaf path.
+     * Full path (hex) from root to this leaf.
      * @type {string}
      * @memberof MerkleStateInfoDTOTreeInner
      */
     path: string;
     /**
-     * Encoded leaf path.
+     * Compact-encoded path.
      * @type {string}
      * @memberof MerkleStateInfoDTOTreeInner
      */
     encodedPath: string;
     /**
-     * Nibble count.
+     * Number of nibbles in the path.
      * @type {number}
      * @memberof MerkleStateInfoDTOTreeInner
      */
     nibbleCount: number;
     /**
-     * Branch link bitmask.
+     * Bitmask indicating which nibble slots (0 to 15) have child links.
      * @type {string}
      * @memberof MerkleStateInfoDTOTreeInner
      */
     linkMask: string;
     /**
-     * Branch links (max 16).
+     * Child links (max 16, one per nibble).
      * @type {Array<MerkleTreeBranchLinkDTO>}
      * @memberof MerkleStateInfoDTOTreeInner
      */
     links: Array<MerkleTreeBranchLinkDTO>;
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof MerkleStateInfoDTOTreeInner
      */
     branchHash: string;
     /**
-     * Leaf value (sha256 hash).
+     * Leaf value (SHA3-256 hash of the entity state).
      * @type {string}
      * @memberof MerkleStateInfoDTOTreeInner
      */
     value: string;
     /**
-     * 
+     * 256-bit hash encoded as a 64-character hexadecimal string.
      * @type {string}
      * @memberof MerkleStateInfoDTOTreeInner
      */

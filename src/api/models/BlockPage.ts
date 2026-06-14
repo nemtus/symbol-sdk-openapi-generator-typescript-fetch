@@ -29,13 +29,13 @@ import {
 } from './BlockInfoDTO';
 
 /**
- * 
+ * Paginated list of block information objects.
  * @export
  * @interface BlockPage
  */
 export interface BlockPage {
     /**
-     * Array of blocks.
+     * Array of block information objects.
      * @type {Array<BlockInfoDTO>}
      * @memberof BlockPage
      */

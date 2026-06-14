@@ -15,6 +15,7 @@
 
 import * as runtime from '../runtime';
 import type {
+  CompositeHashes,
   MerkleStateInfoDTO,
   ModelError,
   Order,
@@ -22,6 +23,8 @@ import type {
   SecretLockPage,
 } from '../models/index';
 import {
+    CompositeHashesFromJSON,
+    CompositeHashesToJSON,
     MerkleStateInfoDTOFromJSON,
     MerkleStateInfoDTOToJSON,
     ModelErrorFromJSON,
@@ -42,6 +45,19 @@ export interface GetSecretLockMerkleRequest {
     compositeHash: string;
 }
 
+export interface GetSecretLocksRequest {
+    compositeHashes: CompositeHashes;
+}
+
+export interface SearchAccountSecretLocksRequest {
+    address: string;
+    secret?: string;
+    pageSize?: number;
+    pageNumber?: number;
+    offset?: string;
+    order?: Order;
+}
+
 export interface SearchSecretLockRequest {
     address?: string;
     secret?: string;
@@ -57,7 +73,7 @@ export interface SearchSecretLockRequest {
 export class SecretLockRoutesApi extends runtime.BaseAPI {
 
     /**
-     * Gets the hash lock for a given composite hash.
+     * Returns the secret lock entry associated with the given composite hash.
      * Get secret lock information
      */
     async getSecretLockRaw(requestParameters: GetSecretLockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecretLockInfoDTO>> {
@@ -87,7 +103,7 @@ export class SecretLockRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the hash lock for a given composite hash.
+     * Returns the secret lock entry associated with the given composite hash.
      * Get secret lock information
      */
     async getSecretLock(requestParameters: GetSecretLockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SecretLockInfoDTO> {
@@ -96,8 +112,8 @@ export class SecretLockRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the hash lock merkle for a given composite hash.
-     * Get secret lock merkle information
+     * Returns the state Merkle proof for the secret lock entry associated with the given composite hash.
+     * Get secret lock Merkle information
      */
     async getSecretLockMerkleRaw(requestParameters: GetSecretLockMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MerkleStateInfoDTO>> {
         if (requestParameters['compositeHash'] == null) {
@@ -126,8 +142,8 @@ export class SecretLockRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the hash lock merkle for a given composite hash.
-     * Get secret lock merkle information
+     * Returns the state Merkle proof for the secret lock entry associated with the given composite hash.
+     * Get secret lock Merkle information
      */
     async getSecretLockMerkle(requestParameters: GetSecretLockMerkleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MerkleStateInfoDTO> {
         const response = await this.getSecretLockMerkleRaw(requestParameters, initOverrides);
@@ -135,7 +151,107 @@ export class SecretLockRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an array of secret locks.
+     * Returns secret lock entries associated with the given composite hashes.
+     * Get secret lock information for an array of composite hashes
+     */
+    async getSecretLocksRaw(requestParameters: GetSecretLocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<SecretLockInfoDTO>>> {
+        if (requestParameters['compositeHashes'] == null) {
+            throw new runtime.RequiredError(
+                'compositeHashes',
+                'Required parameter "compositeHashes" was null or undefined when calling getSecretLocks().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/lock/secret`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CompositeHashesToJSON(requestParameters['compositeHashes']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(SecretLockInfoDTOFromJSON));
+    }
+
+    /**
+     * Returns secret lock entries associated with the given composite hashes.
+     * Get secret lock information for an array of composite hashes
+     */
+    async getSecretLocks(requestParameters: GetSecretLocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<SecretLockInfoDTO>> {
+        const response = await this.getSecretLocksRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a paginated list of secret lock entries owned by the given account address, optionally filtered by secret.
+     * Search secret lock entries by account
+     */
+    async searchAccountSecretLocksRaw(requestParameters: SearchAccountSecretLocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecretLockPage>> {
+        if (requestParameters['address'] == null) {
+            throw new runtime.RequiredError(
+                'address',
+                'Required parameter "address" was null or undefined when calling searchAccountSecretLocks().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['secret'] != null) {
+            queryParameters['secret'] = requestParameters['secret'];
+        }
+
+        if (requestParameters['pageSize'] != null) {
+            queryParameters['pageSize'] = requestParameters['pageSize'];
+        }
+
+        if (requestParameters['pageNumber'] != null) {
+            queryParameters['pageNumber'] = requestParameters['pageNumber'];
+        }
+
+        if (requestParameters['offset'] != null) {
+            queryParameters['offset'] = requestParameters['offset'];
+        }
+
+        if (requestParameters['order'] != null) {
+            queryParameters['order'] = requestParameters['order'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/account/{address}/lock/secret`;
+        urlPath = urlPath.replace(`{${"address"}}`, encodeURIComponent(String(requestParameters['address'])));
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SecretLockPageFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a paginated list of secret lock entries owned by the given account address, optionally filtered by secret.
+     * Search secret lock entries by account
+     */
+    async searchAccountSecretLocks(requestParameters: SearchAccountSecretLocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SecretLockPage> {
+        const response = await this.searchAccountSecretLocksRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns a paginated list of secret lock entries, optionally filtered by owner address and secret.
      * Search secret lock entries
      */
     async searchSecretLockRaw(requestParameters: SearchSecretLockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SecretLockPage>> {
@@ -181,7 +297,7 @@ export class SecretLockRoutesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns an array of secret locks.
+     * Returns a paginated list of secret lock entries, optionally filtered by owner address and secret.
      * Search secret lock entries
      */
     async searchSecretLock(requestParameters: SearchSecretLockRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SecretLockPage> {

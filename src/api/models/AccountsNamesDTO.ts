@@ -22,13 +22,13 @@ import {
 } from './AccountNamesDTO';
 
 /**
- * 
+ * Collection of namespace name resolution results for account addresses.
  * @export
  * @interface AccountsNamesDTO
  */
 export interface AccountsNamesDTO {
     /**
-     * Array of account names.
+     * Array of namespace name entries resolved for the requested account addresses.
      * @type {Array<AccountNamesDTO>}
      * @memberof AccountsNamesDTO
      */

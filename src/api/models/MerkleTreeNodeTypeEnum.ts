@@ -14,9 +14,10 @@
 
 
 /**
- * Type of Merkle tree node:
- * * 0 - Branch node.
- * * 255 - Leaf node.
+ * Type of [Merkle tree](https://docs.symbol.dev/concepts/data-validation.html) node used in
+ * state proofs:
+ * - `0`: Branch node (internal node with child links).
+ * - `255`: Leaf node (terminal node with value).
  * 
  * @export
  */

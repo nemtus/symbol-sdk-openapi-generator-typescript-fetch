@@ -14,60 +14,80 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * State information describing a mosaic definition.
  * @export
  * @interface MosaicDTO
  */
 export interface MosaicDTO {
     /**
-     * The version of the state
+     * Version of the on-chain state serialization format. Incremented when the storage
+     * schema of the entity changes (e.g. new fields are added), allowing the node to
+     * deserialize entries written under earlier formats.
+     * 
      * @type {number}
      * @memberof MosaicDTO
      */
     version: number;
     /**
-     * Mosaic identifier.
+     * Unique [mosaic](https://docs.symbol.dev/concepts/mosaic.html) identifier.
+     * A 64-bit unsigned integer derived from the creator's address and a registration nonce,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof MosaicDTO
      */
     id: string;
     /**
-     * Absolute amount. An amount of 123456789 (absolute) for a mosaic with divisibility 6 means 123.456789 (relative).
+     * Absolute amount expressed in the mosaic's smallest (atomic) unit, with no decimal point.
+     * For example, an amount of `123456789` for a mosaic with divisibility 6 represents
+     * `123.456789` whole units. Encoded as a string to preserve precision, since the value
+     * is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof MosaicDTO
      */
     supply: string;
     /**
-     * Height of the blockchain.
+     * Height of a block in the blockchain. Starts at 1 and increments by one per block.
+     * Represented as a string to preserve precision, since the value is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof MosaicDTO
      */
     startHeight: string;
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof MosaicDTO
      */
     ownerAddress: string;
     /**
-     * A number that allows uint 32 values.
+     * Unsigned 32-bit integer.
+     * Represented as integer since it fits in JSON number precision.
+     * 
      * @type {number}
      * @memberof MosaicDTO
      */
     revision: number;
     /**
-     * - 0x00 (none) - No flags present.
-     * - 0x01 (supplyMutable) - Mosaic supports supply changes even when mosaic owner owns partial supply.
-     * - 0x02 (transferable) - Mosaic supports transfers between arbitrary accounts. When not set, mosaic can only be transferred to and from mosaic owner.
-     * - 0x04 (restrictable) - Mosaic supports custom restrictions configured by mosaic owner.
-     * - 0x08 (revokable) - Mosaic allows creator to revoke balances from another user.
+     * Mosaic flags bitmask. Individual values can be combined.
+     * - 0x00 (0 decimal): No flags present.
+     * - 0x01 (1 decimal, `supplyMutable`): Mosaic supply can be increased or decreased later.
+     * - 0x02 (2 decimal, `transferable`): Mosaic can be transferred between arbitrary accounts.
+     *   When not set, it can only be transferred to and from the mosaic owner.
+     * - 0x04 (4 decimal, `restrictable`): Mosaic supports custom restrictions configured by the mosaic owner.
+     * - 0x08 (8 decimal, `revokable`): Mosaic creator can revoke balances from another account.
+     * 
+     * Example: `3` means `0x01 + 0x02`, so the mosaic is both `supplyMutable` and `transferable`.
      * 
      * @type {number}
      * @memberof MosaicDTO
      */
     flags: number;
     /**
-     * Determines up to what decimal place the mosaic can be divided.
+     * Determines up to what decimal place a mosaic can be divided.
      * Divisibility of 3 means that a mosaic can be divided into smallest parts of 0.001 mosaics.
      * The divisibility must be in the range of 0 and 6.
      * 

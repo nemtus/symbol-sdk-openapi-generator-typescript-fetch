@@ -29,7 +29,7 @@ import {
 } from './MetadataInfoDTO';
 
 /**
- * 
+ * Paginated response containing metadata entries.
  * @export
  * @interface MetadataPage
  */

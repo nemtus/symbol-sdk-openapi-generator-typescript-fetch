@@ -22,13 +22,17 @@ import {
 } from './ReceiptTypeEnum';
 
 /**
- * Receipt stored when a state change that triggered a mosaic transfer.
+ * Receipt emitted when transaction execution transfers a mosaic balance between accounts.
+ * For example, this receipt is emitted when mosaic or namespace rental fees are paid.
+ * In that case, the sender address is the account registering the mosaic or namespace, and the
+ * recipient address is the configured rental fee sink address.
+ * 
  * @export
  * @interface BalanceTransferReceiptDTO
  */
 export interface BalanceTransferReceiptDTO {
     /**
-     * Version of the receipt.
+     * Version of the receipt format.
      * @type {number}
      * @memberof BalanceTransferReceiptDTO
      */
@@ -40,25 +44,36 @@ export interface BalanceTransferReceiptDTO {
      */
     type: ReceiptTypeEnum;
     /**
-     * Mosaic identifier.
+     * Unique [mosaic](https://docs.symbol.dev/concepts/mosaic.html) identifier.
+     * A 64-bit unsigned integer derived from the creator's address and a registration nonce,
+     * encoded as a 16-character hexadecimal string.
+     * 
      * @type {string}
      * @memberof BalanceTransferReceiptDTO
      */
     mosaicId: string;
     /**
-     * Absolute amount. An amount of 123456789 (absolute) for a mosaic with divisibility 6 means 123.456789 (relative).
+     * Absolute amount expressed in the mosaic's smallest (atomic) unit, with no decimal point.
+     * For example, an amount of `123456789` for a mosaic with divisibility 6 represents
+     * `123.456789` whole units. Encoded as a string to preserve precision, since the value
+     * is an unsigned 64-bit integer.
+     * 
      * @type {string}
      * @memberof BalanceTransferReceiptDTO
      */
     amount: string;
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof BalanceTransferReceiptDTO
      */
     senderAddress: string;
     /**
-     * Address encoded using a 32-character set.
+     * Address encoded as a 48-character hexadecimal string (24 bytes).
+     * The REST API returns addresses in this format. For Base32-encoded addresses (39 chars) see `Address`.
+     * 
      * @type {string}
      * @memberof BalanceTransferReceiptDTO
      */
