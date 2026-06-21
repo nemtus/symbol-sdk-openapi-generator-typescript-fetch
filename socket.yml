@@ -1,0 +1,39 @@
+# Socket (https://socket.dev) configuration.
+#
+# Two independent, zero-cost layers harden this repo's supply chain:
+#   - Layer A (this file): the Socket GitHub App. Free forever for public/OSS repos.
+#     It comments on PRs that change dependencies, flagging 70+ supply-chain risk
+#     types (malware, install scripts, new network/filesystem access, obfuscation,
+#     typosquats, protestware, license issues). This file ONLY takes effect once an
+#     org owner installs the Socket App on this repo via the GitHub Marketplace
+#     (one-time, no token, no cost).
+#   - Layer B (.github/workflows/ci-nodejs.yml `build` job): Socket Firewall Free
+#     (`sfw`) blocks confirmed-malicious packages at install time in CI. It needs no
+#     account and is independent of this file.
+#
+# This complements, and does not replace, the existing hardening: `npm audit` (known
+# CVEs), `min-release-age=7` + `ignore-scripts=true` (.npmrc), and pinact (SHA-pinned
+# Actions).
+version: 2
+
+# Only re-scan when a dependency manifest actually changes. This repo is NOT an npm
+# workspace: the root plus the three consumer test suites each have their own manifest.
+triggerPaths:
+  - 'package.json'
+  - 'package-lock.json'
+  - 'tests/nodejs-javascript/package.json'
+  - 'tests/nodejs-javascript/package-lock.json'
+  - 'tests/nodejs-typescript/package.json'
+  - 'tests/nodejs-typescript/package-lock.json'
+  - 'tests/browser-cdn/package.json'
+  - 'tests/browser-cdn/package-lock.json'
+
+githubApp:
+  enabled: true
+  pullRequestAlertsEnabled: true
+  dependencyOverviewEnabled: true
+  projectReportsEnabled: true
+  # Dependabot authors every dependency-bump PR here, so do NOT ignore it — a malicious
+  # transitive bump in a Dependabot PR is exactly what must still be scanned.
+  ignoreUsers: []
+  disableCommentsAndCheckRuns: false
