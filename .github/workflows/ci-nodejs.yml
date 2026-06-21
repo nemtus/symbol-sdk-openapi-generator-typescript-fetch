@@ -54,10 +54,11 @@ jobs:
       # audit only flags KNOWN CVEs; malware / typosquats / compromised releases rarely
       # have a CVE and would otherwise install cleanly. `firewall-free` mode needs no
       # Socket account or token — it runs an ephemeral proxy that blocks confirmed-
-      # malicious packages (including transitive deps) before npm fetches them. Applied
-      # only to this `build` job: it is the gate (the live-node test jobs are
-      # continue-on-error), and concentrating the extra network dependency in one place
-      # limits flakiness if Socket's API is unreachable.
+      # malicious packages (including transitive deps) before npm fetches them. Wrapped
+      # around EVERY `npm ci` in this workflow, not just this gate: each install is a
+      # code-execution surface (`npm run test` / eslint / tsc / the generator all import
+      # package code at runtime, and `ignore-scripts` only blocks install hooks), so any
+      # job that installs must be firewall-protected.
       - uses: SocketDev/action@ba6de6cc0565af1f42295590380973573297e31f # v1.3.2
         with:
           mode: firewall-free
@@ -104,7 +105,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.node-version }}-root-
       - run: npm audit --package-lock-only
-      - run: npm ci
+      # Block malicious installs (Socket Firewall Free) — see the build job for rationale.
+      - uses: SocketDev/action@ba6de6cc0565af1f42295590380973573297e31f # v1.3.2
+        with:
+          mode: firewall-free
+      - run: sfw npm ci
       - run: npm run test
 
   test-nodejs-javascript:
@@ -140,7 +145,11 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-nodejs-javascript-
       - run: npm audit --package-lock-only
         working-directory: ./tests/nodejs-javascript
-      - run: npm ci
+      # Block malicious installs (Socket Firewall Free) — see the build job for rationale.
+      - uses: SocketDev/action@ba6de6cc0565af1f42295590380973573297e31f # v1.3.2
+        with:
+          mode: firewall-free
+      - run: sfw npm ci
         working-directory: ./tests/nodejs-javascript
       - run: npm test
         working-directory: ./tests/nodejs-javascript
@@ -178,7 +187,11 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-nodejs-typescript-
       - run: npm audit --package-lock-only
         working-directory: ./tests/nodejs-typescript
-      - run: npm ci
+      # Block malicious installs (Socket Firewall Free) — see the build job for rationale.
+      - uses: SocketDev/action@ba6de6cc0565af1f42295590380973573297e31f # v1.3.2
+        with:
+          mode: firewall-free
+      - run: sfw npm ci
         working-directory: ./tests/nodejs-typescript
       - run: npm test
         working-directory: ./tests/nodejs-typescript
@@ -219,7 +232,11 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-browser-cdn-
       - run: npm audit --package-lock-only
         working-directory: ./tests/browser-cdn
-      - run: npm ci
+      # Block malicious installs (Socket Firewall Free) — see the build job for rationale.
+      - uses: SocketDev/action@ba6de6cc0565af1f42295590380973573297e31f # v1.3.2
+        with:
+          mode: firewall-free
+      - run: sfw npm ci
         working-directory: ./tests/browser-cdn
       - run: npm run test
         working-directory: ./tests/browser-cdn
@@ -259,7 +276,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.node-version }}-root-
       - run: npm audit --package-lock-only
-      - run: npm ci
+      # Block malicious installs (Socket Firewall Free) — see the build job for rationale.
+      - uses: SocketDev/action@ba6de6cc0565af1f42295590380973573297e31f # v1.3.2
+        with:
+          mode: firewall-free
+      - run: sfw npm ci
       # Validate the SAME tree CD publishes (./dist) by packing it. We use `npm pack`,
       # not `npm publish --dry-run`: the latter contacts the registry and fails with
       # "cannot publish over previously published versions" because the version isn't
@@ -285,7 +306,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-24.x-root-
       - run: npm audit --package-lock-only
-      - run: npm ci
+      # Block malicious installs (Socket Firewall Free) — see the build job for rationale.
+      - uses: SocketDev/action@ba6de6cc0565af1f42295590380973573297e31f # v1.3.2
+        with:
+          mode: firewall-free
+      - run: sfw npm ci
       - run: npm run format:check
       - run: npm run lint
       - run: npm run type:check

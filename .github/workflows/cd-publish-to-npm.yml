@@ -60,7 +60,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.node-version }}-root-
       - run: npm audit --package-lock-only
-      - run: npm ci
+      # Socket Firewall Free (`sfw`): blocks confirmed-malicious packages (incl. transitive
+      # deps) before npm fetches them — coverage `npm audit` (known CVEs only) lacks.
+      # `firewall-free` mode needs no Socket account/token. Wrapped around EVERY `npm ci`
+      # in this workflow (it mirrors CI), so the publish pipeline cannot install untrusted
+      # code at any stage. Pinned to a full SHA per the repo's pinact policy.
+      - uses: SocketDev/action@ba6de6cc0565af1f42295590380973573297e31f # v1.3.2
+        with:
+          mode: firewall-free
+      - run: sfw npm ci
       # Use the lockfile-pinned generator (a devDependency), not an unpinned global
       # `npm install -g @latest`. npx resolves to the local node_modules copy, so the
       # version is reproducible, audited (it's in the lockfile), and bumped via Dependabot.
@@ -102,7 +110,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.node-version }}-root-
       - run: npm audit --package-lock-only
-      - run: npm ci
+      # Block malicious installs (Socket Firewall Free) — see the build job for rationale.
+      - uses: SocketDev/action@ba6de6cc0565af1f42295590380973573297e31f # v1.3.2
+        with:
+          mode: firewall-free
+      - run: sfw npm ci
       - run: npm run test
 
   test-nodejs-javascript:
@@ -137,7 +149,11 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-nodejs-javascript-
       - run: npm audit --package-lock-only
         working-directory: ./tests/nodejs-javascript
-      - run: npm ci
+      # Block malicious installs (Socket Firewall Free) — see the build job for rationale.
+      - uses: SocketDev/action@ba6de6cc0565af1f42295590380973573297e31f # v1.3.2
+        with:
+          mode: firewall-free
+      - run: sfw npm ci
         working-directory: ./tests/nodejs-javascript
       - run: npm test
         working-directory: ./tests/nodejs-javascript
@@ -174,7 +190,11 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-nodejs-typescript-
       - run: npm audit --package-lock-only
         working-directory: ./tests/nodejs-typescript
-      - run: npm ci
+      # Block malicious installs (Socket Firewall Free) — see the build job for rationale.
+      - uses: SocketDev/action@ba6de6cc0565af1f42295590380973573297e31f # v1.3.2
+        with:
+          mode: firewall-free
+      - run: sfw npm ci
         working-directory: ./tests/nodejs-typescript
       - run: npm test
         working-directory: ./tests/nodejs-typescript
@@ -214,7 +234,11 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-browser-cdn-
       - run: npm audit --package-lock-only
         working-directory: ./tests/browser-cdn
-      - run: npm ci
+      # Block malicious installs (Socket Firewall Free) — see the build job for rationale.
+      - uses: SocketDev/action@ba6de6cc0565af1f42295590380973573297e31f # v1.3.2
+        with:
+          mode: firewall-free
+      - run: sfw npm ci
         working-directory: ./tests/browser-cdn
       - run: npm run test
         working-directory: ./tests/browser-cdn
@@ -255,7 +279,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.node-version }}-root-
       - run: npm audit --package-lock-only
-      - run: npm ci
+      # Firewall the install in the PRIVILEGED publish job too: this job holds
+      # `id-token: write`, so a malicious dep fetched here is the worst case (it could
+      # tamper with ./dist or abuse the OIDC publish credential). `sfw` blocks confirmed
+      # malware before npm fetches it. Unlike the deliberately-avoided unpinned
+      # `npm install -g npm@latest` below, SocketDev/action is SHA-pinned, so it fits the
+      # repo's "no unpinned code in the id-token step" rule.
+      - uses: SocketDev/action@ba6de6cc0565af1f42295590380973573297e31f # v1.3.2
+        with:
+          mode: firewall-free
+      - run: sfw npm ci
       # Trusted Publishing (OIDC) requires npm >= 11.5.1, which ships by default with
       # Node.js 24.x — so we do NOT `npm install -g npm@latest` (that would add a
       # fresh, unpinned global package to the privileged id-token step). Just assert
