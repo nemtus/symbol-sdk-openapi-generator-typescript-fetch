@@ -85,7 +85,7 @@ checks run on Stop.
 
 The project uses GitHub Actions. Both workflows run on a single unified runtime: **Java 21** and **Node.js 24.x**.
 
-- **CI** (`ci-nodejs.yml`) - On pull requests and pushes to `main`: builds the client, runs all test suites in parallel (unit, nodejs-javascript, nodejs-typescript, browser-cdn), plus a `dry-run-publish` and a `pinact` job that verifies every action is SHA-pinned.
+- **CI** (`ci-nodejs.yml`) - On pull requests and pushes to `main`: builds the client, runs all test suites in parallel (unit, nodejs-javascript, nodejs-typescript, browser-cdn), plus a `dry-run-publish` and a `pinact` job that verifies every action is SHA-pinned. **Every** `npm ci` (in both CI and CD, all jobs including the privileged `publish` job) is wrapped with **Socket Firewall Free** (`sfw`, `SocketDev/action` in `firewall-free` mode — no account/token, SHA-pinned) to block confirmed-malicious packages, including transitive deps, at install time — coverage `npm audit` (known CVEs only) does not provide. Each install is a code-execution surface, so all are firewalled, not just the build gate.
 - **CD** (`cd-publish-to-npm.yml`) - Triggered by pushing a `vX.Y.Z` tag (use `npm run release:patch|minor|major`, which runs `npm version` + `git push --follow-tags`); also runnable manually via `workflow_dispatch`. Builds, tests, then publishes to npm via **OIDC Trusted Publishing** (no `NPM_TOKEN`; provenance attached). The `publish` job is gated by the `release` GitHub Environment (manual approval), so a tag push starts the pipeline but still waits for approval before publishing.
 
 Both workflows:
@@ -117,6 +117,7 @@ requires a clean working tree, so commit or stash first.
 - Java is required for OpenAPI Generator CLI
 - Custom templates in `custom-templates/` modify the default typescript-fetch generation
 - Artifacts in CI/CD use unique naming to prevent conflicts between concurrent builds
+- **Socket supply-chain layer** (free for this public/OSS repo): `socket.yml` configures the Socket GitHub App, which comments on dependency-changing PRs with 70+ risk types (malware, install scripts, typosquats, etc.). It only activates after an org owner installs the Socket App via the GitHub Marketplace. In CI, Socket Firewall Free additionally blocks malicious installs (see the CI section). Both complement — not replace — `npm audit`, `.npmrc` (`min-release-age` / `ignore-scripts`), and pinact.
 
 ## AI assistant configuration
 
