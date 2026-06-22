@@ -209,7 +209,11 @@ jobs:
           persist-credentials: false
       - id: pw
         run: |
-          version="$(node -p "require('./tests/browser-cdn/package-lock.json').packages['node_modules/playwright'].version")"
+          version="$(node -p "require('./tests/browser-cdn/package-lock.json').packages['node_modules/playwright']?.version ?? ''")"
+          if [ -z "${version}" ]; then
+            echo "::error::Could not read playwright version from tests/browser-cdn/package-lock.json (packages['node_modules/playwright'].version) — the lockfile path or structure may have changed." >&2
+            exit 1
+          fi
           echo "version=${version}" >> "$GITHUB_OUTPUT"
 
   test-browser-cdn:
