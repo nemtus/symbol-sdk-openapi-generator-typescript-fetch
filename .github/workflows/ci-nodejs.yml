@@ -196,14 +196,31 @@ jobs:
       - run: npm test
         working-directory: ./tests/nodejs-typescript
 
+  # Derive the Playwright container tag from the locked `playwright` version in
+  # tests/browser-cdn so the image always matches the npm package — no manual tag
+  # bump when Dependabot updates Playwright (see .github/dependabot.yml).
+  detect-playwright-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.pw.outputs.version }}
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - id: pw
+        run: |
+          version="$(node -p "require('./tests/browser-cdn/package-lock.json').packages['node_modules/playwright'].version")"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+
   test-browser-cdn:
-    needs: build
+    needs: [build, detect-playwright-version]
     runs-on: ubuntu-latest
     # Hits a live mainnet node; deterministic coverage is in test-unit, so don't
     # let external flakiness gate CI.
     continue-on-error: true
     container:
-      image: mcr.microsoft.com/playwright:v1.60.0-noble
+      # Auto-synced to the locked playwright version by detect-playwright-version.
+      image: mcr.microsoft.com/playwright:v${{ needs.detect-playwright-version.outputs.version }}-noble
       options: --user 1001
 
     strategy:

@@ -55,11 +55,15 @@ updates:
           - patch
 
   # ---- test suite: tests/browser-cdn ----
-  # `@playwright/test` / `playwright` are coupled to the Playwright CONTAINER tag
-  # (mcr.microsoft.com/playwright:vX.Y.Z-noble in .github/workflows/ci-nodejs.yml).
-  # Dependabot cannot edit that image tag, so bumping the npm package alone breaks the
-  # browser-cdn job. Keep Playwright bumps MANUAL — bump package.json AND the container
-  # tag together (see tests/CLAUDE.md) — and ignore them here.
+  # `@playwright/test` / `playwright` are NOT ignored: ignoring them would also
+  # suppress Dependabot security-update PRs, so a Playwright vulnerability could land
+  # unnoticed. These npm packages are coupled to the Playwright CONTAINER tag
+  # (mcr.microsoft.com/playwright:vX.Y.Z-noble in
+  # .github/workflows/{ci-nodejs,cd-publish-to-npm}.yml), which Dependabot cannot edit
+  # directly. The `detect-playwright-version` job in both workflows derives that tag from
+  # the locked `playwright` version in tests/browser-cdn, so the container auto-syncs to
+  # whatever Dependabot bumps the npm package to (see tests/CLAUDE.md) — no manual tag
+  # edit, no version drift.
   - package-ecosystem: 'npm'
     directory: '/tests/browser-cdn'
     schedule:
@@ -72,9 +76,6 @@ updates:
         update-types:
           - minor
           - patch
-    ignore:
-      - dependency-name: '@playwright/test'
-      - dependency-name: 'playwright'
 
   # ---- github actions ----
   - package-ecosystem: 'github-actions'
