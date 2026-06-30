@@ -1,3 +1,16 @@
+> # ⚠️ Moved & archived
+>
+> This project has moved to the polyglot monorepo
+> **[nemtus/symbol-rest-api-client](https://github.com/nemtus/symbol-rest-api-client)**
+> (directory `clients/typescript-fetch`).
+>
+> - **New package:** [`@nemtus/symbol-rest-api-client-fetch`](https://www.npmjs.com/package/@nemtus/symbol-rest-api-client-fetch)
+> - This package, `@nemtus/symbol-sdk-openapi-generator-typescript-fetch`, is **deprecated** and this repository is **archived** (read-only). Full git history is preserved in the new repo under `clients/typescript-fetch/`.
+>
+> Please migrate to the new package and repository.
+
+---
+
 # symbol-sdk-openapi-generator-typescript-fetch
 
 Symbol SDK for TypeScript with OpenAPI Generator typescript-fetch
